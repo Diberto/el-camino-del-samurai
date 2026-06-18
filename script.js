@@ -2,6 +2,8 @@
    EL CAMINO DEL SAMURAI - INTERACTIVE SCRIPTS
    ========================================================================== */
 
+import * as THREE from 'three';
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // 1. MOBILE MENU TOGGLE
@@ -117,128 +119,248 @@ document.addEventListener('DOMContentLoaded', () => {
 
     animateParallax();
 
-    // 4. INTERACTIVE SAKURA PETALS (HTML5 CANVAS)
-    const canvas = document.getElementById('sakura-canvas');
-    const ctx = canvas.getContext('2d');
+    // 4. 3D SAKURA PETALS WITH THREE.JS & WIND INTERACTION
+    const petalCanvas = document.getElementById('sakura-canvas');
 
-    let petals = [];
-    const maxPetals = 45;
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = window.innerWidth * dpr;
-    canvas.height = window.innerHeight * dpr;
-    ctx.scale(dpr, dpr);
-    let width = canvas.width / dpr;
-    let height = canvas.height / dpr;
+    const scene = new THREE.Scene();
 
-    let mousePos = { x: -1000, y: -1000 };
-    let prevMousePos = { x: -1000, y: -1000 };
-    let mouseVelX = 0;
-    let mouseVelY = 0;
+    const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 500);
+    camera.position.set(0, 4, 42);
+    camera.lookAt(0, -3, 0);
 
-    window.addEventListener('resize', () => {
-        width = canvas.width = window.innerWidth * dpr;
-        height = canvas.height = window.innerHeight * dpr;
-        ctx.scale(dpr, dpr);
-        width = canvas.width / dpr;
-        height = canvas.height / dpr;
+    const renderer = new THREE.WebGLRenderer({
+        canvas: petalCanvas,
+        alpha: true,
+        antialias: true,
     });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    function createPetalTexture() {
+        const c = document.createElement('canvas');
+        c.width = 64;
+        c.height = 64;
+        const ctx = c.getContext('2d');
+        const g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+        g.addColorStop(0, 'rgba(255, 210, 218, 1)');
+        g.addColorStop(0.3, 'rgba(235, 80, 95, 0.9)');
+        g.addColorStop(0.65, 'rgba(200, 50, 60, 0.4)');
+        g.addColorStop(1, 'rgba(180, 30, 40, 0)');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.ellipse(32, 32, 22, 14, 0, 0, Math.PI * 2);
+        ctx.fill();
+        const tex = new THREE.CanvasTexture(c);
+        tex.needsUpdate = true;
+        return tex;
+    }
+
+    const petalTexture = createPetalTexture();
+    const petalGeo = new THREE.PlaneGeometry(1.6, 1.1);
+    const NUM_PETALS = 90;
+    const petals3D = [];
+
+    // Mouse tracking
+    const mouse3D = new THREE.Vector3(0, 0, 0);
+    let mouseSX = -1000, mouseSY = -1000;
+    let prevMouseSX = -1000, prevMouseSY = -1000;
+    let mouseVelX = 0, mouseVelY = 0;
+
+    const raycaster = new THREE.Raycaster();
+    const intersecPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
 
     window.addEventListener('mousemove', (e) => {
-        prevMousePos.x = mousePos.x;
-        prevMousePos.y = mousePos.y;
-        mousePos.x = e.clientX;
-        mousePos.y = e.clientY;
-        mouseVelX = mousePos.x - prevMousePos.x;
-        mouseVelY = mousePos.y - prevMousePos.y;
+        prevMouseSX = mouseSX;
+        prevMouseSY = mouseSY;
+        mouseSX = e.clientX;
+        mouseSY = e.clientY;
+        mouseVelX = mouseSX - prevMouseSX;
+        mouseVelY = mouseSY - prevMouseSY;
     });
 
-    class SakuraPetal {
-        constructor() {
-            this.reset();
-            this.y = Math.random() * height; // Distribute initially across screen
-        }
+    // Wind trail particles
+    const trailGeo = new THREE.BufferGeometry();
+    const trailCount = 20;
+    const trailPos = new Float32Array(trailCount * 3);
+    trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPos, 3));
+    const trailMat = new THREE.PointsMaterial({
+        color: 0xffa0b0,
+        size: 0.6,
+        transparent: true,
+        opacity: 0.6,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+    });
+    const trailPoints = new THREE.Points(trailGeo, trailMat);
+    scene.add(trailPoints);
+    let trailIdx = 0;
 
-        reset() {
-            this.x = Math.random() * (width + 100);
-            this.y = -20;
-            this.size = Math.random() * 6 + 4;
-            this._baseSpeedX = Math.random() * -1.5 - 0.5;
-            this._baseSpeedY = Math.random() * 1.2 + 0.8;
-            this.speedX = this._baseSpeedX;
-            this.speedY = this._baseSpeedY;
-            this.alpha = Math.random() * 0.5 + 0.3;
-            this.angle = Math.random() * Math.PI;
-            this.spinSpeed = Math.random() * 0.02 - 0.01;
-            this.swing = Math.random() * 0.04;
-            this.swingStep = Math.random() * 100;
-        }
-
-        update() {
-            this.swingStep += this.swing;
-            this.x += this.speedX + Math.sin(this.swingStep) * 0.3;
-            this.y += this.speedY;
-            this.angle += this.spinSpeed;
-
-            // Mouse wind interaction: petals are pushed in the direction of mouse movement
-            const dx = this.x - mousePos.x;
-            const dy = this.y - mousePos.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            const windRadius = 140;
-
-            if (distance < windRadius && (Math.abs(mouseVelX) > 0.5 || Math.abs(mouseVelY) > 0.5)) {
-                const force = (windRadius - distance) / windRadius;
-                const windStrength = Math.min(Math.sqrt(mouseVelX * mouseVelX + mouseVelY * mouseVelY) * 0.08, 4);
-                const effectiveForce = force * windStrength;
-                this.speedX += mouseVelX * 0.003 * effectiveForce;
-                this.speedY += mouseVelY * 0.003 * effectiveForce;
-                this.speedX = Math.max(-4, Math.min(4, this.speedX));
-                this.speedY = Math.max(-4, Math.min(4, this.speedY));
-            }
-
-            // Friction to gradually return to natural speed
-            this.speedX += (this._baseSpeedX - this.speedX) * 0.01;
-            this.speedY += (this._baseSpeedY - this.speedY) * 0.01;
-
-            // Reset when leaving screen
-            if (this.y > height + 20 || this.x < -20) {
-                this.reset();
-            }
-        }
-
-        draw() {
-            ctx.save();
-            ctx.translate(this.x, this.y);
-            ctx.rotate(this.angle);
-            ctx.beginPath();
-            
-            // Draw cherry blossom petal shape (two curves)
-            ctx.ellipse(0, 0, this.size, this.size * 0.6, 0, 0, Math.PI * 2);
-            
-            // Premium tailored colors: soft pink/red hue
-            ctx.fillStyle = `rgba(230, 57, 70, ${this.alpha})`;
-            ctx.shadowBlur = 4;
-            ctx.shadowColor = 'rgba(230, 57, 70, 0.3)';
-            ctx.fill();
-            
-            ctx.restore();
-        }
-    }
-
-    // Initialize petals
-    for (let i = 0; i < maxPetals; i++) {
-        petals.push(new SakuraPetal());
-    }
-
-    function animatePetals() {
-        ctx.clearRect(0, 0, width, height);
-        petals.forEach(petal => {
-            petal.update();
-            petal.draw();
+    for (let i = 0; i < NUM_PETALS; i++) {
+        const mat = new THREE.MeshBasicMaterial({
+            map: petalTexture,
+            transparent: true,
+            depthWrite: false,
+            side: THREE.DoubleSide,
+            opacity: 0.35 + Math.random() * 0.45,
         });
-        requestAnimationFrame(animatePetals);
+        const mesh = new THREE.Mesh(petalGeo, mat);
+        const spread = 24;
+        mesh.position.set(
+            (Math.random() - 0.5) * spread * 2,
+            (Math.random() - 0.5) * spread,
+            (Math.random() - 0.5) * 14
+        );
+        const s = 0.5 + Math.random() * 1.2;
+        mesh.scale.set(s, s, 1);
+
+        const p = {
+            mesh,
+            vel: new THREE.Vector3(
+                (Math.random() - 0.5) * 0.02,
+                -(0.25 + Math.random() * 0.5),
+                (Math.random() - 0.5) * 0.02
+            ),
+            rotV: new THREE.Vector3(
+                (Math.random() - 0.5) * 0.03,
+                (Math.random() - 0.5) * 0.015,
+                (Math.random() - 0.5) * 0.04
+            ),
+            swingOff: Math.random() * 100,
+            baseVelY: -(0.25 + Math.random() * 0.5),
+        };
+
+        scene.add(mesh);
+        petals3D.push(p);
     }
 
-    animatePetals();
+    function updateMouse3D() {
+        const ndc = new THREE.Vector2(
+            (mouseSX / window.innerWidth) * 2 - 1,
+            -(mouseSY / window.innerHeight) * 2 + 1
+        );
+        raycaster.setFromCamera(ndc, camera);
+        const pt = new THREE.Vector3();
+        raycaster.ray.intersectPlane(intersecPlane, pt);
+        mouse3D.copy(pt);
+    }
+
+    function animatePetals3D() {
+        requestAnimationFrame(animatePetals3D);
+        updateMouse3D();
+
+        const windSpeed = Math.sqrt(mouseVelX * mouseVelX + mouseVelY * mouseVelY);
+        const windR = 10;
+        const petalPositions = trailPoints.geometry.attributes.position.array;
+
+        // If mouse is moving, add trail particles
+        if (windSpeed > 2 && mouseSX > -500) {
+            for (let i = 0; i < 3; i++) {
+                const idx = (trailIdx + i) % trailCount;
+                petalPositions[idx * 3] = mouse3D.x + (Math.random() - 0.5) * 2;
+                petalPositions[idx * 3 + 1] = mouse3D.y + (Math.random() - 0.5) * 2;
+                petalPositions[idx * 3 + 2] = mouse3D.z + (Math.random() - 0.5) * 2;
+            }
+            trailIdx = (trailIdx + 3) % trailCount;
+            trailPoints.geometry.attributes.position.needsUpdate = true;
+            trailMat.opacity = Math.min(windSpeed * 0.1, 0.8);
+        } else {
+            trailMat.opacity *= 0.95;
+        }
+
+        petals3D.forEach((p) => {
+            const mesh = p.mesh;
+
+            // Gravity
+            p.vel.y -= 0.003;
+
+            // Sway
+            p.swingOff += 0.015;
+            p.vel.x += Math.sin(p.swingOff) * 0.004;
+
+            // Wind from mouse
+            if (windSpeed > 0.5) {
+                const dx = mesh.position.x - mouse3D.x;
+                const dy = mesh.position.y - mouse3D.y;
+                const dz = mesh.position.z - mouse3D.z;
+                const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+                if (dist < windR) {
+                    const force = 1 - dist / windR;
+                    const push = force * Math.min(windSpeed * 0.2, 5);
+
+                    const wdx = mouseVelX / windSpeed;
+                    const wdy = mouseVelY / windSpeed;
+
+                    p.vel.x += wdx * push * 0.04;
+                    p.vel.y += wdy * push * 0.04;
+                    p.vel.z += (Math.random() - 0.5) * push * 0.08;
+
+                    // Tumble faster in wind
+                    p.rotV.x += (Math.random() - 0.5) * push * 0.006;
+                    p.rotV.z += (Math.random() - 0.5) * push * 0.006;
+
+                    const maxV = 2.5;
+                    p.vel.x = Math.max(-maxV, Math.min(maxV, p.vel.x));
+                    p.vel.y = Math.max(-maxV, Math.min(maxV, p.vel.y));
+                    p.vel.z = Math.max(-maxV, Math.min(maxV, p.vel.z));
+
+                    // Brighten petal when caught in wind
+                    mesh.material.opacity = Math.min(mesh.material.opacity + 0.02, 0.9);
+                }
+            }
+
+            // Return to natural opacity
+            if (mesh.material.opacity > 0.4) {
+                mesh.material.opacity -= 0.001;
+            }
+
+            // Drag
+            p.vel.x *= 0.995;
+            p.vel.z *= 0.995;
+            p.rotV.x *= 0.998;
+            p.rotV.z *= 0.998;
+
+            // Apply
+            mesh.position.x += p.vel.x;
+            mesh.position.y += p.vel.y;
+            mesh.position.z += p.vel.z;
+            mesh.rotation.x += p.rotV.x;
+            mesh.rotation.y += p.rotV.y;
+            mesh.rotation.z += p.rotV.z;
+
+            // Reset
+            if (mesh.position.y < -18 || mesh.position.x < -30 || mesh.position.x > 30) {
+                mesh.position.set(
+                    (Math.random() - 0.5) * 40,
+                    18 + Math.random() * 5,
+                    (Math.random() - 0.5) * 14
+                );
+                p.vel.set(
+                    (Math.random() - 0.5) * 0.02,
+                    p.baseVelY,
+                    (Math.random() - 0.5) * 0.02
+                );
+                p.rotV.set(
+                    (Math.random() - 0.5) * 0.03,
+                    (Math.random() - 0.5) * 0.015,
+                    (Math.random() - 0.5) * 0.04
+                );
+                mesh.material.opacity = 0.35 + Math.random() * 0.45;
+            }
+        });
+
+        renderer.render(scene, camera);
+    }
+
+    animatePetals3D();
+
+    window.addEventListener('resize', () => {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+    });
 
     // 5. INTERACTIVE ORACLE (BUSHIDO CARDS)
     const oracleCards = document.querySelectorAll('.oracle-card');
