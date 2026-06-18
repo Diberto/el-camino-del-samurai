@@ -1259,8 +1259,8 @@ img {
     transform: translateY(0);
 }
 
-/* 14.5 MUSIC CONTROL */
-#music-toggle {
+/* 14.5 SCROLL TOP BUTTON */
+#scroll-top {
     position: fixed;
     bottom: 1.5rem;
     right: 1.5rem;
@@ -1279,30 +1279,31 @@ img {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(15px);
+    pointer-events: none;
 }
 
-#music-toggle:hover {
+#scroll-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+#scroll-top:hover {
     background-color: var(--accent-gold);
     color: var(--bg-primary);
     transform: scale(1.1);
     box-shadow: 0 6px 20px rgba(197, 168, 128, 0.4);
 }
 
-#music-toggle.playing {
-    background-color: rgba(217, 4, 41, 0.15);
-    border-color: var(--accent-red);
-    color: var(--accent-red);
-    box-shadow: 0 4px 20px rgba(217, 4, 41, 0.25);
+#scroll-top.visible:hover {
+    transform: scale(1.1) translateY(0);
 }
 
-#music-toggle.playing:hover {
-    background-color: var(--accent-red);
-    color: var(--text-primary);
-}
-
-#music-toggle svg {
-    width: 20px;
-    height: 20px;
+#scroll-top svg {
+    width: 22px;
+    height: 22px;
 }
 
 /* 15. RESPONSIVENESS */

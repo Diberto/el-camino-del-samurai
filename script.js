@@ -402,27 +402,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Play chime after a short delay when page loads
     setTimeout(playZenChime, 600);
 
-    // 9. BACKGROUND MUSIC TOGGLE
-    const musicToggle = document.getElementById('music-toggle');
-    const bgMusic = document.getElementById('bg-music');
-    let isPlaying = false;
+    // 9. SCROLL TO TOP BUTTON
+    const scrollBtn = document.getElementById('scroll-top');
 
-    if (musicToggle && bgMusic) {
-        musicToggle.addEventListener('click', () => {
-            if (isPlaying) {
-                bgMusic.pause();
-                musicToggle.classList.remove('playing');
-                musicToggle.setAttribute('aria-label', 'Activar música de fondo');
-                isPlaying = false;
+    if (scrollBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                scrollBtn.classList.add('visible');
             } else {
-                bgMusic.play().then(() => {
-                    musicToggle.classList.add('playing');
-                    musicToggle.setAttribute('aria-label', 'Pausar música de fondo');
-                    isPlaying = true;
-                }).catch(() => {
-                    // Autoplay blocked by browser
-                });
+                scrollBtn.classList.remove('visible');
             }
+        });
+
+        scrollBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
 });
