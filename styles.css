@@ -1365,7 +1365,8 @@ img {
     /* Adaptación del samurai parallax en móvil */
     .parallax-fg {
         background-position: center bottom;
-        opacity: 0.15; /* Lo atenuamos para que no tape el texto en pantallas chicas */
+        opacity: 0.15;
+        z-index: 1;
     }
     
     .parallax-mid {
