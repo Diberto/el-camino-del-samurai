@@ -135,7 +135,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let mouseVelX = 0;
     let mouseVelY = 0;
 
+    let lastScrollY = window.scrollY;
+    let scrollVelY = 0;
+    let scrollBurst = 0;
+
     const windTrails = [];
+
+    window.addEventListener('scroll', () => {
+        const sy = window.scrollY;
+        scrollVelY = sy - lastScrollY;
+        lastScrollY = sy;
+    });
 
     window.addEventListener('resize', () => {
         width = canvas.width = window.innerWidth * dpr;
@@ -210,6 +220,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.spinSpeed += (Math.random() - 0.5) * effectiveForce * 0.01;
             }
 
+            // Scroll wind: petals pushed in scroll direction
+            if (Math.abs(scrollVelY) > 1) {
+                const scrollForce = Math.min(Math.abs(scrollVelY) * 0.03, 4);
+                this.speedY += Math.sign(scrollVelY) * scrollForce * 0.02;
+                this.spinSpeed += (Math.random() - 0.5) * scrollForce * 0.002;
+            }
+
+            // Scroll-to-top burst
+            if (scrollBurst > 0) {
+                const burstForce = Math.min(scrollBurst, 3);
+                this.speedY -= burstForce * 0.04;
+                this.speedX += (Math.random() - 0.5) * burstForce * 0.02;
+                this.spinSpeed += (Math.random() - 0.5) * burstForce * 0.005;
+            }
+
             this.speedX += (this._baseSpeedX - this.speedX) * 0.003;
             this.speedY += (this._baseSpeedY - this.speedY) * 0.003;
             this.spinSpeed *= 0.995;
@@ -239,6 +264,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function animatePetals() {
         ctx.clearRect(0, 0, width, height);
+
+        scrollVelY *= 0.85;
+        if (scrollBurst > 0) scrollBurst -= 0.03;
 
         for (let i = windTrails.length - 1; i >= 0; i--) {
             const t = windTrails[i];
@@ -415,6 +443,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         scrollBtn.addEventListener('click', () => {
+            scrollBurst = 3;
+            for (let i = 0; i < 30; i++) {
+                windTrails.push({
+                    x: Math.random() * width,
+                    y: height - Math.random() * 200,
+                    alpha: 0.6,
+                    size: Math.random() * 6 + 3,
+                });
+            }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
