@@ -131,6 +131,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let height = canvas.height / dpr;
 
     let mousePos = { x: -1000, y: -1000 };
+    let prevMousePos = { x: -1000, y: -1000 };
+    let mouseVelX = 0;
+    let mouseVelY = 0;
 
     window.addEventListener('resize', () => {
         width = canvas.width = window.innerWidth * dpr;
@@ -141,8 +144,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     window.addEventListener('mousemove', (e) => {
+        prevMousePos.x = mousePos.x;
+        prevMousePos.y = mousePos.y;
         mousePos.x = e.clientX;
         mousePos.y = e.clientY;
+        mouseVelX = mousePos.x - prevMousePos.x;
+        mouseVelY = mousePos.y - prevMousePos.y;
     });
 
     class SakuraPetal {
@@ -155,8 +162,10 @@ document.addEventListener('DOMContentLoaded', () => {
             this.x = Math.random() * (width + 100);
             this.y = -20;
             this.size = Math.random() * 6 + 4;
-            this.speedX = Math.random() * -1.5 - 0.5; // Wind blowing left
-            this.speedY = Math.random() * 1.2 + 0.8; // Gravity falling down
+            this._baseSpeedX = Math.random() * -1.5 - 0.5;
+            this._baseSpeedY = Math.random() * 1.2 + 0.8;
+            this.speedX = this._baseSpeedX;
+            this.speedY = this._baseSpeedY;
             this.alpha = Math.random() * 0.5 + 0.3;
             this.angle = Math.random() * Math.PI;
             this.spinSpeed = Math.random() * 0.02 - 0.01;
@@ -170,17 +179,25 @@ document.addEventListener('DOMContentLoaded', () => {
             this.y += this.speedY;
             this.angle += this.spinSpeed;
 
-            // Mouse interaction (repelling petals slightly)
+            // Mouse wind interaction: petals are pushed in the direction of mouse movement
             const dx = this.x - mousePos.x;
             const dy = this.y - mousePos.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
-            
-            if (distance < 120) {
-                const force = (120 - distance) / 120;
-                const angle = Math.atan2(dy, dx);
-                this.x += Math.cos(angle) * force * 3;
-                this.y += Math.sin(angle) * force * 2;
+            const windRadius = 140;
+
+            if (distance < windRadius && (Math.abs(mouseVelX) > 0.5 || Math.abs(mouseVelY) > 0.5)) {
+                const force = (windRadius - distance) / windRadius;
+                const windStrength = Math.min(Math.sqrt(mouseVelX * mouseVelX + mouseVelY * mouseVelY) * 0.08, 4);
+                const effectiveForce = force * windStrength;
+                this.speedX += mouseVelX * 0.003 * effectiveForce;
+                this.speedY += mouseVelY * 0.003 * effectiveForce;
+                this.speedX = Math.max(-4, Math.min(4, this.speedX));
+                this.speedY = Math.max(-4, Math.min(4, this.speedY));
             }
+
+            // Friction to gradually return to natural speed
+            this.speedX += (this._baseSpeedX - this.speedX) * 0.01;
+            this.speedY += (this._baseSpeedY - this.speedY) * 0.01;
 
             // Reset when leaving screen
             if (this.y > height + 20 || this.x < -20) {
