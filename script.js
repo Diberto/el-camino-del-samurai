@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx = canvas.getContext('2d');
 
     let petals = [];
-    const maxPetals = 45;
+    const maxPetals = 50;
     const dpr = window.devicePixelRatio || 1;
     canvas.width = window.innerWidth * dpr;
     canvas.height = window.innerHeight * dpr;
@@ -134,6 +134,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let prevMousePos = { x: -1000, y: -1000 };
     let mouseVelX = 0;
     let mouseVelY = 0;
+
+    const windTrails = [];
 
     window.addEventListener('resize', () => {
         width = canvas.width = window.innerWidth * dpr;
@@ -150,18 +152,30 @@ document.addEventListener('DOMContentLoaded', () => {
         mousePos.y = e.clientY;
         mouseVelX = mousePos.x - prevMousePos.x;
         mouseVelY = mousePos.y - prevMousePos.y;
+
+        const speed = Math.sqrt(mouseVelX * mouseVelX + mouseVelY * mouseVelY);
+        if (speed > 3) {
+            for (let i = 0; i < 3; i++) {
+                windTrails.push({
+                    x: mousePos.x + (Math.random() - 0.5) * 20,
+                    y: mousePos.y + (Math.random() - 0.5) * 20,
+                    alpha: 0.5,
+                    size: Math.random() * 4 + 2,
+                });
+            }
+        }
     });
 
     class SakuraPetal {
         constructor() {
             this.reset();
-            this.y = Math.random() * height; // Distribute initially across screen
+            this.y = Math.random() * height;
         }
 
         reset() {
             this.x = Math.random() * (width + 100);
             this.y = -20;
-            this.size = Math.random() * 6 + 4;
+            this.size = Math.random() * 7 + 4;
             this._baseSpeedX = Math.random() * -1.5 - 0.5;
             this._baseSpeedY = Math.random() * 1.2 + 0.8;
             this.speedX = this._baseSpeedX;
@@ -179,28 +193,28 @@ document.addEventListener('DOMContentLoaded', () => {
             this.y += this.speedY;
             this.angle += this.spinSpeed;
 
-            // Mouse wind interaction: petals are pushed in the direction of mouse movement
             const dx = this.x - mousePos.x;
             const dy = this.y - mousePos.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
-            const windRadius = 140;
+            const windRadius = 220;
 
-            if (distance < windRadius && (Math.abs(mouseVelX) > 0.5 || Math.abs(mouseVelY) > 0.5)) {
+            if (distance < windRadius && (Math.abs(mouseVelX) > 0.3 || Math.abs(mouseVelY) > 0.3)) {
                 const force = (windRadius - distance) / windRadius;
-                const windStrength = Math.min(Math.sqrt(mouseVelX * mouseVelX + mouseVelY * mouseVelY) * 0.08, 4);
+                const windStrength = Math.min(Math.sqrt(mouseVelX * mouseVelX + mouseVelY * mouseVelY) * 0.15, 6);
                 const effectiveForce = force * windStrength;
-                this.speedX += mouseVelX * 0.003 * effectiveForce;
-                this.speedY += mouseVelY * 0.003 * effectiveForce;
-                this.speedX = Math.max(-4, Math.min(4, this.speedX));
-                this.speedY = Math.max(-4, Math.min(4, this.speedY));
+                this.speedX += mouseVelX * 0.008 * effectiveForce;
+                this.speedY += mouseVelY * 0.008 * effectiveForce;
+                const maxV = 10;
+                this.speedX = Math.max(-maxV, Math.min(maxV, this.speedX));
+                this.speedY = Math.max(-maxV, Math.min(maxV, this.speedY));
+                this.spinSpeed += (Math.random() - 0.5) * effectiveForce * 0.01;
             }
 
-            // Friction to gradually return to natural speed
-            this.speedX += (this._baseSpeedX - this.speedX) * 0.01;
-            this.speedY += (this._baseSpeedY - this.speedY) * 0.01;
+            this.speedX += (this._baseSpeedX - this.speedX) * 0.003;
+            this.speedY += (this._baseSpeedY - this.speedY) * 0.003;
+            this.spinSpeed *= 0.995;
 
-            // Reset when leaving screen
-            if (this.y > height + 20 || this.x < -20) {
+            if (this.y > height + 20 || this.x < -20 || this.x > width + 20) {
                 this.reset();
             }
         }
@@ -210,27 +224,39 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.translate(this.x, this.y);
             ctx.rotate(this.angle);
             ctx.beginPath();
-            
-            // Draw cherry blossom petal shape (two curves)
             ctx.ellipse(0, 0, this.size, this.size * 0.6, 0, 0, Math.PI * 2);
-            
-            // Premium tailored colors: soft pink/red hue
             ctx.fillStyle = `rgba(230, 57, 70, ${this.alpha})`;
-            ctx.shadowBlur = 4;
+            ctx.shadowBlur = 6;
             ctx.shadowColor = 'rgba(230, 57, 70, 0.3)';
             ctx.fill();
-            
             ctx.restore();
         }
     }
 
-    // Initialize petals
     for (let i = 0; i < maxPetals; i++) {
         petals.push(new SakuraPetal());
     }
 
     function animatePetals() {
         ctx.clearRect(0, 0, width, height);
+
+        for (let i = windTrails.length - 1; i >= 0; i--) {
+            const t = windTrails[i];
+            t.alpha -= 0.02;
+            t.x += mouseVelX * 0.1;
+            t.y += mouseVelY * 0.1;
+            if (t.alpha <= 0) {
+                windTrails.splice(i, 1);
+                continue;
+            }
+            ctx.beginPath();
+            ctx.arc(t.x, t.y, t.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 200, 210, ${t.alpha * 0.5})`;
+            ctx.fill();
+        }
+
+        if (windTrails.length > 80) windTrails.splice(0, windTrails.length - 80);
+
         petals.forEach(petal => {
             petal.update();
             petal.draw();
