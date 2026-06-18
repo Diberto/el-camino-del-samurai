@@ -228,6 +228,18 @@ img {
     transition: var(--transition-smooth);
 }
 
+.navbar::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(to bottom, rgba(7, 8, 10, 0.55), transparent);
+    pointer-events: none;
+    z-index: -1;
+}
+
 .navbar.scrolled {
     padding: 0.85rem 0;
     background-color: rgba(7, 8, 10, 0.85);
@@ -403,10 +415,10 @@ img {
 
 .hero-desc {
     font-size: 1.1rem;
-    color: var(--text-secondary);
+    color: #d0d5dd;
     margin-bottom: 2.5rem;
     line-height: 1.7;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
     opacity: 0;
     animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
 }
