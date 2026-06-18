@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#07080a">
+    <title>La Ruta del Samurái | Libros Oficiales de Jorge Orpianesi</title>
+    <meta name="description" content="Descubre 'La Ruta del Samurái' y 'El Paso de las Luciérnagas' de Jorge Orpianesi. Crónicas de viajes, artes marciales y la historia de los guerreros feudales de Japón.">
+    <meta name="keywords" content="samurai, bushido, libro, jorge orpianesi, la ruta del samurai, el paso de las luciernagas, japon para budokas, artes marciales, japon, miyamoto musashi">
+    <meta name="author" content="Jorge Orpianesi">
+    <link rel="canonical" href="https://larutadelsamurai.com/">
+    <meta name="robots" content="index, follow">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "La Ruta del Samurái",
+        "url": "https://larutadelsamurai.com/",
+        "author": {
+            "@type": "Person",
+            "name": "Jorge Orpianesi"
+        },
+        "description": "Libros oficiales de Jorge Orpianesi sobre historia samurái, artes marciales y cultura japonesa."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                    "@type": "Book",
+                    "name": "La Ruta del Samurái: Japón para Budokas",
+                    "author": {
+                        "@type": "Person",
+                        "name": "Jorge Orpianesi"
+                    },
+                    "description": "Recorrido geográfico detallado por castillos, cementerios históricos y dojos antiguos de Japón, sirviendo como guía de viajes para cultores de artes marciales.",
+                    "genre": ["Artes Marciales", "Historia Japonesa", "Viajes", "Cultura Samurái"],
+                    "inLanguage": "es",
+                    "isbn": "978-84-123456-7-8",
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": "Jorge Orpianesi"
+                    },
+                    "offers": {
+                        "@type": "Offer",
+                        "url": "https://www.amazon.com/s?k=jorge+orpianesi",
+                        "priceCurrency": "USD",
+                        "availability": "https://schema.org/InStock"
+                    }
+                }
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                    "@type": "Book",
+                    "name": "El Paso de las Luciérnagas",
+                    "author": {
+                        "@type": "Person",
+                        "name": "Jorge Orpianesi"
+                    },
+                    "description": "Segunda parte de la expedición que profundiza en las leyendas de combates épicos, templos escondidos y el legado samurái en la modernidad.",
+                    "genre": ["Artes Marciales", "Historia Japonesa", "Viajes", "Cultura Samurái"],
+                    "inLanguage": "es",
+                    "isbn": "978-84-123456-8-5",
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": "Jorge Orpianesi"
+                    },
+                    "offers": {
+                        "@type": "Offer",
+                        "url": "https://www.amazon.com/s?k=jorge+orpianesi",
+                        "priceCurrency": "USD",
+                        "availability": "https://schema.org/InStock"
+                    }
+                }
+            }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Jorge Orpianesi",
+        "birthDate": "1969",
+        "birthPlace": "Córdoba, Argentina",
+        "description": "Reconocido artista marcial, instructor y profundo estudioso de la cultura e historia tradicional japonesa. Practica Karate-Do, Kobudo, Aikido e Iaido desde 1982.",
+        "sameAs": [
+            "https://www.facebook.com/larutadelsamurai",
+            "https://www.youtube.com/@larutadelsamurai"
+        ],
+        "worksFor": {
+            "@type": "Organization",
+            "name": "La Ruta del Samurái"
+        }
+    }
+    </script>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="La Ruta del Samurái | Libros de Jorge Orpianesi">
+    <meta property="og:description" content="Una obra profunda sobre la historia y geografía samurái, budokas y artes marciales.">
+    <meta property="og:image" content="assets/books_mockup.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Canvas para pétalos de sakura -->
+    <canvas id="sakura-canvas"></canvas>
+
+    <!-- Header / Navbar -->
+    <header class="navbar" id="navbar" role="banner">
+        <div class="nav-container">
+            <a href="#" class="nav-logo" id="nav-logo">
+                <span class="logo-kanji">侍</span>
+                <span class="logo-text">La Ruta del Samurái</span>
+            </a>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="nav-menu" id="nav-menu" role="navigation" aria-label="Menú principal">
+                <ul>
+                    <li><a href="#" class="nav-link active" aria-current="page">Inicio</a></li>
+                    <li><a href="#sinopsis" class="nav-link">El Libro</a></li>
+                    <li><a href="#virtudes" class="nav-link">Las Virtudes</a></li>
+                    <li><a href="#oraculo" class="nav-link">El Oráculo</a></li>
+                    <li><a href="#ediciones" class="nav-link">Ediciones</a></li>
+                    <li><a href="#autor" class="nav-link">Autor</a></li>
+                    <li><a href="#contacto" class="btn btn-nav">Comprar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main">
+
+    <!-- Hero Section (Parallax) -->
+    <section class="hero-parallax" id="inicio">
+        <!-- Capa 1: Fondo de montañas y sol -->
+        <div class="parallax-layer parallax-bg" style="background-image: url('assets/bg_mountains.png');"></div>
+        
+        <!-- Capa 2: Pagoda / Elemento de medio plano -->
+        <div class="parallax-layer parallax-mid" style="background-image: url('assets/mid_pagoda.png');"></div>
+        
+        <!-- Capa 3: Contenido de Texto -->
+        <div class="parallax-layer parallax-text">
+            <div class="hero-content">
+                <h2 class="hero-tagline">LA SENDA DE LA HISTORIA Y EL BUDO</h2>
+                <h1 class="hero-title">La Ruta<br><span class="highlight-red">del Samurái</span></h1>
+                <p class="hero-desc">Sigue las huellas de Miyamoto Musashi. Un fascinante viaje por la geografía, templos y castillos feudales del Japón tradicional.</p>
+                <div class="hero-actions">
+                    <a href="#sinopsis" class="btn btn-primary">Explorar Libros</a>
+                    <a href="#oraculo" class="btn btn-secondary">Oráculo Zen</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Capa 4: Samurai Foreground -->
+        <div class="parallax-layer parallax-fg" style="background-image: url('assets/fg_samurai.png');"></div>
+        
+        <!-- Capa inferior de degradado para fusionar el final del hero con la siguiente sección -->
+        <div class="hero-overlay-bottom"></div>
+    </section>
+
+    <!-- Sección de Sinopsis / El Libro -->
+    <section class="section sinopsis-section" id="sinopsis">
+        <div class="container grid-2">
+            <div class="sinopsis-image fade-in">
+                <div class="image-wrapper">
+                    <img src="assets/books_mockup.png" alt="La Ruta del Samurái Libros Mockup" class="book-img">
+                    <div class="glow-effect"></div>
+                </div>
+            </div>
+            <div class="sinopsis-content fade-in">
+                <span class="section-subtitle">LA OBRA LITERARIA</span>
+                <h2 class="section-title">La guía definitiva de Japón para Budokas</h2>
+                <p class="text-large">Una aventura literaria y fotográfica que conecta la historia feudal japonesa, las artes marciales y la filosofía de vida de los guerreros eternos.</p>
+                
+                <div class="philosophy-points">
+                    <div class="point-item">
+                        <div class="point-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        </div>
+                        <div class="point-text">
+                            <h3>Viaje al Corazón de Japón</h3>
+                            <p>Explora templos budistas, castillos medievales, campos de batalla históricos y la mística del Monte Fuji con fotos y mapas únicos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="point-item">
+                        <div class="point-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <div class="point-text">
+                            <h3>La senda de Miyamoto Musashi</h3>
+                            <p>Sigue el itinerario del legendario espadachín y autor de "El Libro de los Cinco Anillos" a través de los parajes donde meditó y luchó.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="point-item">
+                        <div class="point-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                        </div>
+                        <div class="point-text">
+                            <h3>Cultura Budoka y Tradición</h3>
+                            <p>Descubre el Kobudo, Iaido y Karate-Do desde su origen espiritual y su aplicación práctica para templar el carácter hoy.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="#ediciones" class="btn btn-primary btn-margin">Ver las Ediciones</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de las Virtudes del Bushido -->
+    <section class="section virtues-section" id="virtudes">
+        <div class="container">
+            <div class="section-header center fade-in">
+                <span class="section-subtitle">EL CÓDIGO ANCESTRAL</span>
+                <h2 class="section-title">Las Siete Virtudes del Bushido</h2>
+                <p class="section-desc">Los pilares eternos sobre los que se construía el espíritu del guerrero. Principios éticos para el autogobierno.</p>
+            </div>
+            
+            <div class="virtues-grid">
+                <!-- 1. Gi (Rectitud) -->
+                <div class="virtue-card fade-in">
+                    <div class="virtue-kanji">義</div>
+                    <h3 class="virtue-title">GI <span class="virtue-trans">(Rectitud / Justicia)</span></h3>
+                    <p class="virtue-desc">Sé sumamente honesto en tus tratos con todo el mundo. Cree en la justicia, no en la que emana de los demás, sino en la tuya propia.</p>
+                </div>
+                
+                <!-- 2. Yu (Coraje) -->
+                <div class="virtue-card fade-in">
+                    <div class="virtue-kanji">勇</div>
+                    <h3 class="virtue-title">YU <span class="virtue-trans">(Valor Heroico)</span></h3>
+                    <p class="virtue-desc">Alzarse sobre las masas de gente que temen actuar. El coraje no es ciego, es inteligente y fuerte. Reemplaza el miedo por el respeto y la precaución.</p>
+                </div>
+                
+                <!-- 3. Jin (Benevolencia) -->
+                <div class="virtue-card fade-in">
+                    <div class="virtue-kanji">仁</div>
+                    <h3 class="virtue-title">JIN <span class="virtue-trans">(Benevolencia / Compasión)</span></h3>
+                    <p class="virtue-desc">Mediante el entrenamiento y la fuerza interior, el samurai desarrolla compasión. Ayuda a tus semejantes en cada oportunidad.</p>
+                </div>
+                
+                <!-- 4. Rei (Respeto) -->
+                <div class="virtue-card fade-in">
+                    <div class="virtue-kanji">礼</div>
+                    <h3 class="virtue-title">REI <span class="virtue-trans">(Cortesía / Respeto)</span></h3>
+                    <p class="virtue-desc">Los samurai no tienen motivos para ser crueles. No necesitan demostrar su fuerza. Un samurai es cortés incluso con sus enemigos.</p>
+                </div>
+                
+                <!-- 5. Makoto (Honestidad) -->
+                <div class="virtue-card fade-in">
+                    <div class="virtue-kanji">誠</div>
+                    <h3 class="virtue-title">MAKOTO <span class="virtue-trans">(Sinceridad Absoluta)</span></h3>
+                    <p class="virtue-desc">Cuando un samurai dice que hará algo, es como si ya estuviera hecho. Nada en la tierra lo detendrá. Hablar y hacer son la misma acción.</p>
+                </div>
+                
+                <!-- 6. Meiyo (Honor) -->
+                <div class="virtue-card fade-in">
+                    <div class="virtue-kanji">名誉</div>
+                    <h3 class="virtue-title">MEIYO <span class="virtue-trans">(Honor)</span></h3>
+                    <p class="virtue-desc">El verdadero samurai solo tiene un juez de su propio honor, y es él mismo. Las decisiones que tomas y cómo las ejecutas reflejan quién eres en verdad.</p>
+                </div>
+                
+                <!-- 7. Chugi (Lealtad) -->
+                <div class="virtue-card fade-in">
+                    <div class="virtue-kanji">忠義</div>
+                    <h3 class="virtue-title">CHUGI <span class="virtue-trans">(Deber / Lealtad)</span></h3>
+                    <p class="virtue-desc">Haber hecho o dicho algo significa que te pertenece. Eres responsable de ello y de todas sus consecuencias. Leal a quienes están bajo tu cuidado.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Interactiva: Oráculo del Bushido -->
+    <section class="section oracle-section" id="oraculo">
+        <div class="container">
+            <div class="section-header center fade-in">
+                <span class="section-subtitle">INTERACTIVO</span>
+                <h2 class="section-title">Consulta el Oráculo del Bushido</h2>
+                <p class="section-desc">Despeja tu mente, realiza una respiración profunda y haz clic en una de las tres cartas ancestrales. Deja que el destino te revele la virtud que debe guiar tus decisiones hoy.</p>
+            </div>
+            
+            <div class="oracle-container fade-in">
+                <div class="cards-wrapper">
+                    <!-- Carta 1 -->
+                    <div class="oracle-card" data-index="0">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="card-pattern"></div>
+                                <span class="card-symbol">剣</span>
+                            </div>
+                            <div class="card-back">
+                                <div class="back-content">
+                                    <span class="card-back-kanji">勇</span>
+                                    <h4 class="card-back-title">YŪ - VALOR</h4>
+                                    <p class="card-back-quote">"El coraje es la fuerza del espíritu para ejecutar lo que la razón dicta."</p>
+                                    <p class="card-back-action">Afronta hoy ese problema que has estado posponiendo. Tu fuerza crece al actuar.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Carta 2 -->
+                    <div class="oracle-card" data-index="1">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="card-pattern"></div>
+                                <span class="card-symbol">盾</span>
+                            </div>
+                            <div class="card-back">
+                                <div class="back-content">
+                                    <span class="card-back-kanji">義</span>
+                                    <h4 class="card-back-title">GI - RECTITUD</h4>
+                                    <p class="card-back-quote">"La rectitud es el hueso que da soporte. Sin ella la cabeza no puede mantenerse en alto."</p>
+                                    <p class="card-back-action">Haz lo correcto en tus decisiones de hoy, no lo que sea más fácil o rápido.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Carta 3 -->
+                    <div class="oracle-card" data-index="2">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="card-pattern"></div>
+                                <span class="card-symbol">心</span>
+                            </div>
+                            <div class="card-back">
+                                <div class="back-content">
+                                    <span class="card-back-kanji">仁</span>
+                                    <h4 class="card-back-title">JIN - COMPASIÓN</h4>
+                                    <p class="card-back-quote">"La benevolencia es una virtud real. Hace que el fuerte sea amable con el débil."</p>
+                                    <p class="card-back-action">Hoy, ofrece ayuda genuina a alguien a tu alrededor. La verdadera fuerza protege.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slash-overlay" id="slash-overlay"></div>
+                <button class="btn btn-secondary btn-reset" id="btn-reset-oracle">Meditar Nuevamente</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Capítulos y Ediciones -->
+    <section class="section chapters-section" id="capitulos">
+        <div class="container grid-2">
+            <div class="chapters-content fade-in">
+                <span class="section-subtitle">CONTENIDO EXCLUSIVO</span>
+                <h2 class="section-title">Las Obras del Autor</h2>
+                <p class="section-desc">Dos tomos excepcionales que plasman un viaje sin precedentes por la historia feudal y las artes marciales de Japón.</p>
+                
+                <div class="chapters-list">
+                    <div class="chapter-item">
+                        <div class="chapter-num">I</div>
+                        <div class="chapter-info">
+                            <h3>La Ruta del Samurái: Japón para Budokas</h3>
+                            <p>Un recorrido geográfico detallado por castillos, cementerios históricos y dojos antiguos, sirviendo como guía de viajes para todo cultor de artes marciales.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chapter-item">
+                        <div class="chapter-num">II</div>
+                        <div class="chapter-info">
+                            <h3>El Paso de las Luciérnagas</h3>
+                            <p>La segunda parte de esta gran expedición, que profundiza en las leyendas de combates épicos, templos escondidos y el legado samurái en la modernidad.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="editions-wrapper fade-in" id="ediciones">
+                <span class="section-subtitle text-center block">ELIGE TU SENDA</span>
+                <h2 class="section-title text-center">Ediciones Disponibles</h2>
+                
+                <div class="editions-cards">
+                    <!-- Edición Digital -->
+                    <div class="edition-card">
+                        <div class="edition-badge">DIGITAL</div>
+                        <h3 class="edition-title">Formatos eBook</h3>
+                        <p class="edition-format">Dispositivos Amazon Kindle</p>
+                        <div class="edition-price">Digital</div>
+                        <ul class="edition-benefits">
+                            <li>Disponible para descarga instantánea</li>
+                            <li>Optimizado para Kindle y e-readers</li>
+                            <li>Acceso rápido a los itinerarios de viaje</li>
+                        </ul>
+                        <a href="https://www.amazon.com/s?k=jorge+orpianesi" target="_blank" class="btn btn-primary block text-center">Comprar en Amazon</a>
+                    </div>
+                    
+                    <!-- Edición Física -->
+                    <div class="edition-card premium">
+                        <div class="edition-badge gold">FÍSICA</div>
+                        <h3 class="edition-title">Edición Impresa</h3>
+                        <p class="edition-format">Libro de Papel Premium</p>
+                        <div class="edition-price">Papel</div>
+                        <ul class="edition-benefits">
+                            <li>Papel ahuesado y portadas a todo color</li>
+                            <li>Más de 200 fotografías exclusivas</li>
+                            <li>9 mapas detallados de los recorridos</li>
+                            <li>Firmado y enviado directamente por el autor</li>
+                        </ul>
+                        <a href="#contacto" class="btn btn-primary block text-center">Consultar al Autor</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección del Autor -->
+    <section class="section author-section" id="autor">
+        <div class="container grid-2 align-center">
+            <div class="author-details fade-in">
+                <span class="section-subtitle">EL CREADOR</span>
+                <h2 class="section-title">Conoce a Jorge Orpianesi</h2>
+                <p class="text-large">Reconocido artista marcial, instructor y profundo estudioso de la cultura e historia tradicional japonesa.</p>
+                <p>Nacido en Córdoba, Argentina (1969), practica disciplinas tradicionales japonesas como Karate-Do, Kobudo, Aikido e Iaido desde 1982. Instructor titulado desde 1989 y ex-competidor nacional, formó parte en 2013 del selecto seminario mundial en Okinawa. Es columnista de la prestigiosa revista norteamericana Bugeisha y a través de su travesía por Japón dio vida a estas crónicas literarias.</p>
+                <div class="author-signature">
+                    <span class="signature-kanji">道</span>
+                    <div class="signature-name">
+                        <strong>Jorge Orpianesi</strong>
+                        <span>Artista Marcial, Escritor & Divulgador</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="author-visual fade-in">
+                <div class="image-wrapper">
+                    <img src="assets/author_portrait.png" alt="Jorge Orpianesi Retrato" class="author-img">
+                    <div class="glow-effect"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulario de Suscripción / Newsletter & Footer -->
+    <section class="section signup-section" id="contacto">
+        <div class="container max-w-sm center fade-in">
+            <span class="section-subtitle text-center block">ÚNETE A LA SENDA</span>
+            <h2 class="section-title text-center">Recibe el Primer Capítulo Gratis</h2>
+            <p class="text-center">Suscríbete para recibir una versión preliminar del libro en formato PDF, además de meditaciones y reflexiones semanales sobre el Bushido.</p>
+            
+            <form class="signup-form" id="signup-form">
+                <div class="input-group">
+                    <input type="email" placeholder="Tu correo electrónico" required id="signup-email">
+                    <button type="submit" class="btn btn-primary">Suscribirse</button>
+                </div>
+                <div class="form-message" id="form-message"></div>
+            </form>
+        </div>
+    </section>
+</main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">
+                        <span class="logo-kanji">侍</span>
+                        <span>La Ruta del Samurái</span>
+                    </a>
+                    <p>Viajes históricos y crónicas por la senda de los guerreros budoka de Japón.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navegación</h4>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#sinopsis">El Libro</a></li>
+                        <li><a href="#virtudes">Las Virtudes</a></li>
+                        <li><a href="#oraculo">El Oráculo</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><a href="mailto:budokanorpianesi@hotmail.com">budokanorpianesi@hotmail.com</a></li>
+                        <li><a href="https://www.facebook.com/larutadelsamurai" target="_blank">Facebook Oficial</a></li>
+                        <li><a href="https://www.youtube.com/@larutadelsamurai" target="_blank">Canal de YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 La Ruta del Samurái. Todos los derechos reservados. Libros oficiales de Jorge Orpianesi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS Link -->
+    <script type="module" src="script.js"></script>
+
+    <!-- Background Music -->
+    <audio id="bg-music" loop preload="none">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3" type="audio/mpeg">
+        <!-- Reemplazar con una pista oriental suave, ej: https://cdn.pixabay.com/download/audio/... -->
+    </audio>
+    <button id="music-toggle" aria-label="Activar música de fondo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18V5l12-2v13"/>
+            <circle cx="6" cy="18" r="3"/>
+            <circle cx="18" cy="16" r="3"/>
+        </svg>
+    </button>
+</body>
+</html>
