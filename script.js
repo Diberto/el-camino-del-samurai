@@ -70,11 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
         let fgCtx = fgCanvas.getContext('2d', { alpha: true });
         if (!bgCtx || !fgCtx) return;
 
-        let width = bgCanvas.width = fgCanvas.width = window.innerWidth;
+        let width = bgCanvas.width = fgCanvas.width = Math.min(window.innerWidth, 1280);
         let height = bgCanvas.height = fgCanvas.height = window.innerHeight;
 
         window.addEventListener('resize', () => {
-            width = bgCanvas.width = fgCanvas.width = window.innerWidth;
+            width = bgCanvas.width = fgCanvas.width = Math.min(window.innerWidth, 1280);
             height = bgCanvas.height = fgCanvas.height = window.innerHeight;
         }, { passive: true });
 
@@ -218,11 +218,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         if (!ctx) return; // Fallback if Canvas context is unsupported
-        let width = canvas.width = window.innerWidth;
+        let width = canvas.width = Math.min(window.innerWidth, 1280);
         let height = canvas.height = window.innerHeight;
         
         window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
+            width = canvas.width = Math.min(window.innerWidth, 1280);
             height = canvas.height = window.innerHeight;
             createStars();
         });
