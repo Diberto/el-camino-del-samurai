@@ -32,9 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     initDayNightCycle();
 
-    // 0.05 WEBGPU CLOUDS SHADER SYSTEM WITH WEBGL & CANVAS2D FALLBACKS
-    function initGPUClouds() {
-        const canvas = document.getElementById('clouds-canvas');
+    // 0.05 WEBGPU CLOUDS SHADER SYSTEM WITH WEBGL & CANVAS2D FALLBACKS (DUAL LAYER)
+    function initSingleGPUCloudCanvas(canvasId, speedMultiplier, cloudScale, maxAlpha, driftY) {
+        const canvas = document.getElementById(canvasId);
         if (!canvas) return;
 
         let width = canvas.width = window.innerWidth;
@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let startTime = Date.now();
 
-        // 1. ATTEMPT WEBGPU
         if (navigator.gpu) {
             navigator.gpu.requestAdapter().then(adapter => {
                 if (!adapter) {
@@ -75,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     time: f32,
                     width: f32,
                     height: f32,
-                    unused: f32,
+                    speed: f32,
                 };
                 @group(0) @binding(0) var<uniform> uniforms: Uniforms;
 
@@ -124,11 +123,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     let uv = pos.xy / vec2<f32>(uniforms.width, uniforms.height);
                     var st = uv;
                     st.x = st.x * (uniforms.width / uniforms.height);
-                    let drift = vec2<f32>(uniforms.time * 0.012, 0.0);
-                    let n = fbm(st * 3.2 + drift);
-                    let height_fade = smoothstep(0.0, 0.70, 1.0 - uv.y);
-                    let density = smoothstep(0.33, 0.70, n) * height_fade * 0.52;
-                    let cloud_color = vec3<f32>(0.98, 0.95, 0.90);
+                    let drift = vec2<f32>(uniforms.time * uniforms.speed, ${driftY.toFixed(3)});
+                    let n = fbm(st * ${cloudScale.toFixed(2)} + drift);
+                    let height_fade = smoothstep(0.0, 0.75, 1.0 - uv.y);
+                    let density = smoothstep(0.30, 0.68, n) * height_fade * ${maxAlpha.toFixed(2)};
+                    let cloud_color = vec3<f32>(0.98, 0.96, 0.92);
                     return vec4<f32>(cloud_color * density, density);
                 }
             `;
@@ -148,9 +147,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 primitive: { topology: 'triangle-strip' }
             });
 
-            const uniformBufferSize = 16; // 4 floats
             const uniformBuffer = device.createBuffer({
-                size: uniformBufferSize,
+                size: 16,
                 usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
             });
 
@@ -161,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             function render() {
                 const elapsed = (Date.now() - startTime) / 1000.0;
-                const uniformData = new Float32Array([elapsed, canvas.width, canvas.height, 0]);
+                const uniformData = new Float32Array([elapsed, canvas.width, canvas.height, speedMultiplier]);
                 device.queue.writeBuffer(uniformBuffer, 0, uniformData);
 
                 const commandEncoder = device.createCommandEncoder();
@@ -210,6 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 precision highp float;
                 uniform float u_time;
                 uniform vec2 u_resolution;
+                uniform float u_speed;
 
                 float hash(vec2 p) {
                     return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
@@ -239,11 +238,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     vec2 uv = gl_FragCoord.xy / u_resolution.xy;
                     vec2 st = uv;
                     st.x *= u_resolution.x / u_resolution.y;
-                    vec2 drift = vec2(u_time * 0.012, 0.0);
-                    float n = fbm(st * 3.2 + drift);
-                    float height_fade = smoothstep(0.0, 0.70, 1.0 - uv.y);
-                    float density = smoothstep(0.33, 0.70, n) * height_fade * 0.52;
-                    vec3 cloud_color = vec3(0.98, 0.95, 0.90);
+                    vec2 drift = vec2(u_time * u_speed, ${driftY.toFixed(3)});
+                    float n = fbm(st * ${cloudScale.toFixed(2)} + drift);
+                    float height_fade = smoothstep(0.0, 0.75, 1.0 - uv.y);
+                    float density = smoothstep(0.30, 0.68, n) * height_fade * ${maxAlpha.toFixed(2)};
+                    vec3 cloud_color = vec3(0.98, 0.96, 0.92);
                     gl_FragColor = vec4(cloud_color * density, density);
                 }
             `;
@@ -276,6 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const timeLocation = gl.getUniformLocation(program, "u_time");
             const resolutionLocation = gl.getUniformLocation(program, "u_resolution");
+            const speedLocation = gl.getUniformLocation(program, "u_speed");
 
             gl.viewport(0, 0, width, height);
 
@@ -285,6 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 gl.clear(gl.COLOR_BUFFER_BIT);
                 gl.uniform1f(timeLocation, elapsed);
                 gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+                gl.uniform1f(speedLocation, speedMultiplier);
                 gl.drawArrays(gl.TRIANGLES, 0, 6);
                 requestAnimationFrame(renderWebGL);
             }
@@ -294,13 +295,13 @@ document.addEventListener('DOMContentLoaded', () => {
         function initCanvas2DFallback() {
             const ctx = canvas.getContext('2d');
             const clouds = [];
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 6; i++) {
                 clouds.push({
                     x: Math.random() * width,
                     y: Math.random() * (height * 0.45),
-                    radius: Math.random() * 220 + 120,
-                    speed: Math.random() * 0.25 + 0.1,
-                    alpha: Math.random() * 0.25 + 0.15
+                    radius: Math.random() * 200 + 100,
+                    speed: speedMultiplier * 15,
+                    alpha: maxAlpha * 0.5
                 });
             }
 
@@ -325,7 +326,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    initGPUClouds();
+    // Initialize Background Clouds (Behind Fuji) & Foreground Volumetric Clouds (In front of Fuji)
+    initSingleGPUCloudCanvas('clouds-bg-canvas', 0.008, 3.0, 0.48, 0.0);
+    initSingleGPUCloudCanvas('clouds-fg-canvas', 0.018, 2.4, 0.38, 15.0);
 
     // 0.1 STARFIELD CANVAS ANIMATION (NIGHT MODE - GPU ACCELERATED WITH FALLBACK)
     function initStarfield() {
@@ -500,6 +503,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. SVG MULTI-LAYER PARALLAX (MOUSE + SCROLL - GPU ACCELERATED)
     const hero = document.getElementById('inicio');
     const layerSvg1 = document.querySelector('.layer-svg-1');
+    const layerCloudsFg = document.querySelector('.layer-clouds-fg');
     const layerSvg2 = document.querySelector('.layer-svg-2');
     const layerSvg3 = document.querySelector('.layer-svg-3');
     const layerSvg4 = document.querySelector('.layer-svg-4');
@@ -531,6 +535,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const mSvg1X = mouseX * -22; // Monte Fuji
             const mSvg1Y = mouseY * -14;
 
+            const mCloudsFgX = mouseX * -18; // Nubes volumétricas frontales
+            const mCloudsFgY = mouseY * -11;
+
             const mSvg2X = mouseX * -16; // Río / Camino
             const mSvg2Y = mouseY * -10;
 
@@ -554,6 +561,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Scroll position multipliers
             const sSvg1Y = scrollY * 0.38;
+            const sCloudsFgY = scrollY * 0.34;
             const sSvg2Y = scrollY * 0.30;
             const sSvg3Y = scrollY * 0.22;
             const sSvg4Y = scrollY * 0.16;
@@ -563,6 +571,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const sTextY = scrollY * 0.18;
 
             if (layerSvg1) layerSvg1.style.transform = `translate3d(${mSvg1X}px, ${sSvg1Y + mSvg1Y}px, 0) scale(1.05)`;
+            if (layerCloudsFg) layerCloudsFg.style.transform = `translate3d(${mCloudsFgX}px, ${sCloudsFgY + mCloudsFgY}px, 0) scale(1.04)`;
             if (layerSvg2) layerSvg2.style.transform = `translate3d(${mSvg2X}px, ${sSvg2Y + mSvg2Y}px, 0) scale(1.04)`;
             if (layerSvg3) layerSvg3.style.transform = `translate3d(${mSvg3X}px, ${sSvg3Y + mSvg3Y}px, 0) scale(1.03)`;
             if (layerSvg4) layerSvg4.style.transform = `translate3d(${mSvg4X}px, ${sSvg4Y + mSvg4Y}px, 0) scale(1.02)`;

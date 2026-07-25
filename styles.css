@@ -326,9 +326,9 @@ body.theme-night .theme-toggle-btn .icon-moon {
     transform: translate3d(0, 0, 0);
 }
 
-/* DAY SKY (Cielo Azul Celeste & Nubes Orientales) */
+/* DAY SKY (Cielo Azul Profundo & Nubes Orientales) */
 .sky-day {
-    background: linear-gradient(180deg, #1d3557 0%, #3a86ff 25%, #48cae4 55%, #90e0ef 75%, #07080a 100%);
+    background: linear-gradient(180deg, #0d1b2a 0%, #15284f 22%, #1e3c72 48%, #2a5298 72%, #080d1a 100%);
     opacity: 1;
     z-index: 1;
 }
@@ -352,8 +352,8 @@ body.theme-night .theme-toggle-btn .icon-moon {
     100% { transform: scale(1.15) translate3d(0, 0, 0); opacity: 1; }
 }
 
-/* CLOUDS CANVAS (WebGPU Atmospheric Shader) */
-#clouds-canvas {
+/* DUAL CLOUDS CANVASES (BACKGROUND & FOREGROUND DEEP SHADERS) */
+#clouds-bg-canvas, #clouds-fg-canvas {
     position: absolute;
     top: 0;
     left: 0;
@@ -362,6 +362,60 @@ body.theme-night .theme-toggle-btn .icon-moon {
     pointer-events: none;
     will-change: transform;
     transform: translate3d(0, 0, 0);
+}
+
+.layer-clouds-fg {
+    z-index: 2.5;
+    opacity: 0.85;
+}
+
+/* LOW ATMOSPHERIC MIST & FOG (Niebla Mística en la Parte Inferior) */
+.hero-mist-layer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 38%;
+    z-index: 4;
+    pointer-events: none;
+    overflow: hidden;
+    mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+}
+
+.mist-wave {
+    position: absolute;
+    bottom: 0;
+    left: -50%;
+    width: 200%;
+    height: 100%;
+    background-repeat: repeat-x;
+    background-size: 1200px 100%;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+}
+
+.mist-wave-1 {
+    background-image: radial-gradient(ellipse at 50% 100%, rgba(245, 240, 230, 0.45) 0%, rgba(200, 210, 225, 0.2) 50%, transparent 80%);
+    animation: driftMist1 32s ease-in-out infinite alternate;
+}
+
+.mist-wave-2 {
+    bottom: -10%;
+    background-image: radial-gradient(ellipse at 50% 100%, rgba(255, 255, 255, 0.35) 0%, rgba(180, 200, 220, 0.15) 55%, transparent 85%);
+    animation: driftMist2 48s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes driftMist1 {
+    0% { transform: translate3d(0, 0, 0) scaleY(1); opacity: 0.6; }
+    50% { transform: translate3d(15%, -5px, 0) scaleY(1.12); opacity: 0.85; }
+    100% { transform: translate3d(30%, 0, 0) scaleY(1); opacity: 0.6; }
+}
+
+@keyframes driftMist2 {
+    0% { transform: translate3d(0, 0, 0) scaleY(1); opacity: 0.5; }
+    50% { transform: translate3d(-20%, 8px, 0) scaleY(1.18); opacity: 0.75; }
+    100% { transform: translate3d(-35%, 0, 0) scaleY(1); opacity: 0.5; }
 }
 
 /* NIGHT SKY */
