@@ -2252,12 +2252,14 @@ body.theme-night .hero-logo-main {
     /* 3. HERO PARALLAX ON MOBILE (ENLARGED & PERFECTLY CENTERED CIRCLE, SNUG LOGO SPACING) */
     .hero-parallax {
         min-height: 100vh;
+        height: auto !important;
         padding-top: 0;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         width: 100%;
         overflow-x: hidden;
+        overflow-y: visible;
     }
 
     /* Move all parallax artwork layers up to top, slightly enlarged and perfectly centered */
@@ -2275,24 +2277,38 @@ body.theme-night .hero-logo-main {
         left: auto;
         transform: none !important;
         z-index: 10;
-        margin-top: calc(min(96vw, 440px) + 22px);
+        margin-top: calc(min(96vw, 440px) + 20px);
         margin-bottom: 2.5rem;
         padding: 0 1.25rem;
         width: 100%;
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .hero-content {
         max-width: 100%;
         margin: 0 auto;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .hero-main-logo-wrapper {
         margin-bottom: 0.75rem;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .hero-logo-main {
-        max-width: 280px;
+        max-width: min(85vw, 300px);
+        width: 100%;
+        height: auto;
+        display: block;
         margin: 0 auto;
     }
 

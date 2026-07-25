@@ -23,7 +23,18 @@ document.addEventListener('DOMContentLoaded', () => {
         
         function updateLogoImage() {
             if (!heroLogoImg) return;
-            heroLogoImg.src = 'assets/logo_typography_light.webp';
+            const isMobile = window.innerWidth <= 768;
+            const isNight = document.body.classList.contains('theme-night');
+            if (isMobile) {
+                // On mobile, below the circle:
+                // Day mode has light parchment background -> use dark logo (black letters + red stamp)
+                // Night mode has dark night background -> use light logo (white letters + red stamp)
+                heroLogoImg.src = isNight ? 'assets/logo_typography_light.webp' : 'assets/logo_typography_dark.webp';
+            } else {
+                // On desktop, over Mount Fuji / Enso circle artwork:
+                // Always use light logo (white letters + red stamp)
+                heroLogoImg.src = 'assets/logo_typography_light.webp';
+            }
         }
 
         updateLogoImage();
