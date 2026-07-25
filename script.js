@@ -147,6 +147,109 @@ document.addEventListener('DOMContentLoaded', () => {
     
     initStarfield();
 
+    // 0.2 DYNAMIC SAKURA PETALS PARTICLE SYSTEM (GPU ACCELERATED WITH FALLBACK)
+    function initSakuraParticles() {
+        const canvas = document.getElementById('sakura-canvas');
+        if (!canvas) return;
+
+        let ctx = null;
+        try {
+            // Attempt hardware-accelerated 2D context
+            ctx = canvas.getContext('2d', { alpha: true, desynchronized: true, willReadFrequently: false });
+        } catch (err) {
+            ctx = canvas.getContext('2d');
+        }
+        if (!ctx) return;
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }, { passive: true });
+
+        const petal1 = new Image();
+        const petal2 = new Image();
+        petal1.src = new URL('./assets/sakura_petal_1.webp', import.meta.url).href;
+        petal2.src = new URL('./assets/sakura_petal_2.webp', import.meta.url).href;
+
+        const petalsList = [];
+        const numPetals = 35;
+        let imagesLoaded = 0;
+
+        function onImageLoad() {
+            imagesLoaded++;
+            if (imagesLoaded === 2) {
+                createPetals();
+                animatePetals();
+            }
+        }
+
+        petal1.onload = onImageLoad;
+        petal2.onload = onImageLoad;
+
+        function createPetals() {
+            for (let i = 0; i < numPetals; i++) {
+                petalsList.push({
+                    x: Math.random() * (width + 200) - 100,
+                    y: Math.random() * (height + 100) - 100,
+                    image: Math.random() > 0.55 ? petal1 : petal2,
+                    scale: Math.random() * 0.28 + 0.12,
+                    speedY: Math.random() * 1.6 + 0.8,
+                    speedX: Math.random() * 1.3 + 0.4,
+                    swaySpeed: Math.random() * 0.015 + 0.005,
+                    swayAmp: Math.random() * 25 + 10,
+                    swayOffset: Math.random() * Math.PI * 2,
+                    angle: Math.random() * Math.PI * 2,
+                    rotateSpeed: Math.random() * 0.018 - 0.009,
+                    flip: Math.random() * Math.PI * 2,
+                    flipSpeed: Math.random() * 0.035 + 0.015
+                });
+            }
+        }
+
+        function animatePetals() {
+            ctx.clearRect(0, 0, width, height);
+
+            for (let i = 0; i < petalsList.length; i++) {
+                const p = petalsList[i];
+                
+                // Drift falling physics
+                p.y += p.speedY;
+                p.x += p.speedX + Math.sin(p.y * p.swaySpeed + p.swayOffset) * 0.35;
+                p.angle += p.rotateSpeed;
+                p.flip += p.flipSpeed;
+
+                // Recycle offscreen petals
+                if (p.y > height + 80 || p.x > width + 80) {
+                    p.y = -80;
+                    p.x = Math.random() * (width + 200) - 150;
+                    p.speedY = Math.random() * 1.6 + 0.8;
+                    p.speedX = Math.random() * 1.3 + 0.4;
+                    p.scale = Math.random() * 0.28 + 0.12;
+                }
+
+                // Render with GPU accelerated scale, rotation, and 3D flip effect
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.angle);
+                
+                // 3D flip using cosine scaling
+                const flipScaleX = Math.cos(p.flip);
+                ctx.scale(p.scale * flipScaleX, p.scale);
+
+                // Draw petal centered
+                ctx.drawImage(p.image, -p.image.width / 2, -p.image.height / 2);
+                ctx.restore();
+            }
+
+            requestAnimationFrame(animatePetals);
+        }
+    }
+
+    initSakuraParticles();
+
     // 1. MOBILE MENU TOGGLE
     const menuToggle = document.getElementById('menu-toggle');
     const navMenu = document.getElementById('nav-menu');
@@ -208,8 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const layerSvg4 = document.querySelector('.layer-svg-4');
     const layerSvg5 = document.querySelector('.layer-svg-5');
     const layerSvg6 = document.querySelector('.layer-svg-6');
-    const layerSvg7 = document.querySelector('.layer-svg-7');
-    const layerSvg8 = document.querySelector('.layer-svg-8');
+    const layerSakuraCanvas = document.querySelector('.layer-sakura-canvas');
     const layerText = document.querySelector('.hero-content');
 
     let mouseX = 0;
@@ -271,8 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (layerSvg4) layerSvg4.style.transform = `translate3d(${mSvg4X}px, ${sSvg4Y + mSvg4Y}px, 0) scale(1.02)`;
             if (layerSvg5) layerSvg5.style.transform = `translate3d(${mSvg5X}px, ${sSvg5Y + mSvg5Y}px, 0) scale(1.02)`;
             if (layerSvg6) layerSvg6.style.transform = `translate3d(${mSvg6X}px, ${sSvg6Y + mSvg6Y}px, 0) scale(1.01)`;
-            if (layerSvg7) layerSvg7.style.transform = `translate3d(${mSvg7X}px, ${sSvg7Y + mSvg7Y}px, 0) scale(1.01)`;
-            if (layerSvg8) layerSvg8.style.transform = `translate3d(${mSvg7X * 1.2}px, ${sSvg7Y + mSvg7Y * 1.2}px, 0) scale(1.01)`;
+            if (layerSakuraCanvas) layerSakuraCanvas.style.transform = `translate3d(${mSvg7X}px, ${sSvg7Y + mSvg7Y}px, 0) scale(1.01)`;
             if (layerText) layerText.style.transform = `translate3d(${mTextX}px, ${sTextY + mTextY}px, 0)`;
         }
 

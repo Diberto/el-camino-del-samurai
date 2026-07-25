@@ -597,12 +597,16 @@ body.theme-night .layer-svg-6 {
 }
 
 /* SVG Layers 7 & 8: Pétalos Flotantes */
-.layer-svg-7, .layer-svg-8 {
+.layer-sakura-canvas {
     z-index: 8;
-    background-size: contain;
-    background-position: right 6% center;
-    background-repeat: no-repeat;
-    filter: drop-shadow(0 0 10px rgba(217, 4, 41, 0.4));
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
 }
 
 .hero-main-logo-wrapper {
