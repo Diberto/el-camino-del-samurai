@@ -359,19 +359,18 @@ body.theme-night .theme-toggle-btn .kanji-night {
     display: block;
 }
 
-/* SKY CONTAINER & DAY/NIGHT ANIMATION SYSTEM (GPU ACCELERATED - MAX 1280PX CANVAS) */
+/* SKY CONTAINER & DAY/NIGHT ANIMATION SYSTEM (GPU ACCELERATED) */
 .sky-container {
     position: fixed;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
     width: 100vw;
-    max-width: 1280px;
     height: 100vh;
     z-index: 0;
     overflow: hidden;
     pointer-events: none;
     will-change: transform, opacity;
+    transform: translate3d(0, 0, 0);
 }
 
 .sky-layer {
@@ -411,17 +410,16 @@ body.theme-night .theme-toggle-btn .kanji-night {
     100% { transform: scale(1.15) translate3d(0, 0, 0); opacity: 1; }
 }
 
-/* DUAL CLOUDS & STARFIELD CANVASES (MAX WIDTH 1280PX) */
-#clouds-bg-canvas, #clouds-fg-canvas, #starfield-canvas {
+/* DUAL CLOUDS CANVASES (BACKGROUND & FOREGROUND DEEP SHADERS) */
+#clouds-bg-canvas, #clouds-fg-canvas {
     position: absolute;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
     width: 100%;
-    max-width: 1280px;
     height: 100%;
     pointer-events: none;
     will-change: transform;
+    transform: translate3d(0, 0, 0);
 }
 
 .layer-clouds-fg {
@@ -607,7 +605,7 @@ body.theme-night .layer-svg-6 {
     transition: var(--transition-fast);
 }
 
-/* 6. HERO PARALLAX */
+/* 6. HERO PARALLAX STAGE (OBJECTS CONTAINER MAX 1280PX, FULLSCREEN BACKGROUND) */
 .hero-parallax {
     position: relative;
     height: 100vh;
@@ -615,6 +613,19 @@ body.theme-night .layer-svg-6 {
     overflow: hidden;
     display: flex;
     align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.parallax-stage {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1280px;
+    height: 100%;
+    pointer-events: none;
     z-index: 2;
 }
 
