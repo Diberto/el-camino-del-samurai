@@ -2177,31 +2177,42 @@ body.theme-night .layer-svg-6 {
         text-align: center;
     }
 
-    /* 3. HERO PARALLAX ON MOBILE (ARTWORK AT TOP, LOGO TYPOGRAPHY BELOW ENSO CIRCLE) */
+    /* Fix unrendered left edge seam on mobile viewports */
+    .sky-container, .sky-layer {
+        width: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+    }
+
+    /* 3. HERO PARALLAX ON MOBILE (ENLARGED & PERFECTLY CENTERED CIRCLE, SNUG LOGO SPACING) */
     .hero-parallax {
         min-height: 100vh;
         padding-top: 0;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
+        width: 100%;
+        overflow-x: hidden;
     }
 
-    /* Move all parallax artwork layers up to the top right below navbar */
+    /* Move all parallax artwork layers up to top, slightly enlarged and perfectly centered */
     .hero-parallax .parallax-layer[class*="layer-svg-"] {
-        background-position: center top 55px !important;
-        background-size: min(92vw, 420px) auto !important;
+        background-position: center top 48px !important;
+        background-size: min(96vw, 440px) auto !important;
+        left: 0 !important;
+        width: 100% !important;
     }
 
-    /* Logo typography positioned cleanly BELOW the Enso circle artwork */
+    /* Reduce gap between Enso circle artwork and logo typography */
     .parallax-text {
         position: relative;
         top: auto;
         left: auto;
         transform: none !important;
         z-index: 10;
-        margin-top: calc(min(92vw, 420px) + 65px);
+        margin-top: calc(min(96vw, 440px) + 22px);
         margin-bottom: 2.5rem;
-        padding: 0 1.5rem;
+        padding: 0 1.25rem;
         width: 100%;
         text-align: center;
     }
