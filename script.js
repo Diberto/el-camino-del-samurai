@@ -23,13 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         function updateLogoImage() {
             if (!heroLogoImg) return;
-            const isMobile = window.innerWidth <= 768;
-            const isNight = document.body.classList.contains('theme-night');
-            if (isMobile) {
-                heroLogoImg.src = isNight ? 'assets/logo_typography_light.webp' : 'assets/logo_typography_dark.webp';
-            } else {
-                heroLogoImg.src = 'assets/logo_typography_light.webp';
-            }
+            heroLogoImg.src = 'assets/logo_typography_light.webp';
         }
 
         updateLogoImage();
