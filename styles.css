@@ -605,10 +605,11 @@ body.theme-night .layer-svg-6 {
     transition: var(--transition-fast);
 }
 
-/* 6. HERO PARALLAX STAGE (OBJECTS CONTAINER MAX 1280PX, FULLSCREEN BACKGROUND) */
+/* 6. HERO PARALLAX (CENTERED MAX 1200PX CONTAINER, 100% FULLSCREEN BACKGROUND) */
 .hero-parallax {
     position: relative;
     height: 100vh;
+    min-height: 680px;
     width: 100%;
     overflow: hidden;
     display: flex;
@@ -617,104 +618,45 @@ body.theme-night .layer-svg-6 {
     z-index: 2;
 }
 
-.parallax-stage {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+/* Centered 1200px Hero Grid Container */
+.hero-parallax-container {
+    position: relative;
     width: 100%;
-    max-width: 1280px;
+    max-width: 1200px;
     height: 100%;
-    pointer-events: none;
-    z-index: 2;
-}
-
-.parallax-layer {
-    position: absolute;
-    top: -5%;
-    left: -5%;
-    width: 110%;
-    height: 110%;
-    background-size: cover;
-    background-position: center bottom;
-    background-repeat: no-repeat;
-    will-change: transform;
-    pointer-events: none;
-}
-
-/* Capa 1: Fondo de montañas */
-.layer-bg {
-    z-index: 1;
-}
-
-/* SVG Layer 1: Sol Rojo & Monte Fuji */
-.layer-svg-1 {
-    z-index: 2;
-    background-size: contain;
-    background-position: right 6% center;
-    background-repeat: no-repeat;
-    filter: drop-shadow(0 0 35px rgba(217, 4, 41, 0.45));
-}
-
-/* SVG Layer 2: Río / Camino Serpenteante */
-.layer-svg-2 {
-    z-index: 3;
-    background-size: contain;
-    background-position: right 6% center;
-    background-repeat: no-repeat;
-    opacity: 0.95;
-}
-
-/* SVG Layer 3: Terreno y Rocas */
-.layer-svg-3 {
-    z-index: 4;
-    background-size: contain;
-    background-position: right 6% center;
-    background-repeat: no-repeat;
-}
-
-/* SVG Layer 4: Samurái Ilustrado en Acantilado */
-.layer-svg-4 {
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     z-index: 5;
-    background-size: contain;
-    background-position: right 6% center;
-    background-repeat: no-repeat;
-    filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.6));
 }
 
-/* SVG Layer 5: Anillo Enso Sumi-e */
-.layer-svg-5 {
-    z-index: 6;
-    background-size: contain;
-    background-position: right 6% center;
-    background-repeat: no-repeat;
-    opacity: 0.95;
-    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.7));
+/* Columna Izquierda: Logo Tipográfico, Texto y Botones CTA */
+.parallax-layer-text {
+    position: relative;
+    z-index: 10;
+    max-width: 480px;
+    width: 44%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-/* SVG Layer 6: Rama de Sakura y Flores */
-.layer-svg-6 {
-    z-index: 7;
-    background-size: contain;
-    background-position: right 6% center;
-    background-repeat: no-repeat;
-    filter: drop-shadow(0 0 15px rgba(217, 4, 41, 0.35));
-}
-
-.layer-svg-7, .layer-svg-8 {
-    z-index: 8;
-    background-size: contain;
-    background-position: right 6% center;
-    background-repeat: no-repeat;
-    filter: drop-shadow(0 0 10px rgba(217, 4, 41, 0.4));
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
 }
 
 .hero-main-logo-wrapper {
     margin-bottom: 1.25rem;
+    width: 100%;
 }
 
 .hero-logo-main {
-    max-width: 440px;
+    max-width: 390px;
     width: 100%;
     height: auto;
     filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 8px rgba(216, 17, 36, 0.35));
@@ -730,14 +672,89 @@ body.theme-night .hero-logo-main {
     filter: drop-shadow(0 0 35px rgba(216, 17, 36, 0.75));
 }
 
-/* Capa 3: Contenido UI */
-.parallax-text {
-    z-index: 10;
+.hero-tagline {
+    font-family: var(--font-title);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    color: var(--accent-gold);
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.hero-desc {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
+}
+
+.hero-actions {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    padding-left: 8%;
-    pointer-events: auto;
+    gap: 1.25rem;
+}
+
+/* Columna Derecha: Ilustraciones Parallax Dentro del Anillo Enso (Máximo 650px) */
+.hero-artwork-wrapper {
+    position: relative;
+    width: min(50vw, 650px);
+    height: min(50vw, 650px);
+    max-width: 650px;
+    max-height: 650px;
+    flex-shrink: 0;
+    pointer-events: none;
+    z-index: 4;
+}
+
+.hero-artwork-wrapper .parallax-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    will-change: transform;
+    pointer-events: none;
+}
+
+/* SVG Layers Filters and Opacity */
+.layer-svg-1 {
+    z-index: 2;
+    filter: drop-shadow(0 0 35px rgba(217, 4, 41, 0.45));
+}
+
+.layer-svg-2 {
+    z-index: 3;
+    opacity: 0.95;
+}
+
+.layer-svg-3 {
+    z-index: 4;
+}
+
+.layer-svg-4 {
+    z-index: 5;
+    filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.6));
+}
+
+.layer-svg-5 {
+    z-index: 6;
+    opacity: 0.95;
+    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.7));
+}
+
+.layer-svg-6 {
+    z-index: 7;
+    filter: drop-shadow(0 0 15px rgba(217, 4, 41, 0.35));
+}
+
+.layer-svg-7, .layer-svg-8 {
+    z-index: 8;
+    filter: drop-shadow(0 0 10px rgba(217, 4, 41, 0.4));
 }
 
 .hero-content {
