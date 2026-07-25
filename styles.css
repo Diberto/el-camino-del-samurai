@@ -252,8 +252,167 @@ img {
     margin: 0 auto;
     padding: 0 2rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    position: relative;
+}
+
+/* TOGGLE BUTTON STYLES */
+.theme-toggle-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: absolute;
+    right: 2rem;
+    color: #f4a261;
+    transition: all 0.3s ease;
+    z-index: 105;
+}
+
+.theme-toggle-btn:hover {
+    background: rgba(217, 4, 41, 0.2);
+    border-color: rgba(217, 4, 41, 0.5);
+    transform: scale(1.08);
+}
+
+.theme-toggle-btn .icon-sun,
+.theme-toggle-btn .icon-moon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.theme-toggle-btn .icon-moon {
+    display: none;
+    color: #a0c4ff;
+}
+
+body.theme-night .theme-toggle-btn .icon-sun {
+    display: none;
+}
+
+body.theme-night .theme-toggle-btn .icon-moon {
+    display: block;
+}
+
+/* SKY CONTAINER & DAY/NIGHT ANIMATION SYSTEM */
+.sky-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.sky-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1), filter 1.8s ease;
+}
+
+/* DAY SKY */
+.sky-day {
+    background: linear-gradient(180deg, #1f1d2b 0%, #d94e34 35%, #f4a261 70%, #07080a 100%);
+    opacity: 1;
+    z-index: 1;
+}
+
+.sun-glow {
+    position: absolute;
+    top: 22%;
+    right: 22%;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 200, 120, 0.65) 0%, rgba(217, 4, 41, 0.35) 50%, transparent 75%);
+    filter: blur(22px);
+    animation: sunPulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes sunPulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.14); opacity: 1; }
+}
+
+/* CLOUDS DRIFTING */
+.cloud-layer {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    width: 200%;
+    height: 35%;
+    background-repeat: repeat-x;
+    background-size: 800px auto;
+    opacity: 0.25;
+    pointer-events: none;
+}
+
+.cloud-layer-1 {
+    background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.45) 0%, transparent 60%);
+    animation: driftClouds 55s linear infinite;
+}
+
+.cloud-layer-2 {
+    top: 18%;
+    opacity: 0.18;
+    animation: driftClouds 85s linear infinite reverse;
+}
+
+@keyframes driftClouds {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* NIGHT SKY */
+.sky-night {
+    background: linear-gradient(180deg, #050811 0%, #0b1326 40%, #151a2e 75%, #07080a 100%);
+    opacity: 0;
+    z-index: 2;
+}
+
+#starfield-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.moon-aura {
+    position: absolute;
+    top: 20%;
+    right: 26%;
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(160, 190, 255, 0.3) 0%, rgba(217, 4, 41, 0.15) 55%, transparent 75%);
+    filter: blur(35px);
+}
+
+/* NIGHT THEME TOGGLE ACTIVE STATES */
+body.theme-night .sky-day {
+    opacity: 0;
+}
+
+body.theme-night .sky-night {
+    opacity: 1;
+}
+
+body.theme-night .layer-bg {
+    filter: brightness(0.65) contrast(1.15);
 }
 
 .nav-logo {
@@ -262,20 +421,17 @@ img {
     gap: 0.75rem;
 }
 
-.logo-kanji {
-    font-family: var(--font-title);
-    font-size: 1.8rem;
-    font-weight: 900;
-    color: var(--accent-red);
-    border: 1.5px solid var(--accent-red);
-    width: 38px;
-    height: 38px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--accent-red-glow);
-    padding-bottom: 3px;
+.logo-img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(217, 4, 41, 0.45));
+    transition: var(--transition-fast);
+}
+
+.nav-logo:hover .logo-img {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 15px rgba(217, 4, 41, 0.75));
 }
 
 .logo-text {
@@ -363,22 +519,94 @@ img {
     pointer-events: none;
 }
 
-/* Capa 1: Montañas y Sol (Fondo) */
-.parallax-bg {
+/* Capa 1: Fondo de montañas */
+.layer-bg {
     z-index: 1;
 }
 
-/* Capa 2: Pagoda (Medio plano) */
-.parallax-mid {
+/* SVG Layer 1: Sol Rojo & Monte Fuji */
+.layer-svg-1 {
     z-index: 2;
-    mix-blend-mode: screen;
-    filter: invert(1) sepia(1) saturate(6) hue-rotate(330deg) brightness(0.65);
-    opacity: 0.25;
+    background-size: contain;
+    background-position: right 6% center;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0 35px rgba(217, 4, 41, 0.45));
 }
 
-/* Capa 3: Contenido de texto */
-.parallax-text {
+/* SVG Layer 2: Río / Camino Serpenteante */
+.layer-svg-2 {
     z-index: 3;
+    background-size: contain;
+    background-position: right 6% center;
+    background-repeat: no-repeat;
+    opacity: 0.95;
+}
+
+/* SVG Layer 3: Terreno y Rocas */
+.layer-svg-3 {
+    z-index: 4;
+    background-size: contain;
+    background-position: right 6% center;
+    background-repeat: no-repeat;
+}
+
+/* SVG Layer 4: Samurái Ilustrado en Acantilado */
+.layer-svg-4 {
+    z-index: 5;
+    background-size: contain;
+    background-position: right 6% center;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.6));
+}
+
+/* SVG Layer 5: Anillo Enso Sumi-e */
+.layer-svg-5 {
+    z-index: 6;
+    background-size: contain;
+    background-position: right 6% center;
+    background-repeat: no-repeat;
+    opacity: 0.95;
+    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.7));
+}
+
+/* SVG Layer 6: Rama de Sakura y Flores */
+.layer-svg-6 {
+    z-index: 7;
+    background-size: contain;
+    background-position: right 6% center;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0 15px rgba(217, 4, 41, 0.35));
+}
+
+/* SVG Layers 7 & 8: Pétalos Flotantes */
+.layer-svg-7, .layer-svg-8 {
+    z-index: 8;
+    background-size: contain;
+    background-position: right 6% center;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0 10px rgba(217, 4, 41, 0.4));
+}
+
+.hero-main-logo-wrapper {
+    margin-bottom: 1.25rem;
+}
+
+.hero-logo-main {
+    max-width: 440px;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 25px rgba(217, 4, 41, 0.45));
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+}
+
+.hero-logo-main:hover {
+    transform: scale(1.03);
+    filter: drop-shadow(0 0 35px rgba(217, 4, 41, 0.7));
+}
+
+/* Capa 3: Contenido UI */
+.parallax-text {
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -1503,15 +1731,6 @@ img {
     .card-back-kanji {
         font-size: 3rem;
     }
-    .card-back-title {
-        font-size: 0.95rem;
-    }
-    .card-back-quote {
-        font-size: 0.75rem;
-    }
-    .card-back-action {
-        font-size: 0.75rem;
-    }
     .back-content {
         gap: 0.35rem;
     }
@@ -1522,4 +1741,264 @@ img {
     .chapter-info h3 {
         font-size: 1.05rem;
     }
+}
+
+/* ==========================================================================
+   INTERACTIVE 3D BOOK SHOWCASE SYSTEM
+   ========================================================================== */
+.book-3d-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    user-select: none;
+}
+
+.tomo-tabs {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    background: rgba(17, 18, 24, 0.85);
+    padding: 0.35rem;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tomo-tab {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.tomo-tab.active {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.tomo-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.tomo-indicator.red {
+    background-color: var(--accent-red);
+    box-shadow: 0 0 8px var(--accent-red);
+}
+
+.tomo-indicator.blue {
+    background-color: #1a6ed8;
+    box-shadow: 0 0 8px #1a6ed8;
+}
+
+.book-3d-stage {
+    perspective: 1200px;
+    width: 100%;
+    height: 440px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.book-3d-card {
+    width: 270px;
+    height: 400px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: grab;
+}
+
+.book-3d-card:active {
+    cursor: grabbing;
+}
+
+/* 3D Faces */
+.book-face-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: translateZ(22px);
+    border-radius: 3px 7px 7px 3px;
+    overflow: hidden;
+    box-shadow: inset 4px 0 10px rgba(0, 0, 0, 0.3);
+    backface-visibility: hidden;
+    background: #111;
+}
+
+.book-face-front img, .book-face-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.book-face-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: rotateY(180deg) translateZ(22px);
+    border-radius: 7px 3px 3px 7px;
+    overflow: hidden;
+    box-shadow: inset -4px 0 10px rgba(0, 0, 0, 0.3);
+    backface-visibility: hidden;
+    background: #111;
+}
+
+/* Dynamic Gloss / Shine */
+.book-shine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.25) 100%);
+    pointer-events: none;
+}
+
+/* 3D Spine */
+.book-face-spine {
+    position: absolute;
+    width: 44px;
+    height: 100%;
+    top: 0;
+    left: -22px;
+    transform: rotateY(-90deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 0.2rem;
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.6);
+}
+
+.spine-tomo1 {
+    background: linear-gradient(90deg, #5a020d 0%, #a8081a 45%, #7a0310 100%);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.spine-tomo2 {
+    background: linear-gradient(90deg, #091a38 0%, #15428a 45%, #0b2248 100%);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.spine-kanji {
+    font-size: 1.2rem;
+    color: var(--accent-gold);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.spine-title {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: var(--font-title);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #f8f9fa;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.spine-author {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* 3D Stacked Pages (Right Edge) */
+.book-face-pages {
+    position: absolute;
+    width: 42px;
+    height: 98%;
+    top: 1%;
+    right: -21px;
+    transform: rotateY(90deg);
+    background: repeating-linear-gradient(
+        0deg,
+        #f4efe6,
+        #f4efe6 2px,
+        #e3dbca 2px,
+        #e3dbca 4px
+    );
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.35);
+    border-radius: 2px;
+}
+
+.book-face-top {
+    position: absolute;
+    width: 98%;
+    left: 1%;
+    height: 42px;
+    top: -21px;
+    transform: rotateX(90deg);
+    background: #ede4d3;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.book-face-bottom {
+    position: absolute;
+    width: 98%;
+    left: 1%;
+    height: 42px;
+    bottom: -21px;
+    transform: rotateX(-90deg);
+    background: #ede4d3;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Realistic 3D Shadow underneath */
+.book-3d-shadow {
+    position: absolute;
+    width: 270px;
+    height: 40px;
+    bottom: -35px;
+    left: 0;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 70%);
+    transform: rotateX(90deg) translateZ(-40px);
+    pointer-events: none;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+/* Controls & Hints */
+.book-3d-controls {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn-flip-3d, .btn-reset-3d {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.85rem;
+    gap: 0.5rem;
+}
+
+.book-3d-hint {
+    margin-top: 0.75rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    text-align: center;
 }
