@@ -65,28 +65,39 @@ document.addEventListener('DOMContentLoaded', () => {
             height = bgCanvas.height = fgCanvas.height = window.innerHeight;
         }, { passive: true });
 
-        // Load 3 high-resolution organic cloud WebP textures
-        const img1 = new Image();
-        const img2 = new Image();
-        const img3 = new Image();
-        img1.src = new URL('./assets/cloud_texture_1.webp', import.meta.url).href;
-        img2.src = new URL('./assets/cloud_texture_2.webp', import.meta.url).href;
-        img3.src = new URL('./assets/cloud_texture_3.webp', import.meta.url).href;
-
-        const textures = [img1, img2, img3];
+        // Load 3 high-resolution organic cloud WebP textures with fail-safe error handling
         let loadedCount = 0;
+        let isStarted = false;
+
+        function startClouds() {
+            if (isStarted) return;
+            isStarted = true;
+            setupCloudParticles();
+            animateVolumetricClouds();
+        }
 
         function onLoaded() {
             loadedCount++;
-            if (loadedCount === 3) {
-                setupCloudParticles();
-                animateVolumetricClouds();
+            if (loadedCount >= 1) {
+                startClouds();
             }
         }
 
-        img1.onload = onLoaded;
-        img2.onload = onLoaded;
-        img3.onload = onLoaded;
+        function createCloudImage(srcPath) {
+            const img = new Image();
+            img.onload = onLoaded;
+            img.onerror = onLoaded; // Ensure errors or missing assets never block rendering
+            img.src = srcPath;
+            return img;
+        }
+
+        const img1 = createCloudImage('assets/cloud_texture_1.webp');
+        const img2 = createCloudImage('assets/cloud_texture_2.webp');
+        const img3 = createCloudImage('assets/cloud_texture_3.webp');
+        const textures = [img1, img2, img3];
+
+        // Safety fallback: start clouds within 300ms regardless of network state
+        setTimeout(startClouds, 300);
 
         const bgClouds = [];
         const fgClouds = [];
