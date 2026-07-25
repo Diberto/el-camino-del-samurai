@@ -1001,10 +1001,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         galleryCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const src = card.getAttribute('data-src');
-                const title = card.getAttribute('data-title');
-                const tag = card.getAttribute('data-tag');
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const imgEl = card.querySelector('img');
+                const src = imgEl ? imgEl.src : card.getAttribute('data-src');
+                const title = card.getAttribute('data-title') || (card.querySelector('.gallery-card-title') ? card.querySelector('.gallery-card-title').textContent : '');
+                const tag = card.getAttribute('data-tag') || (card.querySelector('.gallery-tag') ? card.querySelector('.gallery-tag').textContent : '');
                 if (src) openLightbox(src, title, tag);
             });
         });
