@@ -416,6 +416,48 @@ body.theme-night .layer-bg {
     filter: brightness(0.60) contrast(1.15);
 }
 
+/* ASTRO CELESTE DINÁMICO (SOL ROJO DÍA / LUNA PLATEADA NOCHE) */
+.layer-celestial {
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 14%;
+    pointer-events: none;
+}
+
+.celestial-orb {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    /* DAY MODE: Sol Rojo Japonés */
+    background: radial-gradient(circle at 45% 45%, #e63946 0%, #d90429 65%, #9b021a 100%);
+    box-shadow: 0 0 60px rgba(217, 4, 41, 0.75), 0 0 120px rgba(244, 162, 97, 0.45);
+    transition: background 1.8s ease, box-shadow 1.8s ease, transform 1.8s ease;
+    animation: orbPulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes orbPulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
+}
+
+/* NIGHT MODE: Luna Mística Plateada / Índigo */
+body.theme-night .celestial-orb {
+    background: radial-gradient(circle at 40% 40%, #ffffff 0%, #dbe4f0 40%, #8a9bb8 75%, #3c4866 100%);
+    box-shadow: 0 0 70px rgba(180, 210, 255, 0.8), 0 0 140px rgba(110, 150, 240, 0.4);
+}
+
+body.theme-night .layer-svg-1,
+body.theme-night .layer-svg-2,
+body.theme-night .layer-svg-3,
+body.theme-night .layer-svg-4,
+body.theme-night .layer-svg-5,
+body.theme-night .layer-svg-6 {
+    filter: brightness(0.65) contrast(1.15) hue-rotate(185deg);
+    transition: filter 1.8s ease;
+}
+
 .nav-logo {
     display: flex;
     align-items: center;

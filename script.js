@@ -195,6 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. SVG MULTI-LAYER PARALLAX (MOUSE + SCROLL)
     const hero = document.getElementById('inicio');
     const layerBg = document.querySelector('.layer-bg');
+    const layerCelestial = document.querySelector('.layer-celestial');
     const layerSvg1 = document.querySelector('.layer-svg-1');
     const layerSvg2 = document.querySelector('.layer-svg-2');
     const layerSvg3 = document.querySelector('.layer-svg-3');
@@ -227,7 +228,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const mBgX = mouseX * -30;
             const mBgY = mouseY * -20;
 
-            const mSvg1X = mouseX * -22; // Sol & Fuji
+            const mCelestX = mouseX * -25; // Sol/Luna astro
+            const mCelestY = mouseY * -16;
+
+            const mSvg1X = mouseX * -22; // Monte Fuji
             const mSvg1Y = mouseY * -14;
 
             const mSvg2X = mouseX * -16; // Río / Camino
@@ -253,6 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Scroll position multipliers
             const sBgY = scrollY * 0.45;
+            const sCelestY = scrollY * 0.40;
             const sSvg1Y = scrollY * 0.38;
             const sSvg2Y = scrollY * 0.30;
             const sSvg3Y = scrollY * 0.22;
@@ -263,6 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const sTextY = scrollY * 0.18;
 
             if (layerBg) layerBg.style.transform = `translate3d(${mBgX}px, ${sBgY + mBgY}px, 0) scale(1.06)`;
+            if (layerCelestial) layerCelestial.style.transform = `translate3d(${mCelestX}px, ${sCelestY + mCelestY}px, 0) scale(1.04)`;
             if (layerSvg1) layerSvg1.style.transform = `translate3d(${mSvg1X}px, ${sSvg1Y + mSvg1Y}px, 0) scale(1.05)`;
             if (layerSvg2) layerSvg2.style.transform = `translate3d(${mSvg2X}px, ${sSvg2Y + mSvg2Y}px, 0) scale(1.04)`;
             if (layerSvg3) layerSvg3.style.transform = `translate3d(${mSvg3X}px, ${sSvg3Y + mSvg3Y}px, 0) scale(1.03)`;
