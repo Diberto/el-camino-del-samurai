@@ -240,41 +240,46 @@ img {
     z-index: -1;
 }
 
-/* Scrolled Sticky Navbar (Day Mode Default: White Glass Fade Gradient) */
+/* Scrolled Sticky Navbar (Day Mode Default: Ultra-Translucent Frosted Glass) */
 .navbar.scrolled {
-    padding: 0.85rem 0;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.82) 65%, rgba(255, 255, 255, 0) 100%);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: none;
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+    padding: 0.75rem 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.18) 70%, rgba(255, 255, 255, 0) 100%);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
 }
 
 .navbar.scrolled .nav-link {
-    color: #111319;
+    color: #ffffff;
     font-weight: 600;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
 .navbar.scrolled .nav-link:hover,
 .navbar.scrolled .nav-link.active {
-    color: var(--accent-red);
+    color: #ffffff;
+    text-shadow: 0 0 12px var(--accent-red-glow), 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 
-/* Scrolled Sticky Navbar (Night Mode: Dark Glass Fade Gradient) */
+/* Scrolled Sticky Navbar (Night Mode: Dark Frosted Glass) */
 body.theme-night .navbar.scrolled {
-    background: linear-gradient(to bottom, rgba(7, 8, 12, 0.95) 0%, rgba(7, 8, 12, 0.80) 65%, rgba(7, 8, 12, 0) 100%);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.45);
+    background: linear-gradient(180deg, rgba(7, 8, 14, 0.55) 0%, rgba(7, 8, 14, 0.25) 70%, rgba(7, 8, 14, 0) 100%);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
 }
 
 body.theme-night .navbar.scrolled .nav-link {
     color: #f8f9fa;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 body.theme-night .navbar.scrolled .nav-link:hover,
 body.theme-night .navbar.scrolled .nav-link.active {
-    color: var(--accent-red);
+    color: var(--accent-gold);
+    text-shadow: 0 0 12px var(--accent-gold-glow);
 }
 
 .nav-container {
