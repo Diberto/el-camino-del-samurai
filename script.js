@@ -8,6 +8,7 @@ import logoTypographyDark from './assets/logo_typography_dark.webp';
 import cloudTexture1 from './assets/cloud_texture_1.webp';
 import cloudTexture2 from './assets/cloud_texture_2.webp';
 import cloudTexture3 from './assets/cloud_texture_3.webp';
+import kanjiStamp from './assets/kanji_stamp.webp';
 
 document.addEventListener('DOMContentLoaded', () => {
 

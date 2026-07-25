@@ -1367,20 +1367,18 @@ body.theme-night .hero-logo-main {
     border-top: 1px solid var(--border-color);
 }
 
-.signature-kanji {
-    font-family: var(--font-title);
-    font-size: 3rem;
-    font-weight: 900;
-    color: var(--accent-red);
-    border: 1px solid var(--accent-red);
+.author-signature-stamp {
     width: 65px;
     height: 65px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    padding-bottom: 4px;
-    box-shadow: 0 0 15px var(--accent-red-glow);
+    object-fit: contain;
+    filter: drop-shadow(0 0 12px var(--accent-red-glow));
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+    flex-shrink: 0;
+}
+
+.author-signature:hover .author-signature-stamp {
+    transform: scale(1.12) rotate(-5deg);
+    filter: drop-shadow(0 0 22px rgba(216, 17, 36, 0.65));
 }
 
 .signature-name strong {
@@ -1495,6 +1493,20 @@ body.theme-night .hero-logo-main {
     font-family: var(--font-title);
     font-size: 1.15rem;
     font-weight: 700;
+}
+
+.footer-logo-stamp {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px var(--accent-red-glow));
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+    flex-shrink: 0;
+}
+
+.footer-logo:hover .footer-logo-stamp {
+    transform: scale(1.15) rotate(5deg);
+    filter: drop-shadow(0 0 18px rgba(216, 17, 36, 0.7));
 }
 
 .footer-links h4 {
