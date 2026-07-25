@@ -70,14 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
         let fgCtx = fgCanvas.getContext('2d', { alpha: true });
         if (!bgCtx || !fgCtx) return;
 
-        let width = bgCanvas.width = window.innerWidth;
-        let fgWidth = fgCanvas.width = Math.min(window.innerWidth, 1280);
-        let height = bgCanvas.height = fgCanvas.height = window.innerHeight;
+        let width = bgCanvas.width = fgCanvas.width = Math.ceil(window.innerWidth * 1.3);
+        let height = bgCanvas.height = fgCanvas.height = Math.ceil(window.innerHeight * 1.3);
 
         window.addEventListener('resize', () => {
-            width = bgCanvas.width = window.innerWidth;
-            fgWidth = fgCanvas.width = Math.min(window.innerWidth, 1280);
-            height = bgCanvas.height = fgCanvas.height = window.innerHeight;
+            width = bgCanvas.width = fgCanvas.width = Math.ceil(window.innerWidth * 1.3);
+            height = bgCanvas.height = fgCanvas.height = Math.ceil(window.innerHeight * 1.3);
         }, { passive: true });
 
         // Load 3 high-resolution organic cloud WebP textures with fail-safe error handling

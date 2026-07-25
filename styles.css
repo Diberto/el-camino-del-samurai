@@ -413,10 +413,10 @@ body.theme-night .theme-toggle-btn .kanji-night {
 /* DUAL CLOUDS CANVASES (BACKGROUND & FOREGROUND DEEP SHADERS) */
 #clouds-bg-canvas, #clouds-fg-canvas {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: -15%;
+    left: -15%;
+    width: 130%;
+    height: 130%;
     pointer-events: none;
     will-change: transform;
     transform: translate3d(0, 0, 0);
@@ -614,6 +614,16 @@ body.theme-night .layer-svg-6 {
     display: flex;
     align-items: center;
     z-index: 2;
+}
+
+.hero-stage {
+    position: relative;
+    width: 100%;
+    max-width: 1280px;
+    height: 100%;
+    margin: 0 auto;
+    z-index: 3;
+    pointer-events: none;
 }
 
 .parallax-layer {
@@ -2129,16 +2139,15 @@ body.theme-night .hero-logo-main {
 }
 
 /* ==========================================================================
-   DESKTOP PARALLAX CANVAS & OBJECT BOUNDS (max-width: 1280px)
+   DESKTOP PARALLAX STAGE & OBJECT BOUNDS (max-width: 1280px)
    ========================================================================== */
 @media (min-width: 769px) {
-    .hero-parallax .parallax-layer[class*="layer-svg-"],
-    .hero-parallax #clouds-fg-canvas {
+    .hero-stage {
         max-width: 1280px;
-        left: 0 !important;
-        right: 0 !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+        position: relative;
     }
 }
 
