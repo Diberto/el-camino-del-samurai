@@ -2242,43 +2242,46 @@ body.theme-night .hero-logo-main {
         text-align: center;
     }
 
-    /* Fix unrendered left edge seam on mobile viewports */
-    .sky-container, .sky-layer {
+    /* Fix unrendered left edge seam on mobile viewports and ensure sky spans full height */
+    .sky-container, .sky-layer, .parallax-layer.layer-bg {
         width: 100% !important;
+        height: 100% !important;
+        min-height: 100vh;
         left: 0 !important;
         right: 0 !important;
     }
 
-    /* 3. HERO PARALLAX ON MOBILE (ENLARGED & PERFECTLY CENTERED CIRCLE, SNUG LOGO SPACING) */
+    /* 3. HERO PARALLAX ON MOBILE (MAXIMIZED CIRCLE & LOGO, ORIGINAL STACKED BUTTONS) */
     .hero-parallax {
         min-height: 100vh;
-        height: 100vh;
+        height: auto !important;
         padding-top: 0;
+        padding-bottom: 5rem;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         width: 100%;
         position: relative;
-        overflow: hidden;
+        overflow-x: hidden;
     }
 
-    /* Move all parallax artwork layers up to top, perfectly sized and centered */
+    /* Move all parallax artwork layers up to top, maximized in size and perfectly centered */
     .hero-parallax .parallax-layer[class*="layer-svg-"] {
-        background-position: center top 36px !important;
-        background-size: min(72vw, 310px) auto !important;
+        background-position: center top 48px !important;
+        background-size: min(96vw, 440px) auto !important;
         left: 0 !important;
         width: 100% !important;
     }
 
-    /* Reduce gap between Enso circle artwork and logo typography to fit within 100vh */
+    /* Snug placement for logo typography right below the enlarged Enso circle */
     .parallax-text {
         position: relative;
         top: auto;
         left: auto;
         transform: none !important;
         z-index: 10;
-        margin-top: calc(min(72vw, 310px) + 38px);
-        margin-bottom: 1.5rem;
+        margin-top: calc(min(96vw, 440px) + 15px);
+        margin-bottom: 2rem;
         padding: 0 1.25rem;
         width: 100%;
         text-align: center;
@@ -2297,7 +2300,7 @@ body.theme-night .hero-logo-main {
     }
 
     .hero-main-logo-wrapper {
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.75rem;
         width: 100%;
         display: flex;
         justify-content: center;
@@ -2305,7 +2308,7 @@ body.theme-night .hero-logo-main {
     }
 
     .hero-logo-main {
-        max-width: min(78vw, 260px);
+        max-width: min(92vw, 340px);
         width: 100%;
         height: auto;
         display: block;
@@ -2313,26 +2316,38 @@ body.theme-night .hero-logo-main {
     }
 
     .hero-desc {
-        font-size: 0.9rem;
-        line-height: 1.4;
-        margin-bottom: 1rem;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 1.5rem;
+        max-width: 340px;
     }
 
+    /* Restore original stacked full-width button layout for Explorar Libros and Oráculo Zen */
     .hero-actions {
         display: flex;
-        flex-direction: row;
-        gap: 0.75rem;
+        flex-direction: column;
+        gap: 0.9rem;
         width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
         justify-content: center;
+        align-items: center;
+    }
+
+    .hero-actions .btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        padding: 0.85rem 1.5rem;
     }
 
     .hero-overlay-bottom {
         position: absolute;
-        bottom: -1px;
+        bottom: 0;
         left: 0;
         width: 100%;
-        height: 22vh;
-        background: linear-gradient(to top, var(--bg-primary) 10%, transparent 100%);
+        height: 25vh;
+        background: linear-gradient(to top, var(--bg-primary) 25%, transparent 100%);
         z-index: 5;
         pointer-events: none;
     }
