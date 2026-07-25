@@ -108,12 +108,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const fgClouds = [];
 
         function setupCloudParticles() {
+            const validTextures = textures.filter(img => img.complete && img.naturalWidth > 0);
+            const activeTextures = validTextures.length > 0 ? validTextures : textures;
+
             // Background distant clouds (Behind Mount Fuji - 14 particles)
             for (let i = 0; i < 14; i++) {
                 bgClouds.push({
                     x: Math.random() * (width + 600) - 300,
                     y: Math.random() * (height * 0.48) - 40,
-                    texture: textures[Math.floor(Math.random() * textures.length)],
+                    texture: activeTextures[Math.floor(Math.random() * activeTextures.length)],
                     scaleX: Math.random() * 0.7 + 0.8,
                     scaleY: Math.random() * 0.5 + 0.6,
                     speedX: Math.random() * 0.35 + 0.15,
@@ -128,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 fgClouds.push({
                     x: Math.random() * (width + 800) - 400,
                     y: Math.random() * (height * 0.40) + 10,
-                    texture: textures[Math.floor(Math.random() * textures.length)],
+                    texture: activeTextures[Math.floor(Math.random() * activeTextures.length)],
                     scaleX: Math.random() * 0.8 + 0.7,
                     scaleY: Math.random() * 0.4 + 0.5,
                     speedX: Math.random() * 0.6 + 0.3,
@@ -155,12 +158,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     c.y = Math.random() * (height * 0.48) - 40;
                 }
 
-                bgCtx.save();
-                bgCtx.globalAlpha = c.opacity;
-                bgCtx.translate(c.x, c.y + swayY);
-                bgCtx.scale(c.scaleX, c.scaleY);
-                bgCtx.drawImage(c.texture, -c.texture.width / 2, -c.texture.height / 2);
-                bgCtx.restore();
+                if (c.texture && c.texture.complete && c.texture.naturalWidth > 0) {
+                    bgCtx.save();
+                    bgCtx.globalAlpha = c.opacity;
+                    bgCtx.translate(c.x, c.y + swayY);
+                    bgCtx.scale(c.scaleX, c.scaleY);
+                    bgCtx.drawImage(c.texture, -c.texture.width / 2, -c.texture.height / 2);
+                    bgCtx.restore();
+                }
             }
 
             // 2. Render Foreground Volumetric Clouds (Crossing Mount Fuji)
@@ -175,12 +180,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     c.y = Math.random() * (height * 0.40) + 10;
                 }
 
-                fgCtx.save();
-                fgCtx.globalAlpha = c.opacity;
-                fgCtx.translate(c.x, c.y + swayY);
-                fgCtx.scale(c.scaleX, c.scaleY);
-                fgCtx.drawImage(c.texture, -c.texture.width / 2, -c.texture.height / 2);
-                fgCtx.restore();
+                if (c.texture && c.texture.complete && c.texture.naturalWidth > 0) {
+                    fgCtx.save();
+                    fgCtx.globalAlpha = c.opacity;
+                    fgCtx.translate(c.x, c.y + swayY);
+                    fgCtx.scale(c.scaleX, c.scaleY);
+                    fgCtx.drawImage(c.texture, -c.texture.width / 2, -c.texture.height / 2);
+                    fgCtx.restore();
+                }
             }
 
             requestAnimationFrame(animateVolumetricClouds);
