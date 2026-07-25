@@ -8,9 +8,9 @@
     --bg-secondary: #111218;
     --bg-card: rgba(18, 19, 26, 0.65);
     
-    --accent-red: #d90429;
+    --accent-red: #d81124;
     --accent-red-hover: #ef233c;
-    --accent-red-glow: rgba(217, 4, 41, 0.4);
+    --accent-red-glow: rgba(216, 17, 36, 0.45);
     
     --accent-gold: #c5a880;
     --accent-gold-hover: #dfc59f;
@@ -27,7 +27,7 @@
     --transition-fast: all 0.2s ease;
     
     --border-color: rgba(255, 255, 255, 0.05);
-    --border-glow: rgba(217, 4, 41, 0.15);
+    --border-glow: rgba(216, 17, 36, 0.18);
 }
 
 * {
@@ -240,11 +240,41 @@ img {
     z-index: -1;
 }
 
+/* Scrolled Sticky Navbar (Day Mode Default: White Glass Fade Gradient) */
 .navbar.scrolled {
     padding: 0.85rem 0;
-    background-color: rgba(7, 8, 10, 0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.82) 65%, rgba(255, 255, 255, 0) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: none;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+}
+
+.navbar.scrolled .nav-link {
+    color: #111319;
+    font-weight: 600;
+}
+
+.navbar.scrolled .nav-link:hover,
+.navbar.scrolled .nav-link.active {
+    color: var(--accent-red);
+}
+
+/* Scrolled Sticky Navbar (Night Mode: Dark Glass Fade Gradient) */
+body.theme-night .navbar.scrolled {
+    background: linear-gradient(to bottom, rgba(7, 8, 12, 0.95) 0%, rgba(7, 8, 12, 0.80) 65%, rgba(7, 8, 12, 0) 100%);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.45);
+}
+
+body.theme-night .navbar.scrolled .nav-link {
+    color: #f8f9fa;
+}
+
+body.theme-night .navbar.scrolled .nav-link:hover,
+body.theme-night .navbar.scrolled .nav-link.active {
+    color: var(--accent-red);
 }
 
 .nav-container {
@@ -257,13 +287,13 @@ img {
     position: relative;
 }
 
-/* TOGGLE BUTTON STYLES */
+/* KANJI TOGGLE BUTTON STYLES (日 = Day / 月 = Night) */
 .theme-toggle-btn {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.12);
+    border: 1.5px solid var(--accent-red);
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -272,38 +302,51 @@ img {
     right: 2rem;
     top: 50%;
     transform: translateY(-50%);
-    color: #f4a261;
-    transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+    color: var(--accent-red);
+    font-family: var(--font-title);
+    font-size: 1.25rem;
+    font-weight: 700;
+    box-shadow: 0 0 15px rgba(216, 17, 36, 0.35);
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
     z-index: 105;
 }
 
 .theme-toggle-btn:hover {
-    background: rgba(217, 4, 41, 0.2);
-    border-color: rgba(217, 4, 41, 0.5);
+    background: rgba(216, 17, 36, 0.25);
+    border-color: var(--accent-red-hover);
     transform: translateY(-50%) scale(1.08);
+    box-shadow: 0 0 22px rgba(216, 17, 36, 0.6);
 }
 
 .theme-toggle-btn:active {
     transform: translateY(-50%) scale(0.95);
 }
 
-.theme-toggle-btn .icon-sun,
-.theme-toggle-btn .icon-moon {
-    width: 20px;
-    height: 20px;
+.theme-toggle-btn .kanji-day {
+    display: block;
+    color: var(--accent-red);
+    text-shadow: 0 0 8px rgba(216, 17, 36, 0.5);
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.theme-toggle-btn .icon-moon {
+.theme-toggle-btn .kanji-night {
     display: none;
-    color: #a0c4ff;
+    color: var(--accent-gold);
+    text-shadow: 0 0 8px rgba(197, 168, 128, 0.6);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-body.theme-night .theme-toggle-btn .icon-sun {
+body.theme-night .theme-toggle-btn {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+    box-shadow: 0 0 15px rgba(197, 168, 128, 0.35);
+}
+
+body.theme-night .theme-toggle-btn .kanji-day {
     display: none;
 }
 
-body.theme-night .theme-toggle-btn .icon-moon {
+body.theme-night .theme-toggle-btn .kanji-night {
     display: block;
 }
 
