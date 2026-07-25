@@ -2252,33 +2252,33 @@ body.theme-night .hero-logo-main {
     /* 3. HERO PARALLAX ON MOBILE (ENLARGED & PERFECTLY CENTERED CIRCLE, SNUG LOGO SPACING) */
     .hero-parallax {
         min-height: 100vh;
-        height: auto !important;
+        height: 100vh;
         padding-top: 0;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         width: 100%;
-        overflow-x: hidden;
-        overflow-y: visible;
+        position: relative;
+        overflow: hidden;
     }
 
-    /* Move all parallax artwork layers up to top, slightly enlarged and perfectly centered */
+    /* Move all parallax artwork layers up to top, perfectly sized and centered */
     .hero-parallax .parallax-layer[class*="layer-svg-"] {
-        background-position: center top 48px !important;
-        background-size: min(96vw, 440px) auto !important;
+        background-position: center top 36px !important;
+        background-size: min(72vw, 310px) auto !important;
         left: 0 !important;
         width: 100% !important;
     }
 
-    /* Reduce gap between Enso circle artwork and logo typography */
+    /* Reduce gap between Enso circle artwork and logo typography to fit within 100vh */
     .parallax-text {
         position: relative;
         top: auto;
         left: auto;
         transform: none !important;
         z-index: 10;
-        margin-top: calc(min(96vw, 440px) + 20px);
-        margin-bottom: 2.5rem;
+        margin-top: calc(min(72vw, 310px) + 38px);
+        margin-bottom: 1.5rem;
         padding: 0 1.25rem;
         width: 100%;
         text-align: center;
@@ -2297,7 +2297,7 @@ body.theme-night .hero-logo-main {
     }
 
     .hero-main-logo-wrapper {
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.5rem;
         width: 100%;
         display: flex;
         justify-content: center;
@@ -2305,11 +2305,36 @@ body.theme-night .hero-logo-main {
     }
 
     .hero-logo-main {
-        max-width: min(85vw, 300px);
+        max-width: min(78vw, 260px);
         width: 100%;
         height: auto;
         display: block;
         margin: 0 auto;
+    }
+
+    .hero-desc {
+        font-size: 0.9rem;
+        line-height: 1.4;
+        margin-bottom: 1rem;
+    }
+
+    .hero-actions {
+        display: flex;
+        flex-direction: row;
+        gap: 0.75rem;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .hero-overlay-bottom {
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 100%;
+        height: 22vh;
+        background: linear-gradient(to top, var(--bg-primary) 10%, transparent 100%);
+        z-index: 5;
+        pointer-events: none;
     }
 
     .hero-description {
