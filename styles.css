@@ -2,15 +2,39 @@
    EL CAMINO DEL SAMURAI - DESIGN SYSTEM & STYLES
    ========================================================================== */
 
-/* 1. VARIABLES & RESET */
+/* 1. VARIABLES & RESET (DAY MODE DEFAULT) */
 :root {
-    --bg-primary: #07080a;
-    --bg-secondary: #111218;
-    --bg-card: rgba(18, 19, 26, 0.65);
+    --bg-primary: #f5f0eb;
+    --bg-secondary: #e8e1d7;
+    --bg-card: rgba(255, 255, 255, 0.90);
     
     --accent-red: #d81124;
     --accent-red-hover: #ef233c;
-    --accent-red-glow: rgba(216, 17, 36, 0.45);
+    --accent-red-glow: rgba(216, 17, 36, 0.35);
+    
+    --accent-gold: #aa7d36;
+    --accent-gold-hover: #c4944c;
+    --accent-gold-glow: rgba(170, 125, 54, 0.25);
+    
+    --text-primary: #111319;
+    --text-secondary: #3e4250;
+    --text-muted: #6b7080;
+    
+    --font-title: 'Cinzel', serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+    
+    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-fast: all 0.2s ease;
+    
+    --border-color: rgba(0, 0, 0, 0.08);
+    --border-glow: rgba(216, 17, 36, 0.18);
+}
+
+/* NIGHT MODE THEME OVERRIDES (DARK SAMURAI NIGHT) */
+body.theme-night {
+    --bg-primary: #07080a;
+    --bg-secondary: #111218;
+    --bg-card: rgba(18, 19, 26, 0.70);
     
     --accent-gold: #c5a880;
     --accent-gold-hover: #dfc59f;
@@ -20,14 +44,8 @@
     --text-secondary: #a2aab2;
     --text-muted: #6c757d;
     
-    --font-title: 'Cinzel', serif;
-    --font-body: 'Plus Jakarta Sans', sans-serif;
-    
-    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    --transition-fast: all 0.2s ease;
-    
-    --border-color: rgba(255, 255, 255, 0.05);
-    --border-glow: rgba(216, 17, 36, 0.18);
+    --border-color: rgba(255, 255, 255, 0.06);
+    --border-glow: rgba(216, 17, 36, 0.25);
 }
 
 * {
@@ -43,12 +61,16 @@ html {
     font-family: var(--font-body);
     font-size: 16px;
     overflow-x: hidden;
+    transition: background-color 0.6s ease, color 0.6s ease;
 }
 
 body {
     overflow-x: hidden;
     position: relative;
     line-height: 1.6;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.6s ease, color 0.6s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -56,10 +78,12 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     letter-spacing: 0.05em;
     color: var(--text-primary);
+    transition: color 0.6s ease;
 }
 
 p {
     color: var(--text-secondary);
+    transition: color 0.6s ease;
 }
 
 a {
