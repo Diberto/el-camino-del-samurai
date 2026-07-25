@@ -972,4 +972,51 @@ document.addEventListener('DOMContentLoaded', () => {
             resetCardView(activeCard);
         });
     }
+
+    // 13. PHOTO GALLERY LIGHTBOX MODAL CONTROLLER
+    function initGalleryLightbox() {
+        const galleryCards = document.querySelectorAll('.gallery-card');
+        const lightbox = document.getElementById('gallery-lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxTag = document.getElementById('lightbox-tag');
+        const lightboxTitle = document.getElementById('lightbox-title');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const lightboxBackdrop = document.getElementById('lightbox-backdrop');
+
+        if (!lightbox || !galleryCards.length) return;
+
+        function openLightbox(src, title, tag) {
+            if (lightboxImg) lightboxImg.src = src;
+            if (lightboxTitle) lightboxTitle.textContent = title || '';
+            if (lightboxTag) lightboxTag.textContent = tag || '';
+            lightbox.classList.add('active');
+            lightbox.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            lightbox.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        galleryCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const src = card.getAttribute('data-src');
+                const title = card.getAttribute('data-title');
+                const tag = card.getAttribute('data-tag');
+                if (src) openLightbox(src, title, tag);
+            });
+        });
+
+        if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+        if (lightboxBackdrop) lightboxBackdrop.addEventListener('click', closeLightbox);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+    }
+
+    initGalleryLightbox();
 });

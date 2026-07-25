@@ -139,6 +139,7 @@
                     <li><a href="#oraculo" class="nav-link">El Oráculo</a></li>
                     <li><a href="#ediciones" class="nav-link">Ediciones</a></li>
                     <li><a href="#autor" class="nav-link">Autor</a></li>
+                    <li><a href="#galeria" class="nav-link">Galería</a></li>
                     <li><a href="#contacto" class="btn btn-nav">Comprar</a></li>
                 </ul>
             </nav>
@@ -546,9 +547,82 @@
             </div>
             
             <div class="author-visual fade-in">
-                <div class="image-wrapper">
-                    <img src="assets/author_portrait.png" alt="Jorge Orpianesi Retrato" class="author-img">
+                <div class="image-wrapper author-image-card">
+                    <img src="assets/photos/orpianesi1.webp" alt="Jorge Orpianesi - Autor de El Camino del Samurái" class="author-img">
                     <div class="glow-effect"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Galería Fotográfica de Japón -->
+    <section class="section gallery-section" id="galeria">
+        <div class="container">
+            <div class="section-header text-center fade-in">
+                <span class="section-subtitle">EXPEDICIONES Y FOTOGRAFÍA</span>
+                <h2 class="section-title">Galería de la Travesía</h2>
+                <p class="section-desc">Un recorrido visual exclusivo por los santuarios, castillos feudales y caminos sagrados que forman la esencia de las obras de Jorge Orpianesi.</p>
+            </div>
+
+            <div class="gallery-grid fade-in">
+                <div class="gallery-card" data-src="assets/photos/WhatsApp Image 2026-06-25 at 16.10.09.webp" data-title="Fortalezas del Periodo Sengoku" data-tag="Castillos & Arquitectura">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="assets/photos/WhatsApp Image 2026-06-25 at 16.10.09.webp" alt="Castillos y Fortalezas del Japón Feudal" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Castillos & Arquitectura</span>
+                            <h4 class="gallery-card-title">Fortalezas del Periodo Sengoku</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-card" data-src="assets/photos/WhatsApp Image 2026-06-25 at 16.10.12.webp" data-title="Santuarios Shintoístas" data-tag="Templos & Espiritualidad">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="assets/photos/WhatsApp Image 2026-06-25 at 16.10.12.webp" alt="Templos y Santuarios Shinto" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Templos & Espiritualidad</span>
+                            <h4 class="gallery-card-title">Santuarios Shintoístas</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-card" data-src="assets/photos/WhatsApp Image 2026-06-25 at 16.10.13.webp" data-title="Huellas de Miyamoto Musashi" data-tag="Ruta del Budo">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="assets/photos/WhatsApp Image 2026-06-25 at 16.10.13.webp" alt="Huellas de Miyamoto Musashi" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Ruta del Budo</span>
+                            <h4 class="gallery-card-title">Huellas de Miyamoto Musashi</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-card" data-src="assets/photos/WhatsApp Image 2026-06-25 at 16.10.15.webp" data-title="Jardines y Valles Sagrados" data-tag="Naturaleza & Zen">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="assets/photos/WhatsApp Image 2026-06-25 at 16.10.15.webp" alt="Jardines Zen y Paisajes Tradicionales" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Naturaleza & Zen</span>
+                            <h4 class="gallery-card-title">Jardines y Valles Sagrados</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-card" data-src="assets/photos/WhatsApp Image 2026-06-25 at 16.10.29.webp" data-title="Puentes y Pasos Legendarios" data-tag="Patrimonio Histórico">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="assets/photos/WhatsApp Image 2026-06-25 at 16.10.29.webp" alt="Pasos Históricos de Japón" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Patrimonio Histórico</span>
+                            <h4 class="gallery-card-title">Puentes y Pasos Legendarios</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gallery-card" data-src="assets/photos/WhatsApp Image 2026-06-25 at 16.10.35.webp" data-title="Esculturas y Monumentos del Budo" data-tag="Cultura & Tradición">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="assets/photos/WhatsApp Image 2026-06-25 at 16.10.35.webp" alt="Artefactos y Esculturas Tradicionales" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Cultura & Tradición</span>
+                            <h4 class="gallery-card-title">Esculturas y Monumentos</h4>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -606,6 +680,19 @@
             </div>
         </div>
     </footer>
+
+    <!-- Lightbox Modal para la Galería -->
+    <div class="gallery-lightbox" id="gallery-lightbox" aria-hidden="true" role="dialog">
+        <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
+        <div class="lightbox-container">
+            <button class="lightbox-close" id="lightbox-close" aria-label="Cerrar vista">&times;</button>
+            <img src="" alt="Vista ampliada" id="lightbox-img">
+            <div class="lightbox-info">
+                <span class="lightbox-tag" id="lightbox-tag"></span>
+                <h3 class="lightbox-title" id="lightbox-title"></h3>
+            </div>
+        </div>
+    </div>
 
     <!-- JS Link -->
     <script type="module" src="script.js"></script>
