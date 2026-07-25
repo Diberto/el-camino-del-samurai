@@ -13,25 +13,34 @@ document.addEventListener('DOMContentLoaded', () => {
         // Auto-detect local time if no saved preference (Day: 6AM - 7PM)
         const hour = new Date().getHours();
         const isNightTime = hour < 6 || hour >= 19;
-        
         const initialNightMode = savedTheme === 'night' || (!savedTheme && isNightTime);
         
         if (initialNightMode) {
             document.body.classList.add('theme-night');
-            if (heroLogoImg) heroLogoImg.src = 'assets/logo_typography_light.webp';
         } else {
             document.body.classList.remove('theme-night');
-            if (heroLogoImg) heroLogoImg.src = 'assets/logo_typography_dark.webp';
         }
+        
+        function updateLogoImage() {
+            if (!heroLogoImg) return;
+            const isMobile = window.innerWidth <= 768;
+            const isNight = document.body.classList.contains('theme-night');
+            if (isMobile) {
+                heroLogoImg.src = isNight ? 'assets/logo_typography_light.webp' : 'assets/logo_typography_dark.webp';
+            } else {
+                heroLogoImg.src = 'assets/logo_typography_light.webp';
+            }
+        }
+
+        updateLogoImage();
+        window.addEventListener('resize', updateLogoImage, { passive: true });
         
         if (toggleBtn) {
             toggleBtn.addEventListener('click', () => {
                 document.body.classList.toggle('theme-night');
                 const isNight = document.body.classList.contains('theme-night');
                 localStorage.setItem('theme_mode', isNight ? 'night' : 'day');
-                if (heroLogoImg) {
-                    heroLogoImg.src = isNight ? 'assets/logo_typography_light.webp' : 'assets/logo_typography_dark.webp';
-                }
+                updateLogoImage();
             });
         }
     }
