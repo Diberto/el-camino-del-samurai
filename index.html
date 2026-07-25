@@ -126,10 +126,6 @@
     <!-- Header / Navbar -->
     <header class="navbar" id="navbar" role="banner">
         <div class="nav-container">
-            <a href="#" class="nav-logo" id="nav-logo">
-                <span class="logo-kanji">侍</span>
-                <span class="logo-text">La Ruta del Samurái</span>
-            </a>
             <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
                 <span></span>
                 <span></span>
@@ -146,24 +142,64 @@
                     <li><a href="#contacto" class="btn btn-nav">Comprar</a></li>
                 </ul>
             </nav>
+            <button class="theme-toggle-btn" id="theme-toggle" aria-label="Cambiar modo día/noche" title="Modo Día / Noche">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
         </div>
     </header>
 
     <main id="main">
 
-    <!-- Hero Section (Parallax) -->
+    <!-- Hero Section (Parallax Multicapa SVG Impecable) -->
     <section class="hero-parallax" id="inicio">
-        <!-- Capa 1: Fondo de montañas y sol -->
-        <div class="parallax-layer parallax-bg" style="background-image: url('assets/bg_mountains.png');"></div>
+        <!-- Capa de Cielos Animados (Día & Noche) -->
+        <div class="sky-container" id="sky-container">
+            <!-- Cielo de Día (Atardecer Dorado & Nubes) -->
+            <div class="sky-layer sky-day">
+                <div class="sun-glow"></div>
+                <div class="cloud-layer cloud-layer-1"></div>
+                <div class="cloud-layer cloud-layer-2"></div>
+            </div>
+            <!-- Cielo de Noche (Estrellas & Aura Índigo) -->
+            <div class="sky-layer sky-night">
+                <canvas id="starfield-canvas"></canvas>
+                <div class="moon-aura"></div>
+            </div>
+        </div>
         
-        <!-- Capa 2: Pagoda / Elemento de medio plano -->
-        <div class="parallax-layer parallax-mid" style="background-image: url('assets/mid_pagoda.png');"></div>
+        <!-- Capa 1: Fondo de montañas y niebla -->
+        <div class="parallax-layer layer-bg" style="background-image: url('assets/bg_mountains.png');"></div>
         
-        <!-- Capa 3: Contenido de Texto -->
+        <!-- Capa 2: Sol Rojo y Monte Fuji (SVG Layer 1) -->
+        <div class="parallax-layer layer-svg-1" style="background-image: url('assets/svg_true_layer_1.webp');"></div>
+        
+        <!-- Capa 3: Río / Camino Serpenteante (SVG Layer 2) -->
+        <div class="parallax-layer layer-svg-2" style="background-image: url('assets/svg_true_layer_2.webp');"></div>
+        
+        <!-- Capa 4: Terreno y Rocas (SVG Layer 3) -->
+        <div class="parallax-layer layer-svg-3" style="background-image: url('assets/svg_true_layer_3.webp');"></div>
+        
+        <!-- Capa 5: Samurái Ilustrado en Acantilado (SVG Layer 4) -->
+        <div class="parallax-layer layer-svg-4" style="background-image: url('assets/svg_true_layer_4.webp');"></div>
+        
+        <!-- Capa 6: Marco Enso Sumi-e (SVG Layer 5) -->
+        <div class="parallax-layer layer-svg-5" style="background-image: url('assets/svg_true_layer_5.webp');"></div>
+        
+        <!-- Capa 7: Rama de Sakura y Flores (SVG Layer 6) -->
+        <div class="parallax-layer layer-svg-6" style="background-image: url('assets/svg_true_layer_6.webp');"></div>
+        
+        <!-- Capa 8: Pétalos Flotantes (SVG Layers 7 & 8) -->
+        <div class="parallax-layer layer-svg-7" style="background-image: url('assets/svg_true_layer_7.webp');"></div>
+        <div class="parallax-layer layer-svg-8" style="background-image: url('assets/svg_true_layer_8.webp');"></div>
+        
+        <!-- Capa 9: Contenido Principal con el Logo Tipográfico Oficial -->
         <div class="parallax-layer parallax-text">
             <div class="hero-content">
+                <div class="hero-main-logo-wrapper">
+                    <img src="assets/logo_typography_light.webp" alt="La Ruta del Samurái - Jorge Orpianesi" class="hero-logo-main">
+                </div>
                 <h2 class="hero-tagline">LA SENDA DE LA HISTORIA Y EL BUDO</h2>
-                <h1 class="hero-title">La Ruta<br><span class="highlight-red">del Samurái</span></h1>
                 <p class="hero-desc">Sigue las huellas de Miyamoto Musashi. Un fascinante viaje por la geografía, templos y castillos feudales del Japón tradicional.</p>
                 <div class="hero-actions">
                     <a href="#sinopsis" class="btn btn-primary">Explorar Libros</a>
@@ -172,10 +208,7 @@
             </div>
         </div>
         
-        <!-- Capa 4: Samurai Foreground -->
-        <div class="parallax-layer parallax-fg" style="background-image: url('assets/fg_samurai.png');"></div>
-        
-        <!-- Capa inferior de degradado para fusionar el final del hero con la siguiente sección -->
+        <!-- Capa inferior de degradado para fusionar el final del hero -->
         <div class="hero-overlay-bottom"></div>
     </section>
 
@@ -183,9 +216,70 @@
     <section class="section sinopsis-section" id="sinopsis">
         <div class="container grid-2">
             <div class="sinopsis-image fade-in">
-                <div class="image-wrapper">
-                    <img src="assets/books_mockup.png" alt="La Ruta del Samurái Libros Mockup" class="book-img">
-                    <div class="glow-effect"></div>
+                <div class="book-3d-wrapper" id="book-3d-container">
+                    <div class="tomo-tabs">
+                        <button class="tomo-tab active" data-tomo="1">
+                            <span class="tomo-indicator red"></span> Tomo I: La Ruta del Samurái
+                        </button>
+                        <button class="tomo-tab" data-tomo="2">
+                            <span class="tomo-indicator blue"></span> Tomo II: El Paso de las Luciérnagas
+                        </button>
+                    </div>
+
+                    <!-- Tomo 1 Stage -->
+                    <div class="book-3d-stage tomo-stage active" id="stage-tomo-1">
+                        <div class="book-3d-card" id="book-card-1" data-rotated="false">
+                            <div class="book-face-front">
+                                <img src="assets/book1_front.webp" alt="La Ruta del Samurái - Portada Tomo 1">
+                                <div class="book-shine"></div>
+                            </div>
+                            <div class="book-face-back">
+                                <img src="assets/book1_back.webp" alt="La Ruta del Samurái - Contraportada Tomo 1">
+                                <div class="book-shine"></div>
+                            </div>
+                            <div class="book-face-spine spine-tomo1">
+                                <span class="spine-kanji">侍</span>
+                                <span class="spine-title">LA RUTA DEL SAMURÁI</span>
+                                <span class="spine-author">JORGE ORPIANESI</span>
+                            </div>
+                            <div class="book-face-pages"></div>
+                            <div class="book-face-top"></div>
+                            <div class="book-face-bottom"></div>
+                            <div class="book-3d-shadow"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tomo 2 Stage -->
+                    <div class="book-3d-stage tomo-stage" id="stage-tomo-2" style="display: none;">
+                        <div class="book-3d-card" id="book-card-2" data-rotated="false">
+                            <div class="book-face-front">
+                                <img src="assets/book2_front.webp" alt="El Paso de las Luciérnagas - Portada Tomo 2">
+                                <div class="book-shine"></div>
+                            </div>
+                            <div class="book-face-back">
+                                <img src="assets/book2_back.webp" alt="El Paso de las Luciérnagas - Contraportada Tomo 2">
+                                <div class="book-shine"></div>
+                            </div>
+                            <div class="book-face-spine spine-tomo2">
+                                <span class="spine-kanji">侍</span>
+                                <span class="spine-title">EL PASO DE LAS LUCIÉRNAGAS</span>
+                                <span class="spine-author">JORGE ORPIANESI</span>
+                            </div>
+                            <div class="book-face-pages"></div>
+                            <div class="book-face-top"></div>
+                            <div class="book-face-bottom"></div>
+                            <div class="book-3d-shadow"></div>
+                        </div>
+                    </div>
+
+                    <div class="book-3d-controls">
+                        <button class="btn btn-secondary btn-flip-3d" id="btn-flip-3d">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                            <span>Girar 180° (Ver Contraportada)</span>
+                        </button>
+                        <button class="btn btn-secondary btn-reset-3d" id="btn-reset-3d">Vista Frontal</button>
+                    </div>
+                    <p class="book-3d-hint">✨ <em>Mueve el cursor o arrastra para interactuar en 3D</em></p>
                 </div>
             </div>
             <div class="sinopsis-content fade-in">
