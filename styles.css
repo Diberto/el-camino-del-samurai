@@ -646,8 +646,12 @@ body.theme-night .layer-svg-6 {
     max-width: 440px;
     width: 100%;
     height: auto;
-    filter: drop-shadow(0 0 25px rgba(217, 4, 41, 0.45));
+    filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.35));
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+}
+
+body.theme-night .hero-logo-main {
+    filter: drop-shadow(0 0 25px rgba(217, 4, 41, 0.45));
 }
 
 .hero-logo-main:hover {

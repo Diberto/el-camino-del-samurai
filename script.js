@@ -295,6 +295,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // 1.5 DAY / NIGHT THEME TOGGLE (SWITCHING DARK / LIGHT LOGO TYPOGRAPHY)
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const heroLogoImg = document.querySelector('.hero-logo-main');
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('theme-night');
+            const isNight = document.body.classList.contains('theme-night');
+            if (heroLogoImg) {
+                heroLogoImg.src = isNight ? 'assets/logo_typography_light.webp' : 'assets/logo_typography_dark.webp';
+            }
+        });
+    }
+
     // 2. NAVBAR SCROLL EFFECT & ACTIVE STATE
     const navbar = document.getElementById('navbar');
     const sections = document.querySelectorAll('section[id]');
