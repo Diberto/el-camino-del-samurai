@@ -32,6 +32,301 @@ document.addEventListener('DOMContentLoaded', () => {
     
     initDayNightCycle();
 
+    // 0.05 WEBGPU CLOUDS SHADER SYSTEM WITH WEBGL & CANVAS2D FALLBACKS
+    function initGPUClouds() {
+        const canvas = document.getElementById('clouds-canvas');
+        if (!canvas) return;
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            if (gl) gl.viewport(0, 0, width, height);
+        }, { passive: true });
+
+        let startTime = Date.now();
+
+        // 1. ATTEMPT WEBGPU
+        if (navigator.gpu) {
+            navigator.gpu.requestAdapter().then(adapter => {
+                if (!adapter) {
+                    initWebGLFallback();
+                    return;
+                }
+                adapter.requestDevice().then(device => {
+                    initWebGPUPipeline(device);
+                }).catch(() => initWebGLFallback());
+            }).catch(() => initWebGLFallback());
+            return;
+        } else {
+            initWebGLFallback();
+            return;
+        }
+
+        function initWebGPUPipeline(device) {
+            const context = canvas.getContext('webgpu');
+            const format = navigator.gpu.getPreferredCanvasFormat();
+            context.configure({ device, format, alphaMode: 'premultiplied' });
+
+            const wgslCode = `
+                struct Uniforms {
+                    time: f32,
+                    width: f32,
+                    height: f32,
+                    unused: f32,
+                };
+                @group(0) @binding(0) var<uniform> uniforms: Uniforms;
+
+                fn hash(p: vec2<f32>) -> f32 {
+                    let h = dot(p, vec2<f32>(127.1, 311.7));
+                    return fract(sin(h) * 43758.5453123);
+                }
+
+                fn noise(p: vec2<f32>) -> f32 {
+                    let i = floor(p);
+                    let f = fract(p);
+                    let u = f * f * (3.0 - 2.0 * f);
+                    let a = hash(i + vec2<f32>(0.0, 0.0));
+                    let b = hash(i + vec2<f32>(1.0, 0.0));
+                    let c = hash(i + vec2<f32>(0.0, 1.0));
+                    let d = hash(i + vec2<f32>(1.0, 1.0));
+                    return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
+                }
+
+                fn fbm(p: vec2<f32>) -> f32 {
+                    var v = 0.0;
+                    var a = 0.5;
+                    var q = p;
+                    let rot = mat2x2<f32>(0.87758256, 0.47942554, -0.47942554, 0.87758256);
+                    for (var i = 0; i < 4; i = i + 1) {
+                        v = v + a * noise(q);
+                        q = rot * q * 2.0 + vec2<f32>(100.0);
+                        a = a * 0.5;
+                    }
+                    return v;
+                }
+
+                @vertex
+                fn vs_main(@builtin(vertex_index) in_vertex_index: u32) -> @builtin(position) vec4<f32> {
+                    var pos = array<vec2<f32>, 4>(
+                        vec2<f32>(-1.0, -1.0),
+                        vec2<f32>( 1.0, -1.0),
+                        vec2<f32>(-1.0,  1.0),
+                        vec2<f32>( 1.0,  1.0)
+                    );
+                    return vec4<f32>(pos[in_vertex_index], 0.0, 1.0);
+                }
+
+                @fragment
+                fn fs_main(@builtin(position) pos: vec4<f32>) -> @location(0) vec4<f32> {
+                    let uv = pos.xy / vec2<f32>(uniforms.width, uniforms.height);
+                    var st = uv;
+                    st.x = st.x * (uniforms.width / uniforms.height);
+                    let drift = vec2<f32>(uniforms.time * 0.012, 0.0);
+                    let n = fbm(st * 3.2 + drift);
+                    let height_fade = smoothstep(0.0, 0.70, 1.0 - uv.y);
+                    let density = smoothstep(0.33, 0.70, n) * height_fade * 0.52;
+                    let cloud_color = vec3<f32>(0.98, 0.95, 0.90);
+                    return vec4<f32>(cloud_color * density, density);
+                }
+            `;
+
+            const shaderModule = device.createShaderModule({ code: wgslCode });
+            const pipeline = device.createRenderPipeline({
+                layout: 'auto',
+                vertex: { module: shaderModule, entryPoint: 'vs_main' },
+                fragment: {
+                    module: shaderModule,
+                    entryPoint: 'fs_main',
+                    targets: [{ format, blend: {
+                        color: { srcFactor: 'one', dstFactor: 'one-minus-src-alpha', operation: 'add' },
+                        alpha: { srcFactor: 'one', dstFactor: 'one-minus-src-alpha', operation: 'add' }
+                    }}]
+                },
+                primitive: { topology: 'triangle-strip' }
+            });
+
+            const uniformBufferSize = 16; // 4 floats
+            const uniformBuffer = device.createBuffer({
+                size: uniformBufferSize,
+                usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
+            });
+
+            const bindGroup = device.createBindGroup({
+                layout: pipeline.getBindGroupLayout(0),
+                entries: [{ binding: 0, resource: { buffer: uniformBuffer } }]
+            });
+
+            function render() {
+                const elapsed = (Date.now() - startTime) / 1000.0;
+                const uniformData = new Float32Array([elapsed, canvas.width, canvas.height, 0]);
+                device.queue.writeBuffer(uniformBuffer, 0, uniformData);
+
+                const commandEncoder = device.createCommandEncoder();
+                const textureView = context.getCurrentTexture().createView();
+                const passEncoder = commandEncoder.beginRenderPass({
+                    colorAttachments: [{
+                        view: textureView,
+                        clearValue: { r: 0, g: 0, b: 0, a: 0 },
+                        loadOp: 'clear',
+                        storeOp: 'store'
+                    }]
+                });
+
+                passEncoder.setPipeline(pipeline);
+                passEncoder.setBindGroup(0, bindGroup);
+                passEncoder.draw(4);
+                passEncoder.end();
+                device.queue.submit([commandEncoder.finish()]);
+
+                requestAnimationFrame(render);
+            }
+            requestAnimationFrame(render);
+        }
+
+        let gl = null;
+        function initWebGLFallback() {
+            try {
+                gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true });
+            } catch (e) {
+                gl = canvas.getContext('experimental-webgl', { alpha: true, premultipliedAlpha: true });
+            }
+
+            if (!gl) {
+                initCanvas2DFallback();
+                return;
+            }
+
+            const vsSource = `
+                attribute vec2 position;
+                void main() {
+                    gl_Position = vec4(position, 0.0, 1.0);
+                }
+            `;
+
+            const fsSource = `
+                precision highp float;
+                uniform float u_time;
+                uniform vec2 u_resolution;
+
+                float hash(vec2 p) {
+                    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+                }
+
+                float noise(vec2 p) {
+                    vec2 i = floor(p);
+                    vec2 f = fract(p);
+                    vec2 u = f * f * (3.0 - 2.0 * f);
+                    return mix(mix(hash(i + vec2(0.0, 0.0)), hash(i + vec2(1.0, 0.0)), u.x),
+                               mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y);
+                }
+
+                float fbm(vec2 p) {
+                    float v = 0.0;
+                    float a = 0.5;
+                    mat2 rot = mat2(0.87758256, 0.47942554, -0.47942554, 0.87758256);
+                    for (int i = 0; i < 4; i++) {
+                        v += a * noise(p);
+                        p = rot * p * 2.0 + vec2(100.0);
+                        a *= 0.5;
+                    }
+                    return v;
+                }
+
+                void main() {
+                    vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+                    vec2 st = uv;
+                    st.x *= u_resolution.x / u_resolution.y;
+                    vec2 drift = vec2(u_time * 0.012, 0.0);
+                    float n = fbm(st * 3.2 + drift);
+                    float height_fade = smoothstep(0.0, 0.70, 1.0 - uv.y);
+                    float density = smoothstep(0.33, 0.70, n) * height_fade * 0.52;
+                    vec3 cloud_color = vec3(0.98, 0.95, 0.90);
+                    gl_FragColor = vec4(cloud_color * density, density);
+                }
+            `;
+
+            function createShader(gl, type, source) {
+                const shader = gl.createShader(type);
+                gl.shaderSource(shader, source);
+                gl.compileShader(shader);
+                return shader;
+            }
+
+            const vs = createShader(gl, gl.VERTEX_SHADER, vsSource);
+            const fs = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+            const program = gl.createProgram();
+            gl.attachShader(program, vs);
+            gl.attachShader(program, fs);
+            gl.linkProgram(program);
+            gl.useProgram(program);
+
+            const positionAttributeLocation = gl.getAttribLocation(program, "position");
+            const positionBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+                -1, -1,  1, -1, -1,  1,
+                -1,  1,  1, -1,  1,  1,
+            ]), gl.STATIC_DRAW);
+
+            gl.enableVertexAttribArray(positionAttributeLocation);
+            gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
+
+            const timeLocation = gl.getUniformLocation(program, "u_time");
+            const resolutionLocation = gl.getUniformLocation(program, "u_resolution");
+
+            gl.viewport(0, 0, width, height);
+
+            function renderWebGL() {
+                const elapsed = (Date.now() - startTime) / 1000.0;
+                gl.clearColor(0, 0, 0, 0);
+                gl.clear(gl.COLOR_BUFFER_BIT);
+                gl.uniform1f(timeLocation, elapsed);
+                gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+                gl.drawArrays(gl.TRIANGLES, 0, 6);
+                requestAnimationFrame(renderWebGL);
+            }
+            requestAnimationFrame(renderWebGL);
+        }
+
+        function initCanvas2DFallback() {
+            const ctx = canvas.getContext('2d');
+            const clouds = [];
+            for (let i = 0; i < 8; i++) {
+                clouds.push({
+                    x: Math.random() * width,
+                    y: Math.random() * (height * 0.45),
+                    radius: Math.random() * 220 + 120,
+                    speed: Math.random() * 0.25 + 0.1,
+                    alpha: Math.random() * 0.25 + 0.15
+                });
+            }
+
+            function draw2D() {
+                ctx.clearRect(0, 0, width, height);
+                for (let i = 0; i < clouds.length; i++) {
+                    const c = clouds[i];
+                    c.x += c.speed;
+                    if (c.x - c.radius > width) c.x = -c.radius;
+                    
+                    const gradient = ctx.createRadialGradient(c.x, c.y, 10, c.x, c.y, c.radius);
+                    gradient.addColorStop(0, `rgba(255, 252, 245, ${c.alpha})`);
+                    gradient.addColorStop(1, 'rgba(255, 252, 245, 0)');
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.arc(c.x, c.y, c.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                requestAnimationFrame(draw2D);
+            }
+            requestAnimationFrame(draw2D);
+        }
+    }
+
+    initGPUClouds();
+
     // 0.1 STARFIELD CANVAS ANIMATION (NIGHT MODE - GPU ACCELERATED WITH FALLBACK)
     function initStarfield() {
         const canvas = document.getElementById('starfield-canvas');
