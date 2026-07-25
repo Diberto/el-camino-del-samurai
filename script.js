@@ -32,12 +32,20 @@ document.addEventListener('DOMContentLoaded', () => {
     
     initDayNightCycle();
 
-    // 0.1 STARFIELD CANVAS ANIMATION (NIGHT MODE)
+    // 0.1 STARFIELD CANVAS ANIMATION (NIGHT MODE - GPU ACCELERATED WITH FALLBACK)
     function initStarfield() {
         const canvas = document.getElementById('starfield-canvas');
         if (!canvas) return;
         
-        const ctx = canvas.getContext('2d');
+        let ctx = null;
+        try {
+            // Attempt hardware-accelerated 2D context
+            ctx = canvas.getContext('2d', { alpha: true, desynchronized: true, willReadFrequently: false });
+        } catch (err) {
+            ctx = canvas.getContext('2d');
+        }
+        
+        if (!ctx) return; // Fallback if Canvas context is unsupported
         let width = canvas.width = window.innerWidth;
         let height = canvas.height = window.innerHeight;
         
@@ -192,10 +200,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', handleScrollEffects);
     handleScrollEffects(); // Trigger once on load
 
-    // 3. SVG MULTI-LAYER PARALLAX (MOUSE + SCROLL)
+    // 3. SVG MULTI-LAYER PARALLAX (MOUSE + SCROLL - GPU ACCELERATED)
     const hero = document.getElementById('inicio');
-    const layerBg = document.querySelector('.layer-bg');
-    const layerCelestial = document.querySelector('.layer-celestial');
     const layerSvg1 = document.querySelector('.layer-svg-1');
     const layerSvg2 = document.querySelector('.layer-svg-2');
     const layerSvg3 = document.querySelector('.layer-svg-3');
@@ -215,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('mousemove', (e) => {
         targetMouseX = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
         targetMouseY = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
-    });
+    }, { passive: true });
 
     function animateParallax() {
         mouseX += (targetMouseX - mouseX) * lerpFactor;
@@ -225,12 +231,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (scrollY < window.innerHeight) {
             // Mouse multipliers (layered depth)
-            const mBgX = mouseX * -30;
-            const mBgY = mouseY * -20;
-
-            const mCelestX = mouseX * -25; // Sol/Luna astro
-            const mCelestY = mouseY * -16;
-
             const mSvg1X = mouseX * -22; // Monte Fuji
             const mSvg1Y = mouseY * -14;
 
@@ -256,8 +256,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const mTextY = mouseY * 4;
 
             // Scroll position multipliers
-            const sBgY = scrollY * 0.45;
-            const sCelestY = scrollY * 0.40;
             const sSvg1Y = scrollY * 0.38;
             const sSvg2Y = scrollY * 0.30;
             const sSvg3Y = scrollY * 0.22;
@@ -267,8 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const sSvg7Y = scrollY * 0.02;
             const sTextY = scrollY * 0.18;
 
-            if (layerBg) layerBg.style.transform = `translate3d(${mBgX}px, ${sBgY + mBgY}px, 0) scale(1.06)`;
-            if (layerCelestial) layerCelestial.style.transform = `translate3d(${mCelestX}px, ${sCelestY + mCelestY}px, 0) scale(1.04)`;
             if (layerSvg1) layerSvg1.style.transform = `translate3d(${mSvg1X}px, ${sSvg1Y + mSvg1Y}px, 0) scale(1.05)`;
             if (layerSvg2) layerSvg2.style.transform = `translate3d(${mSvg2X}px, ${sSvg2Y + mSvg2Y}px, 0) scale(1.04)`;
             if (layerSvg3) layerSvg3.style.transform = `translate3d(${mSvg3X}px, ${sSvg3Y + mSvg3Y}px, 0) scale(1.03)`;
