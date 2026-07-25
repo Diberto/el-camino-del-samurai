@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 0. DAY/NIGHT THEME CONTROLLER
     function initDayNightCycle() {
         const toggleBtn = document.getElementById('theme-toggle');
+        const heroLogoImg = document.querySelector('.hero-logo-main');
         const savedTheme = localStorage.getItem('theme_mode');
         
         // Auto-detect local time if no saved preference (Day: 6AM - 7PM)
@@ -17,8 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (initialNightMode) {
             document.body.classList.add('theme-night');
+            if (heroLogoImg) heroLogoImg.src = 'assets/logo_typography_light.webp';
         } else {
             document.body.classList.remove('theme-night');
+            if (heroLogoImg) heroLogoImg.src = 'assets/logo_typography_dark.webp';
         }
         
         if (toggleBtn) {
@@ -26,6 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.body.classList.toggle('theme-night');
                 const isNight = document.body.classList.contains('theme-night');
                 localStorage.setItem('theme_mode', isNight ? 'night' : 'day');
+                if (heroLogoImg) {
+                    heroLogoImg.src = isNight ? 'assets/logo_typography_light.webp' : 'assets/logo_typography_dark.webp';
+                }
             });
         }
     }
@@ -292,20 +298,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 menuToggle.classList.remove('active');
                 navMenu.classList.remove('active');
             });
-        });
-    }
-
-    // 1.5 DAY / NIGHT THEME TOGGLE (SWITCHING DARK / LIGHT LOGO TYPOGRAPHY)
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const heroLogoImg = document.querySelector('.hero-logo-main');
-
-    if (themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', () => {
-            document.body.classList.toggle('theme-night');
-            const isNight = document.body.classList.contains('theme-night');
-            if (heroLogoImg) {
-                heroLogoImg.src = isNight ? 'assets/logo_typography_light.webp' : 'assets/logo_typography_dark.webp';
-            }
         });
     }
 
