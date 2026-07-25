@@ -2177,24 +2177,30 @@ body.theme-night .layer-svg-6 {
         text-align: center;
     }
 
-    /* 3. HERO PARALLAX ON MOBILE (NO EXCESSIVE TOP MARGIN, LOGO TYPOGRAPHY BELOW PARALLAX OBJECTS) */
+    /* 3. HERO PARALLAX ON MOBILE (ARTWORK AT TOP, LOGO TYPOGRAPHY BELOW ENSO CIRCLE) */
     .hero-parallax {
         min-height: 100vh;
         padding-top: 0;
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
+        justify-content: flex-start;
     }
 
-    /* Logo typography positioned BELOW parallax objects on mobile */
+    /* Move all parallax artwork layers up to the top right below navbar */
+    .hero-parallax .parallax-layer[class*="layer-svg-"] {
+        background-position: center top 55px !important;
+        background-size: min(92vw, 420px) auto !important;
+    }
+
+    /* Logo typography positioned cleanly BELOW the Enso circle artwork */
     .parallax-text {
         position: relative;
         top: auto;
         left: auto;
         transform: none !important;
         z-index: 10;
-        margin-top: 52vh;
-        margin-bottom: 2rem;
+        margin-top: calc(min(92vw, 420px) + 65px);
+        margin-bottom: 2.5rem;
         padding: 0 1.5rem;
         width: 100%;
         text-align: center;
