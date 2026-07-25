@@ -2,6 +2,13 @@
    EL CAMINO DEL SAMURAI - INTERACTIVE SCRIPTS
    ========================================================================== */
 
+// Import static WebP assets for Vite production build bundling and resolution
+import logoTypographyLight from './assets/logo_typography_light.webp';
+import logoTypographyDark from './assets/logo_typography_dark.webp';
+import cloudTexture1 from './assets/cloud_texture_1.webp';
+import cloudTexture2 from './assets/cloud_texture_2.webp';
+import cloudTexture3 from './assets/cloud_texture_3.webp';
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // 0. DAY/NIGHT THEME CONTROLLER
@@ -29,11 +36,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 // On mobile, below the circle:
                 // Day mode has light parchment background -> use dark logo (black letters + red stamp)
                 // Night mode has dark night background -> use light logo (white letters + red stamp)
-                heroLogoImg.src = isNight ? 'assets/logo_typography_light.webp' : 'assets/logo_typography_dark.webp';
+                heroLogoImg.src = isNight ? logoTypographyLight : logoTypographyDark;
             } else {
                 // On desktop, over Mount Fuji / Enso circle artwork:
                 // Always use light logo (white letters + red stamp)
-                heroLogoImg.src = 'assets/logo_typography_light.webp';
+                heroLogoImg.src = logoTypographyLight;
             }
         }
 
@@ -96,9 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return img;
         }
 
-        const img1 = createCloudImage('assets/cloud_texture_1.webp');
-        const img2 = createCloudImage('assets/cloud_texture_2.webp');
-        const img3 = createCloudImage('assets/cloud_texture_3.webp');
+        const img1 = createCloudImage(cloudTexture1);
+        const img2 = createCloudImage(cloudTexture2);
+        const img3 = createCloudImage(cloudTexture3);
         const textures = [img1, img2, img3];
 
         // Safety fallback: start clouds within 300ms regardless of network state
