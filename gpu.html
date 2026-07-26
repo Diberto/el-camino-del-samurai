@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel GPU & Configuración Atmosférica | El Camino del Samurái</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ESTILOS ESPECÍFICOS DEL PANEL GPU CONTROLLER */
+        .gpu-page {
+            background-color: #07080a;
+            color: #f8f9fa;
+            min-height: 100vh;
+            padding-bottom: 4rem;
+        }
+
+        .gpu-header {
+            background: linear-gradient(180deg, rgba(15, 17, 26, 0.95) 0%, rgba(7, 8, 10, 0.8) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.25rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+
+        .gpu-header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .gpu-title-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .gpu-title-icon {
+            font-size: 1.6rem;
+            color: var(--accent-red);
+            text-shadow: 0 0 12px var(--accent-red-glow);
+        }
+
+        .gpu-title {
+            font-family: var(--font-title);
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            margin: 0;
+        }
+
+        .gpu-badge-scope {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 12px;
+            background: rgba(216, 17, 36, 0.2);
+            border: 1px solid var(--accent-red);
+            color: var(--accent-red);
+            letter-spacing: 0.08em;
+        }
+
+        .gpu-grid {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* LIVE PREVIEW CONTAINER */
+        .preview-card {
+            background: rgba(15, 17, 26, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: sticky;
+            top: 90px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .preview-title {
+            font-family: var(--font-title);
+            font-size: 1.05rem;
+            color: var(--accent-gold);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .preview-frame {
+            position: relative;
+            width: 100%;
+            height: 480px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: #000;
+        }
+
+        .preview-frame canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* CONTROL SECTIONS */
+        .config-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .config-card {
+            background: rgba(15, 17, 26, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(16px);
+        }
+
+        .config-card-title {
+            font-family: var(--font-title);
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0.75rem;
+        }
+
+        .control-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .control-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.4rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .control-val {
+            color: var(--accent-red);
+            font-family: var(--font-title);
+            font-weight: 700;
+        }
+
+        .control-slider {
+            width: 100%;
+            accent-color: var(--accent-red);
+            height: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .control-select, .control-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
+            padding: 0.6rem 0.8rem;
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+        }
+
+        .control-select:focus, .control-input:focus {
+            border-color: var(--accent-red);
+            outline: none;
+        }
+
+        .color-pickers-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+        }
+
+        .color-picker-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            font-size: 0.8rem;
+        }
+
+        .color-picker-input {
+            width: 100%;
+            height: 36px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .presets-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .btn-preset {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 1024px) {
+            .gpu-grid {
+                grid-template-columns: 1fr;
+            }
+            .preview-card {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body class="gpu-page">
+
+    <!-- Header / Navbar del Panel GPU -->
+    <header class="gpu-header">
+        <div class="gpu-header-content">
+            <div class="gpu-title-group">
+                <span class="gpu-title-icon">⚡</span>
+                <h1 class="gpu-title">Panel GPU & Configuración Atmosférica</h1>
+                <span class="gpu-badge-scope" id="scope-indicator">MODO USUARIO</span>
+            </div>
+            <a href="index.html" class="btn btn-secondary" style="padding: 0.5rem 1.2rem; font-size: 0.85rem;">
+                ← Volver al Sitio Principal
+            </a>
+        </div>
+    </header>
+
+    <main class="gpu-grid">
+
+        <!-- Columna Izquierda: Vista Previa en Vivo en Tiempo Real -->
+        <div class="preview-card">
+            <div class="preview-header">
+                <h2 class="preview-title">👁️ Vista Previa en Tiempo Real</h2>
+                <button class="theme-toggle-btn" id="preview-theme-toggle" title="Alternar Día/Noche en la Previa" style="position: relative; right: 0; top: 0; transform: none;">
+                    <div class="toggle-sky-bg">
+                        <div class="toggle-sky-night">
+                            <span class="toggle-star star-1"></span>
+                            <span class="toggle-star star-2"></span>
+                            <span class="toggle-star star-3"></span>
+                            <span class="toggle-moon-aura"></span>
+                        </div>
+                        <div class="toggle-sky-day">
+                            <span class="toggle-sun-rays"></span>
+                            <span class="toggle-cloud cloud-1"></span>
+                            <span class="toggle-cloud cloud-2"></span>
+                        </div>
+                    </div>
+                    <span class="kanji-day">日</span>
+                    <span class="kanji-night">月</span>
+                </button>
+            </div>
+
+            <div class="preview-frame" id="gpu-preview-frame">
+                <!-- Capa de cielo animado de prueba -->
+                <div class="sky-container" style="position: absolute; width: 100%; height: 100%;">
+                    <div class="sky-layer sky-day" id="preview-sky-day">
+                        <div class="sun-glow"></div>
+                        <canvas id="clouds-bg-canvas"></canvas>
+                    </div>
+                    <div class="sky-layer sky-night" id="preview-sky-night">
+                        <canvas id="starfield-canvas"></canvas>
+                        <div class="moon-aura"></div>
+                    </div>
+                </div>
+                <!-- Lienzo de Pétalos Sakura -->
+                <canvas id="sakura-canvas" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"></canvas>
+                <!-- Lienzo de Nubes Frontales -->
+                <canvas id="clouds-fg-canvas" style="position: absolute; top:-15%; left:-15%; width:130%; height:130%; pointer-events:none;"></canvas>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.75rem; text-align: center;">
+                ✨ <em>Mueve el ratón sobre la previa para probar la dinámica de viento y partículas</em>
+            </p>
+        </div>
+
+        <!-- Columna Derecha: Panel de Controles Avanzados -->
+        <div class="config-panel">
+
+            <!-- 1. Nubes & Atmósfera -->
+            <div class="config-card">
+                <h3 class="config-card-title">☁️ Nubes & Motor Volumétrico</h3>
+                
+                <div class="control-group">
+                    <div class="control-label-row">
+                        <span>Velocidad de Nubes</span>
+                        <span class="control-val" id="val-cloud-speed">1.0x</span>
+                    </div>
+                    <input type="range" class="control-slider" id="input-cloud-speed" min="0.1" max="3.0" step="0.1" value="1.0">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label-row">
+                        <span>Dirección del Viento</span>
+                        <span class="control-val" id="val-cloud-dir">Derecha ➡️</span>
+                    </div>
+                    <select class="control-select" id="input-cloud-dir">
+                        <option value="1">Derecha ➡️</option>
+                        <option value="-1">Izquierda ⬅️</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label-row">
+                        <span>Aceleración Flujo</span>
+                        <span class="control-val" id="val-cloud-acc">1.0x</span>
+                    </div>
+                    <input type="range" class="control-slider" id="input-cloud-acc" min="0.5" max="2.5" step="0.1" value="1.0">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label-row">
+                        <span>Densidad Nubes Fondo</span>
+                        <span class="control-val" id="val-cloud-count-bg">14</span>
+                    </div>
+                    <input type="range" class="control-slider" id="input-cloud-count-bg" min="4" max="30" step="1" value="14">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label-row">
+                        <span>Densidad Nubes Frontales</span>
+                        <span class="control-val" id="val-cloud-count-fg">9</span>
+                    </div>
+                    <input type="range" class="control-slider" id="input-cloud-count-fg" min="2" max="20" step="1" value="9">
+                </div>
+            </div>
+
+            <!-- 2. Partículas Sakura & Estrellas -->
+            <div class="config-card">
+                <h3 class="config-card-title">🌸 Partículas (Sakura & Estrellas)</h3>
+
+                <div class="control-group">
+                    <div class="control-label-row">
+                        <span>Pétalos Sakura en Pantalla</span>
+                        <span class="control-val" id="val-sakura-count">50</span>
+                    </div>
+                    <input type="range" class="control-slider" id="input-sakura-count" min="10" max="150" step="5" value="50">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label-row">
+                        <span>Velocidad de Caída Sakura</span>
+                        <span class="control-val" id="val-sakura-speed">1.0x</span>
+                    </div>
+                    <input type="range" class="control-slider" id="input-sakura-speed" min="0.2" max="3.0" step="0.1" value="1.0">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label-row">
+                        <span>Sensibilidad al Viento del Ratón</span>
+                        <span class="control-val" id="val-wind-sens">1.0x</span>
+                    </div>
+                    <input type="range" class="control-slider" id="input-wind-sens" min="0.0" max="3.0" step="0.1" value="1.0">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label-row">
+                        <span>Densidad Estrellas (Modo Noche)</span>
+                        <span class="control-val" id="val-star-count">130</span>
+                    </div>
+                    <input type="range" class="control-slider" id="input-star-count" min="30" max="300" step="10" value="130">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label-row">
+                        <span>Intervalo Estrellas Fugaces</span>
+                        <span class="control-val" id="val-shooting-freq">5s</span>
+                    </div>
+                    <input type="range" class="control-slider" id="input-shooting-freq" min="2" max="15" step="1" value="5">
+                </div>
+            </div>
+
+            <!-- 3. Cielos Día / Noche & Fondos -->
+            <div class="config-card">
+                <h3 class="config-card-title">☀️ Degradados de Cielo (Día & Noche)</h3>
+
+                <div class="control-group">
+                    <div class="control-label-row">
+                        <span>Cielo Día (Superior / Medio / Inferior)</span>
+                    </div>
+                    <div class="color-pickers-row">
+                        <div class="color-picker-item">
+                            <span>Superior</span>
+                            <input type="color" class="color-picker-input" id="input-day-top" value="#0d1b2a">
+                        </div>
+                        <div class="color-picker-item">
+                            <span>Medio</span>
+                            <input type="color" class="color-picker-input" id="input-day-mid" value="#1e3c72">
+                        </div>
+                        <div class="color-picker-item">
+                            <span>Inferior</span>
+                            <input type="color" class="color-picker-input" id="input-day-bottom" value="#080d1a">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label-row">
+                        <span>Cielo Noche (Superior / Medio / Inferior)</span>
+                    </div>
+                    <div class="color-pickers-row">
+                        <div class="color-picker-item">
+                            <span>Superior</span>
+                            <input type="color" class="color-picker-input" id="input-night-top" value="#02040b">
+                        </div>
+                        <div class="color-picker-item">
+                            <span>Medio</span>
+                            <input type="color" class="color-picker-input" id="input-night-mid" value="#111a32">
+                        </div>
+                        <div class="color-picker-item">
+                            <span>Inferior</span>
+                            <input type="color" class="color-picker-input" id="input-night-bottom" value="#07080a">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Opciones GPU & Rendimiento Hardware -->
+            <div class="config-card">
+                <h3 class="config-card-title">⚡ Aceleración GPU & Rendimiento</h3>
+
+                <div class="control-group">
+                    <div class="control-label-row">
+                        <span>Modo de Renderizado Canvas</span>
+                    </div>
+                    <select class="control-select" id="input-render-mode">
+                        <option value="gpu2d">GPU Canvas 2D (Acelerado por HW)</option>
+                        <option value="webgl">WebGL Experimental</option>
+                        <option value="canvas2d">Estándar 2D (Compatibilidad)</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label-row">
+                        <span>Límite de Fotogramas (FPS Cap)</span>
+                    </div>
+                    <select class="control-select" id="input-fps-cap">
+                        <option value="60">60 FPS (Recomendado Suave)</option>
+                        <option value="30">30 FPS (Ahorro de Batería)</option>
+                        <option value="120">120 FPS (Alta Tasa de Refresco)</option>
+                        <option value="0">Sin Límite (Máximo Rendimiento)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 5. Presets & Ámbito de Guardado -->
+            <div class="config-card">
+                <h3 class="config-card-title">💾 Gestión de Presets & Guardado</h3>
+
+                <div class="control-group">
+                    <div class="control-label-row">
+                        <span>Ámbito de Aplicación</span>
+                    </div>
+                    <select class="control-select" id="input-scope-select">
+                        <option value="user">Mi Usuario (Local Preference)</option>
+                        <option value="global">Global del Sitio (Preset Base)</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label-row">
+                        <span>Cargar Preset Guardado</span>
+                    </div>
+                    <select class="control-select" id="input-preset-select">
+                        <!-- Llenado dinámicamente -->
+                    </select>
+                </div>
+
+                <div class="presets-bar">
+                    <button class="btn btn-primary btn-preset" id="btn-save-config">💾 Guardar Configuración</button>
+                    <button class="btn btn-secondary btn-preset" id="btn-save-new-preset">➕ Nuevo Preset</button>
+                    <button class="btn btn-secondary btn-preset" id="btn-export-preset">📤 Exportar JSON</button>
+                    <button class="btn btn-secondary btn-preset" id="btn-reset-default">🔄 Restablecer Inicial</button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script type="module" src="gpu-panel.js"></script>
+</body>
+</html>

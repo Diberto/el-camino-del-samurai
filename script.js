@@ -12,6 +12,7 @@ import kanjiStamp from './assets/kanji_stamp.webp';
 import sakuraPetal1 from './assets/sakura_petal_1.webp';
 import sakuraPetal2 from './assets/sakura_petal_2.webp';
 import sakuraPetal3 from './assets/sakura_petal_3.webp';
+import { gpuConfig } from './gpu-config.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
