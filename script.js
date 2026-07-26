@@ -64,18 +64,22 @@ document.addEventListener('DOMContentLoaded', () => {
     function initVolumetricClouds() {
         const bgCanvas = document.getElementById('clouds-bg-canvas');
         const fgCanvas = document.getElementById('clouds-fg-canvas');
-        if (!bgCanvas || !fgCanvas) return;
+        if (!bgCanvas && !fgCanvas) return;
 
-        let bgCtx = bgCanvas.getContext('2d', { alpha: true });
-        let fgCtx = fgCanvas.getContext('2d', { alpha: true });
-        if (!bgCtx || !fgCtx) return;
+        let bgCtx = bgCanvas ? bgCanvas.getContext('2d', { alpha: true }) : null;
+        let fgCtx = fgCanvas ? fgCanvas.getContext('2d', { alpha: true }) : null;
+        if (!bgCtx && !fgCtx) return;
 
-        let width = bgCanvas.width = fgCanvas.width = Math.ceil(window.innerWidth * 1.3);
-        let height = bgCanvas.height = fgCanvas.height = Math.ceil(window.innerHeight * 1.3);
+        let width = Math.ceil(window.innerWidth * 1.3);
+        let height = Math.ceil(window.innerHeight * 1.3);
+        if (bgCanvas) { bgCanvas.width = width; bgCanvas.height = height; }
+        if (fgCanvas) { fgCanvas.width = width; fgCanvas.height = height; }
 
         window.addEventListener('resize', () => {
-            width = bgCanvas.width = fgCanvas.width = Math.ceil(window.innerWidth * 1.3);
-            height = bgCanvas.height = fgCanvas.height = Math.ceil(window.innerHeight * 1.3);
+            width = Math.ceil(window.innerWidth * 1.3);
+            height = Math.ceil(window.innerHeight * 1.3);
+            if (bgCanvas) { bgCanvas.width = width; bgCanvas.height = height; }
+            if (fgCanvas) { fgCanvas.width = width; fgCanvas.height = height; }
         }, { passive: true });
 
         // Load 3 high-resolution organic cloud WebP textures with fail-safe error handling
@@ -155,46 +159,50 @@ document.addEventListener('DOMContentLoaded', () => {
             time += 0.016;
 
             // 1. Render Background Clouds
-            bgCtx.clearRect(0, 0, width, height);
-            for (let i = 0; i < bgClouds.length; i++) {
-                const c = bgClouds[i];
-                c.x += c.speedX;
-                const swayY = Math.sin(time * c.swaySpeed + c.swayOffset) * 8;
+            if (bgCtx) {
+                bgCtx.clearRect(0, 0, width, height);
+                for (let i = 0; i < bgClouds.length; i++) {
+                    const c = bgClouds[i];
+                    c.x += c.speedX;
+                    const swayY = Math.sin(time * c.swaySpeed + c.swayOffset) * 8;
 
-                if (c.x > width + 400) {
-                    c.x = -500;
-                    c.y = Math.random() * (height * 0.48) - 40;
-                }
+                    if (c.x > width + 400) {
+                        c.x = -500;
+                        c.y = Math.random() * (height * 0.48) - 40;
+                    }
 
-                if (c.texture && c.texture.complete && c.texture.naturalWidth > 0) {
-                    bgCtx.save();
-                    bgCtx.globalAlpha = c.opacity;
-                    bgCtx.translate(c.x, c.y + swayY);
-                    bgCtx.scale(c.scaleX, c.scaleY);
-                    bgCtx.drawImage(c.texture, -c.texture.width / 2, -c.texture.height / 2);
-                    bgCtx.restore();
+                    if (c.texture && c.texture.complete && c.texture.naturalWidth > 0) {
+                        bgCtx.save();
+                        bgCtx.globalAlpha = c.opacity;
+                        bgCtx.translate(c.x, c.y + swayY);
+                        bgCtx.scale(c.scaleX, c.scaleY);
+                        bgCtx.drawImage(c.texture, -c.texture.width / 2, -c.texture.height / 2);
+                        bgCtx.restore();
+                    }
                 }
             }
 
             // 2. Render Foreground Volumetric Clouds (Crossing Mount Fuji)
-            fgCtx.clearRect(0, 0, width, height);
-            for (let i = 0; i < fgClouds.length; i++) {
-                const c = fgClouds[i];
-                c.x += c.speedX;
-                const swayY = Math.sin(time * c.swaySpeed + c.swayOffset) * 12;
+            if (fgCtx) {
+                fgCtx.clearRect(0, 0, width, height);
+                for (let i = 0; i < fgClouds.length; i++) {
+                    const c = fgClouds[i];
+                    c.x += c.speedX;
+                    const swayY = Math.sin(time * c.swaySpeed + c.swayOffset) * 12;
 
-                if (c.x > width + 500) {
-                    c.x = -600;
-                    c.y = Math.random() * (height * 0.40) + 10;
-                }
+                    if (c.x > width + 500) {
+                        c.x = -600;
+                        c.y = Math.random() * (height * 0.40) + 10;
+                    }
 
-                if (c.texture && c.texture.complete && c.texture.naturalWidth > 0) {
-                    fgCtx.save();
-                    fgCtx.globalAlpha = c.opacity;
-                    fgCtx.translate(c.x, c.y + swayY);
-                    fgCtx.scale(c.scaleX, c.scaleY);
-                    fgCtx.drawImage(c.texture, -c.texture.width / 2, -c.texture.height / 2);
-                    fgCtx.restore();
+                    if (c.texture && c.texture.complete && c.texture.naturalWidth > 0) {
+                        fgCtx.save();
+                        fgCtx.globalAlpha = c.opacity;
+                        fgCtx.translate(c.x, c.y + swayY);
+                        fgCtx.scale(c.scaleX, c.scaleY);
+                        fgCtx.drawImage(c.texture, -c.texture.width / 2, -c.texture.height / 2);
+                        fgCtx.restore();
+                    }
                 }
             }
 
