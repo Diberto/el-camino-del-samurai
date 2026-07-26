@@ -264,6 +264,30 @@ img {
     z-index: -1;
 }
 
+/* DESKTOP NAV MENU LINKS (LOCK TO LIGHT WHITE NIGHT MODE COLOR IN ALL THEMES) */
+.nav-menu ul {
+    display: flex;
+    align-items: center;
+    gap: 2.2rem;
+    list-style: none;
+}
+
+.nav-link {
+    font-family: var(--font-title);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: #f8f9fa !important;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+    transition: var(--transition-fast);
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--accent-red) !important;
+    text-shadow: 0 0 14px var(--accent-red-glow);
+}
+
 /* Scrolled Sticky Navbar (Identical in All Modes: Dark Glass Fade Gradient) */
 .navbar.scrolled {
     padding: 0.75rem 0;
@@ -275,14 +299,14 @@ img {
 }
 
 .navbar.scrolled .nav-link {
-    color: #f8f9fa;
+    color: #f8f9fa !important;
     font-weight: 600;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 .navbar.scrolled .nav-link:hover,
 .navbar.scrolled .nav-link.active {
-    color: var(--accent-red);
+    color: var(--accent-red) !important;
     text-shadow: 0 0 12px var(--accent-red-glow);
 }
 
