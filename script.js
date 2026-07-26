@@ -839,8 +839,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tomoTabs.length) {
             tomoTabs.forEach(tab => {
                 tab.addEventListener('click', () => {
-                    tomoTabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
+                    tomoTabs.forEach(t => {
+                        t.classList.remove('active', 'btn-primary');
+                        t.classList.add('btn-secondary');
+                    });
+                    tab.classList.add('active', 'btn-primary');
+                    tab.classList.remove('btn-secondary');
                     
                     const tomo = tab.getAttribute('data-tomo');
                     if (tomo === '1') {
