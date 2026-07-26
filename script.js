@@ -13,8 +13,47 @@ import sakuraPetal1 from './assets/sakura_petal_1.webp';
 import sakuraPetal2 from './assets/sakura_petal_2.webp';
 import sakuraPetal3 from './assets/sakura_petal_3.webp';
 import { gpuConfig } from './gpu-config.js';
+import { japaneseFluteAudio } from './audio-engine.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    // -1. TRADITIONAL JAPANESE SHAKUHACHI FLUTE AUDIO CONTROLLER
+    function initAudioController() {
+        const audioBtn = document.getElementById('audio-toggle');
+        if (!audioBtn) return;
+
+        const iconMuted = audioBtn.querySelector('.audio-muted');
+        const iconPlaying = audioBtn.querySelector('.audio-playing');
+
+        function updateAudioUI(isPlaying) {
+            if (isPlaying) {
+                audioBtn.classList.add('playing');
+                if (iconMuted) iconMuted.style.display = 'none';
+                if (iconPlaying) iconPlaying.style.display = 'inline-block';
+            } else {
+                audioBtn.classList.remove('playing');
+                if (iconMuted) iconMuted.style.display = 'inline-block';
+                if (iconPlaying) iconPlaying.style.display = 'none';
+            }
+        }
+
+        audioBtn.addEventListener('click', () => {
+            const isPlayingNow = japaneseFluteAudio.toggle();
+            updateAudioUI(isPlayingNow);
+        });
+
+        if (localStorage.getItem('samurai_audio_active') === 'true') {
+            const startOnUserGesture = () => {
+                japaneseFluteAudio.start();
+                updateAudioUI(true);
+                window.removeEventListener('click', startOnUserGesture);
+                window.removeEventListener('keydown', startOnUserGesture);
+            };
+            window.addEventListener('click', startOnUserGesture, { once: true });
+            window.addEventListener('keydown', startOnUserGesture, { once: true });
+        }
+    }
+    initAudioController();
 
     // 0. DAY/NIGHT THEME CONTROLLER
     function initDayNightCycle() {
