@@ -808,179 +808,158 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 10. INTERACTIVE 3D BOOK CONTROLLER
-    const tomoTabs = document.querySelectorAll('.tomo-tab');
-    const stageTomo1 = document.getElementById('stage-tomo-1');
-    const stageTomo2 = document.getElementById('stage-tomo-2');
-    const card1 = document.getElementById('book-card-1');
-    const card2 = document.getElementById('book-card-2');
-    const btnFlip3d = document.getElementById('btn-flip-3d');
-    const btnReset3d = document.getElementById('btn-reset-3d');
+    // 10. INTERACTIVE 3D BOOK CONTROLLER (SLOW IDLE ROTATION + DRAG + SINGLE FLIP BUTTON)
+    function init3DBookEngine() {
+        const tomoTabs = document.querySelectorAll('.tomo-tab');
+        const stageTomo1 = document.getElementById('stage-tomo-1');
+        const stageTomo2 = document.getElementById('stage-tomo-2');
+        const card1 = document.getElementById('book-card-1');
+        const card2 = document.getElementById('book-card-2');
+        const btnFlipSingle = document.getElementById('btn-flip-single');
+        const btnFlipText = document.getElementById('btn-flip-text');
 
-    let activeCard = card1;
-    let currentRotY = 0;
-    let currentRotX = 0;
+        if (!card1 && !card2) return;
 
-    // Tab Switcher
-    if (tomoTabs.length) {
-        tomoTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tomoTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                
-                const tomo = tab.getAttribute('data-tomo');
-                if (tomo === '1') {
-                    if (stageTomo1) stageTomo1.style.display = 'flex';
-                    if (stageTomo2) stageTomo2.style.display = 'none';
-                    activeCard = card1;
-                } else {
-                    if (stageTomo1) stageTomo1.style.display = 'none';
-                    if (stageTomo2) stageTomo2.style.display = 'flex';
-                    activeCard = card2;
-                }
-                resetCardView(activeCard);
-            });
-        });
-    }
-
-    function updateBookTransform(card, rx, ry) {
-        if (!card) return;
-        card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
-        
-        const shadow = card.querySelector('.book-3d-shadow');
-        if (shadow) {
-            const shadowX = ry * 0.7;
-            shadow.style.transform = `rotateX(90deg) translateZ(-40px) translateX(${shadowX}px)`;
-        }
-    }
-
-    function resetCardView(card) {
-        currentRotX = 0;
-        currentRotY = 0;
-        if (card) {
-            card.setAttribute('data-rotated', 'false');
-            updateBookTransform(card, 0, 0);
-        }
-        if (btnFlip3d) {
-            const label = btnFlip3d.querySelector('span');
-            if (label) label.textContent = 'Girar 180° (Ver Contraportada)';
-        }
-    }
-
-    function setup3DCardInteractions(card) {
-        if (!card) return;
-
+        let activeCard = card1;
         let isDragging = false;
+        let isFlipped = false;
         let startX = 0;
         let startY = 0;
+        
+        let rotX = -4;
+        let rotY = 12;
+        let targetRotX = -4;
+        let targetRotY = 12;
+        let baseRotY = 0;
 
-        card.addEventListener('mousemove', (e) => {
-            if (isDragging) return;
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
+        let idleAngle = 0;
+        let lastInteractionTime = Date.now();
 
-            const baseRotY = card.getAttribute('data-rotated') === 'true' ? 180 : 0;
-            const tiltX = -(y / rect.height) * 20;
-            const tiltY = baseRotY + (x / rect.width) * 25;
+        // 1. Tab Switcher
+        if (tomoTabs.length) {
+            tomoTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tomoTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    const tomo = tab.getAttribute('data-tomo');
+                    if (tomo === '1') {
+                        if (stageTomo1) stageTomo1.style.display = 'flex';
+                        if (stageTomo2) stageTomo2.style.display = 'none';
+                        activeCard = card1;
+                    } else {
+                        if (stageTomo1) stageTomo1.style.display = 'none';
+                        if (stageTomo2) stageTomo2.style.display = 'flex';
+                        activeCard = card2;
+                    }
+                    isFlipped = false;
+                    baseRotY = 0;
+                    targetRotY = 12;
+                    targetRotX = -4;
+                    if (btnFlipText) btnFlipText.textContent = 'Girar a Contraportada';
+                    lastInteractionTime = Date.now();
+                });
+            });
+        }
 
-            updateBookTransform(card, tiltX, tiltY);
-        });
+        // 2. Single Flip Button
+        if (btnFlipSingle) {
+            btnFlipSingle.addEventListener('click', () => {
+                isFlipped = !isFlipped;
+                baseRotY = isFlipped ? 180 : 0;
+                targetRotY = baseRotY + (isFlipped ? -12 : 12);
+                targetRotX = -4;
+                if (btnFlipText) {
+                    btnFlipText.textContent = isFlipped ? 'Girar a Portada' : 'Girar a Contraportada';
+                }
+                lastInteractionTime = Date.now();
+            });
+        }
 
-        card.addEventListener('mouseleave', () => {
-            if (isDragging) return;
-            const baseRotY = card.getAttribute('data-rotated') === 'true' ? 180 : 0;
-            updateBookTransform(card, 0, baseRotY);
-        });
-
-        card.addEventListener('mousedown', (e) => {
+        // 3. Mouse & Touch Drag Tracking
+        function onDragStart(clientX, clientY) {
             isDragging = true;
-            startX = e.clientX;
-            startY = e.clientY;
-            card.style.transition = 'none';
-        });
+            startX = clientX;
+            startY = clientY;
+            lastInteractionTime = Date.now();
+        }
 
-        window.addEventListener('mousemove', (e) => {
+        function onDragMove(clientX, clientY) {
             if (!isDragging) return;
-            const deltaX = e.clientX - startX;
-            const deltaY = e.clientY - startY;
+            const deltaX = clientX - startX;
+            const deltaY = clientY - startY;
 
-            currentRotY += deltaX * 0.5;
-            currentRotX -= deltaY * 0.5;
+            targetRotY += deltaX * 0.55;
+            targetRotX = Math.max(-35, Math.min(35, targetRotX - deltaY * 0.45));
 
-            startX = e.clientX;
-            startY = e.clientY;
+            startX = clientX;
+            startY = clientY;
+            lastInteractionTime = Date.now();
+        }
 
-            updateBookTransform(card, currentRotX, currentRotY);
-        });
-
-        window.addEventListener('mouseup', () => {
+        function onDragEnd() {
             if (!isDragging) return;
             isDragging = false;
-            card.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+            lastInteractionTime = Date.now();
+        }
+
+        [card1, card2].forEach(card => {
+            if (!card) return;
+
+            card.addEventListener('mousedown', (e) => onDragStart(e.clientX, e.clientY));
+            card.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    onDragStart(e.touches[0].clientX, e.touches[0].clientY);
+                }
+            }, { passive: true });
         });
 
-        card.addEventListener('touchstart', (e) => {
-            if (e.touches.length === 1) {
-                isDragging = true;
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-                card.style.transition = 'none';
-            }
-        });
-
+        window.addEventListener('mousemove', (e) => onDragMove(e.clientX, e.clientY));
         window.addEventListener('touchmove', (e) => {
-            if (!isDragging || e.touches.length !== 1) return;
-            const deltaX = e.touches[0].clientX - startX;
-            const deltaY = e.touches[0].clientY - startY;
-
-            currentRotY += deltaX * 0.6;
-            currentRotX -= deltaY * 0.6;
-
-            startX = e.touches[0].clientX;
-            startY = e.touches[0].clientY;
-
-            updateBookTransform(card, currentRotX, currentRotY);
-        });
-
-        window.addEventListener('touchend', () => {
-            if (!isDragging) return;
-            isDragging = false;
-            card.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
-        });
-    }
-
-    setup3DCardInteractions(card1);
-    setup3DCardInteractions(card2);
-
-    if (btnFlip3d) {
-        btnFlip3d.addEventListener('click', () => {
-            if (!activeCard) return;
-            const isFlipped = activeCard.getAttribute('data-rotated') === 'true';
-            
-            if (!isFlipped) {
-                activeCard.setAttribute('data-rotated', 'true');
-                currentRotY = 180;
-                currentRotX = 0;
-                updateBookTransform(activeCard, 0, 180);
-                const label = btnFlip3d.querySelector('span');
-                if (label) label.textContent = 'Girar a Portada Frontal';
-            } else {
-                activeCard.setAttribute('data-rotated', 'false');
-                currentRotY = 0;
-                currentRotX = 0;
-                updateBookTransform(activeCard, 0, 0);
-                const label = btnFlip3d.querySelector('span');
-                if (label) label.textContent = 'Girar 180° (Ver Contraportada)';
+            if (e.touches.length === 1) {
+                onDragMove(e.touches[0].clientX, e.touches[0].clientY);
             }
-        });
+        }, { passive: true });
+
+        window.addEventListener('mouseup', onDragEnd);
+        window.addEventListener('touchend', onDragEnd);
+
+        // 4. Slow Idle Animation Loop
+        function animate3DBook() {
+            const now = Date.now();
+            const timeSinceInteraction = now - lastInteractionTime;
+
+            if (!isDragging && timeSinceInteraction > 1200) {
+                idleAngle += 0.015;
+                const swayY = Math.sin(idleAngle) * 8;
+                const swayX = Math.cos(idleAngle * 0.7) * 3;
+
+                const idleTargetY = baseRotY + swayY;
+                const idleTargetX = swayX;
+
+                targetRotY += (idleTargetY - targetRotY) * 0.03;
+                targetRotX += (idleTargetX - targetRotX) * 0.03;
+            }
+
+            rotY += (targetRotY - rotY) * 0.12;
+            rotX += (targetRotX - rotX) * 0.12;
+
+            if (activeCard) {
+                activeCard.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+                const shadow = activeCard.querySelector('.book-3d-shadow');
+                if (shadow) {
+                    const shadowX = (rotY - baseRotY) * 0.6;
+                    shadow.style.transform = `rotateX(90deg) translateZ(-40px) translateX(${shadowX}px)`;
+                }
+            }
+
+            requestAnimationFrame(animate3DBook);
+        }
+
+        animate3DBook();
     }
 
-    if (btnReset3d) {
-        btnReset3d.addEventListener('click', () => {
-            resetCardView(activeCard);
-        });
-    }
+    init3DBookEngine();
 
     // 13. PHOTO GALLERY LIGHTBOX MODAL CONTROLLER
     function initGalleryLightbox() {

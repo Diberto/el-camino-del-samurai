@@ -812,6 +812,231 @@ body.theme-night .hero-logo-main {
     position: relative;
 }
 
+/* 3D BOOK ENGINE STYLES (20% LARGER + PREMIUM SEGMENTED TABS) */
+.book-3d-wrapper {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.tomo-tabs {
+    display: inline-flex;
+    background: rgba(12, 13, 20, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 40px;
+    padding: 6px;
+    gap: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(216, 17, 36, 0.15);
+}
+
+.tomo-tab {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--font-title);
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 0.7rem 1.4rem;
+    border-radius: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tomo-tab:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.tomo-tab.active {
+    background: linear-gradient(135deg, var(--accent-red) 0%, #a8031d 100%);
+    color: #ffffff;
+    box-shadow: 0 6px 20px rgba(216, 17, 36, 0.55), 0 0 15px var(--accent-red-glow);
+}
+
+.tomo-badge {
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    letter-spacing: 0.08em;
+}
+
+.tomo-tab.active .tomo-badge {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.book-3d-stage {
+    width: 100%;
+    height: 480px;
+    perspective: 1300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.book-3d-card {
+    width: 290px;
+    height: 420px;
+    position: relative;
+    transform-style: preserve-3d;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+    will-change: transform;
+}
+
+.book-3d-card:active {
+    cursor: grabbing;
+}
+
+.book-face-front,
+.book-face-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    box-shadow: 0 22px 45px rgba(0, 0, 0, 0.65), 0 0 30px rgba(216, 17, 36, 0.18);
+}
+
+.book-face-front {
+    transform: translateZ(19px);
+}
+
+.book-face-back {
+    transform: rotateY(180deg) translateZ(19px);
+}
+
+.book-face-front img,
+.book-face-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.book-face-spine {
+    position: absolute;
+    top: 0;
+    left: -38px;
+    width: 38px;
+    height: 100%;
+    background: #0f1017;
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-right: 1px solid rgba(0, 0, 0, 0.4);
+    transform: rotateY(-90deg) translateZ(0);
+    transform-origin: right center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.8rem 0.25rem;
+    color: #ffffff;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.spine-kanji {
+    font-size: 1.1rem;
+    color: var(--accent-red);
+}
+
+.spine-title {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-family: var(--font-title);
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+}
+
+.spine-author {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+}
+
+.book-face-pages {
+    position: absolute;
+    top: 3px;
+    right: 0;
+    width: 36px;
+    height: calc(100% - 6px);
+    background: repeating-linear-gradient(
+        to bottom,
+        #f5edd6 0px,
+        #e5d7b5 2px,
+        #f5edd6 4px
+    );
+    transform: rotateY(90deg) translateZ(271px);
+    transform-origin: right center;
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.35);
+}
+
+.book-3d-shadow {
+    position: absolute;
+    bottom: -35px;
+    left: 10%;
+    width: 80%;
+    height: 35px;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.7) 0%, transparent 70%);
+    transform: rotateX(90deg) translateZ(-40px);
+    pointer-events: none;
+    filter: blur(8px);
+}
+
+.book-3d-controls {
+    margin-top: 1.8rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.btn-flip-single {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1.8rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: 30px;
+    box-shadow: 0 8px 25px rgba(216, 17, 36, 0.45);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-flip-single:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 12px 30px rgba(216, 17, 36, 0.65);
+}
+
+.book-3d-hint {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
 .image-wrapper {
     position: relative;
     z-index: 2;
