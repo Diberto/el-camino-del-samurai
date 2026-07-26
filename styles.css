@@ -320,67 +320,222 @@ img {
     position: relative;
 }
 
-/* KANJI TOGGLE BUTTON STYLES (日 = Day / 月 = Night) */
+/* ARTISTIC DAY/NIGHT TOGGLE BUTTON WITH INNER MICRO SKY ENGINE */
 .theme-toggle-btn {
-    background: rgba(255, 255, 255, 0.12);
-    border: 1.5px solid var(--accent-red);
-    border-radius: 50%;
-    width: 42px;
-    height: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
     position: absolute;
     right: 2rem;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--accent-red);
-    font-family: var(--font-title);
-    font-size: 1.25rem;
-    font-weight: 700;
-    box-shadow: 0 0 15px rgba(216, 17, 36, 0.35);
-    transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    background: transparent;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 105;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45), 0 0 15px rgba(255, 255, 255, 0.15);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
 .theme-toggle-btn:hover {
-    background: rgba(216, 17, 36, 0.25);
-    border-color: var(--accent-red-hover);
-    transform: translateY(-50%) scale(1.08);
-    box-shadow: 0 0 22px rgba(216, 17, 36, 0.6);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.65), 0 0 22px rgba(255, 255, 255, 0.35);
 }
 
 .theme-toggle-btn:active {
     transform: translateY(-50%) scale(0.95);
 }
 
+/* Inner Micro Sky Background Container */
+.toggle-sky-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* --- 1. NIGHT SKY INSIDE BUTTON (Visible in Day Mode) --- */
+.toggle-sky-night {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 35% 35%, #182848 0%, #0b1021 65%, #030611 100%);
+    opacity: 1;
+    transition: opacity 0.6s ease;
+}
+
+.toggle-moon-aura {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(190, 220, 255, 0.6) 40%, rgba(130, 170, 245, 0.2) 70%, transparent 100%);
+    filter: blur(1.5px);
+    animation: buttonMoonPulse 3s ease-in-out infinite alternate;
+}
+
+.toggle-star {
+    position: absolute;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 0 4px #ffffff, 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.toggle-star.star-1 {
+    top: 25%;
+    left: 22%;
+    width: 2px;
+    height: 2px;
+    animation: buttonStarBlink 2.1s ease-in-out infinite;
+}
+
+.toggle-star.star-2 {
+    top: 68%;
+    left: 28%;
+    width: 1.5px;
+    height: 1.5px;
+    animation: buttonStarBlink 3.4s ease-in-out infinite 0.9s;
+}
+
+.toggle-star.star-3 {
+    top: 42%;
+    left: 72%;
+    width: 2px;
+    height: 2px;
+    animation: buttonStarBlink 1.8s ease-in-out infinite 0.4s;
+}
+
+/* --- 2. DAY SKY INSIDE BUTTON (Visible in Night Mode) --- */
+.toggle-sky-day {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 65% 25%, #4a90e2 0%, #1e4d8c 70%, #0d2b56 100%);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.toggle-sun-rays {
+    position: absolute;
+    top: -12%;
+    left: -12%;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 245, 180, 0.95) 0%, rgba(255, 200, 90, 0.65) 45%, rgba(255, 150, 40, 0.25) 75%, transparent 100%);
+    filter: blur(2px);
+    animation: buttonSunPulse 3s ease-in-out infinite alternate;
+}
+
+.toggle-cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 10px;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+    filter: blur(0.5px);
+}
+
+.toggle-cloud.cloud-1 {
+    bottom: 20%;
+    left: 12%;
+    width: 20px;
+    height: 9px;
+    animation: buttonCloudDrift1 4s ease-in-out infinite alternate;
+}
+
+.toggle-cloud.cloud-2 {
+    bottom: 38%;
+    right: 10%;
+    width: 15px;
+    height: 7px;
+    animation: buttonCloudDrift2 5s ease-in-out infinite alternate-reverse;
+}
+
+/* KANJI GLOW TYPOGRAPHY OVERLAY */
+.theme-toggle-btn .kanji-day,
+.theme-toggle-btn .kanji-night {
+    position: relative;
+    z-index: 3;
+    font-family: var(--font-title);
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
 .theme-toggle-btn .kanji-day {
-    display: block;
-    color: var(--accent-red);
-    text-shadow: 0 0 8px rgba(216, 17, 36, 0.5);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: none;
+    color: #fff6d6;
+    text-shadow: 0 0 10px rgba(255, 235, 160, 0.95), 0 0 20px rgba(255, 190, 70, 0.8);
 }
 
 .theme-toggle-btn .kanji-night {
-    display: none;
-    color: var(--accent-gold);
-    text-shadow: 0 0 8px rgba(197, 168, 128, 0.6);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: block;
+    color: #eef5ff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.95), 0 0 20px rgba(180, 210, 255, 0.8);
 }
 
+/* STATE SWAPPING WHEN IN NIGHT THEME */
 body.theme-night .theme-toggle-btn {
-    border-color: var(--accent-gold);
-    color: var(--accent-gold);
-    box-shadow: 0 0 15px rgba(197, 168, 128, 0.35);
+    border-color: rgba(255, 235, 170, 0.7);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 210, 100, 0.35);
+}
+
+body.theme-night .toggle-sky-night {
+    opacity: 0;
+}
+
+body.theme-night .toggle-sky-day {
+    opacity: 1;
 }
 
 body.theme-night .theme-toggle-btn .kanji-day {
-    display: none;
+    display: block;
 }
 
 body.theme-night .theme-toggle-btn .kanji-night {
-    display: block;
+    display: none;
+}
+
+/* ANIMATIONS FOR BUTTON MICRO SKY ENGINE */
+@keyframes buttonMoonPulse {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    100% { transform: scale(1.12); opacity: 1; }
+}
+
+@keyframes buttonStarBlink {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.3); }
+}
+
+@keyframes buttonSunPulse {
+    0% { transform: scale(0.92); opacity: 0.85; }
+    100% { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes buttonCloudDrift1 {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(6px); }
+}
+
+@keyframes buttonCloudDrift2 {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-5px); }
 }
 
 /* SKY CONTAINER & DAY/NIGHT ANIMATION SYSTEM (GPU ACCELERATED) */
