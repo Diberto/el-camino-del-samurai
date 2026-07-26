@@ -9,6 +9,9 @@ import cloudTexture1 from './assets/cloud_texture_1.webp';
 import cloudTexture2 from './assets/cloud_texture_2.webp';
 import cloudTexture3 from './assets/cloud_texture_3.webp';
 import kanjiStamp from './assets/kanji_stamp.webp';
+import sakuraPetal1 from './assets/sakura_petal_1.webp';
+import sakuraPetal2 from './assets/sakura_petal_2.webp';
+import sakuraPetal3 from './assets/sakura_petal_3.webp';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -469,9 +472,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     animateParallax();
 
-    // 4. INTERACTIVE SAKURA PETALS (HTML5 CANVAS)
+    // 4. INTERACTIVE SAKURA PETALS (HTML5 CANVAS WITH LAYER 7 & 8 TEXTURES)
     const canvas = document.getElementById('sakura-canvas');
     const ctx = canvas.getContext('2d');
+
+    // Load organic sakura petal textures extracted from layers 7 & 8
+    const petalImg1 = new Image(); petalImg1.src = sakuraPetal1;
+    const petalImg2 = new Image(); petalImg2.src = sakuraPetal2;
+    const petalImg3 = new Image(); petalImg3.src = sakuraPetal3;
+    const sakuraPetalTextures = [petalImg1, petalImg2, petalImg3];
 
     let petals = [];
     const maxPetals = 50;
@@ -537,16 +546,19 @@ document.addEventListener('DOMContentLoaded', () => {
         reset() {
             this.x = Math.random() * (width + 100);
             this.y = -20;
-            this.size = Math.random() * 7 + 4;
+            this.size = Math.random() * 7 + 4; // Maintained exact size
             this._baseSpeedX = Math.random() * -0.8 - 0.3;
             this._baseSpeedY = Math.random() * 0.6 + 0.4;
             this.speedX = this._baseSpeedX;
             this.speedY = this._baseSpeedY;
-            this.alpha = Math.random() * 0.5 + 0.3;
-            this.angle = Math.random() * Math.PI;
-            this.spinSpeed = Math.random() * 0.02 - 0.01;
+            this.alpha = Math.random() * 0.45 + 0.45;
+            this.angle = Math.random() * Math.PI * 2;
+            this.spinSpeed = Math.random() * 0.025 - 0.012;
             this.swing = Math.random() * 0.04;
             this.swingStep = Math.random() * 100;
+            this.flip = Math.random() * Math.PI * 2;
+            this.flipSpeed = Math.random() * 0.03 + 0.01;
+            this.texture = sakuraPetalTextures[Math.floor(Math.random() * sakuraPetalTextures.length)];
         }
 
         update() {
@@ -554,6 +566,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.x += this.speedX + Math.sin(this.swingStep) * 0.3;
             this.y += this.speedY;
             this.angle += this.spinSpeed;
+            this.flip += this.flipSpeed;
 
             const dx = this.x - mousePos.x;
             const dy = this.y - mousePos.y;
@@ -600,12 +613,18 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.save();
             ctx.translate(this.x, this.y);
             ctx.rotate(this.angle);
-            ctx.beginPath();
-            ctx.ellipse(0, 0, this.size, this.size * 0.6, 0, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(230, 57, 70, ${this.alpha})`;
-            ctx.shadowBlur = 6;
-            ctx.shadowColor = 'rgba(230, 57, 70, 0.3)';
-            ctx.fill();
+            ctx.scale(Math.cos(this.flip), 1);
+            ctx.globalAlpha = this.alpha;
+
+            if (this.texture && this.texture.complete && this.texture.naturalWidth > 0) {
+                const drawSize = this.size * 2.4;
+                ctx.drawImage(this.texture, -drawSize / 2, -drawSize / 2, drawSize, drawSize);
+            } else {
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.size, this.size * 0.6, 0, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(230, 57, 70, ${this.alpha})`;
+                ctx.fill();
+            }
             ctx.restore();
         }
     }
