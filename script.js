@@ -64,6 +64,21 @@ document.addEventListener('DOMContentLoaded', () => {
     
     initDayNightCycle();
 
+    // 0.01 APPLY CUSTOM GPU SKY COLORS
+    function applyGpuSkyColors() {
+        const sky = gpuConfig.currentConfig.sky;
+        if (!sky) return;
+        const skyDayEl = document.querySelector('.sky-layer.sky-day');
+        const skyNightEl = document.querySelector('.sky-layer.sky-night');
+        if (skyDayEl) {
+            skyDayEl.style.background = `linear-gradient(180deg, ${sky.dayGradTop} 0%, ${sky.dayGradMid} 50%, ${sky.dayGradBottom} 100%)`;
+        }
+        if (skyNightEl) {
+            skyNightEl.style.background = `linear-gradient(180deg, ${sky.nightGradTop} 0%, ${sky.nightGradMid} 50%, ${sky.nightGradBottom} 100%)`;
+        }
+    }
+    applyGpuSkyColors();
+
     // 0.05 HIGH-FIDELITY VOLUMETRIC CLOUD PARTICLE ENGINE (BACKGROUND & FOREGROUND)
     function initVolumetricClouds() {
         const bgCanvas = document.getElementById('clouds-bg-canvas');
@@ -127,8 +142,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const validTextures = textures.filter(img => img.complete && img.naturalWidth > 0);
             const activeTextures = validTextures.length > 0 ? validTextures : textures;
 
+            const cloudCfg = gpuConfig.currentConfig.clouds;
+            const bgCount = cloudCfg.volumeCountBg || 14;
+            const fgCount = cloudCfg.volumeCountFg || 9;
+
             // Background distant clouds (Behind Mount Fuji - 14 particles)
-            for (let i = 0; i < 14; i++) {
+            for (let i = 0; i < bgCount; i++) {
                 bgClouds.push({
                     x: Math.random() * (width + 600) - 300,
                     y: Math.random() * (height * 0.48) - 40,
@@ -143,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Foreground volumetric clouds (In front of Mount Fuji - 9 particles)
-            for (let i = 0; i < 9; i++) {
+            for (let i = 0; i < fgCount; i++) {
                 fgClouds.push({
                     x: Math.random() * (width + 800) - 400,
                     y: Math.random() * (height * 0.40) + 10,
@@ -161,17 +180,23 @@ document.addEventListener('DOMContentLoaded', () => {
         let time = 0;
         function animateVolumetricClouds() {
             time += 0.016;
+            const cloudCfg = gpuConfig.currentConfig.clouds;
+            const mult = (cloudCfg.speed || 1.0) * (cloudCfg.direction || 1) * (cloudCfg.acceleration || 1.0);
 
             // 1. Render Background Clouds
             if (bgCtx) {
                 bgCtx.clearRect(0, 0, width, height);
                 for (let i = 0; i < bgClouds.length; i++) {
                     const c = bgClouds[i];
-                    c.x += c.speedX;
+                    c.x += c.speedX * mult;
                     const swayY = Math.sin(time * c.swaySpeed + c.swayOffset) * 8;
 
-                    if (c.x > width + 400) {
+                    if (mult > 0 && c.x > width + 400) {
                         c.x = -500;
+                        c.y = Math.random() * (height * 0.48) - 40;
+                    }
+                    if (mult < 0 && c.x < -500) {
+                        c.x = width + 400;
                         c.y = Math.random() * (height * 0.48) - 40;
                     }
 
@@ -191,11 +216,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 fgCtx.clearRect(0, 0, width, height);
                 for (let i = 0; i < fgClouds.length; i++) {
                     const c = fgClouds[i];
-                    c.x += c.speedX;
+                    c.x += c.speedX * mult;
                     const swayY = Math.sin(time * c.swaySpeed + c.swayOffset) * 12;
 
-                    if (c.x > width + 500) {
+                    if (mult > 0 && c.x > width + 500) {
                         c.x = -600;
+                        c.y = Math.random() * (height * 0.40) + 10;
+                    }
+                    if (mult < 0 && c.x < -600) {
+                        c.x = width + 500;
                         c.y = Math.random() * (height * 0.40) + 10;
                     }
 
@@ -240,17 +269,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         let stars = [];
-        const numStars = 130;
         
         function createStars() {
             stars = [];
+            const pCfg = gpuConfig.currentConfig.particles;
+            const numStars = pCfg.starCount || 130;
+            const twinkle = pCfg.starTwinkleSpeed || 1.0;
             for (let i = 0; i < numStars; i++) {
                 stars.push({
                     x: Math.random() * width,
                     y: Math.random() * (height * 0.75),
                     radius: Math.random() * 1.5 + 0.5,
                     alpha: Math.random(),
-                    speed: Math.random() * 0.02 + 0.005,
+                    speed: (Math.random() * 0.02 + 0.005) * twinkle,
                     direction: Math.random() > 0.5 ? 1 : -1
                 });
             }
@@ -271,11 +302,12 @@ document.addEventListener('DOMContentLoaded', () => {
             };
         }
         
+        const shootInterval = (gpuConfig.currentConfig.particles.shootingStarFreq || 5) * 1000;
         setInterval(() => {
             if (document.body.classList.contains('theme-night') && !shootingStar && Math.random() > 0.4) {
                 spawnShootingStar();
             }
-        }, 5000);
+        }, shootInterval);
         
         function animateStars() {
             ctx.clearRect(0, 0, width, height);
@@ -547,9 +579,11 @@ document.addEventListener('DOMContentLoaded', () => {
         reset() {
             this.x = Math.random() * (width + 100);
             this.y = -20;
+            const pCfg = gpuConfig.currentConfig.particles;
+            const fallSpeed = pCfg.sakuraFallSpeed || 1.0;
             this.size = Math.random() * 7 + 4; // Maintained exact size
-            this._baseSpeedX = Math.random() * -0.8 - 0.3;
-            this._baseSpeedY = Math.random() * 0.6 + 0.4;
+            this._baseSpeedX = (Math.random() * -0.8 - 0.3) * fallSpeed;
+            this._baseSpeedY = (Math.random() * 0.6 + 0.4) * fallSpeed;
             this.speedX = this._baseSpeedX;
             this.speedY = this._baseSpeedY;
             this.alpha = Math.random() * 0.45 + 0.45;
@@ -574,9 +608,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const distance = Math.sqrt(dx * dx + dy * dy);
             const windRadius = 350;
 
+            const pCfg = gpuConfig.currentConfig.particles;
+            const windSens = pCfg.windSensitivity !== undefined ? pCfg.windSensitivity : 1.0;
+
             if (distance < windRadius && (Math.abs(mouseVelX) > 0.3 || Math.abs(mouseVelY) > 0.3)) {
                 const force = (windRadius - distance) / windRadius;
-                const windStrength = Math.min(Math.sqrt(mouseVelX * mouseVelX + mouseVelY * mouseVelY) * 0.2, 8);
+                const windStrength = Math.min(Math.sqrt(mouseVelX * mouseVelX + mouseVelY * mouseVelY) * 0.2, 8) * windSens;
                 const effectiveForce = force * windStrength;
                 this.speedX += mouseVelX * 0.012 * effectiveForce;
                 this.speedY += mouseVelY * 0.012 * effectiveForce;
@@ -630,7 +667,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    for (let i = 0; i < maxPetals; i++) {
+    const targetMaxPetals = gpuConfig.currentConfig.particles.sakuraCount || 50;
+    for (let i = 0; i < targetMaxPetals; i++) {
         petals.push(new SakuraPetal());
     }
 
