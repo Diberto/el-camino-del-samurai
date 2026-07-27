@@ -3,36 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard | El Camino del Samurai</title>
+  <title>Samurai Admin Panel | El Camino del Samurai</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="src/admin/admin.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="admin-body">
+<body class="admin-body theme-night">
   <div id="login-modal" class="admin-login-modal">
-    <div class="login-box">
-      <h2 style="font-family:'Cinzel', serif; color:#e2e8f0; margin-top:0;">Panel Samurai Admin</h2>
-      <p style="color:#a0aec0; font-size:0.9rem;">Ingresa tus credenciales para acceder</p>
+    <div class="login-box samurai-card">
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <span class="logo-symbol" style="font-size: 2.5rem;">⚔️</span>
+        <h2 class="samurai-title">SAMURAI ADMIN</h2>
+        <p class="samurai-subtitle">Control & Gestión del Sitio</p>
+      </div>
       <form id="login-form">
-        <div class="form-group" style="margin-bottom:1rem;">
-          <label style="display:block; margin-bottom:0.4rem; color:#cbd5e0; font-size:0.85rem;">Email</label>
-          <input type="email" id="login-email" required value="admin@samurai.com" style="width:100%; padding:0.6rem; background:#242832; border:1px solid #4a5568; color:#fff; border-radius:4px; box-sizing:border-box;">
+        <div class="form-group">
+          <label>Email de Administrador</label>
+          <input type="email" id="login-email" required value="admin@samurai.com">
         </div>
-        <div class="form-group" style="margin-bottom:1rem;">
-          <label style="display:block; margin-bottom:0.4rem; color:#cbd5e0; font-size:0.85rem;">Contraseña</label>
-          <input type="password" id="login-password" required value="admin123" style="width:100%; padding:0.6rem; background:#242832; border:1px solid #4a5568; color:#fff; border-radius:4px; box-sizing:border-box;">
+        <div class="form-group">
+          <label>Contraseña</label>
+          <input type="password" id="login-password" required value="admin123">
         </div>
-        <div id="login-error" class="login-error" style="color:#e53e3e; margin-bottom:1rem; font-size:0.85rem;"></div>
-        <button type="submit" style="width:100%; padding:0.8rem; background:#3182ce; color:#fff; border:none; border-radius:6px; font-weight:600; cursor:pointer;">Iniciar Sesión</button>
+        <div id="login-error" class="login-error"></div>
+        <button type="submit" class="btn-samurai-red" style="width: 100%; margin-top: 1rem;">Iniciar Sesión</button>
       </form>
     </div>
   </div>
 
   <div id="admin-app" class="admin-layout hidden">
-    <aside class="admin-sidebar">
+    <aside class="admin-sidebar samurai-card">
       <div class="sidebar-header">
         <span class="logo-symbol">⚔️</span>
-        <h3 style="font-family:'Cinzel', serif; margin:0; display:inline-block;">Samurai Admin</h3>
+        <h3 class="samurai-title">SAMURAI ADMIN</h3>
       </div>
       <nav class="sidebar-nav">
         <button class="nav-item active" data-tab="sections">🚩 Secciones y Menú</button>
@@ -40,11 +43,11 @@
         <button class="nav-item" data-tab="blog">✍️ Blog CMS</button>
         <button class="nav-item" data-tab="users">👥 Usuarios</button>
       </nav>
-      <div class="sidebar-footer" style="border-top:1px solid #2d3748; padding-top:1rem; margin-top:auto;">
-        <div class="user-info" style="margin-bottom:0.8rem; font-size:0.85rem; color:#a0aec0;">
-          Usuario: <strong id="user-display-name" style="color:#fff;">Admin</strong>
+      <div class="sidebar-footer">
+        <div class="user-info" style="margin-bottom: 0.8rem;">
+          Usuario: <strong id="user-display-name">Admin</strong>
         </div>
-        <button id="logout-btn" style="width:100%; padding:0.6rem; background:#e53e3e; color:#fff; border:none; border-radius:4px; cursor:pointer;">Cerrar Sesión</button>
+        <button id="logout-btn" class="btn-samurai-outline" style="width: 100%;">Cerrar Sesión</button>
       </div>
     </aside>
 

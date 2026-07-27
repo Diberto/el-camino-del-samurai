@@ -15,19 +15,34 @@ import sakuraPetal3 from './assets/sakura_petal_3.webp';
 import { gpuConfig } from './gpu-config.js';
 import { japaneseFluteAudio } from './audio-engine.js';
 import { dbService } from './src/services/db-service.js';
+import { syncService } from './src/services/sync-service.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Dynamic Admin Settings Sync
-    (async function syncAdminSettings() {
+    // Dynamic Admin Settings Sync & Real-Time Listener
+    function applyDynamicSettings(settings) {
+        if (!settings) return;
+        if (settings.sections_toggle) {
+            Object.entries(settings.sections_toggle).forEach(([sec, active]) => {
+                const el = document.getElementById(sec) || document.querySelector(`.${sec}`);
+                if (el) el.style.display = active ? '' : 'none';
+            });
+        }
+        if (settings.gpu_config) {
+            Object.assign(gpuConfig, settings.gpu_config);
+        }
+    }
+
+    (async function initSync() {
         try {
             const settings = await dbService.getSettings();
-            if (settings?.sections_toggle) {
-                Object.entries(settings.sections_toggle).forEach(([sec, active]) => {
-                    const el = document.getElementById(sec) || document.querySelector(`.${sec}`);
-                    if (el) el.style.display = active ? '' : 'none';
-                });
-            }
+            applyDynamicSettings(settings);
+
+            syncService.subscribe((event) => {
+                if (event.type === 'SETTINGS_UPDATED') {
+                    applyDynamicSettings(event.payload);
+                }
+            });
         } catch (e) {
             console.warn('Could not load dynamic admin settings:', e);
         }

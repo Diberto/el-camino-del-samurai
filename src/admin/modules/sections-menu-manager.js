@@ -1,4 +1,5 @@
 import { dbService } from '../../services/db-service.js';
+import { syncService } from '../../services/sync-service.js';
 
 export async function initSectionsManager(container) {
   const settings = (await dbService.getSettings()) || {
@@ -13,34 +14,34 @@ export async function initSectionsManager(container) {
   };
 
   container.innerHTML = `
-    <h2>Control de Secciones y Menú</h2>
-    <div style="margin-top: 1.5rem; display: grid; gap: 2rem;">
-      <div style="background:#1a1d24; padding:1.5rem; border-radius:8px; border:1px solid #2d3748;">
-        <h3>Visibilidad de Secciones</h3>
+    <h2 class="samurai-title" style="margin-bottom: 1.5rem;">Control de Secciones y Menú</h2>
+    <div style="display: grid; gap: 2rem;">
+      <div class="samurai-card" style="padding: 1.5rem;">
+        <h3 class="samurai-title" style="font-size: 1.2rem;">Visibilidad de Secciones</h3>
         <div id="sections-toggle-list" style="display:flex; flex-direction:column; gap:0.8rem; margin-top:1rem;">
           ${Object.entries(settings.sections_toggle).map(([sec, active]) => `
-            <label style="display:flex; justify-content:space-between; align-items:center; background:#242832; padding:0.8rem 1rem; border-radius:6px;">
-              <span style="text-transform:capitalize; font-weight:600;">${sec}</span>
-              <input type="checkbox" data-section="${sec}" ${active ? 'checked' : ''} style="width:20px; height:20px;">
+            <label style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.3); padding:0.8rem 1rem; border-radius:6px; border:1px solid rgba(255,255,255,0.05);">
+              <span style="text-transform:capitalize; font-weight:600; color:var(--text-primary);">${sec}</span>
+              <input type="checkbox" data-section="${sec}" ${active ? 'checked' : ''} style="width:20px; height:20px; accent-color:var(--accent-red);">
             </label>
           `).join('')}
         </div>
       </div>
 
-      <div style="background:#1a1d24; padding:1.5rem; border-radius:8px; border:1px solid #2d3748;">
-        <h3>Menú de Navegación</h3>
+      <div class="samurai-card" style="padding: 1.5rem;">
+        <h3 class="samurai-title" style="font-size: 1.2rem;">Menú de Navegación</h3>
         <div id="menu-items-list" style="display:flex; flex-direction:column; gap:0.8rem; margin-top:1rem;">
           ${settings.navigation_menu.map(item => `
-            <div class="menu-item-row" style="display:flex; gap:0.5rem; align-items:center;">
-              <input type="text" value="${item.label}" data-key="label" data-id="${item.id}" style="padding:0.5rem; background:#242832; border:1px solid #4a5568; color:#fff; border-radius:4px; flex:1;">
-              <input type="text" value="${item.url}" data-key="url" data-id="${item.id}" style="padding:0.5rem; background:#242832; border:1px solid #4a5568; color:#fff; border-radius:4px; flex:1;">
-              <label style="display:flex; align-items:center; gap:0.3rem;"><input type="checkbox" data-key="visible" data-id="${item.id}" ${item.visible ? 'checked' : ''}> Visible</label>
+            <div class="menu-item-row" style="display:flex; gap:0.8rem; align-items:center;">
+              <input type="text" value="${item.label}" data-key="label" data-id="${item.id}" style="padding:0.6rem; background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:4px; flex:1;">
+              <input type="text" value="${item.url}" data-key="url" data-id="${item.id}" style="padding:0.6rem; background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:4px; flex:1;">
+              <label style="display:flex; align-items:center; gap:0.3rem; color:var(--text-secondary);"><input type="checkbox" data-key="visible" data-id="${item.id}" ${item.visible ? 'checked' : ''} style="accent-color:var(--accent-red);"> Visible</label>
             </div>
           `).join('')}
         </div>
       </div>
-      <button id="save-sections-btn" style="padding:0.8rem 1.5rem; background:#3182ce; color:#fff; border:none; border-radius:6px; cursor:pointer; font-weight:600;">Guardar Cambios</button>
-      <div id="save-sections-msg" style="color:#48bb78; font-weight:600;"></div>
+      <button id="save-sections-btn" class="btn-samurai-red" style="width: fit-content;">Guardar y Sincronizar</button>
+      <div id="save-sections-msg" style="color:var(--accent-gold); font-weight:600;"></div>
     </div>
   `;
 
@@ -66,7 +67,9 @@ export async function initSectionsManager(container) {
     settings.navigation_menu = updatedMenu;
 
     await dbService.saveSettings(settings);
-    document.getElementById('save-sections-msg').textContent = '¡Configuración guardada exitosamente!';
+    syncService.broadcast('SETTINGS_UPDATED', settings);
+
+    document.getElementById('save-sections-msg').textContent = '¡Configuración guardada y sincronizada en vivo!';
     setTimeout(() => { document.getElementById('save-sections-msg').textContent = ''; }, 3000);
   });
 }
