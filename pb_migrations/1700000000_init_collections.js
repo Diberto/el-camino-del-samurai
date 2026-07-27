@@ -10,6 +10,9 @@ migrate((db) => {
       collection.createRule = "";
       collection.updateRule = "";
       collection.deleteRule = "";
+      if (schema && schema.length > 0) {
+        collection.schema = schema;
+      }
       dao.saveCollection(collection);
     } catch (_) {
       const collection = new Collection({

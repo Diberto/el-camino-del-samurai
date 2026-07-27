@@ -69,7 +69,18 @@ export class PocketBaseAdapter {
       }
     } catch {}
 
-    // Return default initial settings structure
+    // Fallback: fetch from site-config.json
+    try {
+      const siteConfigRes = await fetch('/data/site-config.json');
+      if (siteConfigRes.ok) {
+        const configData = await siteConfigRes.json();
+        if (configData && configData.settings) {
+          this.saveSettings(configData.settings).catch(() => null);
+          return configData.settings;
+        }
+      }
+    } catch {}
+
     const defaultSettings = {
       sections_toggle: {
         inicio: true, sinopsis: true, virtudes: true, oraculo: true, capitulos: true, ediciones: true, autor: true, galeria: true, blog: true, contacto: true
@@ -86,13 +97,13 @@ export class PocketBaseAdapter {
         { id: '9', label: 'Comprar', url: '#contacto', visible: true }
       ]
     };
-    await this.saveSettings(defaultSettings).catch(() => null);
+    this.saveSettings(defaultSettings).catch(() => null);
     return defaultSettings;
   }
 
   async saveSettings(settingsData) {
     try {
-      const payload = { settings_data: typeof settingsData === 'object' ? JSON.stringify(settingsData) : settingsData };
+      const payload = { settings_data: settingsData };
       const res = await this.request('/api/collections/settings/records');
       if (res && res.items && res.items.length > 0) {
         return await this.request(`/api/collections/settings/records/${res.items[0].id}`, {
@@ -125,6 +136,19 @@ export class PocketBaseAdapter {
           author: item.author || 'Jorge Orpianesi',
           created_at: item.created || item.created_at
         }));
+      }
+    } catch {}
+
+    try {
+      const siteConfigRes = await fetch('/data/site-config.json');
+      if (siteConfigRes.ok) {
+        const configData = await siteConfigRes.json();
+        if (configData && configData.posts && configData.posts.length > 0) {
+          for (const post of configData.posts) {
+            this.savePost(post).catch(() => null);
+          }
+          return configData.posts;
+        }
       }
     } catch {}
 
