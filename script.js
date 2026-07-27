@@ -34,8 +34,23 @@ document.addEventListener('DOMContentLoaded', () => {
             if (navUl) {
                 navUl.innerHTML = settings.navigation_menu
                     .filter(item => item.visible !== false)
-                    .map(item => `<li><a href="${item.url}" class="nav-link">${item.label}</a></li>`)
+                    .map((item, idx) => {
+                        const isComprar = item.url === '#contacto' || item.label.toLowerCase().includes('comprar');
+                        const linkClass = isComprar ? 'btn btn-nav' : 'nav-link';
+                        return `<li><a href="${item.url}" class="${linkClass}">${item.label}</a></li>`;
+                    })
                     .join('');
+
+                navUl.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        const menuToggle = document.getElementById('menu-toggle');
+                        const navMenu = document.getElementById('nav-menu');
+                        if (menuToggle && navMenu) {
+                            menuToggle.classList.remove('active');
+                            navMenu.classList.remove('active');
+                        }
+                    });
+                });
             }
         }
 
@@ -468,7 +483,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. NAVBAR SCROLL EFFECT & ACTIVE STATE
     const navbar = document.getElementById('navbar');
-    const sections = document.querySelectorAll('section[id]');
 
     function handleScrollEffects() {
         const scrollY = window.scrollY;
@@ -480,18 +494,26 @@ document.addEventListener('DOMContentLoaded', () => {
             navbar.classList.remove('scrolled');
         }
 
-        // Active link highlighting
-        sections.forEach(current => {
-            const sectionHeight = current.offsetHeight;
-            const sectionTop = current.offsetTop - 100;
-            const sectionId = current.getAttribute('id');
-            const navLink = document.querySelector(`.nav-menu a[href*=${sectionId}]`);
+        // Active link highlighting based on current visible section
+        const sections = document.querySelectorAll('section[id]');
+        const allNavLinks = document.querySelectorAll('#nav-menu a');
+        let currentSectionId = '';
 
-            if (navLink) {
-                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                    navLinks.forEach(link => link.classList.remove('active'));
-                    navLink.classList.add('active');
-                }
+        sections.forEach(current => {
+            if (current.style.display === 'none') return;
+            const sectionHeight = current.offsetHeight;
+            const sectionTop = current.offsetTop - 150;
+            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                currentSectionId = current.getAttribute('id');
+            }
+        });
+
+        allNavLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (currentSectionId && (href === `#${currentSectionId}` || href === `index.html#${currentSectionId}`)) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
             }
         });
     }
