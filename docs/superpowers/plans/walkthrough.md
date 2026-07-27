@@ -1,23 +1,22 @@
-# Walkthrough: PocketBase como Proveedor Único y Exclusivo de Base de Datos
+# Walkthrough: Limpieza y Eliminación Total de Adaptadores Strapi y SQLite Local
 
 ## Cambios Realizados
 
-1. **Eliminación Total de Emuladores Locales ([db-service.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/db-service.js))**:
-   - Se removieron por completo `LocalSqliteAdapter` y `StrapiAdapter` de `DatabaseService`.
-   - PocketBase es ahora el **proveedor 100% exclusivo y único** para toda la aplicación.
+1. **Eliminación de Archivos de Adaptadores Secundarios**:
+   - Eliminado `src/services/adapters/sqlite-adapter.js`.
+   - Eliminado `src/services/adapters/strapi-adapter.js`.
 
-2. **Permisos Públicos de la API de PocketBase ([pb_migrations/1700000000_init_collections.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/pb_migrations/1700000000_init_collections.js))**:
-   - Se actualizaron las reglas de la API de PocketBase para todas las colecciones (`settings`, `posts`, `media`, `users`):
-     - `listRule: ""`, `viewRule: ""`, `createRule: ""`, `updateRule: ""`, `deleteRule: ""`.
-   - **¿Por qué esto resuelve la visibilidad global entre dispositivos?**: 
-     Al establecer las reglas a `""` (cadena vacía), PocketBase otorga acceso público para listar, leer, crear y actualizar registros. Cuando guardas un cambio en el Admin desde el Dispositivo A, el Dispositivo B (cualquier visitante o teléfono móvil) lee directamente de la base de datos de PocketBase en el servidor sin bloqueos de permisos.
+2. **Limpieza de Interfaz en el Panel Admin ([admin.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/admin.html))**:
+   - Se removió el selector de proveedores de la ventana de login (`#login-provider-select`).
+   - Se removió el selector de proveedores de la barra lateral (`#db-provider-select`).
 
-3. **Inclusión de Datos Iniciales en PocketBase ([pocketbase-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/pocketbase-adapter.js))**:
-   - Al consultar `getSettings`, `getPosts` o `getMedia`, si la base de datos de PocketBase está vacía, puebla automáticamente la base de datos de PocketBase en el servidor con la información inicial.
+3. **Simplificación del Código ([src/admin/admin.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/admin.js))**:
+   - Removida toda la lógica de cambio de proveedor en caliente.
+   - El proyecto funciona única y exclusivamente con **PocketBase**.
 
 ---
 
 ## Verificación
 
-- **Compilación de Producción (`vite build`)**: Ejecutada con 0 errores.
-- **Sincronización Git**: Commit `8656858` publicado en `origin/master`.
+- **Compilación de Producción (`vite build`)**: Verificada con 0 errores.
+- **Sincronización Git**: Commit `0da1f79` publicado en `origin/master`.
