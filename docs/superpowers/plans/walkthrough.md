@@ -1,24 +1,23 @@
-# Walkthrough: Solución Definitiva a Errores 400 (Bad Request)
+# Walkthrough: Solución Definitiva de Autoprovisionamiento y Saneamiento de Cargas PocketBase
 
-## Causa Raíz
-1. **Peticiones POST no deseadas durante lecturas (GET)**: `getSettings()`, `getPosts()`, `getMedia()` intentaban crear registros vía `POST` automáticamente al cargar la página si la colección no devolvía elementos. Esto generaba errores `400 Bad Request` en la consola si el usuario no estaba autenticado o si la colección estaba vacía.
-2. **Sintaxis de Migraciones en PocketBase 0.22.x**: Las colecciones creadas mediante `new Collection({ schema: [...] })` requerían el uso explícito de `SchemaField` y `.schema.addField()` en las migraciones de JavaScript de PocketBase.
+## Diagnóstico
+1. **Autenticación `users/auth-with-password` devolvía 400**: El usuario `admin@samurai.com` no existía formalmente en la colección `users` de PocketBase. Al intentar autenticarse sin registrar el usuario previamente, PocketBase devolvía HTTP 400 (Fallo de Autenticación).
+2. **Cargas de `savePost` devolvían 400**: La estructura enviada a `posts/records` incluía campos no registrados en el esquema (como `created_at` o IDs de plantilla `default-post-1`), provocando que PocketBase rechazara la creación del registro.
 
 ---
 
-## Solución Aplicada
+## Solución Aplicada ([pocketbase-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/pocketbase-adapter.js))
 
-1. **Lectura Pura sin Efectos Secundarios ([pocketbase-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/pocketbase-adapter.js))**:
-   - `getSettings()`, `getPosts()`, `getMedia()`, `getUsers()` ahora realizan **únicamente consultas `GET`**.
-   - Si PocketBase no devuelve registros o está inicializándose, el adaptador responde inmediatamente con los datos por defecto desde memoria, sin ejecutar peticiones `POST`.
-   - Las peticiones `POST` / `PATCH` solo se realizan cuando el administrador presiona expresamente "Guardar" en el panel.
+1. **Autoprovisionamiento del Usuario Admin**:
+   - En `login()`, si el usuario intenta ingresar con `admin@samurai.com` / `admin123` y el registro no existe en PocketBase, el adaptador crea automáticamente el usuario `admin@samurai.com` en PocketBase vía API de registro (`/api/collections/users/records`), permitiendo autenticaciones directas futuras sin error.
 
-2. **Corrección de Migraciones ([pb_migrations/1700000000_init_collections.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/pb_migrations/1700000000_init_collections.js))**:
-   - Se actualizó el script de migración para utilizar `new SchemaField(...)` y `.schema.addField(...)`, asegurando que PocketBase registre correctamente todos los campos en `settings`, `posts`, `media` y `users`.
+2. **Saneamiento Estricto del Payload de Artículos (`savePost`)**:
+   - Se filtraron los datos enviados en `savePost()` para incluir únicamente los campos reconocidos por el esquema de PocketBase (`title`, `slug`, `excerpt`, `content`, `cover_image`, `status`, `author`).
+   - Se removió cualquier campo no registrado o ID temporal (`default-post-*`).
 
 ---
 
 ## Verificación
 
-- **Compilación de Producción (`vite build`)**: Ejecutada con 0 errores.
-- **Sincronización Git**: Commit `40ba44b` publicado en `origin/master`.
+- **Compilación de Producción (`vite build`)**: Verificada con 0 errores.
+- **Sincronización Git**: Commit `8a1ce7e` publicado en `origin/master`.
