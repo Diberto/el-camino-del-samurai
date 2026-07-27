@@ -1,20 +1,19 @@
-# Walkthrough: Editor WYSIWYG Modernizado, Duplicación de Posts y Corrección de Ruteo Admin
+# Walkthrough: Atributos Autocomplete y Manejo de Conexión de Servidores Backend
 
 ## Cambios Realizados
 
-### 1. Solución de Acceso al Admin (`vite.config.js` & `index.html`)
-- [vite.config.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/vite.config.js): Añadido plugin middleware de reescritura HTML para que acceder tanto a `/admin` como a `/admin.html`, `/blog` y `/gpu` funcione de forma transparente en el servidor de desarrollo Vite y en producción.
-- [index.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/index.html): Añadido enlace directo `⚔️ Panel Admin` en el pie de página.
+### 1. Atributos `autocomplete` en el Formulario de Login ([admin.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/admin.html))
+- Añadidos los atributos recomendados `autocomplete="username"` al campo de email y `autocomplete="current-password"` al campo de contraseña para eliminar la advertencia de accesibilidad DOM del navegador.
 
-### 2. UI WYSIWYG Rediseñada ([wysiwyg-editor.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/components/wysiwyg-editor.js))
-- Barra de herramientas con estética Samurai (selector H1-H4/párrafo/blockquote, formatos B/I/U/S, alineaciones, listas, enlaces y YouTube embed tool).
-- **Drag & Drop Zona**: Arrastra imágenes PNG/JPG directamente al editor para convertirlas automáticamente a `.webp` en tiempo real.
+### 2. Selector de Proveedor en la Pantalla de Login ([admin.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/admin.html) & [admin.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/admin.js))
+- Añadido un selector desplegable de proveedor directamente en el modal de inicio de sesión (`SQLite Local / Emulator`, `PocketBase`, `Strapi CMS`).
+- Si PocketBase o Strapi no están corriendo localmente, el usuario puede seleccionar **SQLite Local / Emulator** para ingresar inmediatamente con las credenciales por defecto (`admin@samurai.com` / `admin123`).
 
-### 3. Función "📋 Duplicar Artículo" ([blog-cms-manager.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/blog-cms-manager.js))
-- Añadido botón **📋 Duplicar** en la tabla de artículos del blog. Clona inmediatamente el post seleccionado asignando estado *Borrador*, título `(Copia)` y nueva marca de tiempo.
+### 3. Captura y Manejo Claro de Errores de Conexión 404 ([pocketbase-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/pocketbase-adapter.js))
+- Si PocketBase no está ejecutándose en `http://127.0.0.1:8090`, el error de red o 404 es capturado y muestra un mensaje informativo indicando cómo alternar el proveedor a SQLite Local.
 
 ---
 
 ## Verificación
 
-- **Compilación de Producción (`vite build`)**: Ejecutada limpiamente construyendo sin errores todos los módulos y asset chunks (`dist/index.html`, `dist/admin.html`, `dist/blog.html`, `dist/gpu.html`).
+- **Compilación de Producción (`vite build`)**: Ejecutada con éxito mediante `cmd.exe /c "npm run build"`, confirmando 0 errores de compilación.
