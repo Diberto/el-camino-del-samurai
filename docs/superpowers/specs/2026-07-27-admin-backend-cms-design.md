@@ -1,33 +1,35 @@
-# El Camino Del Samurai: PocketBase Linux & Cross-Platform Service Spec
+# El Camino Del Samurai: Unified Node App (`server.js`) Spec
 
 ## Overview
-This specification documents the cross-platform PocketBase service runner (`scripts/start-pocketbase.js`), auto-seeder, and default `PocketBaseAdapter` integration supporting Linux (amd64/arm64) and Windows OS.
+This specification details the zero-config, single-entrypoint Node.js application server (`server.js`) that manages PocketBase backend execution, API reverse proxying, and static web serving for standard hosting environments.
 
 ---
 
-## 1. Cross-Platform PocketBase Binary Resolution
+## 1. Unified Node App Server Specifications (`server.js`)
 
-### 1.1 Operating System & Architecture Detection
-`scripts/start-pocketbase.js` inspects `process.platform` and `process.arch`:
-- **Linux x64**: `pocketbase_0.22.14_linux_amd64.zip`
-- **Linux arm64**: `pocketbase_0.22.14_linux_arm64.zip`
-- **Windows x64**: `pocketbase_0.22.14_windows_amd64.zip`
-
-### 1.2 Binary Acquisition & Execution
-- Downloads target zip from PocketBase GitHub Releases if binary (`./pocketbase` or `./pocketbase.exe`) is not found in `./bin/pocketbase/`.
-- Extracts executable, grants execute permissions (`chmod +x` on Linux), and launches `pocketbase serve --http=127.0.0.1:8090`.
+### 1.1 Server Components & Execution Flow
+1. **PocketBase Process Lifecycle**:
+   - `server.js` executes `scripts/start-pocketbase.js` on startup.
+   - Ensures PocketBase binary exists (downloading for Linux/Windows if missing) and runs PocketBase on internal port `8090`.
+2. **Reverse Proxying**:
+   - Intercepts requests matching `/api/*` and `/_/*` (PocketBase Admin UI) and proxies them to `http://127.0.0.1:8090`.
+3. **Static Web Serving**:
+   - Serves static assets from `dist/` (or `public/` during development).
+   - Serves `index.html`, `blog.html`, `admin.html`, `gpu.html` seamlessly on port assigned by hosting (`process.env.PORT` or `3000`).
 
 ---
 
-## 2. Database Service & Default Provider Settings
+## 2. Package & Build Configuration
 
-### 2.1 Provider Factory Update (`db-service.js`)
-- Default provider set to `'pocketbase'`.
-- `PocketBaseAdapter` includes auto-fallback/seeding logic: if PocketBase returns empty/404 or fails to respond, returns default initial posts (3 articles with public WebP images) and section toggles so website renders 100% reliably.
+### 2.1 `package.json` Updates
+- `"start": "node server.js"`
+- `"dev": "node server.js"`
+- `"build": "vite build"`
 
 ---
 
 ## 3. Verification & Build Plan
 
 1. **Vite Production Build**: Execute `cmd.exe /c "npm run build"`.
-2. **Git Synchronization**: Commit and push changes to `origin master`.
+2. **Node App Test**: Test `node server.js` to confirm single-process serving.
+3. **Git Synchronization**: Commit and push changes to `origin master`.
