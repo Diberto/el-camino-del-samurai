@@ -55,7 +55,11 @@ export class PocketBaseAdapter {
   async getSettings() {
     const res = await this.request('/api/collections/settings/records');
     if (res && res.items && res.items.length > 0) {
-      return res.items[0].settings_data;
+      const raw = res.items[0].settings_data;
+      if (typeof raw === 'string') {
+        try { return JSON.parse(raw); } catch { return raw; }
+      }
+      if (raw && typeof raw === 'object') return raw;
     }
     // Return default initial settings structure
     const defaultSettings = {
@@ -74,21 +78,22 @@ export class PocketBaseAdapter {
         { id: '9', label: 'Comprar', url: '#contacto', visible: true }
       ]
     };
-    await this.saveSettings(defaultSettings);
+    await this.saveSettings(defaultSettings).catch(() => null);
     return defaultSettings;
   }
 
   async saveSettings(settingsData) {
+    const payload = { settings_data: typeof settingsData === 'object' ? JSON.stringify(settingsData) : settingsData };
     const res = await this.request('/api/collections/settings/records');
     if (res && res.items && res.items.length > 0) {
       return await this.request(`/api/collections/settings/records/${res.items[0].id}`, {
         method: 'PATCH',
-        body: JSON.stringify({ settings_data: settingsData })
+        body: JSON.stringify(payload)
       });
     } else {
       return await this.request('/api/collections/settings/records', {
         method: 'POST',
-        body: JSON.stringify({ settings_data: settingsData })
+        body: JSON.stringify(payload)
       });
     }
   }
@@ -140,7 +145,7 @@ export class PocketBaseAdapter {
     ];
 
     for (const post of defaultPosts) {
-      await this.savePost(post);
+      await this.savePost(post).catch(() => null);
     }
     return defaultPosts;
   }
@@ -182,7 +187,7 @@ export class PocketBaseAdapter {
       { name: 'Jorge Orpianesi', url: 'photos/orpianesi1.webp', type: 'image/webp', size: '31.8 KB' }
     ];
     for (const item of defaultMedia) {
-      await this.request('/api/collections/media/records', { method: 'POST', body: JSON.stringify(item) });
+      await this.request('/api/collections/media/records', { method: 'POST', body: JSON.stringify(item) }).catch(() => null);
     }
     return defaultMedia;
   }
