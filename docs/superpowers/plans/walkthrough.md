@@ -1,22 +1,22 @@
-# Walkthrough: Integración de Servicio PocketBase Multiplataforma (Linux / Windows)
+# Walkthrough: Eliminación Completa del Motor de Audio y Botón de Música
 
 ## Cambios Realizados
 
-### 1. Script Runner Multiplataforma (`scripts/start-pocketbase.js`)
-- Script de inicialización que detecta el sistema operativo (`process.platform`: **Linux amd64/arm64**, **Windows x64**, **macOS**).
-- Descarga e instala automáticamente la versión correspondiente del binario oficial de PocketBase desde GitHub Releases.
-- Configura permisos de ejecución (`chmod +x` en Linux) y lanza la API REST de PocketBase en `http://127.0.0.1:8090`.
+1. **Eliminación del Archivo de Audio ([audio-engine.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/audio-engine.js))**:
+   - Eliminado el motor de síntesis Web Audio y reproductor de flauta Shakuhachi (`audio-engine.js`).
 
-### 2. Proveedor Predeterminado y Autoseeding ([db-service.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/db-service.js))
-- Establecido `pocketbase` como el proveedor predeterminado en `DatabaseService`.
-- Implementado sistema de respaldo automático en `PocketBaseAdapter` para responder con el estado inicial publicado si el servicio remoto no ha sido poblado o está en proceso de arranque.
+2. **Eliminación del Botón Flotante ([index.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/index.html#L143))**:
+   - Removido el elemento HTML `<button class="audio-toggle-btn" id="audio-toggle">` de la cabecera superior.
 
-### 3. Script en `package.json`
-- Añadido el comando `npm run pb` para iniciar el backend de PocketBase con 1 solo comando.
+3. **Limpieza en Javascript ([script.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/script.js))**:
+   - Eliminadas las importaciones y la función `initAudioController()`.
+
+4. **Limpieza en Hojas de Estilos ([styles.css](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/styles.css))**:
+   - Eliminadas todas las reglas de CSS (`.audio-toggle-btn`, `.playing`, `@keyframes audioPulse`).
 
 ---
 
 ## Verificación
 
-- **Prueba de Ejecución**: Verificada la descarga y arranque del servidor PocketBase en `http://127.0.0.1:8090`.
-- **Sincronización Git**: Commit `1d552ed` publicado en `origin/master`.
+- **Compilación de Producción (`vite build`)**: Verificada con 0 errores y 0 advertencias.
+- **Sincronización Git**: Commit `cb7e83e` publicado en `origin/master`.
