@@ -1,23 +1,22 @@
-# Walkthrough: Blog Dinámico 3 Últimos en Home + Vista de Catálogo y Lectura Completa en `blog.html`
+# Walkthrough: Integración de Servicio PocketBase Multiplataforma (Linux / Windows)
 
 ## Cambios Realizados
 
-### 1. Widget Dinámico de los 3 Últimos Artículos ([script.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/script.js))
-- En la sección `#blog` de la Landing Page ([index.html#blog](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/index.html#L649)), los artículos se filtran por estado *Publicado*, se ordenan dinámicamente por fecha descendente `created_at` y se renderizan los **3 últimos**.
-- Cada tarjeta contiene enlace directo a `blog.html?post=ID`.
+### 1. Script Runner Multiplataforma (`scripts/start-pocketbase.js`)
+- Script de inicialización que detecta el sistema operativo (`process.platform`: **Linux amd64/arm64**, **Windows x64**, **macOS**).
+- Descarga e instala automáticamente la versión correspondiente del binario oficial de PocketBase desde GitHub Releases.
+- Configura permisos de ejecución (`chmod +x` en Linux) y lanza la API REST de PocketBase en `http://127.0.0.1:8090`.
 
-### 2. Router de 2 Vistas en `blog.html` ([blog.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/public/blog.js))
-- **Vista de Catálogo Completo (`blog.html`)**:
-  - Presenta el listado completo de todos los artículos publicados.
-  - Incluye barra de búsqueda en tiempo real `🔍 Buscar por título o tema...`.
-  - Botón **"Leer Artículo Completo →"** en cada tarjeta.
-- **Vista de Lectura de Artículo Seleccionado (`blog.html?post=ID`)**:
-  - Muestra la vista de lectura individual con botón de navegación **"← Volver al Catálogo de Artículos"**.
-  - Visualización completa de imagen de portada en alta resolución, fecha, autor, contenido WYSIWYG formateado y botones de navegación hacia el *Artículo Anterior* / *Siguiente Artículo*.
+### 2. Proveedor Predeterminado y Autoseeding ([db-service.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/db-service.js))
+- Establecido `pocketbase` como el proveedor predeterminado en `DatabaseService`.
+- Implementado sistema de respaldo automático en `PocketBaseAdapter` para responder con el estado inicial publicado si el servicio remoto no ha sido poblado o está en proceso de arranque.
+
+### 3. Script en `package.json`
+- Añadido el comando `npm run pb` para iniciar el backend de PocketBase con 1 solo comando.
 
 ---
 
 ## Verificación
 
-- **Compilación de Producción (`vite build`)**: Ejecutada con éxito con `cmd.exe /c "npm run build"`, 0 errores.
-- **Sincronización Git**: Commit `102b502` publicado exitosamente en `origin/master`.
+- **Prueba de Ejecución**: Verificada la descarga y arranque del servidor PocketBase en `http://127.0.0.1:8090`.
+- **Sincronización Git**: Commit `1d552ed` publicado en `origin/master`.
