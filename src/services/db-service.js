@@ -5,7 +5,7 @@ import { StrapiAdapter } from './adapters/strapi-adapter.js';
 
 class DatabaseService {
   constructor() {
-    this.providerType = localStorage.getItem('db_provider') || 'local';
+    this.providerType = localStorage.getItem('db_provider') || 'pocketbase';
     this.initProvider();
   }
 
