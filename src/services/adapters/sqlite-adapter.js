@@ -2,21 +2,36 @@
 export class LocalSqliteAdapter {
   constructor() {
     this.storageKey = 'local_db_emulator';
-    if (!localStorage.getItem(this.storageKey)) {
+    // Clear legacy mock data if present to ensure sync with real index.html sections
+    const existingData = localStorage.getItem(this.storageKey);
+    if (!existingData || existingData.includes('philosophy')) {
       localStorage.setItem(this.storageKey, JSON.stringify({
         settings: {
-          sections_toggle: { hero: true, philosophy: true, gallery: true, gpu: true, blog: true, contact: true },
+          sections_toggle: {
+            inicio: true,
+            sinopsis: true,
+            virtudes: true,
+            oraculo: true,
+            capitulos: true,
+            ediciones: true,
+            autor: true,
+            galeria: true,
+            contacto: true
+          },
           navigation_menu: [
-            { id: '1', label: 'Inicio', url: '#hero', visible: true },
-            { id: '2', label: 'Filosofía', url: '#philosophy', visible: true },
-            { id: '3', label: 'Galería', url: '#gallery', visible: true },
-            { id: '4', label: 'GPU Engine', url: '#gpu', visible: true },
-            { id: '5', label: 'Blog', url: '#blog', visible: true }
+            { id: '1', label: 'Inicio', url: '#inicio', visible: true },
+            { id: '2', label: 'El Libro', url: '#sinopsis', visible: true },
+            { id: '3', label: 'Las Virtudes', url: '#virtudes', visible: true },
+            { id: '4', label: 'El Oráculo', url: '#oraculo', visible: true },
+            { id: '5', label: 'Ediciones', url: '#ediciones', visible: true },
+            { id: '6', label: 'Autor', url: '#autor', visible: true },
+            { id: '7', label: 'Galería', url: '#galeria', visible: true },
+            { id: '8', label: 'Comprar', url: '#contacto', visible: true }
           ],
           gpu_config: { renderScale: 1.0, quality: 'high', enableShaders: true }
         },
         posts: [],
-        users: [{ id: 'usr-1', email: 'admin@samurai.com', name: 'Admin Samurai', role: 'admin', active: true }]
+        users: [{ id: 'usr-1', email: 'admin@samurai.com', name: 'Jorge Orpianesi Admin', role: 'admin', active: true }]
       }));
     }
   }

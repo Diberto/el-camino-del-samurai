@@ -24,10 +24,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!settings) return;
         if (settings.sections_toggle) {
             Object.entries(settings.sections_toggle).forEach(([sec, active]) => {
-                const el = document.getElementById(sec) || document.querySelector(`.${sec}`);
+                const el = document.getElementById(sec) || document.querySelector(`.${sec}-section`) || document.querySelector(`.${sec}`);
                 if (el) el.style.display = active ? '' : 'none';
             });
         }
+
+        if (settings.navigation_menu) {
+            const navUl = document.querySelector('#nav-menu ul');
+            if (navUl) {
+                navUl.innerHTML = settings.navigation_menu
+                    .filter(item => item.visible !== false)
+                    .map(item => `<li><a href="${item.url}" class="nav-link">${item.label}</a></li>`)
+                    .join('');
+            }
+        }
+
         if (settings.gpu_config) {
             Object.assign(gpuConfig, settings.gpu_config);
         }
