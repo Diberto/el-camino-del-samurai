@@ -11,34 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const adminApp = document.getElementById('admin-app');
   const logoutBtn = document.getElementById('logout-btn');
   const userDisplayName = document.getElementById('user-display-name');
-  const loginProviderSelect = document.getElementById('login-provider-select');
-  const sidebarProviderSelect = document.getElementById('db-provider-select');
-
-  function syncProviders() {
-    const currentProvider = dbService.getProvider();
-    if (loginProviderSelect) loginProviderSelect.value = currentProvider;
-    if (sidebarProviderSelect) sidebarProviderSelect.value = currentProvider;
-  }
-
-  function handleProviderChange(provider) {
-    dbService.setProvider(provider);
-    syncProviders();
-  }
-
-  if (loginProviderSelect) {
-    loginProviderSelect.addEventListener('change', (e) => handleProviderChange(e.target.value));
-  }
-
-  if (sidebarProviderSelect) {
-    sidebarProviderSelect.addEventListener('change', (e) => {
-      handleProviderChange(e.target.value);
-      loadModules();
-    });
-  }
 
   function checkAuth() {
     const user = dbService.getCurrentUser();
-    syncProviders();
     if (user) {
       loginModal.classList.add('hidden');
       adminApp.classList.remove('hidden');
@@ -54,8 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
-    const selectedProvider = loginProviderSelect ? loginProviderSelect.value : 'local';
-    dbService.setProvider(selectedProvider);
 
     try {
       await dbService.login(email, password);
