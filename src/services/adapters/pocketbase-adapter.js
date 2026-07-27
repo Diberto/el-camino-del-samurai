@@ -34,8 +34,21 @@ export class PocketBaseAdapter {
       }
     } catch {}
 
-    // Admin fallback user for admin.html login
+    // Auto-create admin user in PocketBase if missing
     if (email === 'admin@samurai.com' && password === 'admin123') {
+      try {
+        await this.request('/api/collections/users/records', {
+          method: 'POST',
+          body: JSON.stringify({
+            username: 'admin_samurai',
+            email: 'admin@samurai.com',
+            password: 'admin123',
+            passwordConfirm: 'admin123',
+            name: 'Jorge Orpianesi Admin'
+          })
+        });
+      } catch {}
+
       const user = { id: 'admin-usr', email, name: 'Jorge Orpianesi Admin', role: 'admin' };
       this.currentUser = user;
       this.token = 'admin-token-local';
@@ -43,6 +56,7 @@ export class PocketBaseAdapter {
       localStorage.setItem('pb_auth_user', JSON.stringify(user));
       return user;
     }
+
     throw new Error('Credenciales incorrectas');
   }
 
@@ -72,7 +86,6 @@ export class PocketBaseAdapter {
       }
     } catch {}
 
-    // Fallback default settings without triggering auto-POST on GET
     return {
       sections_toggle: {
         inicio: true, sinopsis: true, virtudes: true, oraculo: true, capitulos: true, ediciones: true, autor: true, galeria: true, blog: true, contacto: true
@@ -93,7 +106,9 @@ export class PocketBaseAdapter {
 
   async saveSettings(settingsData) {
     try {
-      const payload = { settings_data: settingsData };
+      const payload = {
+        settings_data: typeof settingsData === 'object' ? JSON.stringify(settingsData) : settingsData
+      };
       const res = await this.request('/api/collections/settings/records');
       if (res && res.items && res.items.length > 0) {
         return await this.request(`/api/collections/settings/records/${res.items[0].id}`, {
@@ -129,7 +144,6 @@ export class PocketBaseAdapter {
       }
     } catch {}
 
-    // Fallback default posts without triggering auto-POST on GET
     return [
       {
         id: 'default-post-1',
@@ -166,13 +180,18 @@ export class PocketBaseAdapter {
 
   async savePost(postData) {
     try {
-      const payload = { ...postData };
-      if (payload.id && payload.id.startsWith('default-post-')) {
-        delete payload.id;
-      }
+      const payload = {
+        title: postData.title || '',
+        slug: postData.slug || '',
+        excerpt: postData.excerpt || '',
+        content: postData.content || '',
+        cover_image: postData.cover_image || 'photos/cueva_reigando.webp',
+        status: postData.status || 'published',
+        author: postData.author || 'Jorge Orpianesi'
+      };
 
-      if (payload.id) {
-        return await this.request(`/api/collections/posts/records/${payload.id}`, {
+      if (postData.id && !postData.id.startsWith('default-post-')) {
+        return await this.request(`/api/collections/posts/records/${postData.id}`, {
           method: 'PATCH',
           body: JSON.stringify(payload)
         });
@@ -210,7 +229,6 @@ export class PocketBaseAdapter {
       }
     } catch {}
 
-    // Fallback default media without triggering auto-POST on GET
     return [
       { id: 'default-media-1', name: 'Cueva Reigando', url: 'photos/cueva_reigando.webp', type: 'image/webp', size: '229.7 KB' },
       { id: 'default-media-2', name: 'Castillo Sengoku', url: 'photos/castillo_sengoku.webp', type: 'image/webp', size: '159.5 KB' },
@@ -245,7 +263,13 @@ export class PocketBaseAdapter {
       } else {
         return await this.request('/api/collections/users/records', {
           method: 'POST',
-          body: JSON.stringify(userData)
+          body: JSON.stringify({
+            username: userData.name ? userData.name.toLowerCase().replace(/\s+/g, '_') : 'user_' + Date.now(),
+            email: userData.email,
+            password: 'User123456!',
+            passwordConfirm: 'User123456!',
+            name: userData.name || 'Usuario'
+          })
         });
       }
     } catch {
