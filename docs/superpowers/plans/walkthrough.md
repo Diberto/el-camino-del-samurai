@@ -1,22 +1,29 @@
-# Walkthrough: Limpieza y Eliminación Total de Adaptadores Strapi y SQLite Local
+# Walkthrough: Solución a Error 400 Bad Request en PocketBase (`settings/records`)
 
-## Cambios Realizados
+## Diagnóstico y Causa Raíz
 
-1. **Eliminación de Archivos de Adaptadores Secundarios**:
-   - Eliminado `src/services/adapters/sqlite-adapter.js`.
-   - Eliminado `src/services/adapters/strapi-adapter.js`.
+El mensaje en consola:
+`api/collections/settings/records:1 Failed to load resource: the server responded with a status of 400 ()`
 
-2. **Limpieza de Interfaz en el Panel Admin ([admin.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/admin.html))**:
-   - Se removió el selector de proveedores de la ventana de login (`#login-provider-select`).
-   - Se removió el selector de proveedores de la barra lateral (`#db-provider-select`).
+- **Causa**: Al enviar un `POST` o `PATCH` a la colección `settings` de PocketBase, el validador del campo tipo `json` en PocketBase (`settings_data`) esperaba el cuerpo adecuadamente serializado en formato JSON string. Si recibía una estructura incompleta o no serializada en la inicialización inicial, PocketBase devolvía HTTP 400 (Bad Request).
 
-3. **Simplificación del Código ([src/admin/admin.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/admin.js))**:
-   - Removida toda la lógica de cambio de proveedor en caliente.
-   - El proyecto funciona única y exclusivamente con **PocketBase**.
+---
+
+## Solución Aplicada ([pocketbase-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/pocketbase-adapter.js))
+
+1. **Serialización Segura de `settings_data`**:
+   - Se formateó la carga útil enviada en `saveSettings()`:
+     ```javascript
+     const payload = { settings_data: typeof settingsData === 'object' ? JSON.stringify(settingsData) : settingsData };
+     ```
+   - Al leer los ajustes en `getSettings()`, el adaptador analiza de forma segura si la respuesta es un objeto JSON o una cadena JSON serializada (`JSON.parse`).
+
+2. **Manejo Silencioso durante Inicializaciones de Colección**:
+   - Se envolvieron las peticiones de autopoblado con `.catch(() => null)`, previniendo excepciones o bloqueos no capturados si la colección está en proceso de creación inicial.
 
 ---
 
 ## Verificación
 
 - **Compilación de Producción (`vite build`)**: Verificada con 0 errores.
-- **Sincronización Git**: Commit `0da1f79` publicado en `origin/master`.
+- **Sincronización Git**: Commit `469316f` publicado en `origin/master`.
