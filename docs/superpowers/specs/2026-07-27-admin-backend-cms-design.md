@@ -1,41 +1,37 @@
-# El Camino Del Samurai: Strapi Headless CMS Integration Spec
+# El Camino Del Samurai: Media Library & Blog Integration Spec
 
 ## Overview
-This specification documents the Strapi v4/v5 adapter integration for the Blog CMS, media upload engine, settings manager, and provider switcher within the `DatabaseService` architecture.
+This specification details the unified Media Library (`media-manager.js`) integrated into the Admin dashboard, `DatabaseService`, Blog CMS, and WYSIWYG editor for WebP asset management across the website.
 
 ---
 
-## 1. Strapi Adapter Specifications (`StrapiAdapter`)
+## 1. Media Library Specifications
 
-### 1.1 Class Signature & Endpoint Mapping
-- File: `src/services/adapters/strapi-adapter.js`
-- Default API Base URL: `http://localhost:1337` (configurable via `localStorage.getItem('strapi_base_url')`).
+### 1.1 Data Schema & Adapter Extensions
+- `getMedia()`: Retrieves array of media objects `[{ id, name, url, size, type, created_at }]`.
+- `uploadMedia(file)`: Converts file to WebP canvas buffer and persists it via active database adapter (`LocalSqliteAdapter`, `StrapiAdapter`, or `PocketBaseAdapter`), returning absolute/relative URL.
+- `deleteMedia(id)`: Removes target media item from store.
 
-| Action | HTTP Method | Endpoint | Description |
-| :--- | :--- | :--- | :--- |
-| Auth Login | `POST` | `/api/auth/local` | Authenticates with `identifier` and `password`, storing `jwt` token. |
-| Get Posts | `GET` | `/api/posts?populate=*&sort=createdAt:desc` | Retrieves blog posts array formatted for the public site. |
-| Save Post (Create) | `POST` | `/api/posts` | Body: `{ data: { title, slug, excerpt, content, status } }`. |
-| Save Post (Update) | `PUT` | `/api/posts/:id` | Body: `{ data: { title, excerpt, content, status } }`. |
-| Delete Post | `DELETE` | `/api/posts/:id` | Removes target post record. |
-| Upload Media | `POST` | `/api/upload` | Multipart FormData with converted `.webp` file. |
-| Get Settings | `GET` | `/api/settings` | Retrieves global site settings & section toggles. |
-| Save Settings | `POST`/`PUT` | `/api/settings` | Updates site settings schema. |
+### 1.2 Default Assets Standardization
+Normalize asset URLs to avoid spaces and ensure static server compatibility:
+- `assets/photos/orpianesi1.webp`
+- `assets/photos/WhatsApp%20Image%202026-06-25%20at%2016.10.09.webp`
+- `assets/photos/WhatsApp%20Image%202026-06-25%20at%2016.10.13.webp`
+- `assets/photos/WhatsApp%20Image%202026-06-25%20at%2016.10.15.webp`
 
 ---
 
-## 2. Dynamic Provider Switcher Component
+## 2. Blog CMS & WYSIWYG Integration
 
-### 2.1 UI Placement
-- Integrated into the Admin Sidebar ([admin.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/admin.html)).
-- Allows selecting between:
-  - **PocketBase (Default)**
-  - **Strapi CMS**
-  - **SQLite Local (Emulator)**
+### 2.1 Cover Image Selector
+- Post editor includes a Cover Image field with live preview thumbnail and **"🖼️ Seleccionar de Galería"** modal picker.
+
+### 2.2 WYSIWYG Media Picker Button
+- **"🖼️ Galería"** toolbar button opens a modal showing all media assets in the Media Library. Clicking any image inserts `<img src="..." alt="...">` into the editor DOM.
 
 ---
 
 ## 3. Verification & Build Plan
 
-1. **Vite Production Build**: Execute `cmd.exe /c "npm run build"` to verify module resolution and compilation of `strapi-adapter.js`.
-2. **Provider Switcher Functional Test**: Confirm switching to `strapi` instantiates `StrapiAdapter` seamlessly in `DatabaseService`.
+1. **Vite Production Build**: Run `cmd.exe /c "npm run build"`.
+2. **Git Synchronization**: Commit and push changes to `origin master`.
