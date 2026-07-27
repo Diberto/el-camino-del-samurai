@@ -320,45 +320,6 @@ img {
     position: relative;
 }
 
-/* TRADITIONAL JAPANESE AUDIO TOGGLE BUTTON */
-.audio-toggle-btn {
-    position: absolute;
-    right: 5.8rem;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    background: rgba(15, 17, 26, 0.65);
-    backdrop-filter: blur(10px);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.15rem;
-    z-index: 105;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 0 8px rgba(255, 255, 255, 0.15);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
-}
-
-.audio-toggle-btn:hover {
-    transform: translateY(-50%) scale(1.1);
-    border-color: var(--accent-gold);
-    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.6), 0 0 15px rgba(197, 168, 128, 0.4);
-}
-
-.audio-toggle-btn.playing {
-    border-color: var(--accent-red);
-    box-shadow: 0 0 20px rgba(216, 17, 36, 0.6);
-    animation: audioPulse 2.5s ease-in-out infinite alternate;
-}
-
-@keyframes audioPulse {
-    0% { box-shadow: 0 0 12px rgba(216, 17, 36, 0.4); }
-    100% { box-shadow: 0 0 22px rgba(216, 17, 36, 0.8), 0 0 8px rgba(255, 255, 255, 0.5); }
-}
-
 /* ARTISTIC DAY/NIGHT TOGGLE BUTTON WITH INNER MICRO SKY ENGINE */
 .theme-toggle-btn {
     position: absolute;
