@@ -78,9 +78,9 @@ async function ensureBinary() {
 
   console.log('📦 Extrayendo binario de PocketBase...');
   if (isWin) {
-    execSync(`powershell -Command "Expand-Archive -Path '${zipPath}' -DestinationPath '${binDir}' -Force"`);
+    execSync(`powershell -Command "Expand-Archive -Path '${zipPath}' -DestinationPath '${binDir}' -Force"`, { stdio: 'ignore' });
   } else {
-    execSync(`unzip -o "${zipPath}" -d "${binDir}"`);
+    execSync(`unzip -q -o "${zipPath}" -d "${binDir}"`, { stdio: 'ignore' });
     fs.chmodSync(binPath, 0o755);
   }
 

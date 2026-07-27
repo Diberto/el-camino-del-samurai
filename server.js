@@ -116,10 +116,10 @@ function serveStaticFile(filePath, res) {
   });
 }
 
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`=======================================================`);
   console.log(`🌸 El Camino del Samurai - Node App Server Activo`);
-  console.log(`🌐 Servidor Web & API corriendo en: http://localhost:${PORT}`);
+  console.log(`🌐 Servidor Web & API corriendo en el puerto: ${PORT}`);
   console.log(`=======================================================`);
 });
 
