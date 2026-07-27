@@ -1,18 +1,22 @@
-# Walkthrough: Sincronización Secciones <-> Menú, Estilo "Comprar" y Scrollspy Dinámico
+# Walkthrough: Sección Blog Samurai & 3 Artículos de Ejemplo
 
 ## Cambios Realizados
 
-### 1. Sincronización Automática Secciones <-> Menú ([sections-menu-manager.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/sections-menu-manager.js))
-- Al cambiar el interruptor de cualquier sección en el Administrador (ej. desmarcar `sinopsis`), el ítem correspondiente en el menú de navegación (`#sinopsis`) se desmarca o deshabilita automáticamente en la UI y la base de datos.
+### 1. Sección Blog en la Landing Page (`index.html`)
+- [index.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/index.html): Añadida la sección `<section class="section blog-section" id="blog">` con tarjetas de diseño glassmorphic, tipografía `'Cinzel'`, etiquetas doradas y botón de acción a la vista dedicada.
+- [script.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/script.js): Carga y renderiza automáticamente en vivo los 3 artículos publicados más recientes en el grid de la Landing Page.
 
-### 2. Estilo de Resaltado del Botón "Comprar" ([script.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/script.js))
-- Restaurado el estilo distintivo `class="btn btn-nav"` para el enlace "Comprar" (`#contacto`) al re-renderizar el menú dinámicamente.
+### 2. 3 Artículos de Ejemplo Pre-cargados
+- [sqlite-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/sqlite-adapter.js): Pre-cargados 3 posts ricos con imágenes optimizadas y contenido sobre la obra de Jorge Orpianesi:
+  1. **Los Secretos de Miyamoto Musashi en la Cueva Reigando**: Historia y citas del *Gorin no Sho*.
+  2. **Castillos Feudales del Periodo Sengoku: Arquitectura e Historia**: Análisis de fortificaciones (Himeji, Kumamoto) con listas y fotografía.
+  3. **La Filosofía del Bushido en el Trabajo Diario y la Vida Moderna**: Aplicación contemporánea de las 7 virtudes del Bushido.
 
-### 3. Scrollspy e Indicador Activo Dinámico en Scroll ([script.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/script.js))
-- Corregida la función `handleScrollEffects()` para consultar dinámicamente los enlaces actuales del DOM y realizar una coincidencia exacta de ID (`#${currentSectionId}`), evitando que queden seleccionados elementos de secciones que no están en pantalla.
+### 3. Página de Lectura Dedicada ([blog.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/blog.html))
+- [blog.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/blog.html) & [blog.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/public/blog.js): Actualizados para usar el sistema de diseño completo (`theme-night`, tipografía `'Cinzel'` y tarjetas con glassmorphism).
 
 ---
 
 ## Verificación
 
-- **Compilación de Producción (`vite build`)**: Verificada con `cmd.exe /c "npm run build"`, construyendo sin errores todos los módulos.
+- **Compilación de Producción (`vite build`)**: Ejecutada con éxito mediante `cmd.exe /c "npm run build"`, construyendo limpiamente todos los assets.
