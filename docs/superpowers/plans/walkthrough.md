@@ -1,18 +1,27 @@
-# Walkthrough: Samurai Admin Unificado y Sincronización en Tiempo Real
+# Walkthrough: Sincronización Exacta Admin <-> Landing Page (index.html)
 
 ## Cambios Realizados
 
-### 1. Coherencia Estética Samurai (`styles.css`)
-- [admin.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/admin.html): Rediseñado con la estructura de tarjetas glassmorphic, tipografía `'Cinzel'`, badges y botones samurai (`btn-samurai-red`, `btn-samurai-outline`).
-- [admin.css](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/admin.css): Actualizado para usar directamente los tokens y variables CSS de la landing page (`--accent-red`, `--accent-gold`, `--bg-card`, `--border-color`, `--border-glow`).
+### 1. Mapeo Directo a Elementos Reales de `index.html`
+- [sqlite-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/sqlite-adapter.js) & [sections-menu-manager.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/sections-menu-manager.js):
+  - Actualizados para mapear las secciones reales de la landing page:
+    1. **Inicio** (`#inicio` - Hero Parallax)
+    2. **El Libro** (`#sinopsis` - Sinopsis & Modelo 3D)
+    3. **Las Virtudes** (`#virtudes` - Las 7 Virtudes del Bushido)
+    4. **El Oráculo** (`#oraculo` - Oráculo Interactivo)
+    5. **Obras del Autor** (`#capitulos` - Contenido Exclusivo)
+    6. **Ediciones** (`#ediciones` - Formatos eBook / Impreso)
+    7. **Autor** (`#autor` - Biografía Jorge Orpianesi)
+    8. **Galería** (`#galeria` - Galería Fotográfica)
+    9. **Suscripción / Contacto** (`#contacto` - Formulario & Footer)
 
-### 2. Servicio de Sincronización en Tiempo Real (`syncService`)
-- [sync-service.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/sync-service.js): Utiliza `BroadcastChannel('samurai_sync_channel')` y eventos de almacenamiento para emitir cambios instantáneamente entre pestañas.
-- [sections-menu-manager.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/sections-menu-manager.js) & [gpu-config-manager.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/gpu-config-manager.js): Emiten eventos `SETTINGS_UPDATED` al guardar.
-- [script.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/script.js): Suscrito a `syncService` para actualizar en tiempo real la visibilidad de secciones y los parámetros del motor GPU sin necesidad de recargar la página `index.html`.
+### 2. Renderizado Dinámico del Menú & Visibilidad en Vivo
+- [script.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/script.js):
+  - `applyDynamicSettings()` re-renderiza en vivo los enlaces del menú superior (`#nav-menu ul`) cuando el administrador modifica o deshabilita un enlace.
+  - Alterna la propiedad `display` de las secciones exactas de la landing page mediante `document.getElementById(sec) || document.querySelector('.${sec}-section')`.
 
 ---
 
 ## Verificación
 
-- **Compilación de producción (`vite build`)**: Ejecutada con `cmd.exe /c "npm run build"`, confirmando la generación limpia de los 4 entrypoints (`index.html`, `gpu.html`, `admin.html`, `blog.html`).
+- **Compilación de Producción (`vite build`)**: Verificada exitosamente con `cmd.exe /c "npm run build"`, construyendo los 4 puntos de entrada sin inconsistencias.
