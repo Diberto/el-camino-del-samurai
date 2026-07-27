@@ -1,30 +1,18 @@
-# Walkthrough: Admin Backend, CMS & User Management
+# Walkthrough: Samurai Admin Unificado y Sincronización en Tiempo Real
 
 ## Cambios Realizados
 
-### 1. Capa Adaptadora de Datos (`DatabaseService`)
-- [db-service.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/db-service.js): Singleton que abstrae el backend subyacente.
-- [pocketbase-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/pocketbase-adapter.js): Integración con PocketBase API REST/Auth/Storage.
-- [sqlite-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/sqlite-adapter.js): Emulador local en localStorage/SQLite para desarrollo sin servidor externo.
+### 1. Coherencia Estética Samurai (`styles.css`)
+- [admin.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/admin.html): Rediseñado con la estructura de tarjetas glassmorphic, tipografía `'Cinzel'`, badges y botones samurai (`btn-samurai-red`, `btn-samurai-outline`).
+- [admin.css](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/admin.css): Actualizado para usar directamente los tokens y variables CSS de la landing page (`--accent-red`, `--accent-gold`, `--bg-card`, `--border-color`, `--border-glow`).
 
-### 2. Procesamiento Multimedia y Conversión WebP
-- [webp-converter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/utils/webp-converter.js): Módulo Canvas en cliente que convierte imágenes JPG/PNG automáticamente a formato `.webp` optimizado antes del upload.
-- [youtube-embed.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/utils/youtube-embed.js): Extractor de ID y generador de contenedores `<iframe>` responsivos para videos de YouTube.
-
-### 3. Dashboard Administrativo
-- [admin.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/admin.html): Panel SPA en la ruta `/admin.html`.
-- [admin.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/admin.js) y [admin.css](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/admin.css): Autenticación JWT / control de sesiones y ruteo de pestañas.
-- **Control de Secciones y Menú**: [sections-menu-manager.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/sections-menu-manager.js).
-- **Control de Opciones GPU**: [gpu-config-manager.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/gpu-config-manager.js).
-- **Editor WYSIWYG & Blog CMS**: [wysiwyg-editor.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/components/wysiwyg-editor.js) y [blog-cms-manager.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/blog-cms-manager.js).
-- **Gestión de Usuarios**: [user-manager.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/user-manager.js).
-
-### 4. Integración Pública y Sección Blog
-- [script.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/script.js): Actualizado para ocultar/mostrar secciones dinámicamente según configuración guardada en DB.
-- [blog.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/blog.html) y [blog.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/public/blog.js): Página pública para renderizar artículos del blog con imágenes WebP y reproductores YouTube.
+### 2. Servicio de Sincronización en Tiempo Real (`syncService`)
+- [sync-service.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/sync-service.js): Utiliza `BroadcastChannel('samurai_sync_channel')` y eventos de almacenamiento para emitir cambios instantáneamente entre pestañas.
+- [sections-menu-manager.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/sections-menu-manager.js) & [gpu-config-manager.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/gpu-config-manager.js): Emiten eventos `SETTINGS_UPDATED` al guardar.
+- [script.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/script.js): Suscrito a `syncService` para actualizar en tiempo real la visibilidad de secciones y los parámetros del motor GPU sin necesidad de recargar la página `index.html`.
 
 ---
 
-## Verificación Realizada
+## Verificación
 
-- **Compilación de producción (`vite build`)**: Ejecutada exitosamente sin errores, generando bundle optimizado para todas las páginas (`index.html`, `gpu.html`, `admin.html`, `blog.html`).
+- **Compilación de producción (`vite build`)**: Ejecutada con `cmd.exe /c "npm run build"`, confirmando la generación limpia de los 4 entrypoints (`index.html`, `gpu.html`, `admin.html`, `blog.html`).
