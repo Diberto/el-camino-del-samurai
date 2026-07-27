@@ -14,8 +14,24 @@ import sakuraPetal2 from './assets/sakura_petal_2.webp';
 import sakuraPetal3 from './assets/sakura_petal_3.webp';
 import { gpuConfig } from './gpu-config.js';
 import { japaneseFluteAudio } from './audio-engine.js';
+import { dbService } from './src/services/db-service.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    // Dynamic Admin Settings Sync
+    (async function syncAdminSettings() {
+        try {
+            const settings = await dbService.getSettings();
+            if (settings?.sections_toggle) {
+                Object.entries(settings.sections_toggle).forEach(([sec, active]) => {
+                    const el = document.getElementById(sec) || document.querySelector(`.${sec}`);
+                    if (el) el.style.display = active ? '' : 'none';
+                });
+            }
+        } catch (e) {
+            console.warn('Could not load dynamic admin settings:', e);
+        }
+    })();
 
     // -1. TRADITIONAL JAPANESE SHAKUHACHI FLUTE AUDIO CONTROLLER
     function initAudioController() {

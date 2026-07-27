@@ -7,6 +7,8 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         gpu: resolve(__dirname, 'gpu.html'),
+        admin: resolve(__dirname, 'admin.html'),
+        blog: resolve(__dirname, 'blog.html'),
       },
     },
   },
