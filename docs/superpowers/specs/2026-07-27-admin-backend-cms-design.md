@@ -1,28 +1,29 @@
-# El Camino Del Samurai: Blog Catalog & Reader Spec
+# El Camino Del Samurai: PocketBase Linux & Cross-Platform Service Spec
 
 ## Overview
-This specification defines the 2-stage public blog architecture: dynamic top 3 posts widget on `index.html`, full articles catalog view on `blog.html`, and single-article reading view on `blog.html?post=ID`.
+This specification documents the cross-platform PocketBase service runner (`scripts/start-pocketbase.js`), auto-seeder, and default `PocketBaseAdapter` integration supporting Linux (amd64/arm64) and Windows OS.
 
 ---
 
-## 1. Landing Page Widget (`script.js` & `index.html#blog`)
-- Fetches all published posts via `dbService.getPosts()`.
-- Sorts array by `created_at` in descending order and takes top 3 items (`slice(0, 3)`).
-- Each card links directly to `blog.html?post=${post.id}`.
+## 1. Cross-Platform PocketBase Binary Resolution
+
+### 1.1 Operating System & Architecture Detection
+`scripts/start-pocketbase.js` inspects `process.platform` and `process.arch`:
+- **Linux x64**: `pocketbase_0.22.14_linux_amd64.zip`
+- **Linux arm64**: `pocketbase_0.22.14_linux_arm64.zip`
+- **Windows x64**: `pocketbase_0.22.14_windows_amd64.zip`
+
+### 1.2 Binary Acquisition & Execution
+- Downloads target zip from PocketBase GitHub Releases if binary (`./pocketbase` or `./pocketbase.exe`) is not found in `./bin/pocketbase/`.
+- Extracts executable, grants execute permissions (`chmod +x` on Linux), and launches `pocketbase serve --http=127.0.0.1:8090`.
 
 ---
 
-## 2. Dedicated Blog Page Router (`src/public/blog.js` & `blog.html`)
+## 2. Database Service & Default Provider Settings
 
-### 2.1 Catalog View (`blog.html` with no query parameter)
-- Renders full list of published articles in responsive grid.
-- Search / filter by title or keyword.
-- Each item has a **"Leer Artículo →"** action that updates URL to `blog.html?post=${post.id}` and switches to Single Post view smoothly.
-
-### 2.2 Single Post Reader View (`blog.html?post=ID`)
-- Detects `post` URL parameter (`URLSearchParams`).
-- Renders breadcrumb: **"← Volver a Todos los Artículos"** (resets URL back to `blog.html`).
-- Renders cover image, title, author, date, and full HTML body.
+### 2.1 Provider Factory Update (`db-service.js`)
+- Default provider set to `'pocketbase'`.
+- `PocketBaseAdapter` includes auto-fallback/seeding logic: if PocketBase returns empty/404 or fails to respond, returns default initial posts (3 articles with public WebP images) and section toggles so website renders 100% reliably.
 
 ---
 
