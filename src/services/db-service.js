@@ -35,6 +35,8 @@ class DatabaseService {
   getPosts() { return this.adapter.getPosts(); }
   savePost(p) { return this.adapter.savePost(p); }
   deletePost(id) { return this.adapter.deletePost(id); }
+  getMedia() { return this.adapter.getMedia ? this.adapter.getMedia() : []; }
+  deleteMedia(id) { return this.adapter.deleteMedia ? this.adapter.deleteMedia(id) : null; }
   getUsers() { return this.adapter.getUsers(); }
   saveUser(u) { return this.adapter.saveUser(u); }
   uploadMedia(f) { return this.adapter.uploadMedia(f); }

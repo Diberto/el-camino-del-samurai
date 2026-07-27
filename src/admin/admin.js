@@ -3,6 +3,7 @@ import { initSectionsManager } from './modules/sections-menu-manager.js';
 import { initGpuManager } from './modules/gpu-config-manager.js';
 import { initBlogManager } from './modules/blog-cms-manager.js';
 import { initUserManager } from './modules/user-manager.js';
+import { initMediaManager } from './modules/media-manager.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const loginModal = document.getElementById('login-modal');
@@ -83,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSectionsManager(document.getElementById('tab-sections'));
     initGpuManager(document.getElementById('tab-gpu'));
     initBlogManager(document.getElementById('tab-blog'));
+    initMediaManager(document.getElementById('tab-media'));
     initUserManager(document.getElementById('tab-users'));
   }
 

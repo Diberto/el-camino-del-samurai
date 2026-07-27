@@ -25,46 +25,52 @@ export class WysiwygEditor {
           <span style="color:rgba(255,255,255,0.15); margin:0 0.2rem;">|</span>
 
           <!-- Inline Text Formats -->
-          <button type="button" data-cmd="bold" title="Negrita (Ctrl+B)" class="wysiwyg-btn" style="font-weight:bold;">B</button>
-          <button type="button" data-cmd="italic" title="Cursiva (Ctrl+I)" class="wysiwyg-btn" style="font-style:italic;">I</button>
-          <button type="button" data-cmd="underline" title="Subrayado (Ctrl+U)" class="wysiwyg-btn" style="text-decoration:underline;">U</button>
+          <button type="button" data-cmd="bold" title="Negrita" class="wysiwyg-btn" style="font-weight:bold;">B</button>
+          <button type="button" data-cmd="italic" title="Cursiva" class="wysiwyg-btn" style="font-style:italic;">I</button>
+          <button type="button" data-cmd="underline" title="Subrayado" class="wysiwyg-btn" style="text-decoration:underline;">U</button>
           <button type="button" data-cmd="strikeThrough" title="Tachado" class="wysiwyg-btn" style="text-decoration:line-through;">S</button>
 
           <span style="color:rgba(255,255,255,0.15); margin:0 0.2rem;">|</span>
 
           <!-- Alignment -->
-          <button type="button" data-cmd="justifyLeft" title="Alinear a la Izquierda" class="wysiwyg-btn">⬅️</button>
+          <button type="button" data-cmd="justifyLeft" title="Alinear a Izquierda" class="wysiwyg-btn">⬅️</button>
           <button type="button" data-cmd="justifyCenter" title="Alinear al Centro" class="wysiwyg-btn">↔️</button>
-          <button type="button" data-cmd="justifyRight" title="Alinear a la Derecha" class="wysiwyg-btn">➡️</button>
+          <button type="button" data-cmd="justifyRight" title="Alinear a Derecha" class="wysiwyg-btn">➡️</button>
 
           <span style="color:rgba(255,255,255,0.15); margin:0 0.2rem;">|</span>
 
           <!-- Lists -->
-          <button type="button" data-cmd="insertUnorderedList" title="Lista con Viñetas" class="wysiwyg-btn">• Lista</button>
+          <button type="button" data-cmd="insertUnorderedList" title="Lista Viñetas" class="wysiwyg-btn">• Lista</button>
           <button type="button" data-cmd="insertOrderedList" title="Lista Numerada" class="wysiwyg-btn">1. Lista</button>
 
           <span style="color:rgba(255,255,255,0.15); margin:0 0.2rem;">|</span>
 
           <!-- Links -->
           <button type="button" id="btn-insert-link" title="Insertar Enlace" class="wysiwyg-btn">🔗 Link</button>
-          <button type="button" data-cmd="unlink" title="Quitar Enlace" class="wysiwyg-btn">✂️ Unlink</button>
 
           <span style="color:rgba(255,255,255,0.15); margin:0 0.2rem;">|</span>
 
-          <!-- Media & WebP -->
-          <button type="button" id="btn-insert-image" class="btn-samurai-outline" style="padding:0.3rem 0.7rem; font-size:0.85rem;">🖼️ Subir WebP</button>
+          <!-- Media Gallery Picker & WebP -->
+          <button type="button" id="btn-open-media-gallery" class="btn-samurai-outline" style="padding:0.3rem 0.7rem; font-size:0.85rem; color:var(--accent-gold); border-color:var(--accent-gold-glow);">🖼️ Galería de Medios</button>
+          <button type="button" id="btn-insert-image" class="btn-samurai-outline" style="padding:0.3rem 0.7rem; font-size:0.85rem;">⬆️ Subir WebP</button>
           <button type="button" id="btn-insert-youtube" class="btn-samurai-red" style="padding:0.3rem 0.7rem; font-size:0.85rem;">▶️ YouTube</button>
 
           <input type="file" id="wysiwyg-file-input" accept="image/*" style="display:none;">
         </div>
 
-        <!-- Drag & Drop Zone -->
-        <div id="drop-zone-hint" style="padding:0.4rem 1rem; background:rgba(197,168,128,0.05); font-size:0.8rem; color:var(--accent-gold); border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center;">
-          <span>✨ <em>Tip: Arrastra y suelta cualquier imagen (PNG/JPG) directamente en el editor para convertirla automáticamente a WebP.</em></span>
-        </div>
-
         <div class="wysiwyg-content" contenteditable="true" style="min-height:300px; padding:1.5rem; color:var(--text-primary); outline:none; line-height:1.7; font-family:var(--font-body);">
           ${this.initialHTML}
+        </div>
+      </div>
+
+      <!-- Media Gallery Modal -->
+      <div id="wysiwyg-media-modal" class="admin-login-modal hidden" style="background:rgba(0,0,0,0.85); z-index:9999;">
+        <div class="samurai-card" style="width:90%; max-width:800px; max-height:80vh; overflow-y:auto; padding:2rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+            <h3 class="samurai-title">Seleccionar Imagen de Galería de Medios</h3>
+            <button type="button" id="close-media-modal-btn" class="btn-samurai-outline">✕ Cerrar</button>
+          </div>
+          <div id="media-modal-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:1rem;"></div>
         </div>
       </div>
     `;
@@ -100,6 +106,37 @@ export class WysiwygEditor {
         contentDiv.focus();
       }
     });
+
+    // Open Media Gallery Modal Picker
+    const mediaModal = this.container.querySelector('#wysiwyg-media-modal');
+    const mediaGrid = this.container.querySelector('#media-modal-grid');
+    const closeMediaModalBtn = this.container.querySelector('#close-media-modal-btn');
+
+    this.container.querySelector('#btn-open-media-gallery').addEventListener('click', async () => {
+      const mediaItems = await dbService.getMedia();
+      if (mediaItems.length === 0) {
+        mediaGrid.innerHTML = '<p style="color:var(--text-muted); grid-column:1/-1; text-align:center;">No hay imágenes registradas en la Galería de Medios. Sube una desde el menú Medios o el botón Subir WebP.</p>';
+      } else {
+        mediaGrid.innerHTML = mediaItems.map(item => `
+          <div class="media-modal-item" data-url="${item.url}" style="border:1px solid var(--border-color); border-radius:8px; padding:0.5rem; cursor:pointer; background:rgba(0,0,0,0.4); text-align:center; transition:transform 0.2s ease;">
+            <img src="${item.url}" alt="${item.name}" style="width:100%; height:120px; object-fit:cover; border-radius:4px; margin-bottom:0.4rem;">
+            <span style="font-size:0.75rem; color:var(--text-secondary); display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${item.name}</span>
+          </div>
+        `).join('');
+
+        mediaGrid.querySelectorAll('.media-modal-item').forEach(card => {
+          card.addEventListener('click', () => {
+            const url = card.dataset.url;
+            contentDiv.focus();
+            document.execCommand('insertImage', false, url);
+            mediaModal.classList.add('hidden');
+          });
+        });
+      }
+      mediaModal.classList.remove('hidden');
+    });
+
+    closeMediaModalBtn.addEventListener('click', () => mediaModal.classList.add('hidden'));
 
     // Image upload (WebP converter)
     const fileInput = this.container.querySelector('#wysiwyg-file-input');
