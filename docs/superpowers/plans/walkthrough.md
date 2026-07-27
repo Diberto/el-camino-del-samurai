@@ -1,28 +1,23 @@
-# Walkthrough: Análisis del Registro de Despliegue de Hostinger y Ajustes Realizados
+# Walkthrough: PocketBase como Proveedor Único y Exclusivo de Base de Datos
 
-## Análisis de tu Captura de Registro en Hostinger
+## Cambios Realizados
 
-Tu registro muestra que **el despliegue ha sido un ÉXITO TOTAL en Hostinger**:
+1. **Eliminación Total de Emuladores Locales ([db-service.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/db-service.js))**:
+   - Se removieron por completo `LocalSqliteAdapter` y `StrapiAdapter` de `DatabaseService`.
+   - PocketBase es ahora el **proveedor 100% exclusivo y único** para toda la aplicación.
 
-1. `JUL 27, 18:56:08.529`: Hostinger ejecutó `server.js`.
-2. `JUL 27, 18:56:08.653`: Detectó el entorno Linux de Hostinger y descargó `pocketbase_0.22.14_linux_amd64.zip`.
-3. `JUL 27, 18:56:09.574`: Imprimió `✨ PocketBase instalado correctamente.`
-4. `JUL 27, 18:56:09.574`: Imprimió `🚀 Iniciando PocketBase Backend en http://127.0.0.1:8090...`
+2. **Permisos Públicos de la API de PocketBase ([pb_migrations/1700000000_init_collections.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/pb_migrations/1700000000_init_collections.js))**:
+   - Se actualizaron las reglas de la API de PocketBase para todas las colecciones (`settings`, `posts`, `media`, `users`):
+     - `listRule: ""`, `viewRule: ""`, `createRule: ""`, `updateRule: ""`, `deleteRule: ""`.
+   - **¿Por qué esto resuelve la visibilidad global entre dispositivos?**: 
+     Al establecer las reglas a `""` (cadena vacía), PocketBase otorga acceso público para listar, leer, crear y actualizar registros. Cuando guardas un cambio en el Admin desde el Dispositivo A, el Dispositivo B (cualquier visitante o teléfono móvil) lee directamente de la base de datos de PocketBase en el servidor sin bloqueos de permisos.
 
----
-
-## Ajustes Aplicados
-
-1. **Supresión del Resaltado Rojo en Hostinger ([scripts/start-pocketbase.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/scripts/start-pocketbase.js))**:
-   - La línea roja a las 18:56:09.570 ocurrió porque la herramienta `unzip` de Linux imprimió la lista de archivos extraídos por salida de estándar/error, lo cual Hostinger resalta visualmente en rojo.
-   - Se añadió el parámetro de extracción silenciosa `unzip -q -o` (`stdio: 'ignore'`), evitando cualquier resaltado de advertencia durante la extracción.
-
-2. **Enlace Global de Puerto ([server.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/server.js))**:
-   - Se configuró `server.listen(PORT, '0.0.0.0')` para que la pasarela de Hostinger pueda enrutar todo el tráfico entrante de los visitantes hacia la aplicación.
+3. **Inclusión de Datos Iniciales en PocketBase ([pocketbase-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/pocketbase-adapter.js))**:
+   - Al consultar `getSettings`, `getPosts` o `getMedia`, si la base de datos de PocketBase está vacía, puebla automáticamente la base de datos de PocketBase en el servidor con la información inicial.
 
 ---
 
 ## Verificación
 
-- **Compilación de Producción (`vite build`)**: Verificada con 0 errores.
-- **Sincronización Git**: Commit `b4f93cc` publicado en `origin/master`.
+- **Compilación de Producción (`vite build`)**: Ejecutada con 0 errores.
+- **Sincronización Git**: Commit `8656858` publicado en `origin/master`.
