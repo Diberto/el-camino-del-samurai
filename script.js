@@ -897,45 +897,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 8. ENTRANCE ANIMATION WITH ZEN BELL
-    function playZenChime() {
-        try {
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            
-            // Master gain
-            const masterGain = audioCtx.createGain();
-            masterGain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-            masterGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 2.5);
-            masterGain.connect(audioCtx.destination);
-
-            // Bell-like tones with gentle inharmonicity
-            const frequencies = [220, 277.18, 329.63, 440];
-            
-            frequencies.forEach((freq, i) => {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                
-                osc.type = 'sine';
-                osc.frequency.value = freq;
-                
-                gain.gain.setValueAtTime(0, audioCtx.currentTime + i * 0.04);
-                gain.gain.linearRampToValueAtTime(1, audioCtx.currentTime + i * 0.04 + 0.02);
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 2);
-                
-                osc.connect(gain);
-                gain.connect(masterGain);
-                
-                osc.start(audioCtx.currentTime + i * 0.04);
-                osc.stop(audioCtx.currentTime + 2.5);
-            });
-        } catch (e) {
-            // AudioContext not available
-        }
-    }
-
-    // Play chime after a short delay when page loads
-    setTimeout(playZenChime, 600);
-
     // 9. SCROLL TO TOP BUTTON
     const scrollBtn = document.getElementById('scroll-top');
 
