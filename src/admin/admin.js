@@ -12,13 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const logoutBtn = document.getElementById('logout-btn');
   const userDisplayName = document.getElementById('user-display-name');
 
-  function checkAuth() {
+  async function checkAuth() {
     const user = dbService.getCurrentUser();
     if (user) {
       loginModal.classList.add('hidden');
       adminApp.classList.remove('hidden');
       userDisplayName.textContent = user.name || user.email;
-      loadModules();
+      await loadModules();
     } else {
       loginModal.classList.remove('hidden');
       adminApp.classList.add('hidden');
@@ -29,18 +29,21 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
+    const errorEl = document.getElementById('login-error');
+    errorEl.textContent = 'Verificando credenciales...';
 
     try {
       await dbService.login(email, password);
-      checkAuth();
+      errorEl.textContent = '';
+      await checkAuth();
     } catch (err) {
-      document.getElementById('login-error').textContent = err.message || 'Error de autenticación';
+      errorEl.textContent = err.message || 'Error de autenticación';
     }
   });
 
-  logoutBtn.addEventListener('click', () => {
+  logoutBtn.addEventListener('click', async () => {
     dbService.logout();
-    checkAuth();
+    await checkAuth();
   });
 
   // Tab switching
@@ -49,16 +52,30 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
-      document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
+      const targetPanel = document.getElementById(`tab-${btn.dataset.tab}`);
+      if (targetPanel) targetPanel.classList.add('active');
     });
   });
 
-  function loadModules() {
-    initSectionsManager(document.getElementById('tab-sections'));
-    initGpuManager(document.getElementById('tab-gpu'));
-    initBlogManager(document.getElementById('tab-blog'));
-    initMediaManager(document.getElementById('tab-media'));
-    initUserManager(document.getElementById('tab-users'));
+  async function loadModules() {
+    try {
+      const sectionsEl = document.getElementById('tab-sections');
+      if (sectionsEl) await initSectionsManager(sectionsEl).catch(e => console.warn('Error loading sections manager:', e));
+
+      const gpuEl = document.getElementById('tab-gpu');
+      if (gpuEl) await initGpuManager(gpuEl).catch(e => console.warn('Error loading gpu manager:', e));
+
+      const blogEl = document.getElementById('tab-blog');
+      if (blogEl) await initBlogManager(blogEl).catch(e => console.warn('Error loading blog manager:', e));
+
+      const mediaEl = document.getElementById('tab-media');
+      if (mediaEl) await initMediaManager(mediaEl).catch(e => console.warn('Error loading media manager:', e));
+
+      const usersEl = document.getElementById('tab-users');
+      if (usersEl) await initUserManager(usersEl).catch(e => console.warn('Error loading user manager:', e));
+    } catch (err) {
+      console.warn('Error in loadModules:', err);
+    }
   }
 
   checkAuth();

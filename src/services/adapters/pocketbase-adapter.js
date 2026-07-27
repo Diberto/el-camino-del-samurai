@@ -31,10 +31,12 @@ export class PocketBaseAdapter {
       localStorage.setItem('pb_auth_user', JSON.stringify(this.currentUser));
       return this.currentUser;
     }
-    // Admin fallback user
+    // Admin fallback user for admin.html login
     if (email === 'admin@samurai.com' && password === 'admin123') {
       const user = { id: 'admin-usr', email, name: 'Jorge Orpianesi Admin', role: 'admin' };
       this.currentUser = user;
+      this.token = 'admin-token-local';
+      localStorage.setItem('pb_auth_token', this.token);
       localStorage.setItem('pb_auth_user', JSON.stringify(user));
       return user;
     }
@@ -49,18 +51,24 @@ export class PocketBaseAdapter {
   }
 
   getCurrentUser() {
-    return this.currentUser || { id: 'admin-usr', email: 'admin@samurai.com', name: 'Jorge Orpianesi Admin', role: 'admin' };
+    if (!this.currentUser) {
+      this.currentUser = JSON.parse(localStorage.getItem('pb_auth_user') || 'null');
+    }
+    return this.currentUser;
   }
 
   async getSettings() {
-    const res = await this.request('/api/collections/settings/records');
-    if (res && res.items && res.items.length > 0) {
-      const raw = res.items[0].settings_data;
-      if (typeof raw === 'string') {
-        try { return JSON.parse(raw); } catch { return raw; }
+    try {
+      const res = await this.request('/api/collections/settings/records');
+      if (res && res.items && res.items.length > 0) {
+        const raw = res.items[0].settings_data;
+        if (typeof raw === 'string') {
+          try { return JSON.parse(raw); } catch { return raw; }
+        }
+        if (raw && typeof raw === 'object') return raw;
       }
-      if (raw && typeof raw === 'object') return raw;
-    }
+    } catch {}
+
     // Return default initial settings structure
     const defaultSettings = {
       sections_toggle: {
@@ -83,37 +91,43 @@ export class PocketBaseAdapter {
   }
 
   async saveSettings(settingsData) {
-    const payload = { settings_data: typeof settingsData === 'object' ? JSON.stringify(settingsData) : settingsData };
-    const res = await this.request('/api/collections/settings/records');
-    if (res && res.items && res.items.length > 0) {
-      return await this.request(`/api/collections/settings/records/${res.items[0].id}`, {
-        method: 'PATCH',
-        body: JSON.stringify(payload)
-      });
-    } else {
-      return await this.request('/api/collections/settings/records', {
-        method: 'POST',
-        body: JSON.stringify(payload)
-      });
+    try {
+      const payload = { settings_data: typeof settingsData === 'object' ? JSON.stringify(settingsData) : settingsData };
+      const res = await this.request('/api/collections/settings/records');
+      if (res && res.items && res.items.length > 0) {
+        return await this.request(`/api/collections/settings/records/${res.items[0].id}`, {
+          method: 'PATCH',
+          body: JSON.stringify(payload)
+        });
+      } else {
+        return await this.request('/api/collections/settings/records', {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+      }
+    } catch {
+      return null;
     }
   }
 
   async getPosts() {
-    const res = await this.request('/api/collections/posts/records?sort=-created');
-    if (res && res.items && res.items.length > 0) {
-      return res.items.map(item => ({
-        id: item.id,
-        title: item.title,
-        slug: item.slug,
-        excerpt: item.excerpt,
-        content: item.content,
-        cover_image: item.cover_image ? (item.cover_image.startsWith('http') || item.cover_image.startsWith('photos/') ? item.cover_image : `${this.baseUrl}/api/files/posts/${item.id}/${item.cover_image}`) : 'photos/cueva_reigando.webp',
-        status: item.status || 'published',
-        author: item.author || 'Jorge Orpianesi',
-        created_at: item.created || item.created_at
-      }));
-    }
-    // Seed default initial posts to PocketBase if empty
+    try {
+      const res = await this.request('/api/collections/posts/records?sort=-created');
+      if (res && res.items && res.items.length > 0) {
+        return res.items.map(item => ({
+          id: item.id,
+          title: item.title,
+          slug: item.slug,
+          excerpt: item.excerpt,
+          content: item.content,
+          cover_image: item.cover_image ? (item.cover_image.startsWith('http') || item.cover_image.startsWith('photos/') ? item.cover_image : `${this.baseUrl}/api/files/posts/${item.id}/${item.cover_image}`) : 'photos/cueva_reigando.webp',
+          status: item.status || 'published',
+          author: item.author || 'Jorge Orpianesi',
+          created_at: item.created || item.created_at
+        }));
+      }
+    } catch {}
+
     const defaultPosts = [
       {
         title: 'Los Secretos de Miyamoto Musashi en la Cueva Reigando',
@@ -151,35 +165,46 @@ export class PocketBaseAdapter {
   }
 
   async savePost(postData) {
-    if (postData.id && !postData.id.startsWith('post-')) {
-      return await this.request(`/api/collections/posts/records/${postData.id}`, {
-        method: 'PATCH',
-        body: JSON.stringify(postData)
-      });
-    } else {
-      return await this.request('/api/collections/posts/records', {
-        method: 'POST',
-        body: JSON.stringify(postData)
-      });
+    try {
+      if (postData.id && !postData.id.startsWith('post-')) {
+        return await this.request(`/api/collections/posts/records/${postData.id}`, {
+          method: 'PATCH',
+          body: JSON.stringify(postData)
+        });
+      } else {
+        return await this.request('/api/collections/posts/records', {
+          method: 'POST',
+          body: JSON.stringify(postData)
+        });
+      }
+    } catch {
+      return null;
     }
   }
 
   async deletePost(id) {
-    return await this.request(`/api/collections/posts/records/${id}`, { method: 'DELETE' });
+    try {
+      return await this.request(`/api/collections/posts/records/${id}`, { method: 'DELETE' });
+    } catch {
+      return null;
+    }
   }
 
   async getMedia() {
-    const res = await this.request('/api/collections/media/records?sort=-created');
-    if (res && res.items && res.items.length > 0) {
-      return res.items.map(item => ({
-        id: item.id,
-        name: item.name,
-        url: item.file ? `${this.baseUrl}/api/files/media/${item.id}/${item.file}` : item.url,
-        type: item.type || 'image/webp',
-        size: item.size || 'WebP',
-        created_at: item.created
-      }));
-    }
+    try {
+      const res = await this.request('/api/collections/media/records?sort=-created');
+      if (res && res.items && res.items.length > 0) {
+        return res.items.map(item => ({
+          id: item.id,
+          name: item.name,
+          url: item.file ? `${this.baseUrl}/api/files/media/${item.id}/${item.file}` : item.url,
+          type: item.type || 'image/webp',
+          size: item.size || 'WebP',
+          created_at: item.created
+        }));
+      }
+    } catch {}
+
     const defaultMedia = [
       { name: 'Cueva Reigando', url: 'photos/cueva_reigando.webp', type: 'image/webp', size: '229.7 KB' },
       { name: 'Castillo Sengoku', url: 'photos/castillo_sengoku.webp', type: 'image/webp', size: '159.5 KB' },
@@ -193,25 +218,36 @@ export class PocketBaseAdapter {
   }
 
   async deleteMedia(id) {
-    return await this.request(`/api/collections/media/records/${id}`, { method: 'DELETE' });
+    try {
+      return await this.request(`/api/collections/media/records/${id}`, { method: 'DELETE' });
+    } catch {
+      return null;
+    }
   }
 
   async getUsers() {
-    const res = await this.request('/api/collections/users/records');
-    return (res && res.items) ? res.items : [{ id: 'admin-usr', email: 'admin@samurai.com', name: 'Jorge Orpianesi Admin', role: 'admin' }];
+    try {
+      const res = await this.request('/api/collections/users/records');
+      if (res && res.items) return res.items;
+    } catch {}
+    return [{ id: 'admin-usr', email: 'admin@samurai.com', name: 'Jorge Orpianesi Admin', role: 'admin' }];
   }
 
   async saveUser(userData) {
-    if (userData.id && !userData.id.startsWith('admin-')) {
-      return await this.request(`/api/collections/users/records/${userData.id}`, {
-        method: 'PATCH',
-        body: JSON.stringify(userData)
-      });
-    } else {
-      return await this.request('/api/collections/users/records', {
-        method: 'POST',
-        body: JSON.stringify(userData)
-      });
+    try {
+      if (userData.id && !userData.id.startsWith('admin-')) {
+        return await this.request(`/api/collections/users/records/${userData.id}`, {
+          method: 'PATCH',
+          body: JSON.stringify(userData)
+        });
+      } else {
+        return await this.request('/api/collections/users/records', {
+          method: 'POST',
+          body: JSON.stringify(userData)
+        });
+      }
+    } catch {
+      return null;
     }
   }
 
