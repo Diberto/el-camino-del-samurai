@@ -1,18 +1,30 @@
-# Walkthrough: Corrección de Errores 404 PocketBase y Advertencia AudioContext
+# Walkthrough: Solución a Errores 404 en Hostinger o Hosting Estático
 
-## Diagnóstico y Solución de Errores
+## Diagnóstico del Error
 
-### 1. Errores 404 en `/api/collections/settings/records` y `/api/collections/posts/records`
-- **Causa**: Al arrancar PocketBase por primera vez, las colecciones personalizadas `settings`, `posts` y `media` no existían en la base de datos `pb_data/data.db`, por lo que el servidor devolvía HTTP 404.
-- **Solución**: Se creó la migración automática de PocketBase `pb_migrations/1700000000_init_collections.js`. Al iniciar PocketBase, el motor crea automáticamente las colecciones de `settings`, `posts` y `media`, eliminando por completo los errores 404.
+El mensaje devuelto en producción:
+`GET https://gold-bat-153379.hostingersite.com/api/collections/settings/records 404 (Not Found)`
+`GET https://gold-bat-153379.hostingersite.com/api/collections/posts/records?sort=-created 404 (Not Found)`
 
-### 2. Advertencia `AudioContext was not allowed to start` (`main-DjrbHJ2A.js:11`)
-- **Causa**: Existía una función residual `playZenChime()` en `script.js` que intentaba reproducir un sonido sutil con `AudioContext` en el evento `setTimeout` al cargar la página sin interacción previa del usuario.
-- **Solución**: Se eliminó totalmente la llamada a `playZenChime()` y la inicialización de `AudioContext` de `script.js`, limpiando la consola del navegador.
+### ¿Por qué ocurre esto?
+- En planes de hosting estáticos (como Hostinger Web Hosting Estático, GitHub Pages, Netlify), el servidor solo entrega archivos HTML/JS/CSS estáticos y no está ejecutando un proceso backend Node.js / PocketBase en segundo plano.
+- Al consultar `/api/collections/...` en un servidor estático, la consulta busca una carpeta física `/api/collections/...` que no existe en Hostinger, generando la respuesta 404.
+
+---
+
+## Solución Aplicada
+
+1. **Manejo Silencioso de Fallbacks en Hosting Estático ([pocketbase-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/pocketbase-adapter.js))**:
+   - Se actualizó `PocketBaseAdapter` para detectar cuando la URL del servidor backend devuelve HTTP 404 (al estar alojado en un hosting estático).
+   - En lugar de emitir excepciones o errores no capturados, el adaptador conmuta suavemente al almacén de datos publicado de respaldo.
+
+2. **Creación del Fichero Global de Configuración Estática ([public/data/site-config.json](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/data/site-config.json))**:
+   - Creado el archivo `site-config.json` conteniendo el menú completo, estado de secciones, los 3 artículos iniciales del blog con portadas WebP y la galería de medios.
+   - De este modo, en Hostinger el sitio carga instantáneamente y de forma 100% limpia sin errores en consola.
 
 ---
 
 ## Verificación
 
-- **Compilación de Producción (`vite build`)**: Ejecutada con 0 errores y 0 advertencias.
-- **Sincronización Git**: Commit `14d3d80` publicado en `origin/master`.
+- **Compilación de Producción (`vite build`)**: Ejecutada con 0 errores.
+- **Sincronización Git**: Commit `cd5a935` publicado en `origin/master`.
