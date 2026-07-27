@@ -2,8 +2,8 @@
 import { LocalSqliteAdapter } from './sqlite-adapter.js';
 
 export class PocketBaseAdapter {
-  constructor(baseUrl = 'http://127.0.0.1:8090') {
-    this.baseUrl = baseUrl;
+  constructor(baseUrl = '') {
+    this.baseUrl = localStorage.getItem('pb_base_url') || (typeof window !== 'undefined' ? window.location.origin : 'http://127.0.0.1:8090');
     this.token = localStorage.getItem('pb_auth_token') || '';
     this.currentUser = JSON.parse(localStorage.getItem('pb_auth_user') || 'null');
     this.fallbackAdapter = new LocalSqliteAdapter();

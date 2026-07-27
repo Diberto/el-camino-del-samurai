@@ -1,10 +1,11 @@
 {
   "name": "el-camino-del-samurai",
   "version": "1.0.0",
-  "description": "Landing page de El Camino del Samurai",
+  "description": "Landing page y Blog de El Camino del Samurai",
   "type": "module",
-  "main": "index.html",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "dev": "vite",
     "pb": "node scripts/start-pocketbase.js",
     "build": "vite build",
