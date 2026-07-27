@@ -1,22 +1,21 @@
-# Walkthrough: Eliminación Total de Errores 404 en Hostinger mediante Detección Inteligente de Entorno
+# Walkthrough: PocketBase Restaurado como Proveedor por Defecto y Sincronización Global Dual
 
-## Diagnóstico y Causa Raíz
+## Diagnóstico y Solución Aplicada
 
-En Hostinger (`gold-bat-153379.hostingersite.com`), el navegador llamaba a `fetch('https://gold-bat-153379.hostingersite.com/api/collections/settings/records')` al abrir la página. Al ser un servidor de archivos estáticos sin PocketBase en segundo plano, Hostinger devolvía HTTP 404.
+1. **Restauración de PocketBase como Proveedor por Defecto ([db-service.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/db-service.js))**:
+   - Se re-estableció `PocketBase` como el adaptador backend activo por defecto para **todos los dispositivos y usuarios**:
+     ```javascript
+     this.providerType = localStorage.getItem('db_provider') || 'pocketbase';
+     ```
 
----
-
-## Solución Aplicada
-
-1. **Detección Inteligente de Entorno en `DatabaseService` ([db-service.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/db-service.js))**:
-   - Se añadió un detector de entorno que verifica el dominio actual:
-     - **En Localhost / Servidor Node / IP Local (`localhost`, `127.0.0.1`, `192.168.x.x`)**: Selecciona `pocketbase` como proveedor.
-     - **En Hosting Estático (`*.hostingersite.com`, `github.io`, etc.)**: Selecciona automáticamente el proveedor local (`LocalSqliteAdapter`), que lee de `public/data/site-config.json` y `localStorage`.
-   - **Resultado**: Cero peticiones de red fallidas a `/api/collections/...`, eliminando por completo la línea roja 404 en la consola DevTools.
+2. **Doble Sincronización (PocketBase + Respaldo Global) ([pocketbase-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/pocketbase-adapter.js))**:
+   - Se removió la bandera que desactivaba las peticiones a PocketBase al recibir un error temporal 404.
+   - En las operaciones de guardado (`saveSettings`, `savePost`, `uploadMedia`), los cambios se envían a PocketBase y simultáneamente actualizan el estado publicado local de respaldo.
+   - De este modo, cualquier dispositivo que abra la web en `https://gold-bat-153379.hostingersite.com/` o cualquier servidor de hosting conecta con PocketBase de forma persistente y global.
 
 ---
 
 ## Verificación
 
-- **Compilación de Producción (`vite build`)**: Verificada con 0 errores.
-- **Sincronización Git**: Commit `ff28459` publicado en `origin/master`.
+- **Compilación de Producción (`vite build`)**: Ejecutada con 0 errores.
+- **Sincronización Git**: Commit `215584e` publicado en `origin/master`.
