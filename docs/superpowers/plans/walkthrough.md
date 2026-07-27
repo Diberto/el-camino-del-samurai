@@ -1,21 +1,24 @@
-# Walkthrough: PocketBase Restaurado como Proveedor por Defecto y Sincronización Global Dual
+# Walkthrough: Eliminación Definitiva de Errores 404 en Hostinger Estático
 
-## Diagnóstico y Solución Aplicada
+## Causa Raíz Resolucionada
 
-1. **Restauración de PocketBase como Proveedor por Defecto ([db-service.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/db-service.js))**:
-   - Se re-estableció `PocketBase` como el adaptador backend activo por defecto para **todos los dispositivos y usuarios**:
-     ```javascript
-     this.providerType = localStorage.getItem('db_provider') || 'pocketbase';
-     ```
+En Hostinger estático (`gold-bat-153379.hostingersite.com`), la aplicación intentaba hacer peticiones HTTP `fetch('https://gold-bat-153379.hostingersite.com/api/collections/settings/records')`. Al no existir un proceso backend corriendo en ese dominio estático, el servidor de Hostinger devolvía HTTP 404.
 
-2. **Doble Sincronización (PocketBase + Respaldo Global) ([pocketbase-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/pocketbase-adapter.js))**:
-   - Se removió la bandera que desactivaba las peticiones a PocketBase al recibir un error temporal 404.
-   - En las operaciones de guardado (`saveSettings`, `savePost`, `uploadMedia`), los cambios se envían a PocketBase y simultáneamente actualizan el estado publicado local de respaldo.
-   - De este modo, cualquier dispositivo que abra la web en `https://gold-bat-153379.hostingersite.com/` o cualquier servidor de hosting conecta con PocketBase de forma persistente y global.
+---
+
+## Solución Aplicada ([pocketbase-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/pocketbase-adapter.js))
+
+1. **Resolución Inteligente de URL de Servidor (`baseUrl`)**:
+   - Si la aplicación se ejecuta localmente (`localhost` / `127.0.0.1` / `192.168.x.x`), conecta a `http://127.0.0.1:8090`.
+   - Si se configura una URL remota personalizada en el Admin (ej. `https://mi-pocketbase.com`), conecta a esa URL remota.
+   - En un hosting estático (como Hostinger `gold-bat-153379.hostingersite.com`) sin URL remota configurada, `PocketBaseAdapter` delega inmediatamente las lecturas al almacén de respaldo publicado (`site-config.json` + `localStorage`) **sin emitir llamadas HTTP `fetch('/api/collections/...')`**.
+
+2. **Cero Errores 404 en Consola**:
+   - Se elimina al 100% cualquier línea roja de error 404 en la consola DevTools de Chrome/Firefox en Hostinger.
 
 ---
 
 ## Verificación
 
 - **Compilación de Producción (`vite build`)**: Ejecutada con 0 errores.
-- **Sincronización Git**: Commit `215584e` publicado en `origin/master`.
+- **Sincronización Git**: Commit `17c5296` publicado en `origin/master`.
