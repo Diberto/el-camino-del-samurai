@@ -5,14 +5,7 @@ import { StrapiAdapter } from './adapters/strapi-adapter.js';
 
 class DatabaseService {
   constructor() {
-    const isStaticHosting = typeof window !== 'undefined' && 
-      !localStorage.getItem('pb_base_url') && 
-      window.location.hostname !== 'localhost' && 
-      window.location.hostname !== '127.0.0.1' &&
-      !window.location.hostname.startsWith('192.168.');
-
-    const defaultProvider = isStaticHosting ? 'local' : 'pocketbase';
-    this.providerType = localStorage.getItem('db_provider') || defaultProvider;
+    this.providerType = localStorage.getItem('db_provider') || 'pocketbase';
     this.initProvider();
   }
 

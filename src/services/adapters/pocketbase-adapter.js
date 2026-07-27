@@ -8,22 +8,18 @@ export class PocketBaseAdapter {
     this.token = localStorage.getItem('pb_auth_token') || '';
     this.currentUser = JSON.parse(localStorage.getItem('pb_auth_user') || 'null');
     this.fallbackAdapter = new LocalSqliteAdapter();
-    this.isServerAvailable = true;
   }
 
   async request(endpoint, options = {}) {
-    if (!this.isServerAvailable && !this.customUrl) return null;
     try {
       const headers = { 'Content-Type': 'application/json', ...options.headers };
       if (this.token) headers['Authorization'] = `Bearer ${this.token}`;
       const res = await fetch(`${this.baseUrl}${endpoint}`, { ...options, headers });
       if (!res.ok) {
-        if (res.status === 404) this.isServerAvailable = false;
         return null;
       }
       return await res.json();
     } catch {
-      this.isServerAvailable = false;
       return null;
     }
   }
@@ -68,13 +64,19 @@ export class PocketBaseAdapter {
         method: 'PATCH',
         body: JSON.stringify({ settings_data: settingsData })
       });
-      if (updated) return updated;
-    } else if (res) {
+      if (updated) {
+        await this.fallbackAdapter.saveSettings(settingsData);
+        return updated;
+      }
+    } else {
       const created = await this.request('/api/collections/settings/records', {
         method: 'POST',
         body: JSON.stringify({ settings_data: settingsData })
       });
-      if (created) return created;
+      if (created) {
+        await this.fallbackAdapter.saveSettings(settingsData);
+        return created;
+      }
     }
     return await this.fallbackAdapter.saveSettings(settingsData);
   }
@@ -103,21 +105,27 @@ export class PocketBaseAdapter {
         method: 'PATCH',
         body: JSON.stringify(postData)
       });
-      if (res) return res;
+      if (res) {
+        await this.fallbackAdapter.savePost(postData);
+        return res;
+      }
     } else {
       const res = await this.request('/api/collections/posts/records', {
         method: 'POST',
         body: JSON.stringify(postData)
       });
-      if (res) return res;
+      if (res) {
+        await this.fallbackAdapter.savePost(postData);
+        return res;
+      }
     }
     return await this.fallbackAdapter.savePost(postData);
   }
 
   async deletePost(id) {
     const res = await this.request(`/api/collections/posts/records/${id}`, { method: 'DELETE' });
-    if (res) return res;
-    return await this.fallbackAdapter.deletePost(id);
+    await this.fallbackAdapter.deletePost(id);
+    return res;
   }
 
   async getMedia() {
@@ -137,8 +145,8 @@ export class PocketBaseAdapter {
 
   async deleteMedia(id) {
     const res = await this.request(`/api/collections/media/records/${id}`, { method: 'DELETE' });
-    if (res) return res;
-    return await this.fallbackAdapter.deleteMedia(id);
+    await this.fallbackAdapter.deleteMedia(id);
+    return res;
   }
 
   async getUsers() {
@@ -174,7 +182,9 @@ export class PocketBaseAdapter {
       const res = await fetch(`${this.baseUrl}/api/collections/media/records`, { method: 'POST', headers, body: formData });
       if (res.ok) {
         const record = await res.json();
-        return record.file ? `${this.baseUrl}/api/files/media/${record.id}/${record.file}` : await this.fallbackAdapter.uploadMedia(file);
+        const url = record.file ? `${this.baseUrl}/api/files/media/${record.id}/${record.file}` : '';
+        await this.fallbackAdapter.uploadMedia(file);
+        return url;
       }
     } catch {}
     return await this.fallbackAdapter.uploadMedia(file);
