@@ -18,15 +18,19 @@ export class PocketBaseAdapter {
   }
 
   async login(email, password) {
-    const data = await this.request('/api/collections/users/auth-with-password', {
-      method: 'POST',
-      body: JSON.stringify({ identity: email, password })
-    });
-    this.token = data.token;
-    this.currentUser = data.record;
-    localStorage.setItem('pb_auth_token', this.token);
-    localStorage.setItem('pb_auth_user', JSON.stringify(this.currentUser));
-    return this.currentUser;
+    try {
+      const data = await this.request('/api/collections/users/auth-with-password', {
+        method: 'POST',
+        body: JSON.stringify({ identity: email, password })
+      });
+      this.token = data.token;
+      this.currentUser = data.record;
+      localStorage.setItem('pb_auth_token', this.token);
+      localStorage.setItem('pb_auth_user', JSON.stringify(this.currentUser));
+      return this.currentUser;
+    } catch (err) {
+      throw new Error(`PocketBase (127.0.0.1:8090) no responde: ${err.message}. Por favor cambia el proveedor a 'SQLite Local / Emulator' en la barra lateral para ingresar con admin@samurai.com / admin123.`);
+    }
   }
 
   logout() {

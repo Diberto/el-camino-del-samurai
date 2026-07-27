@@ -19,14 +19,22 @@
       <form id="login-form">
         <div class="form-group">
           <label>Email de Administrador</label>
-          <input type="email" id="login-email" required value="admin@samurai.com">
+          <input type="email" id="login-email" required value="admin@samurai.com" autocomplete="username">
         </div>
         <div class="form-group">
           <label>Contraseña</label>
-          <input type="password" id="login-password" required value="admin123">
+          <input type="password" id="login-password" required value="admin123" autocomplete="current-password">
         </div>
-        <div id="login-error" class="login-error"></div>
-        <button type="submit" class="btn-samurai-red" style="width: 100%; margin-top: 1rem;">Iniciar Sesión</button>
+        <div class="form-group">
+          <label style="font-size: 0.8rem; color: var(--text-secondary);">Proveedor Backend:</label>
+          <select id="login-provider-select" style="width: 100%; padding: 0.6rem; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: var(--accent-gold); border-radius: 6px; font-weight: 600; cursor: pointer;">
+            <option value="local">SQLite Local / Emulator (Sin Servidor Externo)</option>
+            <option value="pocketbase">PocketBase (127.0.0.1:8090)</option>
+            <option value="strapi">Strapi CMS (localhost:1337)</option>
+          </select>
+        </div>
+        <div id="login-error" class="login-error" style="color: #f56565; margin-bottom: 1rem; font-size: 0.85rem; line-height: 1.4;"></div>
+        <button type="submit" class="btn-samurai-red" style="width: 100%;">Iniciar Sesión</button>
       </form>
     </div>
   </div>
