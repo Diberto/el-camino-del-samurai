@@ -2,6 +2,23 @@ import { defineConfig } from 'vite';
 import { resolve } from 'path';
 
 export default defineConfig({
+  plugins: [
+    {
+      name: 'html-rewrite',
+      configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+          if (req.url === '/admin' || req.url === '/admin/') {
+            req.url = '/admin.html';
+          } else if (req.url === '/blog' || req.url === '/blog/') {
+            req.url = '/blog.html';
+          } else if (req.url === '/gpu' || req.url === '/gpu/') {
+            req.url = '/gpu.html';
+          }
+          next();
+        });
+      }
+    }
+  ],
   build: {
     rollupOptions: {
       input: {

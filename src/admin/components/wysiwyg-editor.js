@@ -11,46 +11,116 @@ export class WysiwygEditor {
 
   render() {
     this.container.innerHTML = `
-      <div class="wysiwyg-toolbar" style="display:flex; gap:0.4rem; padding:0.5rem; background:#242832; border:1px solid #4a5568; border-bottom:none; border-radius:6px 6px 0 0; flex-wrap:wrap;">
-        <button type="button" data-cmd="bold" style="padding:0.4rem 0.7rem; font-weight:bold; cursor:pointer;">B</button>
-        <button type="button" data-cmd="italic" style="padding:0.4rem 0.7rem; font-style:italic; cursor:pointer;">I</button>
-        <button type="button" data-cmd="underline" style="padding:0.4rem 0.7rem; text-decoration:underline; cursor:pointer;">U</button>
-        <button type="button" data-cmd="formatBlock" data-val="H2" style="padding:0.4rem 0.7rem; cursor:pointer;">H2</button>
-        <button type="button" data-cmd="formatBlock" data-val="H3" style="padding:0.4rem 0.7rem; cursor:pointer;">H3</button>
-        <button type="button" data-cmd="insertUnorderedList" style="padding:0.4rem 0.7rem; cursor:pointer;">• Lista</button>
-        <button type="button" id="btn-insert-image" style="padding:0.4rem 0.7rem; background:#4a5568; color:#fff; border:none; border-radius:4px; cursor:pointer;">🖼️ WebP Imagen</button>
-        <button type="button" id="btn-insert-youtube" style="padding:0.4rem 0.7rem; background:#e53e3e; color:#fff; border:none; border-radius:4px; cursor:pointer;">▶️ YouTube</button>
-        <input type="file" id="wysiwyg-file-input" accept="image/*" style="display:none;">
-      </div>
-      <div class="wysiwyg-content" contenteditable="true" style="min-height:250px; padding:1rem; background:#1a1d24; border:1px solid #4a5568; border-radius:0 0 6px 6px; color:#fff; overflow-y:auto;">
-        ${this.initialHTML}
+      <div class="wysiwyg-wrapper" style="border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; background: var(--bg-card);">
+        <div class="wysiwyg-toolbar" style="display:flex; gap:0.4rem; padding:0.6rem; background:rgba(0,0,0,0.5); border-bottom:1px solid var(--border-color); flex-wrap:wrap; align-items:center;">
+          <!-- Format Selector -->
+          <select id="wysiwyg-block-type" style="padding:0.4rem 0.6rem; background:rgba(255,255,255,0.05); color:var(--text-primary); border:1px solid rgba(255,255,255,0.1); border-radius:4px; font-size:0.85rem; cursor:pointer;">
+            <option value="p">Párrafo Normal</option>
+            <option value="h2">Encabezado H2</option>
+            <option value="h3">Encabezado H3</option>
+            <option value="h4">Encabezado H4</option>
+            <option value="blockquote">Cita Destacada (Blockquote)</option>
+          </select>
+
+          <span style="color:rgba(255,255,255,0.15); margin:0 0.2rem;">|</span>
+
+          <!-- Inline Text Formats -->
+          <button type="button" data-cmd="bold" title="Negrita (Ctrl+B)" class="wysiwyg-btn" style="font-weight:bold;">B</button>
+          <button type="button" data-cmd="italic" title="Cursiva (Ctrl+I)" class="wysiwyg-btn" style="font-style:italic;">I</button>
+          <button type="button" data-cmd="underline" title="Subrayado (Ctrl+U)" class="wysiwyg-btn" style="text-decoration:underline;">U</button>
+          <button type="button" data-cmd="strikeThrough" title="Tachado" class="wysiwyg-btn" style="text-decoration:line-through;">S</button>
+
+          <span style="color:rgba(255,255,255,0.15); margin:0 0.2rem;">|</span>
+
+          <!-- Alignment -->
+          <button type="button" data-cmd="justifyLeft" title="Alinear a la Izquierda" class="wysiwyg-btn">⬅️</button>
+          <button type="button" data-cmd="justifyCenter" title="Alinear al Centro" class="wysiwyg-btn">↔️</button>
+          <button type="button" data-cmd="justifyRight" title="Alinear a la Derecha" class="wysiwyg-btn">➡️</button>
+
+          <span style="color:rgba(255,255,255,0.15); margin:0 0.2rem;">|</span>
+
+          <!-- Lists -->
+          <button type="button" data-cmd="insertUnorderedList" title="Lista con Viñetas" class="wysiwyg-btn">• Lista</button>
+          <button type="button" data-cmd="insertOrderedList" title="Lista Numerada" class="wysiwyg-btn">1. Lista</button>
+
+          <span style="color:rgba(255,255,255,0.15); margin:0 0.2rem;">|</span>
+
+          <!-- Links -->
+          <button type="button" id="btn-insert-link" title="Insertar Enlace" class="wysiwyg-btn">🔗 Link</button>
+          <button type="button" data-cmd="unlink" title="Quitar Enlace" class="wysiwyg-btn">✂️ Unlink</button>
+
+          <span style="color:rgba(255,255,255,0.15); margin:0 0.2rem;">|</span>
+
+          <!-- Media & WebP -->
+          <button type="button" id="btn-insert-image" class="btn-samurai-outline" style="padding:0.3rem 0.7rem; font-size:0.85rem;">🖼️ Subir WebP</button>
+          <button type="button" id="btn-insert-youtube" class="btn-samurai-red" style="padding:0.3rem 0.7rem; font-size:0.85rem;">▶️ YouTube</button>
+
+          <input type="file" id="wysiwyg-file-input" accept="image/*" style="display:none;">
+        </div>
+
+        <!-- Drag & Drop Zone -->
+        <div id="drop-zone-hint" style="padding:0.4rem 1rem; background:rgba(197,168,128,0.05); font-size:0.8rem; color:var(--accent-gold); border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center;">
+          <span>✨ <em>Tip: Arrastra y suelta cualquier imagen (PNG/JPG) directamente en el editor para convertirla automáticamente a WebP.</em></span>
+        </div>
+
+        <div class="wysiwyg-content" contenteditable="true" style="min-height:300px; padding:1.5rem; color:var(--text-primary); outline:none; line-height:1.7; font-family:var(--font-body);">
+          ${this.initialHTML}
+        </div>
       </div>
     `;
 
     const contentDiv = this.container.querySelector('.wysiwyg-content');
     const toolbar = this.container.querySelector('.wysiwyg-toolbar');
 
+    // ExecCommand buttons
     toolbar.querySelectorAll('button[data-cmd]').forEach(btn => {
       btn.addEventListener('click', () => {
         document.execCommand(btn.dataset.cmd, false, btn.dataset.val || null);
+        contentDiv.focus();
       });
     });
 
+    // Block type selector
+    const blockSelect = this.container.querySelector('#wysiwyg-block-type');
+    blockSelect.addEventListener('change', (e) => {
+      const val = e.target.value;
+      if (val === 'blockquote') {
+        document.execCommand('formatBlock', false, 'blockquote');
+      } else {
+        document.execCommand('formatBlock', false, `<${val}>`);
+      }
+      contentDiv.focus();
+    });
+
+    // Link inserter
+    this.container.querySelector('#btn-insert-link').addEventListener('click', () => {
+      const url = prompt('Ingresa la URL del enlace (https://...):');
+      if (url) {
+        document.execCommand('createLink', false, url);
+        contentDiv.focus();
+      }
+    });
+
+    // Image upload (WebP converter)
     const fileInput = this.container.querySelector('#wysiwyg-file-input');
     this.container.querySelector('#btn-insert-image').addEventListener('click', () => fileInput.click());
 
     fileInput.addEventListener('change', async (e) => {
       const file = e.target.files[0];
-      if (!file) return;
-      try {
-        const webpFile = await convertToWebP(file);
-        const url = await dbService.uploadMedia(webpFile);
-        document.execCommand('insertImage', false, url);
-      } catch (err) {
-        alert('Error al procesar/subir imagen: ' + err.message);
+      if (file) await this.handleImageFile(file, contentDiv);
+    });
+
+    // Drag & Drop image handler
+    contentDiv.addEventListener('dragover', (e) => e.preventDefault());
+    contentDiv.addEventListener('drop', async (e) => {
+      e.preventDefault();
+      const files = e.dataTransfer.files;
+      if (files && files.length > 0 && files[0].type.startsWith('image/')) {
+        await this.handleImageFile(files[0], contentDiv);
       }
     });
 
+    // YouTube embed tool
     this.container.querySelector('#btn-insert-youtube').addEventListener('click', () => {
       const input = prompt('Ingresa la URL o ID del video de YouTube:');
       const yid = extractYouTubeId(input);
@@ -62,6 +132,17 @@ export class WysiwygEditor {
         alert('URL de YouTube no válida');
       }
     });
+  }
+
+  async handleImageFile(file, contentDiv) {
+    try {
+      const webpFile = await convertToWebP(file);
+      const url = await dbService.uploadMedia(webpFile);
+      contentDiv.focus();
+      document.execCommand('insertImage', false, url);
+    } catch (err) {
+      alert('Error al procesar/subir imagen a WebP: ' + err.message);
+    }
   }
 
   getContent() {
