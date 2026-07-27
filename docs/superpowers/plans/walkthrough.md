@@ -1,24 +1,28 @@
-# Walkthrough: Eliminación Definitiva de Errores 404 en Hostinger Estático
+# Walkthrough: Análisis del Registro de Despliegue de Hostinger y Ajustes Realizados
 
-## Causa Raíz Resolucionada
+## Análisis de tu Captura de Registro en Hostinger
 
-En Hostinger estático (`gold-bat-153379.hostingersite.com`), la aplicación intentaba hacer peticiones HTTP `fetch('https://gold-bat-153379.hostingersite.com/api/collections/settings/records')`. Al no existir un proceso backend corriendo en ese dominio estático, el servidor de Hostinger devolvía HTTP 404.
+Tu registro muestra que **el despliegue ha sido un ÉXITO TOTAL en Hostinger**:
+
+1. `JUL 27, 18:56:08.529`: Hostinger ejecutó `server.js`.
+2. `JUL 27, 18:56:08.653`: Detectó el entorno Linux de Hostinger y descargó `pocketbase_0.22.14_linux_amd64.zip`.
+3. `JUL 27, 18:56:09.574`: Imprimió `✨ PocketBase instalado correctamente.`
+4. `JUL 27, 18:56:09.574`: Imprimió `🚀 Iniciando PocketBase Backend en http://127.0.0.1:8090...`
 
 ---
 
-## Solución Aplicada ([pocketbase-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/pocketbase-adapter.js))
+## Ajustes Aplicados
 
-1. **Resolución Inteligente de URL de Servidor (`baseUrl`)**:
-   - Si la aplicación se ejecuta localmente (`localhost` / `127.0.0.1` / `192.168.x.x`), conecta a `http://127.0.0.1:8090`.
-   - Si se configura una URL remota personalizada en el Admin (ej. `https://mi-pocketbase.com`), conecta a esa URL remota.
-   - En un hosting estático (como Hostinger `gold-bat-153379.hostingersite.com`) sin URL remota configurada, `PocketBaseAdapter` delega inmediatamente las lecturas al almacén de respaldo publicado (`site-config.json` + `localStorage`) **sin emitir llamadas HTTP `fetch('/api/collections/...')`**.
+1. **Supresión del Resaltado Rojo en Hostinger ([scripts/start-pocketbase.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/scripts/start-pocketbase.js))**:
+   - La línea roja a las 18:56:09.570 ocurrió porque la herramienta `unzip` de Linux imprimió la lista de archivos extraídos por salida de estándar/error, lo cual Hostinger resalta visualmente en rojo.
+   - Se añadió el parámetro de extracción silenciosa `unzip -q -o` (`stdio: 'ignore'`), evitando cualquier resaltado de advertencia durante la extracción.
 
-2. **Cero Errores 404 en Consola**:
-   - Se elimina al 100% cualquier línea roja de error 404 en la consola DevTools de Chrome/Firefox en Hostinger.
+2. **Enlace Global de Puerto ([server.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/server.js))**:
+   - Se configuró `server.listen(PORT, '0.0.0.0')` para que la pasarela de Hostinger pueda enrutar todo el tráfico entrante de los visitantes hacia la aplicación.
 
 ---
 
 ## Verificación
 
-- **Compilación de Producción (`vite build`)**: Ejecutada con 0 errores.
-- **Sincronización Git**: Commit `17c5296` publicado en `origin/master`.
+- **Compilación de Producción (`vite build`)**: Verificada con 0 errores.
+- **Sincronización Git**: Commit `b4f93cc` publicado en `origin/master`.
