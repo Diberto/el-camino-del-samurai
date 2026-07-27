@@ -1,19 +1,21 @@
-# Walkthrough: Atributos Autocomplete y Manejo de Conexión de Servidores Backend
+# Walkthrough: Galería de Medios (Media Library) e Integración con Blog CMS
 
 ## Cambios Realizados
 
-### 1. Atributos `autocomplete` en el Formulario de Login ([admin.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/admin.html))
-- Añadidos los atributos recomendados `autocomplete="username"` al campo de email y `autocomplete="current-password"` al campo de contraseña para eliminar la advertencia de accesibilidad DOM del navegador.
+### 1. Corrección de Rutas de Imágenes
+- Se normalizaron y codificaron las URLs de imágenes predeterminadas en [sqlite-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/sqlite-adapter.js) para evitar caracteres no soportados en servidores estáticos y GitHub Pages.
 
-### 2. Selector de Proveedor en la Pantalla de Login ([admin.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/admin.html) & [admin.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/admin.js))
-- Añadido un selector desplegable de proveedor directamente en el modal de inicio de sesión (`SQLite Local / Emulator`, `PocketBase`, `Strapi CMS`).
-- Si PocketBase o Strapi no están corriendo localmente, el usuario puede seleccionar **SQLite Local / Emulator** para ingresar inmediatamente con las credenciales por defecto (`admin@samurai.com` / `admin123`).
+### 2. Módulo Galería de Medios (`media-manager.js`)
+- [media-manager.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/media-manager.js): Módulo en la pestaña **🖼️ Medios** del Admin Panel con zona Drag & Drop, conversión automática a `.webp`, previsualizador de catálogo de medios, botón **📋 Copiar URL** y opción de eliminación.
+- [db-service.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/db-service.js): Añadidos los métodos `getMedia()` y `deleteMedia()`.
 
-### 3. Captura y Manejo Claro de Errores de Conexión 404 ([pocketbase-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/pocketbase-adapter.js))
-- Si PocketBase no está ejecutándose en `http://127.0.0.1:8090`, el error de red o 404 es capturado y muestra un mensaje informativo indicando cómo alternar el proveedor a SQLite Local.
+### 3. Vinculación en el Editor de Blog y WYSIWYG
+- [wysiwyg-editor.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/components/wysiwyg-editor.js): Añadido el botón **🖼️ Galería de Medios** que abre un modal selector de imágenes del catálogo para insertarlas directamente en el cuerpo del artículo.
+- [blog-cms-manager.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/blog-cms-manager.js): Añadido el campo de **Imagen de Portada** con previsualización en vivo y botón **🖼️ Elegir de Galería** modal.
 
 ---
 
 ## Verificación
 
-- **Compilación de Producción (`vite build`)**: Ejecutada con éxito mediante `cmd.exe /c "npm run build"`, confirmando 0 errores de compilación.
+- **Compilación de Producción (`vite build`)**: Ejecutada con éxito con `cmd.exe /c "npm run build"`, 0 errores.
+- **Sincronización Git**: Subido a GitHub en `origin/master` (`fd36f9a`).
