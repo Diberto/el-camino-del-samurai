@@ -2,69 +2,51 @@
 migrate((db) => {
   const dao = new Dao(db);
 
-  // 1. Settings Collection
-  try {
-    dao.findCollectionByNameOrId("settings");
-  } catch (_) {
-    const collection = new Collection({
-      name: "settings",
-      type: "base",
-      schema: [
-        { name: "settings_data", type: "json" }
-      ],
-      listRule: "",
-      viewRule: "",
-      createRule: "",
-      updateRule: "",
-      deleteRule: ""
-    });
-    dao.saveCollection(collection);
+  function ensureCol(name, schema) {
+    try {
+      const collection = dao.findCollectionByNameOrId(name);
+      collection.listRule = "";
+      collection.viewRule = "";
+      collection.createRule = "";
+      collection.updateRule = "";
+      collection.deleteRule = "";
+      dao.saveCollection(collection);
+    } catch (_) {
+      const collection = new Collection({
+        name: name,
+        type: "base",
+        schema: schema,
+        listRule: "",
+        viewRule: "",
+        createRule: "",
+        updateRule: "",
+        deleteRule: ""
+      });
+      dao.saveCollection(collection);
+    }
   }
+
+  // 1. Settings Collection
+  ensureCol("settings", [
+    { name: "settings_data", type: "json" }
+  ]);
 
   // 2. Posts Collection
-  try {
-    dao.findCollectionByNameOrId("posts");
-  } catch (_) {
-    const collection = new Collection({
-      name: "posts",
-      type: "base",
-      schema: [
-        { name: "title", type: "text" },
-        { name: "slug", type: "text" },
-        { name: "excerpt", type: "text" },
-        { name: "content", type: "text" },
-        { name: "cover_image", type: "text" },
-        { name: "status", type: "text" },
-        { name: "author", type: "text" }
-      ],
-      listRule: "",
-      viewRule: "",
-      createRule: "",
-      updateRule: "",
-      deleteRule: ""
-    });
-    dao.saveCollection(collection);
-  }
+  ensureCol("posts", [
+    { name: "title", type: "text" },
+    { name: "slug", type: "text" },
+    { name: "excerpt", type: "text" },
+    { name: "content", type: "text" },
+    { name: "cover_image", type: "text" },
+    { name: "status", type: "text" },
+    { name: "author", type: "text" }
+  ]);
 
   // 3. Media Collection
-  try {
-    dao.findCollectionByNameOrId("media");
-  } catch (_) {
-    const collection = new Collection({
-      name: "media",
-      type: "base",
-      schema: [
-        { name: "name", type: "text" },
-        { name: "url", type: "text" },
-        { name: "type", type: "text" },
-        { name: "size", type: "text" }
-      ],
-      listRule: "",
-      viewRule: "",
-      createRule: "",
-      updateRule: "",
-      deleteRule: ""
-    });
-    dao.saveCollection(collection);
-  }
+  ensureCol("media", [
+    { name: "name", type: "text" },
+    { name: "url", type: "text" },
+    { name: "type", type: "text" },
+    { name: "size", type: "text" }
+  ]);
 });
