@@ -1,27 +1,18 @@
-# Walkthrough: Sincronización Exacta Admin <-> Landing Page (index.html)
+# Walkthrough: Sincronización Secciones <-> Menú, Estilo "Comprar" y Scrollspy Dinámico
 
 ## Cambios Realizados
 
-### 1. Mapeo Directo a Elementos Reales de `index.html`
-- [sqlite-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/sqlite-adapter.js) & [sections-menu-manager.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/sections-menu-manager.js):
-  - Actualizados para mapear las secciones reales de la landing page:
-    1. **Inicio** (`#inicio` - Hero Parallax)
-    2. **El Libro** (`#sinopsis` - Sinopsis & Modelo 3D)
-    3. **Las Virtudes** (`#virtudes` - Las 7 Virtudes del Bushido)
-    4. **El Oráculo** (`#oraculo` - Oráculo Interactivo)
-    5. **Obras del Autor** (`#capitulos` - Contenido Exclusivo)
-    6. **Ediciones** (`#ediciones` - Formatos eBook / Impreso)
-    7. **Autor** (`#autor` - Biografía Jorge Orpianesi)
-    8. **Galería** (`#galeria` - Galería Fotográfica)
-    9. **Suscripción / Contacto** (`#contacto` - Formulario & Footer)
+### 1. Sincronización Automática Secciones <-> Menú ([sections-menu-manager.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/sections-menu-manager.js))
+- Al cambiar el interruptor de cualquier sección en el Administrador (ej. desmarcar `sinopsis`), el ítem correspondiente en el menú de navegación (`#sinopsis`) se desmarca o deshabilita automáticamente en la UI y la base de datos.
 
-### 2. Renderizado Dinámico del Menú & Visibilidad en Vivo
-- [script.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/script.js):
-  - `applyDynamicSettings()` re-renderiza en vivo los enlaces del menú superior (`#nav-menu ul`) cuando el administrador modifica o deshabilita un enlace.
-  - Alterna la propiedad `display` de las secciones exactas de la landing page mediante `document.getElementById(sec) || document.querySelector('.${sec}-section')`.
+### 2. Estilo de Resaltado del Botón "Comprar" ([script.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/script.js))
+- Restaurado el estilo distintivo `class="btn btn-nav"` para el enlace "Comprar" (`#contacto`) al re-renderizar el menú dinámicamente.
+
+### 3. Scrollspy e Indicador Activo Dinámico en Scroll ([script.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/script.js))
+- Corregida la función `handleScrollEffects()` para consultar dinámicamente los enlaces actuales del DOM y realizar una coincidencia exacta de ID (`#${currentSectionId}`), evitando que queden seleccionados elementos de secciones que no están en pantalla.
 
 ---
 
 ## Verificación
 
-- **Compilación de Producción (`vite build`)**: Verificada exitosamente con `cmd.exe /c "npm run build"`, construyendo los 4 puntos de entrada sin inconsistencias.
+- **Compilación de Producción (`vite build`)**: Verificada con `cmd.exe /c "npm run build"`, construyendo sin errores todos los módulos.
