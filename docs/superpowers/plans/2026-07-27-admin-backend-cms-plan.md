@@ -1,46 +1,39 @@
-# Media Library & Blog Image Integration Plan
+# Blog Catalog & Single Article Reader View Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Implement a Media Library Manager (`media-manager.js`) tab in the Admin panel, connect it to `DatabaseService`, normalize image URLs for blog posts, and enable media selection in the WYSIWYG editor and blog post cover picker.
+**Goal:** Ensure the home page blog section shows the top 3 latest published articles linked directly to `blog.html?post=ID`, and implement a 2-view router on `blog.html` (Catalog List View + Single Article Reader View).
 
-**Architecture:** Extended `DatabaseService` adapters with `getMedia()`, `uploadMedia()`, and `deleteMedia()`. Media Library module rendering asset grid with WebP conversion, URL copying, and modal picker for Blog posts.
-
----
-
-### Task 1: Extend `DatabaseService` & Adapters with `getMedia` and Normalized Image URLs
-
-**Files:**
-- Modify: `src/services/adapters/sqlite-adapter.js`
-- Modify: `src/services/adapters/strapi-adapter.js`
-- Modify: `src/services/adapters/pocketbase-adapter.js`
-- Modify: `src/services/db-service.js`
-
-- [ ] **Step 1: Normalize asset URLs and add `getMedia`, `deleteMedia` to adapters and `db-service.js`**
+**Architecture:** `script.js` updates home blog grid with direct links to `blog.html?post=ID`. `src/public/blog.js` reads `URLSearchParams` to render either the full article catalog or the single article reading view with breadcrumbs.
 
 ---
 
-### Task 2: Create `src/admin/modules/media-manager.js` and Integrate into `admin.html` & `admin.js`
+### Task 1: Update Home Blog Widget in `script.js`
 
 **Files:**
-- Create: `src/admin/modules/media-manager.js`
-- Modify: `admin.html`
-- Modify: `src/admin/admin.js`
+- Modify: `script.js`
 
-- [ ] **Step 1: Create `media-manager.js` with WebP Uploader, Media Grid, Copy URL, and Delete actions**
-- [ ] **Step 2: Add `🖼️ Medios` tab to `admin.html` sidebar and wire in `admin.js`**
+- [ ] **Step 1: Ensure `renderHomeBlogPosts()` sorts published posts by `created_at` desc, takes top 3, and links each post card to `blog.html?post=${post.id}`**
 
 ---
 
-### Task 3: Integrate Media Library Modal Picker into WYSIWYG Editor and Blog CMS
+### Task 2: Implement Catalog List View & Single Article Reader View in `src/public/blog.js` and `blog.html`
 
 **Files:**
-- Modify: `src/admin/components/wysiwyg-editor.js`
-- Modify: `src/admin/modules/blog-cms-manager.js`
+- Modify: `blog.html`
+- Modify: `src/public/blog.js`
 
-- [ ] **Step 1: Add Media Library Modal Picker to `wysiwyg-editor.js`**
-- [ ] **Step 2: Add Cover Image field and Media Selector to `blog-cms-manager.js`**
-- [ ] **Step 3: Verify build with `cmd.exe /c "npm run build"` and push to GitHub**
+- [ ] **Step 1: Update `blog.html` header structure for dynamic breadcrumbs and view toggling**
+- [ ] **Step 2: Rewrite `src/public/blog.js` with client-side view router based on `URLSearchParams` or `#id`**
+  - If `?post=ID` exists, render Single Article Reader view with cover banner, breadcrumbs, title, author, date, and full HTML body.
+  - Otherwise, render Catalog List view with search input and cards for ALL published articles.
+
+---
+
+### Task 3: Verify Build & Push to GitHub
+
+- [ ] **Step 1: Execute `cmd.exe /c "npm run build"` to verify 0 errors**
+- [ ] **Step 2: Commit and push changes to `origin master`**
 
 ---
 
