@@ -1,22 +1,18 @@
-# Walkthrough: Aplicación Node.js Unificada (`server.js`) para Despliegue en Hosting
+# Walkthrough: Corrección de Errores 404 PocketBase y Advertencia AudioContext
 
-## Cambios Realizados
+## Diagnóstico y Solución de Errores
 
-### 1. Punto de Entrada Unificado Node.js ([server.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/server.js))
-- Creado servidor web estático y proxy inverso en `server.js`.
-- Inicia automáticamente PocketBase en segundo plano y redirige de forma transparente las peticiones `/api/*` y `/_/*`.
-- Sirve los archivos estáticos de producción (`index.html`, `blog.html`, `admin.html`, `gpu.html`) en la puerta asignada por el proveedor de hosting (`process.env.PORT` o `3000`).
+### 1. Errores 404 en `/api/collections/settings/records` y `/api/collections/posts/records`
+- **Causa**: Al arrancar PocketBase por primera vez, las colecciones personalizadas `settings`, `posts` y `media` no existían en la base de datos `pb_data/data.db`, por lo que el servidor devolvía HTTP 404.
+- **Solución**: Se creó la migración automática de PocketBase `pb_migrations/1700000000_init_collections.js`. Al iniciar PocketBase, el motor crea automáticamente las colecciones de `settings`, `posts` y `media`, eliminando por completo los errores 404.
 
-### 2. Configuración para Hosting ([package.json](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/package.json))
-- Configurado `"start": "node server.js"` y `"main": "server.js"`.
-- Al conectar tu repositorio de GitHub a cualquier hosting (cPanel Node.js, Render, Railway, Vercel, Plesk, VPS), el hosting ejecuta la aplicación sin requerir comandos ni configuraciones manuales adicionales.
-
-### 3. Enrutamiento Relativo Transparente ([pocketbase-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/pocketbase-adapter.js))
-- Actualizado `baseUrl` a `window.location.origin` para que las consultas API en cualquier dispositivo utilicen el mismo dominio y puerto de la aplicación Node.js sin bloqueos de CORS o localhost.
+### 2. Advertencia `AudioContext was not allowed to start` (`main-DjrbHJ2A.js:11`)
+- **Causa**: Existía una función residual `playZenChime()` en `script.js` que intentaba reproducir un sonido sutil con `AudioContext` en el evento `setTimeout` al cargar la página sin interacción previa del usuario.
+- **Solución**: Se eliminó totalmente la llamada a `playZenChime()` y la inicialización de `AudioContext` de `script.js`, limpiando la consola del navegador.
 
 ---
 
 ## Verificación
 
-- **Compilación de Producción (`vite build`)**: Verificada con 0 errores.
-- **Sincronización Git**: Commit `28b5340` publicado en `origin/master`.
+- **Compilación de Producción (`vite build`)**: Ejecutada con 0 errores y 0 advertencias.
+- **Sincronización Git**: Commit `14d3d80` publicado en `origin/master`.
