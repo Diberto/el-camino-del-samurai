@@ -1,22 +1,18 @@
-# Walkthrough: Sección Blog Samurai & 3 Artículos de Ejemplo
+# Walkthrough: Integración de Strapi Headless CMS y Selector de Proveedor
 
 ## Cambios Realizados
 
-### 1. Sección Blog en la Landing Page (`index.html`)
-- [index.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/index.html): Añadida la sección `<section class="section blog-section" id="blog">` con tarjetas de diseño glassmorphic, tipografía `'Cinzel'`, etiquetas doradas y botón de acción a la vista dedicada.
-- [script.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/script.js): Carga y renderiza automáticamente en vivo los 3 artículos publicados más recientes en el grid de la Landing Page.
+### 1. Adaptador de Strapi (`StrapiAdapter`)
+- [strapi-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/strapi-adapter.js): Creado adaptador completo compatible con las APIs REST de Strapi v4/v5 (`/api/auth/local`, `/api/posts`, `/api/upload`, `/api/users`).
 
-### 2. 3 Artículos de Ejemplo Pre-cargados
-- [sqlite-adapter.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/sqlite-adapter.js): Pre-cargados 3 posts ricos con imágenes optimizadas y contenido sobre la obra de Jorge Orpianesi:
-  1. **Los Secretos de Miyamoto Musashi en la Cueva Reigando**: Historia y citas del *Gorin no Sho*.
-  2. **Castillos Feudales del Periodo Sengoku: Arquitectura e Historia**: Análisis de fortificaciones (Himeji, Kumamoto) con listas y fotografía.
-  3. **La Filosofía del Bushido en el Trabajo Diario y la Vida Moderna**: Aplicación contemporánea de las 7 virtudes del Bushido.
+### 2. Fábrica de Servicios de Base de Datos (`DatabaseService`)
+- [db-service.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/db-service.js): Registrado `StrapiAdapter` como proveedor disponible junto a PocketBase y SQLite Local.
 
-### 3. Página de Lectura Dedicada ([blog.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/blog.html))
-- [blog.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/blog.html) & [blog.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/public/blog.js): Actualizados para usar el sistema de diseño completo (`theme-night`, tipografía `'Cinzel'` y tarjetas con glassmorphism).
+### 3. Selector de Proveedor Backend en el Admin (`admin.html`)
+- [admin.html](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/admin.html) & [admin.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/admin.js): Añadido un desplegable interactivo en la barra lateral para alternar dinámicamente el backend activo en tiempo real (**SQLite Local / Emulator**, **Strapi Headless CMS**, o **PocketBase**).
 
 ---
 
 ## Verificación
 
-- **Compilación de Producción (`vite build`)**: Ejecutada con éxito mediante `cmd.exe /c "npm run build"`, construyendo limpiamente todos los assets.
+- **Compilación de Producción (`vite build`)**: Ejecutada exitosamente con `cmd.exe /c "npm run build"`, construyendo sin errores todos los módulos.
