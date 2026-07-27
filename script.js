@@ -59,14 +59,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    async function renderHomeBlogPosts() {
+        const grid = document.getElementById('home-blog-posts-grid');
+        if (!grid) return;
+        try {
+            const posts = await dbService.getPosts();
+            const published = (posts || []).filter(p => p.status === 'published').slice(0, 3);
+            if (published.length === 0) {
+                grid.innerHTML = '<p class="text-center" style="grid-column: 1/-1; color: var(--text-muted);">No hay artículos publicados aún.</p>';
+                return;
+            }
+            grid.innerHTML = published.map(post => `
+                <article class="blog-card" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: var(--transition-smooth); box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+                    ${post.cover_image ? `<div style="height: 200px; overflow: hidden;"><img src="${post.cover_image}" alt="${post.title}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;"></div>` : ''}
+                    <div style="padding: 1.5rem; display: flex; flex-direction: column; flex: 1;">
+                        <span style="font-size: 0.8rem; color: var(--accent-gold); font-weight: 600; margin-bottom: 0.4rem;">${new Date(post.created_at || Date.now()).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                        <h3 style="font-family: var(--font-title); font-size: 1.15rem; color: var(--text-primary); margin: 0 0 0.8rem 0; line-height: 1.4;">${post.title}</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.2rem; flex: 1; line-height: 1.6;">${post.excerpt || post.content.replace(/<[^>]*>?/gm, '').substring(0, 120) + '...'}</p>
+                        <a href="blog.html" class="btn btn-secondary" style="align-self: start; font-size: 0.85rem; padding: 0.5rem 1rem;">Leer Artículo completo →</a>
+                    </div>
+                </article>
+            `).join('');
+        } catch (e) {
+            console.warn('Could not load blog posts:', e);
+        }
+    }
+
     (async function initSync() {
         try {
             const settings = await dbService.getSettings();
             applyDynamicSettings(settings);
+            renderHomeBlogPosts();
 
             syncService.subscribe((event) => {
                 if (event.type === 'SETTINGS_UPDATED') {
                     applyDynamicSettings(event.payload);
+                    renderHomeBlogPosts();
                 }
             });
         } catch (e) {

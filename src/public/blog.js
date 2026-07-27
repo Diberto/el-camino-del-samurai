@@ -3,18 +3,20 @@ import { dbService } from '../services/db-service.js';
 document.addEventListener('DOMContentLoaded', async () => {
   const container = document.getElementById('blog-posts-container');
   const posts = await dbService.getPosts();
-  const published = posts.filter(p => p.status === 'published');
+  const published = (posts || []).filter(p => p.status === 'published');
 
   if (published.length === 0) {
-    container.innerHTML = '<p style="color:#a0aec0; font-size:1.1rem;">No hay artículos publicados aún.</p>';
+    container.innerHTML = '<p style="color: var(--text-muted); font-size: 1.1rem; text-align: center;">No hay artículos publicados aún.</p>';
     return;
   }
 
   container.innerHTML = published.map(post => `
-    <article style="background:#1a1d24; border:1px solid #2d3748; padding:2rem; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,0.4);">
-      <h2 style="font-family:'Cinzel', serif; color:#e2e8f0; margin-top:0;">${post.title}</h2>
-      <div style="font-size:0.85rem; color:#a0aec0; margin-bottom:1.5rem;">${new Date(post.created_at).toLocaleDateString('es-ES')}</div>
-      <div class="post-body" style="line-height:1.7; color:#cbd5e0;">
+    <article id="${post.id}" style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 2.5rem; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.5); backdrop-filter: blur(12px);">
+      <div style="font-size: 0.85rem; color: var(--accent-gold); font-weight: 600; margin-bottom: 0.5rem;">
+        ${new Date(post.created_at || Date.now()).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })} ${post.author ? `• Por ${post.author}` : ''}
+      </div>
+      <h2 style="font-family: var(--font-title); color: var(--text-primary); margin: 0 0 1.5rem 0; font-size: 1.8rem; line-height: 1.3;">${post.title}</h2>
+      <div class="post-body" style="line-height: 1.8; color: var(--text-secondary); font-size: 1.05rem;">
         ${post.content}
       </div>
     </article>

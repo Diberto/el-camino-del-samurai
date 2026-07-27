@@ -10,6 +10,7 @@ const SECTION_LABELS = {
   ediciones: 'Ediciones Disponibles',
   autor: 'Jorge Orpianesi (Autor)',
   galeria: 'Galería Fotográfica',
+  blog: 'Blog Samurai (Noticias & Artículos)',
   contacto: 'Suscripción / Contacto'
 };
 
@@ -22,6 +23,7 @@ const SECTION_URL_MAP = {
   ediciones: '#ediciones',
   autor: '#autor',
   galeria: '#galeria',
+  blog: '#blog',
   contacto: '#contacto'
 };
 
@@ -36,6 +38,7 @@ export async function initSectionsManager(container) {
       ediciones: true,
       autor: true,
       galeria: true,
+      blog: true,
       contacto: true
     },
     navigation_menu: [
@@ -46,7 +49,8 @@ export async function initSectionsManager(container) {
       { id: '5', label: 'Ediciones', url: '#ediciones', visible: true },
       { id: '6', label: 'Autor', url: '#autor', visible: true },
       { id: '7', label: 'Galería', url: '#galeria', visible: true },
-      { id: '8', label: 'Comprar', url: '#contacto', visible: true }
+      { id: '8', label: 'Blog', url: '#blog', visible: true },
+      { id: '9', label: 'Comprar', url: '#contacto', visible: true }
     ]
   };
 
