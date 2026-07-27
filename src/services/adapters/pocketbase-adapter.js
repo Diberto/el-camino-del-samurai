@@ -20,17 +20,20 @@ export class PocketBaseAdapter {
   }
 
   async login(email, password) {
-    const data = await this.request('/api/collections/users/auth-with-password', {
-      method: 'POST',
-      body: JSON.stringify({ identity: email, password })
-    });
-    if (data && data.token) {
-      this.token = data.token;
-      this.currentUser = data.record;
-      localStorage.setItem('pb_auth_token', this.token);
-      localStorage.setItem('pb_auth_user', JSON.stringify(this.currentUser));
-      return this.currentUser;
-    }
+    try {
+      const data = await this.request('/api/collections/users/auth-with-password', {
+        method: 'POST',
+        body: JSON.stringify({ identity: email, password })
+      });
+      if (data && data.token) {
+        this.token = data.token;
+        this.currentUser = data.record;
+        localStorage.setItem('pb_auth_token', this.token);
+        localStorage.setItem('pb_auth_user', JSON.stringify(this.currentUser));
+        return this.currentUser;
+      }
+    } catch {}
+
     // Admin fallback user for admin.html login
     if (email === 'admin@samurai.com' && password === 'admin123') {
       const user = { id: 'admin-usr', email, name: 'Jorge Orpianesi Admin', role: 'admin' };
@@ -69,19 +72,8 @@ export class PocketBaseAdapter {
       }
     } catch {}
 
-    // Fallback: fetch from site-config.json
-    try {
-      const siteConfigRes = await fetch('/data/site-config.json');
-      if (siteConfigRes.ok) {
-        const configData = await siteConfigRes.json();
-        if (configData && configData.settings) {
-          this.saveSettings(configData.settings).catch(() => null);
-          return configData.settings;
-        }
-      }
-    } catch {}
-
-    const defaultSettings = {
+    // Fallback default settings without triggering auto-POST on GET
+    return {
       sections_toggle: {
         inicio: true, sinopsis: true, virtudes: true, oraculo: true, capitulos: true, ediciones: true, autor: true, galeria: true, blog: true, contacto: true
       },
@@ -97,8 +89,6 @@ export class PocketBaseAdapter {
         { id: '9', label: 'Comprar', url: '#contacto', visible: true }
       ]
     };
-    this.saveSettings(defaultSettings).catch(() => null);
-    return defaultSettings;
   }
 
   async saveSettings(settingsData) {
@@ -139,21 +129,10 @@ export class PocketBaseAdapter {
       }
     } catch {}
 
-    try {
-      const siteConfigRes = await fetch('/data/site-config.json');
-      if (siteConfigRes.ok) {
-        const configData = await siteConfigRes.json();
-        if (configData && configData.posts && configData.posts.length > 0) {
-          for (const post of configData.posts) {
-            this.savePost(post).catch(() => null);
-          }
-          return configData.posts;
-        }
-      }
-    } catch {}
-
-    const defaultPosts = [
+    // Fallback default posts without triggering auto-POST on GET
+    return [
       {
+        id: 'default-post-1',
         title: 'Los Secretos de Miyamoto Musashi en la Cueva Reigando',
         slug: 'secretos-miyamoto-musashi-reigando',
         excerpt: 'Un recorrido espiritual por el retiro de montaña donde Musashi escribió El Libro de los Cinco Anillos.',
@@ -163,6 +142,7 @@ export class PocketBaseAdapter {
         author: 'Jorge Orpianesi'
       },
       {
+        id: 'default-post-2',
         title: 'Castillos Feudales del Periodo Sengoku: Arquitectura e Historia',
         slug: 'castillos-feudales-periodo-sengoku',
         excerpt: 'Descubre la ingeniería militar de las fortalezas samurái de Himeji, Matsumoto y Kumamoto.',
@@ -172,6 +152,7 @@ export class PocketBaseAdapter {
         author: 'Jorge Orpianesi'
       },
       {
+        id: 'default-post-3',
         title: 'La Filosofía del Bushido en el Trabajo Diario y la Vida Moderna',
         slug: 'filosofia-bushido-vida-moderna',
         excerpt: 'Cómo aplicar las 7 virtudes ancestrales para cultivar disciplina, enfoque y serenidad cotidiana.',
@@ -181,24 +162,24 @@ export class PocketBaseAdapter {
         author: 'Jorge Orpianesi'
       }
     ];
-
-    for (const post of defaultPosts) {
-      await this.savePost(post).catch(() => null);
-    }
-    return defaultPosts;
   }
 
   async savePost(postData) {
     try {
-      if (postData.id && !postData.id.startsWith('post-')) {
-        return await this.request(`/api/collections/posts/records/${postData.id}`, {
+      const payload = { ...postData };
+      if (payload.id && payload.id.startsWith('default-post-')) {
+        delete payload.id;
+      }
+
+      if (payload.id) {
+        return await this.request(`/api/collections/posts/records/${payload.id}`, {
           method: 'PATCH',
-          body: JSON.stringify(postData)
+          body: JSON.stringify(payload)
         });
       } else {
         return await this.request('/api/collections/posts/records', {
           method: 'POST',
-          body: JSON.stringify(postData)
+          body: JSON.stringify(payload)
         });
       }
     } catch {
@@ -229,16 +210,13 @@ export class PocketBaseAdapter {
       }
     } catch {}
 
-    const defaultMedia = [
-      { name: 'Cueva Reigando', url: 'photos/cueva_reigando.webp', type: 'image/webp', size: '229.7 KB' },
-      { name: 'Castillo Sengoku', url: 'photos/castillo_sengoku.webp', type: 'image/webp', size: '159.5 KB' },
-      { name: 'Jardín Zen', url: 'photos/jardin_zen.webp', type: 'image/webp', size: '53.0 KB' },
-      { name: 'Jorge Orpianesi', url: 'photos/orpianesi1.webp', type: 'image/webp', size: '31.8 KB' }
+    // Fallback default media without triggering auto-POST on GET
+    return [
+      { id: 'default-media-1', name: 'Cueva Reigando', url: 'photos/cueva_reigando.webp', type: 'image/webp', size: '229.7 KB' },
+      { id: 'default-media-2', name: 'Castillo Sengoku', url: 'photos/castillo_sengoku.webp', type: 'image/webp', size: '159.5 KB' },
+      { id: 'default-media-3', name: 'Jardín Zen', url: 'photos/jardin_zen.webp', type: 'image/webp', size: '53.0 KB' },
+      { id: 'default-media-4', name: 'Jorge Orpianesi', url: 'photos/orpianesi1.webp', type: 'image/webp', size: '31.8 KB' }
     ];
-    for (const item of defaultMedia) {
-      await this.request('/api/collections/media/records', { method: 'POST', body: JSON.stringify(item) }).catch(() => null);
-    }
-    return defaultMedia;
   }
 
   async deleteMedia(id) {

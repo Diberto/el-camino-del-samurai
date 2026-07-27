@@ -2,31 +2,37 @@
 migrate((db) => {
   const dao = new Dao(db);
 
-  function ensureCol(name, schema) {
+  function ensureCol(name, fields) {
+    let collection;
     try {
-      const collection = dao.findCollectionByNameOrId(name);
-      collection.listRule = "";
-      collection.viewRule = "";
-      collection.createRule = "";
-      collection.updateRule = "";
-      collection.deleteRule = "";
-      if (schema && schema.length > 0) {
-        collection.schema = schema;
-      }
-      dao.saveCollection(collection);
+      collection = dao.findCollectionByNameOrId(name);
     } catch (_) {
-      const collection = new Collection({
+      collection = new Collection({
         name: name,
-        type: "base",
-        schema: schema,
-        listRule: "",
-        viewRule: "",
-        createRule: "",
-        updateRule: "",
-        deleteRule: ""
+        type: "base"
       });
-      dao.saveCollection(collection);
     }
+
+    collection.listRule = "";
+    collection.viewRule = "";
+    collection.createRule = "";
+    collection.updateRule = "";
+    collection.deleteRule = "";
+
+    for (const f of fields) {
+      try {
+        if (!collection.schema.getFieldByName(f.name)) {
+          collection.schema.addField(new SchemaField({
+            name: f.name,
+            type: f.type
+          }));
+        }
+      } catch (_) {}
+    }
+
+    try {
+      dao.saveCollection(collection);
+    } catch (_) {}
   }
 
   // 1. Settings Collection
