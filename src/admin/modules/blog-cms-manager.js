@@ -86,7 +86,7 @@ export async function initBlogManager(container) {
   }
 
   function renderForm(post = null) {
-    const defaultCover = post?.cover_image || 'assets/photos/WhatsApp%20Image%202026-06-25%20at%2016.10.13.webp';
+    const defaultCover = post?.cover_image || 'photos/cueva_reigando.webp';
 
     container.innerHTML = `
       <h2 class="samurai-title" style="margin-bottom:1.5rem;">${post ? 'Editar Artículo' : 'Nuevo Artículo'}</h2>
