@@ -1,37 +1,32 @@
-# El Camino Del Samurai: Media Library & Blog Integration Spec
+# El Camino Del Samurai: Blog Catalog & Reader Spec
 
 ## Overview
-This specification details the unified Media Library (`media-manager.js`) integrated into the Admin dashboard, `DatabaseService`, Blog CMS, and WYSIWYG editor for WebP asset management across the website.
+This specification defines the 2-stage public blog architecture: dynamic top 3 posts widget on `index.html`, full articles catalog view on `blog.html`, and single-article reading view on `blog.html?post=ID`.
 
 ---
 
-## 1. Media Library Specifications
-
-### 1.1 Data Schema & Adapter Extensions
-- `getMedia()`: Retrieves array of media objects `[{ id, name, url, size, type, created_at }]`.
-- `uploadMedia(file)`: Converts file to WebP canvas buffer and persists it via active database adapter (`LocalSqliteAdapter`, `StrapiAdapter`, or `PocketBaseAdapter`), returning absolute/relative URL.
-- `deleteMedia(id)`: Removes target media item from store.
-
-### 1.2 Default Assets Standardization
-Normalize asset URLs to avoid spaces and ensure static server compatibility:
-- `assets/photos/orpianesi1.webp`
-- `assets/photos/WhatsApp%20Image%202026-06-25%20at%2016.10.09.webp`
-- `assets/photos/WhatsApp%20Image%202026-06-25%20at%2016.10.13.webp`
-- `assets/photos/WhatsApp%20Image%202026-06-25%20at%2016.10.15.webp`
+## 1. Landing Page Widget (`script.js` & `index.html#blog`)
+- Fetches all published posts via `dbService.getPosts()`.
+- Sorts array by `created_at` in descending order and takes top 3 items (`slice(0, 3)`).
+- Each card links directly to `blog.html?post=${post.id}`.
 
 ---
 
-## 2. Blog CMS & WYSIWYG Integration
+## 2. Dedicated Blog Page Router (`src/public/blog.js` & `blog.html`)
 
-### 2.1 Cover Image Selector
-- Post editor includes a Cover Image field with live preview thumbnail and **"🖼️ Seleccionar de Galería"** modal picker.
+### 2.1 Catalog View (`blog.html` with no query parameter)
+- Renders full list of published articles in responsive grid.
+- Search / filter by title or keyword.
+- Each item has a **"Leer Artículo →"** action that updates URL to `blog.html?post=${post.id}` and switches to Single Post view smoothly.
 
-### 2.2 WYSIWYG Media Picker Button
-- **"🖼️ Galería"** toolbar button opens a modal showing all media assets in the Media Library. Clicking any image inserts `<img src="..." alt="...">` into the editor DOM.
+### 2.2 Single Post Reader View (`blog.html?post=ID`)
+- Detects `post` URL parameter (`URLSearchParams`).
+- Renders breadcrumb: **"← Volver a Todos los Artículos"** (resets URL back to `blog.html`).
+- Renders cover image, title, author, date, and full HTML body.
 
 ---
 
 ## 3. Verification & Build Plan
 
-1. **Vite Production Build**: Run `cmd.exe /c "npm run build"`.
+1. **Vite Production Build**: Execute `cmd.exe /c "npm run build"`.
 2. **Git Synchronization**: Commit and push changes to `origin master`.
