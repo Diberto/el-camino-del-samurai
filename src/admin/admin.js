@@ -51,6 +51,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  const providerSelect = document.getElementById('db-provider-select');
+  if (providerSelect) {
+    providerSelect.value = dbService.getProvider();
+    providerSelect.addEventListener('change', (e) => {
+      dbService.setProvider(e.target.value);
+      loadModules();
+    });
+  }
+
   function loadModules() {
     initSectionsManager(document.getElementById('tab-sections'));
     initGpuManager(document.getElementById('tab-gpu'));

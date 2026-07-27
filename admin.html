@@ -43,6 +43,16 @@
         <button class="nav-item" data-tab="blog">✍️ Blog CMS</button>
         <button class="nav-item" data-tab="users">👥 Usuarios</button>
       </nav>
+
+      <div class="provider-selector" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+        <label style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Proveedor Backend:</label>
+        <select id="db-provider-select" style="width: 100%; padding: 0.5rem; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: var(--accent-gold); border-radius: 6px; font-weight: 600; cursor: pointer;">
+          <option value="local">SQLite Local / Emulator</option>
+          <option value="strapi">Strapi CMS (Headless)</option>
+          <option value="pocketbase">PocketBase (Default)</option>
+        </select>
+      </div>
+
       <div class="sidebar-footer">
         <div class="user-info" style="margin-bottom: 0.8rem;">
           Usuario: <strong id="user-display-name">Admin</strong>

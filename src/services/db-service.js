@@ -1,6 +1,7 @@
 // src/services/db-service.js
 import { PocketBaseAdapter } from './adapters/pocketbase-adapter.js';
 import { LocalSqliteAdapter } from './adapters/sqlite-adapter.js';
+import { StrapiAdapter } from './adapters/strapi-adapter.js';
 
 class DatabaseService {
   constructor() {
@@ -11,6 +12,8 @@ class DatabaseService {
   initProvider() {
     if (this.providerType === 'pocketbase') {
       this.adapter = new PocketBaseAdapter();
+    } else if (this.providerType === 'strapi') {
+      this.adapter = new StrapiAdapter();
     } else {
       this.adapter = new LocalSqliteAdapter();
     }
@@ -21,6 +24,8 @@ class DatabaseService {
     localStorage.setItem('db_provider', providerName);
     this.initProvider();
   }
+
+  getProvider() { return this.providerType; }
 
   login(e, p) { return this.adapter.login(e, p); }
   logout() { return this.adapter.logout(); }
