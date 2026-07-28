@@ -4,6 +4,7 @@ import { initGpuManager } from './modules/gpu-config-manager.js';
 import { initBlogManager } from './modules/blog-cms-manager.js';
 import { initUserManager } from './modules/user-manager.js';
 import { initMediaManager } from './modules/media-manager.js';
+import { initBackupManager } from './modules/backup-manager.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const loginModal = document.getElementById('login-modal');
@@ -73,6 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const usersEl = document.getElementById('tab-users');
       if (usersEl) await initUserManager(usersEl).catch(e => console.warn('Error loading user manager:', e));
+
+      const backupsEl = document.getElementById('tab-backups');
+      if (backupsEl) await initBackupManager(backupsEl).catch(e => console.warn('Error loading backup manager:', e));
     } catch (err) {
       console.warn('Error in loadModules:', err);
     }
