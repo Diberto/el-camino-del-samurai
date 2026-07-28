@@ -47,6 +47,20 @@ export class PocketBaseAdapter {
             name: 'Jorge Orpianesi Admin'
           })
         });
+
+        // Try auth again after creation
+        const retryData = await this.request('/api/collections/users/auth-with-password', {
+          method: 'POST',
+          body: JSON.stringify({ identity: email, password })
+        });
+
+        if (retryData && retryData.token) {
+          this.token = retryData.token;
+          this.currentUser = retryData.record;
+          localStorage.setItem('pb_auth_token', this.token);
+          localStorage.setItem('pb_auth_user', JSON.stringify(this.currentUser));
+          return this.currentUser;
+        }
       } catch {}
 
       const user = { id: 'admin-usr', email, name: 'Jorge Orpianesi Admin', role: 'admin' };
