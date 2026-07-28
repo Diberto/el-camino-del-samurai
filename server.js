@@ -364,10 +364,10 @@ function startAutoBackupWorker() {
   }, CHECK_INTERVAL_MS);
 }
 
-server.listen(PORT, '0.0.0.0', () => {
+server.listen(PORT, () => {
   console.log(`=======================================================`);
   console.log(`🌸 El Camino del Samurai - Node App Server Activo`);
-  console.log(`🌐 Servidor Web & API corriendo en el puerto: ${PORT}`);
+  console.log(`🌐 Servidor Web & API corriendo en: ${PORT}`);
   console.log(`=======================================================`);
   startAutoBackupWorker();
 });

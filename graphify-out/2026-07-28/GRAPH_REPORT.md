@@ -1,7 +1,7 @@
 # Graph Report - el-camino-del-samurai  (2026-07-28)
 
 ## Corpus Check
-- 37 files · ~326,623 words
+- 37 files · ~326,699 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
