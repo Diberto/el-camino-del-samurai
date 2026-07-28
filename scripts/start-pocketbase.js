@@ -66,6 +66,9 @@ function downloadFile(url, dest) {
 async function ensureBinary() {
   if (fs.existsSync(binPath)) {
     console.log(`✅ Binario de PocketBase detectado en: ${binPath}`);
+    if (!isWin) {
+      try { fs.chmodSync(binPath, 0o755); } catch {}
+    }
     return;
   }
 
@@ -110,6 +113,10 @@ async function ensureBinary() {
 async function main() {
   try {
     await ensureBinary();
+
+    if (!isWin && fs.existsSync(binPath)) {
+      try { fs.chmodSync(binPath, 0o755); } catch {}
+    }
 
     if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
     if (!fs.existsSync(migrationsDir)) fs.mkdirSync(migrationsDir, { recursive: true });
