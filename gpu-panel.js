@@ -10,6 +10,18 @@ import sakuraPetal1 from './assets/sakura_petal_1.webp';
 import sakuraPetal2 from './assets/sakura_petal_2.webp';
 import sakuraPetal3 from './assets/sakura_petal_3.webp';
 
+let isGpuTabVisible = !document.hidden;
+
+document.addEventListener('visibilitychange', () => {
+    const wasHidden = !isGpuTabVisible;
+    isGpuTabVisible = !document.hidden;
+    if (wasHidden && isGpuTabVisible) {
+        if (typeof renderLiveClouds === 'function') requestAnimationFrame(renderLiveClouds);
+        if (typeof renderLiveStars === 'function') requestAnimationFrame(renderLiveStars);
+        if (typeof renderLiveSakura === 'function') requestAnimationFrame(renderLiveSakura);
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     let cfg = JSON.parse(JSON.stringify(gpuConfig.currentConfig));
 
@@ -370,7 +382,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
-        requestAnimationFrame(renderLiveClouds);
+        if (isGpuTabVisible) {
+            requestAnimationFrame(renderLiveClouds);
+        }
     }
 
     // LIVE STARFIELD ENGINE
@@ -411,7 +425,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 starCtx.fill();
             });
         }
-        requestAnimationFrame(renderLiveStars);
+        if (isGpuTabVisible) {
+            requestAnimationFrame(renderLiveStars);
+        }
     }
 
     // LIVE SAKURA PETALS ENGINE (LAYER 7 & 8 TEXTURES)
@@ -482,7 +498,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 sakuraCtx.restore();
             });
         }
-        requestAnimationFrame(renderLiveSakura);
+        if (isGpuTabVisible) {
+            requestAnimationFrame(renderLiveSakura);
+        }
     }
 
     // Initialize Everything

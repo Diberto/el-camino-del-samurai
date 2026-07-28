@@ -2,6 +2,7 @@
 import http from 'http';
 import fs from 'fs';
 import path from 'path';
+import zlib from 'zlib';
 import { fileURLToPath } from 'url';
 import { fork } from 'child_process';
 
@@ -205,12 +206,12 @@ const server = http.createServer((req, res) => {
       const publicPath = path.join(PUBLIC_DIR, pathname);
       fs.stat(publicPath, (errPub, statsPub) => {
         if (!errPub && statsPub.isFile()) {
-          serveStaticFile(publicPath, res);
+          serveStaticFile(publicPath, req, res);
         } else {
           // SPA Fallback to index.html
           const fallbackPath = path.join(DIST_DIR, 'index.html');
           fs.stat(fallbackPath, (errFb) => {
-            if (!errFb) serveStaticFile(fallbackPath, res);
+            if (!errFb) serveStaticFile(fallbackPath, req, res);
             else {
               res.writeHead(404, { 'Content-Type': 'text/plain' });
               res.end('404 Not Found');
@@ -219,21 +220,56 @@ const server = http.createServer((req, res) => {
         }
       });
     } else {
-      serveStaticFile(filePath, res);
+      serveStaticFile(filePath, req, res);
     }
   });
 });
 
-function serveStaticFile(filePath, res) {
+function serveStaticFile(filePath, req, res) {
   const ext = path.extname(filePath).toLowerCase();
   const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+  const isAsset = filePath.includes(path.join('dist', 'assets'));
+  const cacheHeader = isAsset ? 'public, max-age=31536000, immutable' : 'public, max-age=3600';
 
   fs.readFile(filePath, (err, content) => {
     if (err) {
       res.writeHead(500, { 'Content-Type': 'text/plain' });
-      res.end('500 Internal Server Error');
+      return res.end('500 Internal Server Error');
+    }
+
+    const acceptEncoding = (req && req.headers && req.headers['accept-encoding']) || '';
+    const compressable = ['.html', '.js', '.css', '.json', '.svg', '.xml'].includes(ext);
+
+    if (compressable && acceptEncoding.includes('gzip')) {
+      zlib.gzip(content, (zerr, compressed) => {
+        if (zerr) {
+          res.writeHead(200, { 'Content-Type': contentType, 'Cache-Control': cacheHeader });
+          return res.end(content);
+        }
+        res.writeHead(200, {
+          'Content-Type': contentType,
+          'Content-Encoding': 'gzip',
+          'Cache-Control': cacheHeader,
+          'Vary': 'Accept-Encoding'
+        });
+        res.end(compressed);
+      });
+    } else if (compressable && acceptEncoding.includes('deflate')) {
+      zlib.deflate(content, (zerr, compressed) => {
+        if (zerr) {
+          res.writeHead(200, { 'Content-Type': contentType, 'Cache-Control': cacheHeader });
+          return res.end(content);
+        }
+        res.writeHead(200, {
+          'Content-Type': contentType,
+          'Content-Encoding': 'deflate',
+          'Cache-Control': cacheHeader,
+          'Vary': 'Accept-Encoding'
+        });
+        res.end(compressed);
+      });
     } else {
-      res.writeHead(200, { 'Content-Type': contentType, 'Cache-Control': 'public, max-age=3600' });
+      res.writeHead(200, { 'Content-Type': contentType, 'Cache-Control': cacheHeader });
       res.end(content);
     }
   });

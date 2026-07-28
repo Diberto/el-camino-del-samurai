@@ -16,6 +16,20 @@ import { gpuConfig } from './gpu-config.js';
 import { dbService } from './src/services/db-service.js';
 import { syncService } from './src/services/sync-service.js';
 
+let isAppTabVisible = !document.hidden;
+
+document.addEventListener('visibilitychange', () => {
+    const wasHidden = !isAppTabVisible;
+    isAppTabVisible = !document.hidden;
+    if (wasHidden && isAppTabVisible) {
+        if (typeof animateVolumetricClouds === 'function') requestAnimationFrame(animateVolumetricClouds);
+        if (typeof animateStars === 'function') requestAnimationFrame(animateStars);
+        if (typeof animateParallax === 'function') requestAnimationFrame(animateParallax);
+        if (typeof animatePetals === 'function') requestAnimationFrame(animatePetals);
+        if (typeof animate3DBook === 'function') requestAnimationFrame(animate3DBook);
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // Dynamic Admin Settings Sync & Real-Time Listener
@@ -331,7 +345,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            requestAnimationFrame(animateVolumetricClouds);
+            if (isAppTabVisible) {
+                requestAnimationFrame(animateVolumetricClouds);
+            }
         }
     }
 
@@ -447,7 +463,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             
-            requestAnimationFrame(animateStars);
+            if (isAppTabVisible) {
+                requestAnimationFrame(animateStars);
+            }
         }
         
         animateStars();
@@ -798,7 +816,9 @@ document.addEventListener('DOMContentLoaded', () => {
             petal.update();
             petal.draw();
         });
-        requestAnimationFrame(animatePetals);
+        if (isAppTabVisible) {
+            requestAnimationFrame(animatePetals);
+        }
     }
 
     animatePetals();
@@ -1075,7 +1095,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            requestAnimationFrame(animate3DBook);
+            if (isAppTabVisible) {
+                requestAnimationFrame(animate3DBook);
+            }
         }
 
         animate3DBook();
