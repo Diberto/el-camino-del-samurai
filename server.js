@@ -37,14 +37,15 @@ const MIME_TYPES = {
 
 // 2. Main Node.js Web & Proxy Server
 const server = http.createServer((req, res) => {
-  const reqUrl = req.url || '/';
+  const fullUrl = req.url || '/';
+  const pathname = fullUrl.split('?')[0];
 
   // Reverse Proxy for PocketBase API & Admin UI (/_/ and /api/)
-  if (reqUrl.startsWith('/api/') || reqUrl.startsWith('/_/')) {
+  if (pathname.startsWith('/api/') || pathname.startsWith('/_/')) {
     const proxyOptions = {
       hostname: '127.0.0.1',
       port: PB_PORT,
-      path: reqUrl,
+      path: fullUrl,
       method: req.method,
       headers: { ...req.headers, host: `127.0.0.1:${PB_PORT}` }
     };
@@ -55,7 +56,7 @@ const server = http.createServer((req, res) => {
     });
 
     proxyReq.on('error', (err) => {
-      if (req.method === 'GET' && reqUrl.includes('/records')) {
+      if (req.method === 'GET' && pathname.includes('/records')) {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ page: 1, perPage: 30, totalItems: 0, totalPages: 0, items: [] }));
       } else {
@@ -68,15 +69,15 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // Static File Resolver
-  let filePath = path.join(DIST_DIR, reqUrl);
-  if (reqUrl === '/' || reqUrl === '') {
+  // Static File Resolver using clean pathname
+  let filePath = path.join(DIST_DIR, pathname);
+  if (pathname === '/' || pathname === '') {
     filePath = path.join(DIST_DIR, 'index.html');
-  } else if (reqUrl === '/admin' || reqUrl === '/admin/') {
+  } else if (pathname === '/admin' || pathname === '/admin/' || pathname === '/admin.html') {
     filePath = path.join(DIST_DIR, 'admin.html');
-  } else if (reqUrl === '/blog' || reqUrl === '/blog/') {
+  } else if (pathname === '/blog' || pathname === '/blog/' || pathname === '/blog.html') {
     filePath = path.join(DIST_DIR, 'blog.html');
-  } else if (reqUrl === '/gpu' || reqUrl === '/gpu/') {
+  } else if (pathname === '/gpu' || pathname === '/gpu/' || pathname === '/gpu.html') {
     filePath = path.join(DIST_DIR, 'gpu.html');
   }
 
@@ -84,7 +85,7 @@ const server = http.createServer((req, res) => {
   fs.stat(filePath, (err, stats) => {
     if (err || !stats.isFile()) {
       // Try public dir
-      const publicPath = path.join(PUBLIC_DIR, reqUrl);
+      const publicPath = path.join(PUBLIC_DIR, pathname);
       fs.stat(publicPath, (errPub, statsPub) => {
         if (!errPub && statsPub.isFile()) {
           serveStaticFile(publicPath, res);
