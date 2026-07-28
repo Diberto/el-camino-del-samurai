@@ -122,14 +122,83 @@ function serveStaticFile(filePath, res) {
   });
 }
 
+function startAutoBackupWorker() {
+  const CHECK_INTERVAL_MS = 60 * 60 * 1000; // Revisar cada hora
+  setInterval(async () => {
+    try {
+      const reqSettings = http.request({
+        hostname: '127.0.0.1',
+        port: PB_PORT,
+        path: '/api/collections/settings/records',
+        method: 'GET'
+      }, (resSettings) => {
+        let body = '';
+        resSettings.on('data', chunk => body += chunk);
+        resSettings.on('end', () => {
+          if (resSettings.statusCode !== 200) return;
+          try {
+            const data = JSON.parse(body);
+            if (!data.items || data.items.length === 0) return;
+            const settingsRecord = data.items[0];
+            let parsedData = typeof settingsRecord.settings_data === 'string' ? JSON.parse(settingsRecord.settings_data) : settingsRecord.settings_data;
+            const autoConfig = parsedData.backup_schedule || { frequency: 'disabled', retention: 10, last_backup_at: 0 };
+            
+            if (!autoConfig.frequency || autoConfig.frequency === 'disabled') return;
+
+            const now = Date.now();
+            const lastRun = autoConfig.last_backup_at || 0;
+            let intervalMs = 24 * 60 * 60 * 1000; // Daily
+            if (autoConfig.frequency === 'weekly') intervalMs = 7 * 24 * 60 * 60 * 1000;
+            if (autoConfig.frequency === 'monthly') intervalMs = 30 * 24 * 60 * 60 * 1000;
+
+            if (now - lastRun >= intervalMs) {
+              console.log(`⏰ Ejecutando respaldo automático programado (${autoConfig.frequency})...`);
+              const createReq = http.request({
+                hostname: '127.0.0.1',
+                port: PB_PORT,
+                path: '/api/backups',
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+              }, (createRes) => {
+                if (createRes.statusCode === 200 || createRes.statusCode === 204) {
+                  console.log('✅ Respaldo automático completado con éxito.');
+                  autoConfig.last_backup_at = now;
+                  parsedData.backup_schedule = autoConfig;
+                  
+                  // Update settings record
+                  const updateReq = http.request({
+                    hostname: '127.0.0.1',
+                    port: PB_PORT,
+                    path: `/api/collections/settings/records/${settingsRecord.id}`,
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' }
+                  });
+                  updateReq.write(JSON.stringify({ settings_data: JSON.stringify(parsedData) }));
+                  updateReq.end();
+                }
+              });
+              createReq.write(JSON.stringify({ name: `auto_${autoConfig.frequency}_${Date.now()}` }));
+              createReq.end();
+            }
+          } catch {}
+        });
+      });
+      reqSettings.on('error', () => {});
+      reqSettings.end();
+    } catch {}
+  }, CHECK_INTERVAL_MS);
+}
+
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`=======================================================`);
   console.log(`🌸 El Camino del Samurai - Node App Server Activo`);
   console.log(`🌐 Servidor Web & API corriendo en el puerto: ${PORT}`);
   console.log(`=======================================================`);
+  startAutoBackupWorker();
 });
 
 process.on('SIGINT', () => {
   pbProcess.kill();
   process.exit();
 });
+
