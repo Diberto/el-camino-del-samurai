@@ -1,22 +1,22 @@
-# Walkthrough: Solución Definitiva a la Navegación de Artículos desde la Página Principal (Home)
+# Walkthrough: Solución Definitiva al Enrutamiento de URLs con Parámetros (`blog.html?post=...`)
 
 ## Diagnóstico y Causa Raíz
-En la página de inicio (`index.html`), las tarjetas de los artículos tenían una directiva atributiva inline `onclick="window.location.href='...'"` y a la vez un enlace HTML hijo `<a href="...">`. 
+Al hacer clic en un artículo desde la página principal (`index.html`), el navegador enviaba la solicitud HTTP a `https://gold-bat-153379.hostingersite.com/blog.html?post=default-post-1`.
 
-Al hacer clic, el navegador ejecutaba simultáneamente la navegación del enlace y la del evento padre `onclick`, cancelando la navegación y provocando que la página de inicio se recargara a sí misma sin ingresar al artículo.
+En `server.js`, el resolvedor de archivos estáticos tomaba la URL completa (`req.url`) incluyendo la cadena de consulta (`?post=default-post-1`) e intentaba buscar en el disco del servidor un archivo físicamente llamado `blog.html?post=default-post-1`. 
+Al no existir en disco por contener los parámetros de consulta `?post=...`, la función arrojaba `ENOENT` y activaba el mecanismo de respaldo SPA enviando de vuelta `index.html` (el Home).
 
 ---
 
-## Solución Aplicada ([script.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/script.js))
+## Solución Aplicada ([server.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/server.js))
 
-1. **Estructura Estándar de Enlaces Nativos**:
-   - Se removió la directiva redundante `onclick`.
-   - Se estructuraron los enlaces tanto en la imagen, el título como en el botón principal como etiquetas HTML limpias `<a href="blog.html?post=...">`.
-   - Al hacer clic en cualquier parte de la tarjeta o botón en la página principal, el navegador navega directamente a la lectura completa del artículo en `blog.html?post=...`.
+1. **Separación de Ruta y Parámetros de Consulta (Query String)**:
+   - Se aisló la ruta limpia del archivo (`pathname = fullUrl.split('?')[0]`).
+   - Ahora, al recibir `/blog.html?post=default-post-1`, el servidor identifica la ruta `/blog.html`, sirve inmediatamente la plantilla estática `dist/blog.html` con código de estado 200, y permite que JavaScript procese el parámetro `post=default-post-1`.
 
 ---
 
 ## Verificación
 
 - **Compilación de Producción (`vite build`)**: Ejecutada con 0 errores.
-- **Sincronización Git**: Commit `9cb9cbc` publicado en `origin/master`.
+- **Sincronización Git**: Commit `3b9e154` publicado en `origin/master`.
