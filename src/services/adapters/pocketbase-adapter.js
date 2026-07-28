@@ -5,6 +5,7 @@ export class PocketBaseAdapter {
     this.baseUrl = this.customUrl || (typeof window !== 'undefined' ? window.location.origin : 'http://127.0.0.1:8090');
     this.token = localStorage.getItem('pb_auth_token') || '';
     this.currentUser = JSON.parse(localStorage.getItem('pb_auth_user') || 'null');
+    this.isBackendOffline = false;
   }
 
   async request(endpoint, options = {}) {
@@ -12,56 +13,67 @@ export class PocketBaseAdapter {
       const headers = { 'Content-Type': 'application/json', ...options.headers };
       if (this.token) headers['Authorization'] = `Bearer ${this.token}`;
       const res = await fetch(`${this.baseUrl}${endpoint}`, { ...options, headers });
-      if (!res.ok) return null;
+      if (!res.ok) {
+        if (res.status === 502 || res.status === 503 || res.status === 504) {
+          this.isBackendOffline = true;
+        }
+        return null;
+      }
+      this.isBackendOffline = false;
       return await res.json();
     } catch {
+      this.isBackendOffline = true;
       return null;
     }
   }
 
   async login(email, password) {
-    try {
-      const data = await this.request('/api/collections/users/auth-with-password', {
-        method: 'POST',
-        body: JSON.stringify({ identity: email, password })
-      });
-      if (data && data.token) {
-        this.token = data.token;
-        this.currentUser = data.record;
-        localStorage.setItem('pb_auth_token', this.token);
-        localStorage.setItem('pb_auth_user', JSON.stringify(this.currentUser));
-        return this.currentUser;
-      }
-    } catch {}
-
-    // Auto-create admin user in PocketBase if missing
-    if (email === 'admin@samurai.com' && password === 'admin123') {
+    if (!this.isBackendOffline) {
       try {
-        await this.request('/api/collections/users/records', {
-          method: 'POST',
-          body: JSON.stringify({
-            username: 'admin_samurai',
-            email: 'admin@samurai.com',
-            password: 'admin123',
-            passwordConfirm: 'admin123',
-            name: 'Jorge Orpianesi Admin'
-          })
-        });
-
-        // Try auth again after creation
-        const retryData = await this.request('/api/collections/users/auth-with-password', {
+        const data = await this.request('/api/collections/users/auth-with-password', {
           method: 'POST',
           body: JSON.stringify({ identity: email, password })
         });
-
-        if (retryData && retryData.token) {
-          this.token = retryData.token;
-          this.currentUser = retryData.record;
+        if (data && data.token) {
+          this.token = data.token;
+          this.currentUser = data.record;
           localStorage.setItem('pb_auth_token', this.token);
           localStorage.setItem('pb_auth_user', JSON.stringify(this.currentUser));
           return this.currentUser;
         }
       } catch {}
+    }
+
+    // Auto-create admin user in PocketBase if missing
+    if (email === 'admin@samurai.com' && password === 'admin123') {
+      if (!this.isBackendOffline) {
+        try {
+          await this.request('/api/collections/users/records', {
+            method: 'POST',
+            body: JSON.stringify({
+              username: 'admin_samurai',
+              email: 'admin@samurai.com',
+              password: 'admin123',
+              passwordConfirm: 'admin123',
+              name: 'Jorge Orpianesi Admin'
+            })
+          });
+
+          // Try auth again after creation
+          const retryData = await this.request('/api/collections/users/auth-with-password', {
+            method: 'POST',
+            body: JSON.stringify({ identity: email, password })
+          });
+
+          if (retryData && retryData.token) {
+            this.token = retryData.token;
+            this.currentUser = retryData.record;
+            localStorage.setItem('pb_auth_token', this.token);
+            localStorage.setItem('pb_auth_user', JSON.stringify(this.currentUser));
+            return this.currentUser;
+          }
+        } catch {}
+      }
 
       const user = { id: 'admin-usr', email, name: 'Jorge Orpianesi Admin', role: 'admin' };
       this.currentUser = user;
