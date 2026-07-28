@@ -9,6 +9,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 const binDir = path.join(rootDir, 'bin', 'pocketbase');
+const dataDir = path.join(rootDir, 'pb_data');
+const migrationsDir = path.join(binDir, 'pb_migrations');
 const isWin = process.platform === 'win32';
 const exeName = isWin ? 'pocketbase.exe' : 'pocketbase';
 const binPath = path.join(binDir, exeName);
@@ -36,7 +38,7 @@ function downloadFile(url, dest) {
   return new Promise((resolve, reject) => {
     console.log(`📥 Descargando PocketBase desde: ${url}...`);
     const file = fs.createWriteStream(dest);
-    
+
     function get(currentUrl) {
       https.get(currentUrl, (response) => {
         if (response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
@@ -78,14 +80,28 @@ async function ensureBinary() {
 
   console.log('📦 Extrayendo binario de PocketBase...');
   if (isWin) {
-    execSync(`powershell -Command "Expand-Archive -Path '${zipPath}' -DestinationPath '${binDir}' -Force"`, { stdio: 'ignore' });
+    try {
+      execSync(`powershell -Command "Expand-Archive -Path '${zipPath}' -DestinationPath '${binDir}' -Force"`, { stdio: 'ignore' });
+    } catch {
+      execSync(`tar -xf "${zipPath}" -C "${binDir}"`, { stdio: 'ignore' });
+    }
   } else {
-    execSync(`unzip -q -o "${zipPath}" -d "${binDir}"`, { stdio: 'ignore' });
-    fs.chmodSync(binPath, 0o755);
+    try {
+      execSync(`unzip -q -o "${zipPath}" -d "${binDir}"`, { stdio: 'ignore' });
+    } catch {
+      try {
+        execSync(`python3 -m zipfile -e "${zipPath}" "${binDir}"`, { stdio: 'ignore' });
+      } catch {
+        execSync(`tar -xf "${zipPath}" -C "${binDir}"`, { stdio: 'ignore' });
+      }
+    }
+    try {
+      fs.chmodSync(binPath, 0o755);
+    } catch {}
   }
 
   if (fs.existsSync(zipPath)) {
-    fs.unlinkSync(zipPath);
+    try { fs.unlinkSync(zipPath); } catch {}
   }
 
   console.log('✨ PocketBase instalado correctamente.');
@@ -95,8 +111,25 @@ async function main() {
   try {
     await ensureBinary();
 
+    if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
+    if (!fs.existsSync(migrationsDir)) fs.mkdirSync(migrationsDir, { recursive: true });
+
+    // Sync root pb_migrations to bin/pocketbase/pb_migrations
+    const rootMigrations = path.join(rootDir, 'pb_migrations');
+    if (fs.existsSync(rootMigrations)) {
+      const files = fs.readdirSync(rootMigrations);
+      for (const file of files) {
+        fs.copyFileSync(path.join(rootMigrations, file), path.join(migrationsDir, file));
+      }
+    }
+
     console.log('🚀 Iniciando PocketBase Backend en http://127.0.0.1:8090...');
-    const pbProcess = spawn(binPath, ['serve', '--http=127.0.0.1:8090'], {
+    const pbProcess = spawn(binPath, [
+      'serve',
+      '--http=127.0.0.1:8090',
+      `--dir=${dataDir}`,
+      `--migrationsDir=${migrationsDir}`
+    ], {
       cwd: rootDir,
       stdio: 'inherit'
     });
