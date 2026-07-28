@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import zlib from 'zlib';
 import { fileURLToPath } from 'url';
-import { fork } from 'child_process';
+import { fork, exec } from 'child_process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -132,7 +132,6 @@ const server = http.createServer((req, res) => {
         ? `powershell -Command "Expand-Archive -Path '${zipPath}' -DestinationPath '${pbDataDir}' -Force"`
         : `unzip -o "${zipPath}" -d "${pbDataDir}"`;
 
-      const { exec } = await import('child_process');
       exec(cmd, (err) => {
         if (err) {
           res.writeHead(500, { 'Content-Type': 'application/json' });
@@ -292,17 +291,15 @@ function performBackupCreation(callback) {
     ? `powershell -Command "Compress-Archive -Path '${dbPath}','${storagePath}' -DestinationPath '${zipPath}' -Force"`
     : `zip -r "${zipPath}" "${dbPath}" "${storagePath}"`;
 
-  import('child_process').then(({ exec }) => {
-    exec(cmd, (err) => {
-      if (err) return callback(err);
-      try {
-        const stat = fs.statSync(zipPath);
-        callback(null, { key: zipName, name: zipName, size: stat.size, modified: stat.mtime.toISOString() });
-      } catch (e) {
-        callback(e);
-      }
-    });
-  }).catch(callback);
+  exec(cmd, (err) => {
+    if (err) return callback(err);
+    try {
+      const stat = fs.statSync(zipPath);
+      callback(null, { key: zipName, name: zipName, size: stat.size, modified: stat.mtime.toISOString() });
+    } catch (e) {
+      callback(e);
+    }
+  });
 }
 
 function startAutoBackupWorker() {
