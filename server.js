@@ -85,26 +85,13 @@ const server = http.createServer((req, res) => {
 
     // 3. POST /api/backups -> Create Backup
     if (req.method === 'POST' && (pathname === '/api/backups' || pathname === '/api/backups/')) {
-      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-      const zipName = `pb_backup_${timestamp}.zip`;
-      const zipPath = path.join(backupDir, zipName);
-      const dbPath = path.join(__dirname, 'pb_data', 'data.db');
-      const storagePath = path.join(__dirname, 'pb_data', 'storage');
-
-      const isWin = process.platform === 'win32';
-      const cmd = isWin
-        ? `powershell -Command "Compress-Archive -Path '${dbPath}','${storagePath}' -DestinationPath '${zipPath}' -Force"`
-        : `zip -r "${zipPath}" "${dbPath}" "${storagePath}"`;
-
-      const { exec } = await import('child_process');
-      exec(cmd, (err) => {
+      performBackupCreation((err, result) => {
         if (err) {
           res.writeHead(500, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ error: 'Error al crear el zip de respaldo', details: err.message }));
         } else {
-          const stat = fs.statSync(zipPath);
           res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ key: zipName, name: zipName, size: stat.size, modified: stat.mtime.toISOString() }));
+          res.end(JSON.stringify(result));
         }
       });
       return;
@@ -252,6 +239,36 @@ function serveStaticFile(filePath, res) {
   });
 }
 
+function performBackupCreation(callback) {
+  const backupDir = path.join(__dirname, 'pb_data', 'backups');
+  const dbPath = path.join(__dirname, 'pb_data', 'data.db');
+  const storagePath = path.join(__dirname, 'pb_data', 'storage');
+
+  if (!fs.existsSync(backupDir)) fs.mkdirSync(backupDir, { recursive: true });
+  if (!fs.existsSync(storagePath)) fs.mkdirSync(storagePath, { recursive: true });
+
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const zipName = `pb_backup_${timestamp}.zip`;
+  const zipPath = path.join(backupDir, zipName);
+
+  const isWin = process.platform === 'win32';
+  const cmd = isWin
+    ? `powershell -Command "Compress-Archive -Path '${dbPath}','${storagePath}' -DestinationPath '${zipPath}' -Force"`
+    : `zip -r "${zipPath}" "${dbPath}" "${storagePath}"`;
+
+  import('child_process').then(({ exec }) => {
+    exec(cmd, (err) => {
+      if (err) return callback(err);
+      try {
+        const stat = fs.statSync(zipPath);
+        callback(null, { key: zipName, name: zipName, size: stat.size, modified: stat.mtime.toISOString() });
+      } catch (e) {
+        callback(e);
+      }
+    });
+  }).catch(callback);
+}
+
 function startAutoBackupWorker() {
   const CHECK_INTERVAL_MS = 60 * 60 * 1000; // Revisar cada hora
   setInterval(async () => {
@@ -283,15 +300,9 @@ function startAutoBackupWorker() {
 
             if (now - lastRun >= intervalMs) {
               console.log(`⏰ Ejecutando respaldo automático programado (${autoConfig.frequency})...`);
-              const createReq = http.request({
-                hostname: '127.0.0.1',
-                port: PB_PORT,
-                path: '/api/backups',
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' }
-              }, (createRes) => {
-                if (createRes.statusCode === 200 || createRes.statusCode === 204) {
-                  console.log('✅ Respaldo automático completado con éxito.');
+              performBackupCreation((err, result) => {
+                if (!err && result) {
+                  console.log(`✅ Respaldo automático completado con éxito: ${result.key}`);
                   autoConfig.last_backup_at = now;
                   parsedData.backup_schedule = autoConfig;
                   
@@ -307,8 +318,6 @@ function startAutoBackupWorker() {
                   updateReq.end();
                 }
               });
-              createReq.write(JSON.stringify({ name: `auto_${autoConfig.frequency}_${Date.now()}` }));
-              createReq.end();
             }
           } catch {}
         });
