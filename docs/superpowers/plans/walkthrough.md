@@ -1,22 +1,22 @@
-# Walkthrough: Solución a la Navegación y Lectura de Artículos del Blog
+# Walkthrough: Solución Definitiva a la Navegación de Artículos desde la Página Principal (Home)
 
 ## Diagnóstico y Causa Raíz
-Al hacer clic en un artículo del catálogo (`blog.html` o `index.html`), el evento `click` utilizaba una comparación estricta de ID. Si el atributo de navegación utilizaba el campo `slug` o si el usuario hacía clic sobre el texto interno del botón en lugar del contenedor, la búsqueda del artículo en la colección devolvía `undefined`, impidiendo abrir el detalle del artículo.
+En la página de inicio (`index.html`), las tarjetas de los artículos tenían una directiva atributiva inline `onclick="window.location.href='...'"` y a la vez un enlace HTML hijo `<a href="...">`. 
+
+Al hacer clic, el navegador ejecutaba simultáneamente la navegación del enlace y la del evento padre `onclick`, cancelando la navegación y provocando que la página de inicio se recargara a sí misma sin ingresar al artículo.
 
 ---
 
-## Cambios Aplicados
+## Solución Aplicada ([script.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/script.js))
 
-1. **Navegación Flexible por ID o Slug ([src/public/blog.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/public/blog.js))**:
-   - `renderView()` ahora compara de forma flexible tanto por ID numérico/PocketBase como por `slug` URL-friendly (`p.id === postId || p.slug === postId`).
-   - Se transformaron las tarjetas completas del catálogo en elementos interactivos con `cursor: pointer`, permitiendo abrir el artículo haciendo clic en cualquier parte de la tarjeta o del botón.
-
-2. **Compatibilidad en la Página Principal ([script.js](file:///d:/Documentos/Work/hummus/samurai/el-camino-del-samurai/script.js))**:
-   - Se actualizaron los enlaces de los artículos en `index.html` para incluir el identificador dinámico de respaldo (`post.id || post.slug`), redirigiendo correctamente a `blog.html?post=...`.
+1. **Estructura Estándar de Enlaces Nativos**:
+   - Se removió la directiva redundante `onclick`.
+   - Se estructuraron los enlaces tanto en la imagen, el título como en el botón principal como etiquetas HTML limpias `<a href="blog.html?post=...">`.
+   - Al hacer clic en cualquier parte de la tarjeta o botón en la página principal, el navegador navega directamente a la lectura completa del artículo en `blog.html?post=...`.
 
 ---
 
 ## Verificación
 
 - **Compilación de Producción (`vite build`)**: Ejecutada con 0 errores.
-- **Sincronización Git**: Commit `165b44d` publicado en `origin/master`.
+- **Sincronización Git**: Commit `9cb9cbc` publicado en `origin/master`.
