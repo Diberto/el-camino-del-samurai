@@ -33,6 +33,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderCatalog();
   }
 
+  function escapeHTML(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
   function renderCatalog(filterQuery = '') {
     const filtered = published.filter(p => {
       const q = filterQuery.toLowerCase();
@@ -43,7 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       <div style="margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
           <h2 style="font-family: var(--font-title); font-size: 1.5rem; color: var(--text-primary); margin: 0;">Catálogo de Artículos (${published.length})</h2>
-          <input type="text" id="blog-search-input" value="${filterQuery}" placeholder="🔍 Buscar por título o tema..." style="padding: 0.6rem 1rem; background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); color: #fff; border-radius: 6px; font-size: 0.9rem; min-width: 260px;">
+          <input type="text" id="blog-search-input" value="${escapeHTML(filterQuery)}" placeholder="🔍 Buscar por título o tema..." style="padding: 0.6rem 1rem; background: rgba(0,0,0,0.4); border: 1px solid var(--border-color); color: #fff; border-radius: 6px; font-size: 0.9rem; min-width: 260px;">
         </div>
       </div>
 
@@ -57,9 +67,9 @@ document.addEventListener('DOMContentLoaded', async () => {
               <span style="font-size: 0.8rem; color: var(--accent-gold); font-weight: 600; margin-bottom: 0.4rem;">
                 ${new Date(post.created_at || Date.now()).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}
               </span>
-              <h3 style="font-family: var(--font-title); font-size: 1.15rem; color: var(--text-primary); margin: 0 0 0.8rem 0; line-height: 1.4;">${post.title}</h3>
+              <h3 style="font-family: var(--font-title); font-size: 1.15rem; color: var(--text-primary); margin: 0 0 0.8rem 0; line-height: 1.4;">${escapeHTML(post.title)}</h3>
               <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.2rem; flex: 1; line-height: 1.6;">
-                ${post.excerpt || post.content.replace(/<[^>]*>?/gm, '').substring(0, 110) + '...'}
+                ${escapeHTML(post.excerpt || post.content.replace(/<[^>]*>?/gm, '').substring(0, 110) + '...')}
               </p>
               <button class="open-post-btn btn-samurai-outline" data-id="${post.id || post.slug}" style="align-self: start; font-size: 0.85rem; padding: 0.5rem 1rem; color: var(--accent-gold); border-color: var(--accent-gold-glow);">
                 Leer Artículo Completo →
@@ -101,16 +111,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       <article style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; padding: 2.5rem; box-shadow: 0 8px 30px rgba(0,0,0,0.5);">
         ${post.cover_image ? `
           <div style="max-height: 380px; overflow: hidden; border-radius: 8px; margin-bottom: 2rem; border: 1px solid var(--border-color);">
-            <img src="${post.cover_image}" alt="${post.title}" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="${post.cover_image}" alt="${escapeHTML(post.title)}" style="width: 100%; height: 100%; object-fit: cover;">
           </div>
         ` : ''}
 
         <div style="font-size: 0.85rem; color: var(--accent-gold); font-weight: 600; margin-bottom: 0.5rem; display: flex; gap: 1rem; align-items: center;">
           <span>📅 ${new Date(post.created_at || Date.now()).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
-          <span>✍️ ${post.author || 'Jorge Orpianesi'}</span>
+          <span>✍️ ${escapeHTML(post.author || 'Jorge Orpianesi')}</span>
         </div>
 
-        <h1 style="font-family: var(--font-title); color: var(--text-primary); margin: 0 0 1.5rem 0; font-size: 2.2rem; line-height: 1.3;">${post.title}</h1>
+        <h1 style="font-family: var(--font-title); color: var(--text-primary); margin: 0 0 1.5rem 0; font-size: 2.2rem; line-height: 1.3;">${escapeHTML(post.title)}</h1>
 
         <div class="post-body" style="line-height: 1.85; color: var(--text-secondary); font-size: 1.05rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
           ${post.content}
@@ -118,8 +128,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         <!-- Post Navigation Footer -->
         <div style="display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
-          ${prevPost ? `<button class="nav-prev-post btn-samurai-outline" data-id="${prevPost.id || prevPost.slug}" style="font-size: 0.85rem; cursor: pointer;">← Anterior: ${prevPost.title.substring(0, 30)}...</button>` : '<div></div>'}
-          ${nextPost ? `<button class="nav-next-post btn-samurai-outline" data-id="${nextPost.id || nextPost.slug}" style="font-size: 0.85rem; cursor: pointer;">Siguiente: ${nextPost.title.substring(0, 30)}... →</button>` : '<div></div>'}
+          ${prevPost ? `<button class="nav-prev-post btn-samurai-outline" data-id="${prevPost.id || prevPost.slug}" style="font-size: 0.85rem; cursor: pointer;">← Anterior: ${escapeHTML(prevPost.title.substring(0, 30))}...</button>` : '<div></div>'}
+          ${nextPost ? `<button class="nav-next-post btn-samurai-outline" data-id="${nextPost.id || nextPost.slug}" style="font-size: 0.85rem; cursor: pointer;">Siguiente: ${escapeHTML(nextPost.title.substring(0, 30))}... →</button>` : '<div></div>'}
         </div>
       </article>
     `;
