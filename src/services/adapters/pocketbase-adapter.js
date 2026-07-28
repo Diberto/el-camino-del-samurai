@@ -292,4 +292,67 @@ export class PocketBaseAdapter {
     } catch {}
     return 'photos/cueva_reigando.webp';
   }
+
+  async getBackups() {
+    try {
+      const res = await this.request('/api/backups');
+      return res || [];
+    } catch {
+      return [];
+    }
+  }
+
+  async createBackup(name = '') {
+    try {
+      return await this.request('/api/backups', {
+        method: 'POST',
+        body: JSON.stringify({ name })
+      });
+    } catch {
+      return null;
+    }
+  }
+
+  async restoreBackup(key) {
+    try {
+      return await this.request(`/api/backups/${encodeURIComponent(key)}/restore`, {
+        method: 'POST'
+      });
+    } catch {
+      return null;
+    }
+  }
+
+  async deleteBackup(key) {
+    try {
+      return await this.request(`/api/backups/${encodeURIComponent(key)}`, {
+        method: 'DELETE'
+      });
+    } catch {
+      return null;
+    }
+  }
+
+  async uploadBackup(file) {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      const headers = {};
+      if (this.token) headers['Authorization'] = `Bearer ${this.token}`;
+      const res = await fetch(`${this.baseUrl}/api/backups/upload`, {
+        method: 'POST',
+        headers,
+        body: formData
+      });
+      return res.ok;
+    } catch {
+      return false;
+    }
+  }
+
+  getDownloadBackupUrl(key) {
+    const tokenParam = this.token ? `?token=${encodeURIComponent(this.token)}` : '';
+    return `${this.baseUrl}/api/backups/${encodeURIComponent(key)}${tokenParam}`;
+  }
 }
+

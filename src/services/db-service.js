@@ -22,6 +22,12 @@ class DatabaseService {
   getUsers() { return this.adapter.getUsers(); }
   saveUser(u) { return this.adapter.saveUser(u); }
   uploadMedia(f) { return this.adapter.uploadMedia(f); }
+  getBackups() { return this.adapter.getBackups(); }
+  createBackup(n) { return this.adapter.createBackup(n); }
+  restoreBackup(k) { return this.adapter.restoreBackup(k); }
+  deleteBackup(k) { return this.adapter.deleteBackup(k); }
+  uploadBackup(f) { return this.adapter.uploadBackup(f); }
+  getDownloadBackupUrl(k) { return this.adapter.getDownloadBackupUrl(k); }
 }
 
 export const dbService = new DatabaseService();
