@@ -18,9 +18,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   function renderView() {
     const postId = getTargetPostId();
     if (postId) {
-      const selectedPost = published.find(p => p.id === postId || p.slug === postId);
+      const selectedPost = published.find(p => 
+        String(p.id) === String(postId) || 
+        p.slug === postId || 
+        (p.id && String(p.id).toLowerCase() === String(postId).toLowerCase()) ||
+        (p.slug && String(p.slug).toLowerCase() === String(postId).toLowerCase())
+      );
       if (selectedPost) {
         renderSinglePost(selectedPost);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
     }
@@ -45,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
         ${filtered.map(post => `
-          <article class="blog-catalog-card" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: transform 0.3s ease;">
+          <article class="blog-catalog-card" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: transform 0.3s ease; cursor: pointer;" data-id="${post.id || post.slug}">
             ${post.cover_image ? `<div style="height: 180px; overflow: hidden;"><img src="${post.cover_image}" alt="${post.title}" style="width: 100%; height: 100%; object-fit: cover;"></div>` : ''}
             <div style="padding: 1.5rem; display: flex; flex-direction: column; flex: 1;">
               <span style="font-size: 0.8rem; color: var(--accent-gold); font-weight: 600; margin-bottom: 0.4rem;">
@@ -55,7 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.2rem; flex: 1; line-height: 1.6;">
                 ${post.excerpt || post.content.replace(/<[^>]*>?/gm, '').substring(0, 110) + '...'}
               </p>
-              <button class="open-post-btn btn-samurai-outline" data-id="${post.id}" style="align-self: start; font-size: 0.85rem; padding: 0.5rem 1rem; color: var(--accent-gold); border-color: var(--accent-gold-glow);">
+              <button class="open-post-btn btn-samurai-outline" data-id="${post.id || post.slug}" style="align-self: start; font-size: 0.85rem; padding: 0.5rem 1rem; color: var(--accent-gold); border-color: var(--accent-gold-glow);">
                 Leer Artículo Completo →
               </button>
             </div>
@@ -69,11 +75,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       searchInput.addEventListener('input', (e) => renderCatalog(e.target.value));
     }
 
-    container.querySelectorAll('.open-post-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const id = e.target.dataset.id;
-        history.pushState(null, '', `blog.html?post=${id}`);
-        renderView();
+    container.querySelectorAll('.blog-catalog-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        const id = card.dataset.id;
+        if (id) {
+          history.pushState(null, '', `blog.html?post=${id}`);
+          renderView();
+        }
       });
     });
   }
@@ -85,7 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     container.innerHTML = `
       <div style="margin-bottom: 1.5rem;">
-        <button id="back-to-catalog-btn" class="btn-samurai-outline" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
+        <button id="back-to-catalog-btn" class="btn-samurai-outline" style="font-size: 0.9rem; padding: 0.5rem 1rem; cursor: pointer;">
           ← Volver al Catálogo de Artículos
         </button>
       </div>
@@ -110,8 +118,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         <!-- Post Navigation Footer -->
         <div style="display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); flex-wrap: wrap;">
-          ${prevPost ? `<button class="nav-prev-post btn-samurai-outline" data-id="${prevPost.id}" style="font-size: 0.85rem;">← Anterior: ${prevPost.title.substring(0, 30)}...</button>` : '<div></div>'}
-          ${nextPost ? `<button class="nav-next-post btn-samurai-outline" data-id="${nextPost.id}" style="font-size: 0.85rem;">Siguiente: ${nextPost.title.substring(0, 30)}... →</button>` : '<div></div>'}
+          ${prevPost ? `<button class="nav-prev-post btn-samurai-outline" data-id="${prevPost.id || prevPost.slug}" style="font-size: 0.85rem; cursor: pointer;">← Anterior: ${prevPost.title.substring(0, 30)}...</button>` : '<div></div>'}
+          ${nextPost ? `<button class="nav-next-post btn-samurai-outline" data-id="${nextPost.id || nextPost.slug}" style="font-size: 0.85rem; cursor: pointer;">Siguiente: ${nextPost.title.substring(0, 30)}... →</button>` : '<div></div>'}
         </div>
       </article>
     `;
@@ -123,9 +131,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     container.querySelectorAll('.nav-prev-post, .nav-next-post').forEach(btn => {
       btn.addEventListener('click', (e) => {
-        const id = e.target.dataset.id;
-        history.pushState(null, '', `blog.html?post=${id}`);
-        renderView();
+        const targetBtn = e.target.closest('button');
+        const id = targetBtn ? targetBtn.dataset.id : null;
+        if (id) {
+          history.pushState(null, '', `blog.html?post=${id}`);
+          renderView();
+        }
       });
     });
   }
