@@ -543,5 +543,10 @@
     "mtime": 1785209619.4997656,
     "ast_hash": "5dba01dd73a7e9c565f333c1916b9773",
     "semantic_hash": ""
+  },
+  "pb_migrations/1700000001_unlock_collections.js": {
+    "mtime": 1785268598.728265,
+    "ast_hash": "2abb642eda8f55d633837edcd202f917",
+    "semantic_hash": ""
   }
 }

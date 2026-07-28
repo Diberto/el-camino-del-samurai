@@ -129,6 +129,16 @@ async function main() {
         fs.copyFileSync(path.join(rootMigrations, file), path.join(migrationsDir, file));
       }
     }
+    const dbPath = path.join(dataDir, 'data.db');
+    if (fs.existsSync(dbPath)) {
+      try {
+        execSync(`python3 -c "import sqlite3; conn = sqlite3.connect('${dbPath}'); c = conn.cursor(); c.execute(\\\"UPDATE _collections SET listRule=NULL, viewRule=NULL, createRule=NULL, updateRule=NULL, deleteRule=NULL WHERE name IN ('settings', 'posts', 'media')\\\"); conn.commit()"`, { stdio: 'ignore' });
+      } catch (_) {
+        try {
+          execSync(`python -c "import sqlite3; conn = sqlite3.connect('${dbPath}'); c = conn.cursor(); c.execute(\\\"UPDATE _collections SET listRule=NULL, viewRule=NULL, createRule=NULL, updateRule=NULL, deleteRule=NULL WHERE name IN ('settings', 'posts', 'media')\\\"); conn.commit()"`, { stdio: 'ignore' });
+        } catch (_) {}
+      }
+    }
 
     const pbPort = process.env.PB_PORT || '8090';
     console.log(`🚀 Iniciando PocketBase Backend en http://127.0.0.1:${pbPort}...`);

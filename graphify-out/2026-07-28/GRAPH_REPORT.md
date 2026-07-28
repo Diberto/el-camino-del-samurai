@@ -1,7 +1,7 @@
 # Graph Report - el-camino-del-samurai  (2026-07-28)
 
 ## Corpus Check
-- 37 files · ~326,699 words
+- 37 files · ~326,743 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c7cc8d14`
+- Built from commit: `469434d7`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 

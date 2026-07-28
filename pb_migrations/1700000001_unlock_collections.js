@@ -1,17 +1,6 @@
 // pb_migrations/1700000001_unlock_collections.js
 migrate((db) => {
-  const dao = new Dao(db);
-  const collections = ["settings", "posts", "media"];
-
-  for (const name of collections) {
-    try {
-      const collection = dao.findCollectionByNameOrId(name);
-      collection.listRule = null;
-      collection.viewRule = null;
-      collection.createRule = null;
-      collection.updateRule = null;
-      collection.deleteRule = null;
-      dao.saveCollection(collection);
-    } catch (_) {}
-  }
+  try {
+    db.newQuery("UPDATE _collections SET listRule=NULL, viewRule=NULL, createRule=NULL, updateRule=NULL, deleteRule=NULL WHERE name IN ('settings', 'posts', 'media');").execute();
+  } catch (_) {}
 });
