@@ -1,0 +1,332 @@
+{
+  "communities": {
+    "0": [
+      "src_admin_admin",
+      "src_admin_admin_checkauth",
+      "src_admin_admin_loadmodules",
+      "src_admin_modules_backup_manager",
+      "src_admin_modules_backup_manager_initbackupmanager",
+      "src_admin_modules_blog_cms_manager",
+      "src_admin_modules_blog_cms_manager_initblogmanager",
+      "src_admin_modules_gpu_config_manager",
+      "src_admin_modules_gpu_config_manager_initgpumanager",
+      "src_admin_modules_media_manager",
+      "src_admin_modules_media_manager_initmediamanager",
+      "src_admin_modules_sections_menu_manager",
+      "src_admin_modules_sections_menu_manager_initsectionsmanager",
+      "src_admin_modules_sections_menu_manager_section_labels",
+      "src_admin_modules_sections_menu_manager_section_url_map",
+      "src_admin_modules_user_manager",
+      "src_admin_modules_user_manager_initusermanager",
+      "src_services_db_service",
+      "src_services_db_service_dbservice",
+      "src_services_sync_service",
+      "src_services_sync_service_syncservice",
+      "src_services_sync_service_syncservice_broadcast",
+      "src_services_sync_service_syncservice_constructor",
+      "src_services_sync_service_syncservice_subscribe"
+    ],
+    "1": [
+      "src_services_adapters_pocketbase_adapter",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_constructor",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_createbackup",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_deletebackup",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_deletemedia",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_deletepost",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_getbackups",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_getcurrentuser",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_getdownloadbackupurl",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_getmedia",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_getposts",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_getsettings",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_getusers",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_login",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_logout",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_request",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_restorebackup",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_savepost",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_savesettings",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_saveuser",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_uploadbackup",
+      "src_services_adapters_pocketbase_adapter_pocketbaseadapter_uploadmedia"
+    ],
+    "2": [
+      "src_services_db_service_databaseservice",
+      "src_services_db_service_databaseservice_constructor",
+      "src_services_db_service_databaseservice_createbackup",
+      "src_services_db_service_databaseservice_deletebackup",
+      "src_services_db_service_databaseservice_deletemedia",
+      "src_services_db_service_databaseservice_deletepost",
+      "src_services_db_service_databaseservice_getbackups",
+      "src_services_db_service_databaseservice_getcurrentuser",
+      "src_services_db_service_databaseservice_getdownloadbackupurl",
+      "src_services_db_service_databaseservice_getmedia",
+      "src_services_db_service_databaseservice_getposts",
+      "src_services_db_service_databaseservice_getprovider",
+      "src_services_db_service_databaseservice_getsettings",
+      "src_services_db_service_databaseservice_getusers",
+      "src_services_db_service_databaseservice_login",
+      "src_services_db_service_databaseservice_logout",
+      "src_services_db_service_databaseservice_restorebackup",
+      "src_services_db_service_databaseservice_savepost",
+      "src_services_db_service_databaseservice_savesettings",
+      "src_services_db_service_databaseservice_saveuser",
+      "src_services_db_service_databaseservice_setprovider",
+      "src_services_db_service_databaseservice_uploadbackup",
+      "src_services_db_service_databaseservice_uploadmedia"
+    ],
+    "3": [
+      "script",
+      "script_animateparallax",
+      "script_animatepetals",
+      "script_applydynamicsettings",
+      "script_applygpuskycolors",
+      "script_handlescrolleffects",
+      "script_init3dbookengine",
+      "script_initdaynightcycle",
+      "script_initgallerylightbox",
+      "script_initstarfield",
+      "script_initvolumetricclouds",
+      "script_renderhomeblogposts",
+      "script_sakurapetal",
+      "script_sakurapetal_constructor",
+      "script_sakurapetal_draw",
+      "script_sakurapetal_reset",
+      "script_sakurapetal_update"
+    ],
+    "4": [
+      "package",
+      "package_description",
+      "package_devdependencies",
+      "package_devdependencies_vite",
+      "package_main",
+      "package_name",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_scripts_pb",
+      "package_scripts_preview",
+      "package_scripts_start",
+      "package_type",
+      "package_version",
+      "vite"
+    ],
+    "5": [
+      "gpu_config",
+      "gpu_config_default_preset",
+      "gpu_config_gpuconfig",
+      "gpu_panel",
+      "gpu_panel_applyskygradients",
+      "gpu_panel_initliveclouds",
+      "gpu_panel_initlivesakura",
+      "gpu_panel_initlivestars",
+      "gpu_panel_renderliveclouds",
+      "gpu_panel_renderlivesakura",
+      "gpu_panel_renderlivestars",
+      "gpu_panel_updatepresetdropdown",
+      "gpu_panel_updateuifromconfig"
+    ],
+    "6": [
+      "scripts_start_pocketbase",
+      "scripts_start_pocketbase_bindir",
+      "scripts_start_pocketbase_binpath",
+      "scripts_start_pocketbase_datadir",
+      "scripts_start_pocketbase_dirname",
+      "scripts_start_pocketbase_downloadfile",
+      "scripts_start_pocketbase_ensurebinary",
+      "scripts_start_pocketbase_filename",
+      "scripts_start_pocketbase_getdownloadurl",
+      "scripts_start_pocketbase_main",
+      "scripts_start_pocketbase_migrationsdir",
+      "scripts_start_pocketbase_rootdir"
+    ],
+    "7": [
+      "server",
+      "server_dirname",
+      "server_dist_dir",
+      "server_filename",
+      "server_mime_types",
+      "server_pbprocess",
+      "server_pbscript",
+      "server_public_dir",
+      "server_server",
+      "server_servestaticfile",
+      "server_startautobackupworker"
+    ],
+    "8": [
+      "src_admin_components_wysiwyg_editor",
+      "src_admin_components_wysiwyg_editor_wysiwygeditor",
+      "src_admin_components_wysiwyg_editor_wysiwygeditor_constructor",
+      "src_admin_components_wysiwyg_editor_wysiwygeditor_getcontent",
+      "src_admin_components_wysiwyg_editor_wysiwygeditor_handleimagefile",
+      "src_admin_components_wysiwyg_editor_wysiwygeditor_render",
+      "src_utils_webp_converter",
+      "src_utils_webp_converter_converttowebp",
+      "src_utils_youtube_embed",
+      "src_utils_youtube_embed_extractyoutubeid",
+      "src_utils_youtube_embed_generateyoutubeembedhtml"
+    ],
+    "9": [
+      "gpu_config_gpuconfigengine",
+      "gpu_config_gpuconfigengine_constructor",
+      "gpu_config_gpuconfigengine_exportpresetjson",
+      "gpu_config_gpuconfigengine_importpresetjson",
+      "gpu_config_gpuconfigengine_loadcurrentconfig",
+      "gpu_config_gpuconfigengine_loadpresets",
+      "gpu_config_gpuconfigengine_mergewithdefault",
+      "gpu_config_gpuconfigengine_resettodefault",
+      "gpu_config_gpuconfigengine_savecurrentconfig",
+      "gpu_config_gpuconfigengine_savenewpreset"
+    ],
+    "10": [
+      "src_public_blog",
+      "src_public_blog_escapehtml",
+      "src_public_blog_gettargetpostid",
+      "src_public_blog_rendercatalog",
+      "src_public_blog_rendersinglepost",
+      "src_public_blog_renderview"
+    ],
+    "11": [
+      "pb_migrations_1700000000_init_collections",
+      "pb_migrations_1700000000_init_collections_ensurecol"
+    ],
+    "12": [
+      "scripts_install_service",
+      "scripts_install_service_sh__entry"
+    ],
+    "13": [
+      "vite_config",
+      "vite_config_configureserver"
+    ]
+  },
+  "cohesion": {
+    "0": 0.2028985507246377,
+    "1": 0.1422924901185771,
+    "2": 0.08695652173913043,
+    "3": 0.14705882352941177,
+    "4": 0.13333333333333333,
+    "5": 0.20512820512820512,
+    "6": 0.21212121212121213,
+    "7": 0.18181818181818182,
+    "8": 0.32727272727272727,
+    "9": 0.3333333333333333,
+    "10": 0.6666666666666666,
+    "11": 1.0,
+    "12": 1.0,
+    "13": 1.0
+  },
+  "gods": [
+    {
+      "id": "src_services_adapters_pocketbase_adapter_pocketbaseadapter",
+      "label": "PocketBaseAdapter",
+      "degree": 23
+    },
+    {
+      "id": "src_services_db_service_databaseservice",
+      "label": "DatabaseService",
+      "degree": 23
+    },
+    {
+      "id": "src_services_db_service_dbservice",
+      "label": "dbService",
+      "degree": 11
+    },
+    {
+      "id": "gpu_config_gpuconfigengine",
+      "label": "GpuConfigEngine",
+      "degree": 10
+    },
+    {
+      "id": "src_services_sync_service_syncservice",
+      "label": "SyncService",
+      "degree": 9
+    },
+    {
+      "id": "src_admin_admin_loadmodules",
+      "label": "loadModules()",
+      "degree": 8
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
+      "degree": 6
+    },
+    {
+      "id": "src_admin_components_wysiwyg_editor_wysiwygeditor",
+      "label": "WysiwygEditor",
+      "degree": 6
+    },
+    {
+      "id": "script_sakurapetal",
+      "label": "SakuraPetal",
+      "degree": 5
+    },
+    {
+      "id": "scripts_start_pocketbase_ensurebinary",
+      "label": "ensureBinary()",
+      "degree": 4
+    }
+  ],
+  "surprises": [
+    {
+      "source": "loadModules()",
+      "target": "initBackupManager()",
+      "source_files": [
+        "src/admin/admin.js",
+        "src/admin/modules/backup-manager.js"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "loadModules()",
+      "target": "initBlogManager()",
+      "source_files": [
+        "src/admin/admin.js",
+        "src/admin/modules/blog-cms-manager.js"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "loadModules()",
+      "target": "initGpuManager()",
+      "source_files": [
+        "src/admin/admin.js",
+        "src/admin/modules/gpu-config-manager.js"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "loadModules()",
+      "target": "initMediaManager()",
+      "source_files": [
+        "src/admin/admin.js",
+        "src/admin/modules/media-manager.js"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "loadModules()",
+      "target": "initSectionsManager()",
+      "source_files": [
+        "src/admin/admin.js",
+        "src/admin/modules/sections-menu-manager.js"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}

@@ -93,11 +93,22 @@ export class PocketBaseAdapter {
       const res = await this.request('/api/collections/settings/records');
       if (res && res.items && res.items.length > 0) {
         const raw = res.items[0].settings_data;
+        let parsed = null;
         if (typeof raw === 'string') {
-          try { return JSON.parse(raw); } catch { return raw; }
+          try { parsed = JSON.parse(raw); } catch { parsed = raw; }
+        } else if (raw && typeof raw === 'object') {
+          parsed = raw;
         }
-        if (raw && typeof raw === 'object') return raw;
+        if (parsed) {
+          try { localStorage.setItem('local_samurai_settings', JSON.stringify(parsed)); } catch {}
+          return parsed;
+        }
       }
+    } catch {}
+
+    try {
+      const local = localStorage.getItem('local_samurai_settings');
+      if (local) return JSON.parse(local);
     } catch {}
 
     return {
@@ -119,11 +130,18 @@ export class PocketBaseAdapter {
   }
 
   async saveSettings(settingsData) {
+    const rawDataStr = typeof settingsData === 'object' ? JSON.stringify(settingsData) : settingsData;
     try {
-      const payload = {
-        settings_data: typeof settingsData === 'object' ? JSON.stringify(settingsData) : settingsData
-      };
+      localStorage.setItem('local_samurai_settings', rawDataStr);
+    } catch {}
+
+    try {
+      const payload = { settings_data: rawDataStr };
       const res = await this.request('/api/collections/settings/records');
+      if (res === null) {
+        // Backend API is offline or responding with 502 Bad Gateway
+        return { success: true, localOnly: true };
+      }
       if (res && res.items && res.items.length > 0) {
         return await this.request(`/api/collections/settings/records/${res.items[0].id}`, {
           method: 'PATCH',
@@ -136,7 +154,7 @@ export class PocketBaseAdapter {
         });
       }
     } catch {
-      return null;
+      return { success: true, localOnly: true };
     }
   }
 

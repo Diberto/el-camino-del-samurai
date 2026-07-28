@@ -1,0 +1,547 @@
+{
+  "gpu-config.js": {
+    "mtime": 1785036832.4721012,
+    "ast_hash": "fa19b53e9c49baacd4ace9f3c6badd59",
+    "semantic_hash": "fa19b53e9c49baacd4ace9f3c6badd59"
+  },
+  "gpu-panel.js": {
+    "mtime": 1785209801.8726814,
+    "ast_hash": "bed0b42006711f3ab618c5967f1e904d",
+    "semantic_hash": ""
+  },
+  "package.json": {
+    "mtime": 1785184415.2970307,
+    "ast_hash": "94413842dc5000d944d74fa3b2448c3a",
+    "semantic_hash": "94413842dc5000d944d74fa3b2448c3a"
+  },
+  "pb_migrations/1700000000_init_collections.js": {
+    "mtime": 1785264101.927801,
+    "ast_hash": "79056b78df70f7cc60a158e11c49e4e9",
+    "semantic_hash": ""
+  },
+  "public/data/site-config.json": {
+    "mtime": 1785186490.853167,
+    "ast_hash": "716c48bbb5cd042009bb4ebe19ea11fd",
+    "semantic_hash": "716c48bbb5cd042009bb4ebe19ea11fd"
+  },
+  "script.js": {
+    "mtime": 1785209783.2752783,
+    "ast_hash": "c1e0e0f3651b6ca8970dcacb1446bdeb",
+    "semantic_hash": ""
+  },
+  "scripts/install-service.sh": {
+    "mtime": 1785183937.3074484,
+    "ast_hash": "b735b760a8159344588644c7f4123449",
+    "semantic_hash": "b735b760a8159344588644c7f4123449"
+  },
+  "scripts/start-pocketbase.js": {
+    "mtime": 1785210006.4726436,
+    "ast_hash": "74dd99404d80d69f7189d7d7efcc31bd",
+    "semantic_hash": ""
+  },
+  "server.js": {
+    "mtime": 1785264114.404771,
+    "ast_hash": "b40be63b3cd8b811adf861e1a7d64e1e",
+    "semantic_hash": ""
+  },
+  "src/admin/admin.js": {
+    "mtime": 1785208604.3371286,
+    "ast_hash": "7f018a30baac5a0fe11fc1b4a5bf9501",
+    "semantic_hash": "7f018a30baac5a0fe11fc1b4a5bf9501"
+  },
+  "src/admin/components/wysiwyg-editor.js": {
+    "mtime": 1785179960.6659007,
+    "ast_hash": "6c5c0bbffa638aa20ef4636b2e40a5b6",
+    "semantic_hash": "6c5c0bbffa638aa20ef4636b2e40a5b6"
+  },
+  "src/admin/modules/backup-manager.js": {
+    "mtime": 1785208583.972355,
+    "ast_hash": "68e9c16c16dc725854ab47e761c6597f",
+    "semantic_hash": "68e9c16c16dc725854ab47e761c6597f"
+  },
+  "src/admin/modules/blog-cms-manager.js": {
+    "mtime": 1785181131.5847304,
+    "ast_hash": "8b172c19e782cddea73015260020784f",
+    "semantic_hash": "8b172c19e782cddea73015260020784f"
+  },
+  "src/admin/modules/gpu-config-manager.js": {
+    "mtime": 1785175348.5129285,
+    "ast_hash": "0f18d17d898fa50bf94887671aa7f02b",
+    "semantic_hash": "0f18d17d898fa50bf94887671aa7f02b"
+  },
+  "src/admin/modules/media-manager.js": {
+    "mtime": 1785179930.370084,
+    "ast_hash": "8f7d65ce15c6fa87428bd276d1489264",
+    "semantic_hash": "8f7d65ce15c6fa87428bd276d1489264"
+  },
+  "src/admin/modules/sections-menu-manager.js": {
+    "mtime": 1785176193.0385427,
+    "ast_hash": "460962c7e681b9e9698e5a1d17f525a6",
+    "semantic_hash": "460962c7e681b9e9698e5a1d17f525a6"
+  },
+  "src/admin/modules/user-manager.js": {
+    "mtime": 1785174522.3975894,
+    "ast_hash": "d5e3fe355107b2fb364bc6f44acbe804",
+    "semantic_hash": "d5e3fe355107b2fb364bc6f44acbe804"
+  },
+  "src/public/blog.js": {
+    "mtime": 1785206716.2582996,
+    "ast_hash": "faf1fc99d16288cf302451676cdec6e8",
+    "semantic_hash": "faf1fc99d16288cf302451676cdec6e8"
+  },
+  "src/services/adapters/pocketbase-adapter.js": {
+    "mtime": 1785208794.676322,
+    "ast_hash": "316ddf8b0986c9cc69fbb220fdb0dffe",
+    "semantic_hash": "316ddf8b0986c9cc69fbb220fdb0dffe"
+  },
+  "src/services/db-service.js": {
+    "mtime": 1785208547.5528579,
+    "ast_hash": "7fb08088c973c94b63c7e55df262d7fa",
+    "semantic_hash": "7fb08088c973c94b63c7e55df262d7fa"
+  },
+  "src/services/sync-service.js": {
+    "mtime": 1785175324.589683,
+    "ast_hash": "f26f869bad2126e142ae44a2556c23cc",
+    "semantic_hash": "f26f869bad2126e142ae44a2556c23cc"
+  },
+  "src/utils/webp-converter.js": {
+    "mtime": 1785174473.4233184,
+    "ast_hash": "049872ae7e3f98e373326fb4bbab241b",
+    "semantic_hash": "049872ae7e3f98e373326fb4bbab241b"
+  },
+  "src/utils/youtube-embed.js": {
+    "mtime": 1785174477.8201847,
+    "ast_hash": "ffb6ff49ba94a8c509395147ce518bd1",
+    "semantic_hash": "ffb6ff49ba94a8c509395147ce518bd1"
+  },
+  "vite.config.js": {
+    "mtime": 1785264121.6693754,
+    "ast_hash": "5a79afd0b734b9e987e25c74198bc8d1",
+    "semantic_hash": ""
+  },
+  ".agents/rules/graphify.md": {
+    "mtime": 1785209209.0288074,
+    "ast_hash": "a0e4d192b9e2e17256124dbfc8e24e6a",
+    "semantic_hash": ""
+  },
+  ".agents/skills/seo-optimizacion/SKILL.md": {
+    "mtime": 1785206809.6033323,
+    "ast_hash": "5c9fd754e43491ff9a8d095fed9b92f8",
+    "semantic_hash": ""
+  },
+  ".agents/workflows/graphify.md": {
+    "mtime": 1785209209.0298138,
+    "ast_hash": "637776aa6f7496d069afe7520c845c8a",
+    "semantic_hash": ""
+  },
+  ".superpowers/sdd/progress.md": {
+    "mtime": 1784997244.56739,
+    "ast_hash": "0fbe6701d844fb34684db15ae8ab61d7",
+    "semantic_hash": ""
+  },
+  "admin.html": {
+    "mtime": 1785208593.9102416,
+    "ast_hash": "02547395db68f9aa64798e9a56b28e36",
+    "semantic_hash": ""
+  },
+  "blog.html": {
+    "mtime": 1785206886.3401604,
+    "ast_hash": "5de8e37dab31a312e0b6c15bb9e559fa",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-07-25-animated-day-night-sky.md": {
+    "mtime": 1784996723.674334,
+    "ast_hash": "b4c95b8b5fd3aff2cb2f53947c201517",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-07-27-admin-backend-cms-plan.md": {
+    "mtime": 1785184391.7884052,
+    "ast_hash": "9b3a214c2b7939ca8a9d30258fb259a3",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-07-28-backup-system.md": {
+    "mtime": 1785208158.5490954,
+    "ast_hash": "ef2b18c09b23a04933cfdf2612f18032",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/walkthrough.md": {
+    "mtime": 1785202576.3594515,
+    "ast_hash": "7a0cd5a211ea6f7adc18f5ae05d0f107",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-07-25-animated-day-night-sky-design.md": {
+    "mtime": 1784996520.7134006,
+    "ast_hash": "ccce83dbc843feca02cbf4b121533c1d",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-07-27-admin-backend-cms-design.md": {
+    "mtime": 1785184378.2012002,
+    "ast_hash": "81aaedbc6b9821fae75091ba43484f33",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-07-28-backup-system-design.md": {
+    "mtime": 1785207905.1087408,
+    "ast_hash": "41e878e2123820cd811dd01ca1a0332e",
+    "semantic_hash": ""
+  },
+  "gpu.html": {
+    "mtime": 1785036848.416426,
+    "ast_hash": "cde90b398c3255332d82004d9bfdb310",
+    "semantic_hash": ""
+  },
+  "index.html": {
+    "mtime": 1785209836.9644876,
+    "ast_hash": "dc93ef866427b6b26ad0a68d12c92626",
+    "semantic_hash": ""
+  },
+  "public/robots.txt": {
+    "mtime": 1785206876.1968834,
+    "ast_hash": "9b2b6a4eab77c908d4357961d4c0eb96",
+    "semantic_hash": ""
+  },
+  "assets/Logo.webp": {
+    "mtime": 1785018199.1426513,
+    "ast_hash": "d866beb2280dec06cc9e4d38a46e94ec",
+    "semantic_hash": ""
+  },
+  "assets/author_portrait.png": {
+    "mtime": 1781203296.2661493,
+    "ast_hash": "790f2a0a66fd926632a125aec649e0ef",
+    "semantic_hash": ""
+  },
+  "assets/book1_back.webp": {
+    "mtime": 1784955795.6781013,
+    "ast_hash": "f2909ec77204f5b8f1f3e34b9ef24e96",
+    "semantic_hash": ""
+  },
+  "assets/book1_front.webp": {
+    "mtime": 1784955770.9917603,
+    "ast_hash": "825d3343299fbb2708b65ead2ded5f97",
+    "semantic_hash": ""
+  },
+  "assets/book2_back.webp": {
+    "mtime": 1784955771.24653,
+    "ast_hash": "28e5e2d7ed4c68b7a90492d9f2c5b821",
+    "semantic_hash": ""
+  },
+  "assets/book2_front.webp": {
+    "mtime": 1784955771.1192353,
+    "ast_hash": "e17325bf0dcd16715402860e1c33c3a1",
+    "semantic_hash": ""
+  },
+  "assets/books_mockup.png": {
+    "mtime": 1781203281.0219104,
+    "ast_hash": "273e8e2d878e51b973f9a93ba78fd88c",
+    "semantic_hash": ""
+  },
+  "assets/cloud_texture_1.webp": {
+    "mtime": 1785010364.0191946,
+    "ast_hash": "59a0bda8aa1a031ba608fb716165bd42",
+    "semantic_hash": ""
+  },
+  "assets/cloud_texture_2.webp": {
+    "mtime": 1785010364.415418,
+    "ast_hash": "aacde3ea5908165d6ce0c9e5b42cd720",
+    "semantic_hash": ""
+  },
+  "assets/cloud_texture_3.webp": {
+    "mtime": 1785010364.8052974,
+    "ast_hash": "14152bcb366fc33738b334f86416a5d4",
+    "semantic_hash": ""
+  },
+  "assets/fondo-samurai.svg": {
+    "mtime": 1784956911.9497423,
+    "ast_hash": "64a98dc422dbf25801c2f3a3ce5c307b",
+    "semantic_hash": ""
+  },
+  "assets/kanji_stamp.webp": {
+    "mtime": 1785019643.7856278,
+    "ast_hash": "842760576e7e07ef60af51b0fd3101e8",
+    "semantic_hash": ""
+  },
+  "assets/logo_typography_dark.webp": {
+    "mtime": 1785012456.8498585,
+    "ast_hash": "6a7d37b620b264f0f2fb07d5066c1f65",
+    "semantic_hash": ""
+  },
+  "assets/logo_typography_light.webp": {
+    "mtime": 1784996154.8669162,
+    "ast_hash": "bb1af09768d8384024c42f56de26ab47",
+    "semantic_hash": ""
+  },
+  "assets/photos/WhatsApp Image 2026-06-25 at 16.10.09.webp": {
+    "mtime": 1784882144.0,
+    "ast_hash": "1bdd6b51adefb9367e4dd1d0a00f1452",
+    "semantic_hash": ""
+  },
+  "assets/photos/WhatsApp Image 2026-06-25 at 16.10.10.webp": {
+    "mtime": 1784882162.0,
+    "ast_hash": "ef32aef5028fbbbf59dac9fabcc0f4eb",
+    "semantic_hash": ""
+  },
+  "assets/photos/WhatsApp Image 2026-06-25 at 16.10.12.webp": {
+    "mtime": 1784882166.0,
+    "ast_hash": "dce50dbd4c0e14b18972a13c64f343c0",
+    "semantic_hash": ""
+  },
+  "assets/photos/WhatsApp Image 2026-06-25 at 16.10.13.webp": {
+    "mtime": 1784882170.0,
+    "ast_hash": "962adeaf1888b291f6e14298e9190347",
+    "semantic_hash": ""
+  },
+  "assets/photos/WhatsApp Image 2026-06-25 at 16.10.15.webp": {
+    "mtime": 1784882174.0,
+    "ast_hash": "bbc2b5fbc9b2e7620504958452739054",
+    "semantic_hash": ""
+  },
+  "assets/photos/WhatsApp Image 2026-06-25 at 16.10.21.webp": {
+    "mtime": 1784882178.0,
+    "ast_hash": "7269e8b617e03a134432c264f0bb5b54",
+    "semantic_hash": ""
+  },
+  "assets/photos/WhatsApp Image 2026-06-25 at 16.10.26.webp": {
+    "mtime": 1784882182.0,
+    "ast_hash": "aac9d5fb58e0c64a6c864fd2ee8a78d9",
+    "semantic_hash": ""
+  },
+  "assets/photos/WhatsApp Image 2026-06-25 at 16.10.29.webp": {
+    "mtime": 1784882186.0,
+    "ast_hash": "4e8e6db02c2ae9be22be8b9abcd6381b",
+    "semantic_hash": ""
+  },
+  "assets/photos/WhatsApp Image 2026-06-25 at 16.10.30.webp": {
+    "mtime": 1784882188.0,
+    "ast_hash": "655e68e8dac6d12eeb29e2fc47a96707",
+    "semantic_hash": ""
+  },
+  "assets/photos/WhatsApp Image 2026-06-25 at 16.10.31.webp": {
+    "mtime": 1784882194.0,
+    "ast_hash": "eb8f2f414787d9616bdabe0561f7dcf0",
+    "semantic_hash": ""
+  },
+  "assets/photos/WhatsApp Image 2026-06-25 at 16.10.32.webp": {
+    "mtime": 1784882196.0,
+    "ast_hash": "a3f1275a0418ddb0d3d6a2a796fbac29",
+    "semantic_hash": ""
+  },
+  "assets/photos/WhatsApp Image 2026-06-25 at 16.10.35.webp": {
+    "mtime": 1784882200.0,
+    "ast_hash": "90603a3f62c6a687af0249bd3e0a2e03",
+    "semantic_hash": ""
+  },
+  "assets/photos/orpianesi1.webp": {
+    "mtime": 1784882108.0,
+    "ast_hash": "1f6f1bd63794b6b1ffa91a00f4ef20fc",
+    "semantic_hash": ""
+  },
+  "assets/photos/orpianesi2.webp": {
+    "mtime": 1784882116.0,
+    "ast_hash": "83d25e1037f1f6c9be687780cd4fac96",
+    "semantic_hash": ""
+  },
+  "assets/sakura_petal_1.webp": {
+    "mtime": 1785036036.0000062,
+    "ast_hash": "4344ca5266ce5d8981b5080fb5853d4f",
+    "semantic_hash": ""
+  },
+  "assets/sakura_petal_2.webp": {
+    "mtime": 1785036036.0025117,
+    "ast_hash": "f70fcb09afc7ce0bffc7936d3e588807",
+    "semantic_hash": ""
+  },
+  "assets/sakura_petal_3.webp": {
+    "mtime": 1785036036.0055306,
+    "ast_hash": "5814fab39e3f914ba215f1f87cc0807f",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_1.png": {
+    "mtime": 1785009416.9336078,
+    "ast_hash": "fc7d219e9dac70f2d88fd022aa412212",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_1.webp": {
+    "mtime": 1785009417.2894678,
+    "ast_hash": "1eeed22e284aefbdc16f68cb4665e4c2",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_2.png": {
+    "mtime": 1785009417.4257846,
+    "ast_hash": "bb15609d7e006c3a5ccb6e437522050a",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_2.svg": {
+    "mtime": 1785009014.4303815,
+    "ast_hash": "968e31bc6b7119307dcaea4a453bad45",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_2.webp": {
+    "mtime": 1785009730.5433831,
+    "ast_hash": "b04c890c8a7bc163aa677a76f577b6d1",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_3.png": {
+    "mtime": 1785009418.136081,
+    "ast_hash": "c754f8c082504458c9c166aaead3dd78",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_3.webp": {
+    "mtime": 1785009419.056226,
+    "ast_hash": "6bdfc943b02d32bd43bd4eeca44b7e0a",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_4.png": {
+    "mtime": 1785009419.1668277,
+    "ast_hash": "23f88f4cba925313f7070c6513d7a332",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_4.webp": {
+    "mtime": 1785009419.9706826,
+    "ast_hash": "3423fab324218a7dd0bcd0d2c00187fe",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_5.png": {
+    "mtime": 1785009420.267465,
+    "ast_hash": "c624ba4ebb6078d7b35c80a8beea66dc",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_5.webp": {
+    "mtime": 1785009421.2821915,
+    "ast_hash": "f7f62dfe880e659d329f04e62672f6ff",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_6.png": {
+    "mtime": 1785009421.411945,
+    "ast_hash": "89890aef82f6bc2e6c71b88929ccd2cf",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_6.webp": {
+    "mtime": 1785009422.2509563,
+    "ast_hash": "f9fc625319d49e3d465b9ef76970ce60",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_7.png": {
+    "mtime": 1785009422.2758036,
+    "ast_hash": "0b2fbeedfdc9aab7f628ef85275bfd5a",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_7.webp": {
+    "mtime": 1785009422.6580012,
+    "ast_hash": "0fe6303c4b9b1c0fa04697768d6262ca",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_8.png": {
+    "mtime": 1785009422.6786444,
+    "ast_hash": "e878b803d9a012254ec88c50f46fd9e4",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_8.webp": {
+    "mtime": 1785009423.0708797,
+    "ast_hash": "0b8aa3bded031e463db78a3cc253bdb5",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_9.png": {
+    "mtime": 1785009423.0883296,
+    "ast_hash": "9215b9512ec3248ff65572e045b19412",
+    "semantic_hash": ""
+  },
+  "assets/svg_true_layer_9.webp": {
+    "mtime": 1785009423.4273849,
+    "ast_hash": "dd7956a5b0d85e904bc0b5883d988612",
+    "semantic_hash": ""
+  },
+  "public/photos/WhatsApp Image 2026-06-25 at 16.10.09.webp": {
+    "mtime": 1784882144.0,
+    "ast_hash": "1bdd6b51adefb9367e4dd1d0a00f1452",
+    "semantic_hash": ""
+  },
+  "public/photos/WhatsApp Image 2026-06-25 at 16.10.10.webp": {
+    "mtime": 1784882162.0,
+    "ast_hash": "ef32aef5028fbbbf59dac9fabcc0f4eb",
+    "semantic_hash": ""
+  },
+  "public/photos/WhatsApp Image 2026-06-25 at 16.10.12.webp": {
+    "mtime": 1784882166.0,
+    "ast_hash": "dce50dbd4c0e14b18972a13c64f343c0",
+    "semantic_hash": ""
+  },
+  "public/photos/WhatsApp Image 2026-06-25 at 16.10.13.webp": {
+    "mtime": 1784882170.0,
+    "ast_hash": "962adeaf1888b291f6e14298e9190347",
+    "semantic_hash": ""
+  },
+  "public/photos/WhatsApp Image 2026-06-25 at 16.10.15.webp": {
+    "mtime": 1784882174.0,
+    "ast_hash": "bbc2b5fbc9b2e7620504958452739054",
+    "semantic_hash": ""
+  },
+  "public/photos/WhatsApp Image 2026-06-25 at 16.10.21.webp": {
+    "mtime": 1784882178.0,
+    "ast_hash": "7269e8b617e03a134432c264f0bb5b54",
+    "semantic_hash": ""
+  },
+  "public/photos/WhatsApp Image 2026-06-25 at 16.10.26.webp": {
+    "mtime": 1784882182.0,
+    "ast_hash": "aac9d5fb58e0c64a6c864fd2ee8a78d9",
+    "semantic_hash": ""
+  },
+  "public/photos/WhatsApp Image 2026-06-25 at 16.10.29.webp": {
+    "mtime": 1784882186.0,
+    "ast_hash": "4e8e6db02c2ae9be22be8b9abcd6381b",
+    "semantic_hash": ""
+  },
+  "public/photos/WhatsApp Image 2026-06-25 at 16.10.30.webp": {
+    "mtime": 1784882188.0,
+    "ast_hash": "655e68e8dac6d12eeb29e2fc47a96707",
+    "semantic_hash": ""
+  },
+  "public/photos/WhatsApp Image 2026-06-25 at 16.10.31.webp": {
+    "mtime": 1784882194.0,
+    "ast_hash": "eb8f2f414787d9616bdabe0561f7dcf0",
+    "semantic_hash": ""
+  },
+  "public/photos/WhatsApp Image 2026-06-25 at 16.10.32.webp": {
+    "mtime": 1784882196.0,
+    "ast_hash": "a3f1275a0418ddb0d3d6a2a796fbac29",
+    "semantic_hash": ""
+  },
+  "public/photos/WhatsApp Image 2026-06-25 at 16.10.35.webp": {
+    "mtime": 1784882200.0,
+    "ast_hash": "90603a3f62c6a687af0249bd3e0a2e03",
+    "semantic_hash": ""
+  },
+  "public/photos/castillo_sengoku.webp": {
+    "mtime": 1784882144.0,
+    "ast_hash": "1bdd6b51adefb9367e4dd1d0a00f1452",
+    "semantic_hash": ""
+  },
+  "public/photos/cueva_reigando.webp": {
+    "mtime": 1784882170.0,
+    "ast_hash": "962adeaf1888b291f6e14298e9190347",
+    "semantic_hash": ""
+  },
+  "public/photos/jardin_zen.webp": {
+    "mtime": 1784882174.0,
+    "ast_hash": "bbc2b5fbc9b2e7620504958452739054",
+    "semantic_hash": ""
+  },
+  "public/photos/orpianesi1.webp": {
+    "mtime": 1784882108.0,
+    "ast_hash": "1f6f1bd63794b6b1ffa91a00f4ef20fc",
+    "semantic_hash": ""
+  },
+  "public/photos/orpianesi2.webp": {
+    "mtime": 1784882116.0,
+    "ast_hash": "83d25e1037f1f6c9be687780cd4fac96",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-07-28-architecture-and-performance-optimization-plan.md": {
+    "mtime": 1785209633.4847121,
+    "ast_hash": "367deddb5e93930ff78ab827dc3bd7aa",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-07-28-architecture-and-performance-optimization-design.md": {
+    "mtime": 1785209619.4997656,
+    "ast_hash": "5dba01dd73a7e9c565f333c1916b9773",
+    "semantic_hash": ""
+  }
+}

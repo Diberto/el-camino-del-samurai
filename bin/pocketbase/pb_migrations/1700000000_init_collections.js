@@ -1,5 +1,10 @@
 // pb_migrations/1700000000_init_collections.js
 migrate((db) => {
+  try {
+    db.newQuery("PRAGMA cache_size = -2000;").execute();
+    db.newQuery("PRAGMA temp_store = MEMORY;").execute();
+  } catch (_) {}
+
   const dao = new Dao(db);
 
   function ensureCol(name, fields) {
@@ -13,11 +18,11 @@ migrate((db) => {
       });
     }
 
-    collection.listRule = "";
-    collection.viewRule = "";
-    collection.createRule = "";
-    collection.updateRule = "";
-    collection.deleteRule = "";
+    collection.listRule = null;
+    collection.viewRule = null;
+    collection.createRule = null;
+    collection.updateRule = null;
+    collection.deleteRule = null;
 
     for (const f of fields) {
       try {

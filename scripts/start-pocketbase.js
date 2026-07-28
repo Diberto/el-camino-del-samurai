@@ -130,10 +130,11 @@ async function main() {
       }
     }
 
-    console.log('🚀 Iniciando PocketBase Backend en http://127.0.0.1:8090...');
+    const pbPort = process.env.PB_PORT || '8090';
+    console.log(`🚀 Iniciando PocketBase Backend en http://127.0.0.1:${pbPort}...`);
     const pbProcess = spawn(binPath, [
       'serve',
-      '--http=127.0.0.1:8090',
+      `--http=127.0.0.1:${pbPort}`,
       `--dir=${dataDir}`,
       `--migrationsDir=${migrationsDir}`
     ], {
