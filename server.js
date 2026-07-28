@@ -210,7 +210,13 @@ const server = http.createServer((req, res) => {
         if (!errPub && statsPub.isFile()) {
           serveStaticFile(publicPath, req, res);
         } else {
-          // SPA Fallback to index.html
+          // Return 404 for missing static asset files (.js, .css, etc.) or /assets/ paths
+          const ext = path.extname(pathname);
+          if (pathname.startsWith('/assets/') || ext) {
+            res.writeHead(404, { 'Content-Type': 'text/plain' });
+            return res.end('404 Not Found');
+          }
+          // SPA Fallback to index.html only for page navigation routes
           const fallbackPath = path.join(DIST_DIR, 'index.html');
           fs.stat(fallbackPath, (errFb) => {
             if (!errFb) serveStaticFile(fallbackPath, req, res);

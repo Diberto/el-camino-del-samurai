@@ -35,8 +35,8 @@
     "semantic_hash": "b735b760a8159344588644c7f4123449"
   },
   "scripts/start-pocketbase.js": {
-    "mtime": 1785267912.539455,
-    "ast_hash": "b80da628a7c889e80e89414aeec2174b",
+    "mtime": 1785269191.4779298,
+    "ast_hash": "1d7438bd41685fb819538d76982a2bbd",
     "semantic_hash": ""
   },
   "server.js": {
@@ -545,8 +545,8 @@
     "semantic_hash": ""
   },
   "pb_migrations/1700000001_unlock_collections.js": {
-    "mtime": 1785268598.728265,
-    "ast_hash": "2abb642eda8f55d633837edcd202f917",
+    "mtime": 1785269149.108163,
+    "ast_hash": "dc64bb13f0ad64a41aba5428439bdc98",
     "semantic_hash": ""
   }
 }
