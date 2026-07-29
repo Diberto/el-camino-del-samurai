@@ -132,10 +132,14 @@ async function main() {
     const dbPath = path.join(dataDir, 'data.db');
     if (fs.existsSync(dbPath)) {
       try {
-        execSync(`python3 -c "import sqlite3; conn = sqlite3.connect('${dbPath}'); c = conn.cursor(); c.execute(\\\"UPDATE _collections SET listRule=NULL, viewRule=NULL, createRule=NULL, updateRule=NULL, deleteRule=NULL WHERE name IN ('settings', 'posts', 'media')\\\"); conn.commit()"`, { stdio: 'ignore' });
-      } catch (_) {
+        const { DatabaseSync } = await import('node:sqlite');
+        const db = new DatabaseSync(dbPath);
+        db.exec("UPDATE _collections SET listRule=NULL, viewRule=NULL, createRule=NULL, updateRule=NULL, deleteRule=NULL WHERE name IN ('settings', 'posts', 'media');");
+        db.close();
+        console.log('🔓 Colecciones de PocketBase desbloqueadas correctamente vía node:sqlite.');
+      } catch (errNodeSqlite) {
         try {
-          execSync(`python -c "import sqlite3; conn = sqlite3.connect('${dbPath}'); c = conn.cursor(); c.execute(\\\"UPDATE _collections SET listRule=NULL, viewRule=NULL, createRule=NULL, updateRule=NULL, deleteRule=NULL WHERE name IN ('settings', 'posts', 'media')\\\"); conn.commit()"`, { stdio: 'ignore' });
+          execSync(`python3 -c "import sqlite3; conn = sqlite3.connect('${dbPath}'); c = conn.cursor(); c.execute(\\\"UPDATE _collections SET listRule=NULL, viewRule=NULL, createRule=NULL, updateRule=NULL, deleteRule=NULL WHERE name IN ('settings', 'posts', 'media')\\\"); conn.commit()"`, { stdio: 'ignore' });
         } catch (_) {}
       }
     }

@@ -1,16 +1,16 @@
 # Graph Report - el-camino-del-samurai  (2026-07-28)
 
 ## Corpus Check
-- 37 files · ~326,743 words
+- 38 files · ~326,790 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 267 nodes · 336 edges · 27 communities (19 shown, 8 thin omitted)
+- 268 nodes · 336 edges · 28 communities (20 shown, 8 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `469434d7`
+- Built from commit: `6fcf2625`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -68,7 +68,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (27 total, 8 thin omitted)
+## Communities (28 total, 8 thin omitted)
 
 ### Community 0 - "admin.js"
 Cohesion: 0.21
@@ -149,9 +149,9 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `DatabaseService` connect `DatabaseService` to `admin.js`?**
   _High betweenness centrality (0.071) - this node is a cross-community bridge._
 - **Why does `PocketBaseAdapter` connect `PocketBaseAdapter` to `admin.js`?**
-  _High betweenness centrality (0.067) - this node is a cross-community bridge._
+  _High betweenness centrality (0.066) - this node is a cross-community bridge._
 - **Why does `GpuConfigEngine` connect `GpuConfigEngine` to `gpu-panel.js`?**
-  _High betweenness centrality (0.031) - this node is a cross-community bridge._
+  _High betweenness centrality (0.030) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `description` to the rest of the system?**
   _85 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `PocketBaseAdapter` be split into smaller, more focused modules?**

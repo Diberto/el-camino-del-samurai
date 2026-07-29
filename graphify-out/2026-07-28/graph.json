@@ -444,6 +444,17 @@
       "norm_label": "ensurecol()"
     },
     {
+      "label": "1700000001_unlock_collections.js",
+      "file_type": "code",
+      "source_file": "pb_migrations/1700000001_unlock_collections.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "pb_migrations_1700000001_unlock_collections",
+      "community": 27,
+      "community_name": "1700000001_unlock_collections.js",
+      "norm_label": "1700000001_unlock_collections.js"
+    },
+    {
       "label": "script.js",
       "file_type": "code",
       "source_file": "script.js",
@@ -6754,5 +6765,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "469434d73e4e37e70646fcfa679456af7d6052b1"
+  "built_at_commit": "6fcf2625552507fe4cf66829c329914bb3ae8dae"
 }
