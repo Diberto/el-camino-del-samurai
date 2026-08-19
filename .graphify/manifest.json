@@ -1,0 +1,442 @@
+{
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/gpu-config.js": {
+    "mtime": 1785036832472.1013,
+    "hash": "fa19b53e9c49baacd4ace9f3c6badd59"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/gpu-panel.js": {
+    "mtime": 1785209801872.6814,
+    "hash": "bed0b42006711f3ab618c5967f1e904d"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/pb_migrations/1700000000_init_collections.js": {
+    "mtime": 1785264101927.801,
+    "hash": "79056b78df70f7cc60a158e11c49e4e9"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/pb_migrations/1700000001_unlock_collections.js": {
+    "mtime": 1785269149108.163,
+    "hash": "dc64bb13f0ad64a41aba5428439bdc98"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/script.js": {
+    "mtime": 1787012869510.2944,
+    "hash": "93d8a99372b43460673d9109430dffa6"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/scripts/start-pocketbase.js": {
+    "mtime": 1785269895628.799,
+    "hash": "40618def65533bdc6089d09f9ca0c147"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/server.js": {
+    "mtime": 1786573522206.0564,
+    "hash": "c4b6d87bad167261eba37945a5b846c7"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/admin.js": {
+    "mtime": 1785208604337.1287,
+    "hash": "7f018a30baac5a0fe11fc1b4a5bf9501"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/components/wysiwyg-editor.js": {
+    "mtime": 1785179960665.9006,
+    "hash": "6c5c0bbffa638aa20ef4636b2e40a5b6"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/backup-manager.js": {
+    "mtime": 1785208583972.3547,
+    "hash": "68e9c16c16dc725854ab47e761c6597f"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/blog-cms-manager.js": {
+    "mtime": 1785181131584.7305,
+    "hash": "8b172c19e782cddea73015260020784f"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/gpu-config-manager.js": {
+    "mtime": 1785175348512.9287,
+    "hash": "0f18d17d898fa50bf94887671aa7f02b"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/media-manager.js": {
+    "mtime": 1785179930370.084,
+    "hash": "8f7d65ce15c6fa87428bd276d1489264"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/sections-menu-manager.js": {
+    "mtime": 1785176193038.5427,
+    "hash": "460962c7e681b9e9698e5a1d17f525a6"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/user-manager.js": {
+    "mtime": 1785174522397.5894,
+    "hash": "d5e3fe355107b2fb364bc6f44acbe804"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/public/blog.js": {
+    "mtime": 1785206716258.2996,
+    "hash": "faf1fc99d16288cf302451676cdec6e8"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/adapters/pocketbase-adapter.js": {
+    "mtime": 1785268235790.8545,
+    "hash": "b63fc0fc30a5b2ac0f78e87f914133e4"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/db-service.js": {
+    "mtime": 1785208547552.858,
+    "hash": "7fb08088c973c94b63c7e55df262d7fa"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/sync-service.js": {
+    "mtime": 1785175324589.683,
+    "hash": "f26f869bad2126e142ae44a2556c23cc"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/utils/webp-converter.js": {
+    "mtime": 1785174473423.3184,
+    "hash": "049872ae7e3f98e373326fb4bbab241b"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/utils/youtube-embed.js": {
+    "mtime": 1785174477820.1846,
+    "hash": "ffb6ff49ba94a8c509395147ce518bd1"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/vite.config.js": {
+    "mtime": 1785264121669.3755,
+    "hash": "5a79afd0b734b9e987e25c74198bc8d1"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/.agents/rules/graphify.md": {
+    "mtime": 1785209209028.8074,
+    "hash": "a0e4d192b9e2e17256124dbfc8e24e6a"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/.agents/skills/seo-optimizacion/SKILL.md": {
+    "mtime": 1785206809603.3325,
+    "hash": "5c9fd754e43491ff9a8d095fed9b92f8"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/.agents/workflows/graphify.md": {
+    "mtime": 1785209209029.8137,
+    "hash": "637776aa6f7496d069afe7520c845c8a"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/.superpowers/sdd/progress.md": {
+    "mtime": 1784997244567.39,
+    "hash": "0fbe6701d844fb34684db15ae8ab61d7"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/admin.html": {
+    "mtime": 1785208593910.2417,
+    "hash": "02547395db68f9aa64798e9a56b28e36"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/blog.html": {
+    "mtime": 1785206886340.1604,
+    "hash": "5de8e37dab31a312e0b6c15bb9e559fa"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/docs/superpowers/plans/2026-07-25-animated-day-night-sky.md": {
+    "mtime": 1784996723674.334,
+    "hash": "b4c95b8b5fd3aff2cb2f53947c201517"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/docs/superpowers/plans/2026-07-27-admin-backend-cms-plan.md": {
+    "mtime": 1785184391788.4053,
+    "hash": "9b3a214c2b7939ca8a9d30258fb259a3"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/docs/superpowers/plans/2026-07-28-architecture-and-performance-optimization-plan.md": {
+    "mtime": 1785209633484.7122,
+    "hash": "367deddb5e93930ff78ab827dc3bd7aa"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/docs/superpowers/plans/2026-07-28-backup-system.md": {
+    "mtime": 1785208158549.0955,
+    "hash": "ef2b18c09b23a04933cfdf2612f18032"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/docs/superpowers/plans/walkthrough.md": {
+    "mtime": 1785202576359.4517,
+    "hash": "7a0cd5a211ea6f7adc18f5ae05d0f107"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/docs/superpowers/specs/2026-07-25-animated-day-night-sky-design.md": {
+    "mtime": 1784996520713.4006,
+    "hash": "ccce83dbc843feca02cbf4b121533c1d"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/docs/superpowers/specs/2026-07-27-admin-backend-cms-design.md": {
+    "mtime": 1785184378201.2002,
+    "hash": "81aaedbc6b9821fae75091ba43484f33"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/docs/superpowers/specs/2026-07-28-architecture-and-performance-optimization-design.md": {
+    "mtime": 1785209619499.7656,
+    "hash": "5dba01dd73a7e9c565f333c1916b9773"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/docs/superpowers/specs/2026-07-28-backup-system-design.md": {
+    "mtime": 1785207905108.7407,
+    "hash": "41e878e2123820cd811dd01ca1a0332e"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/gpu.html": {
+    "mtime": 1785036848416.4258,
+    "hash": "cde90b398c3255332d82004d9bfdb310"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/graphify-out/2026-07-28/GRAPH_REPORT.md": {
+    "mtime": 1785268652158.3235,
+    "hash": "aca2d000df8e4afde62ded03bb5775ff"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/graphify-out/GRAPH_REPORT.md": {
+    "mtime": 1785269769822.9995,
+    "hash": "1473a1fd8f9f04f6ee148a448858d421"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/graphify-out/graph.html": {
+    "mtime": 1785269769947.5225,
+    "hash": "4c0726b50852ab332d7d933c790dad46"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/index.html": {
+    "mtime": 1787012845572.9507,
+    "hash": "b534e15327e4a7d14bc85c1ed28ef7c0"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/robots.txt": {
+    "mtime": 1785206876196.8833,
+    "hash": "9b2b6a4eab77c908d4357961d4c0eb96"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/Logo.webp": {
+    "mtime": 1785018199142.6514,
+    "hash": "d866beb2280dec06cc9e4d38a46e94ec"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/author_portrait.png": {
+    "mtime": 1781203296266.1494,
+    "hash": "790f2a0a66fd926632a125aec649e0ef"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/book1_back.webp": {
+    "mtime": 1784955795678.1013,
+    "hash": "f2909ec77204f5b8f1f3e34b9ef24e96"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/book1_front.webp": {
+    "mtime": 1784955770991.7603,
+    "hash": "825d3343299fbb2708b65ead2ded5f97"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/book2_back.webp": {
+    "mtime": 1784955771246.53,
+    "hash": "28e5e2d7ed4c68b7a90492d9f2c5b821"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/book2_front.webp": {
+    "mtime": 1784955771119.2354,
+    "hash": "e17325bf0dcd16715402860e1c33c3a1"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/books_mockup.png": {
+    "mtime": 1781203281021.9104,
+    "hash": "273e8e2d878e51b973f9a93ba78fd88c"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/cloud_texture_1.webp": {
+    "mtime": 1785010364019.1946,
+    "hash": "59a0bda8aa1a031ba608fb716165bd42"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/cloud_texture_2.webp": {
+    "mtime": 1785010364415.418,
+    "hash": "aacde3ea5908165d6ce0c9e5b42cd720"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/cloud_texture_3.webp": {
+    "mtime": 1785010364805.2974,
+    "hash": "14152bcb366fc33738b334f86416a5d4"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/fondo-samurai.svg": {
+    "mtime": 1784956911949.7422,
+    "hash": "64a98dc422dbf25801c2f3a3ce5c307b"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/kanji_stamp.webp": {
+    "mtime": 1785019643785.6277,
+    "hash": "842760576e7e07ef60af51b0fd3101e8"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/logo_typography_dark.webp": {
+    "mtime": 1785012456849.8584,
+    "hash": "6a7d37b620b264f0f2fb07d5066c1f65"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/logo_typography_light.webp": {
+    "mtime": 1784996154866.916,
+    "hash": "bb1af09768d8384024c42f56de26ab47"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/photos/WhatsApp Image 2026-06-25 at 16.10.09.webp": {
+    "mtime": 1784882144000,
+    "hash": "1bdd6b51adefb9367e4dd1d0a00f1452"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/photos/WhatsApp Image 2026-06-25 at 16.10.10.webp": {
+    "mtime": 1784882162000,
+    "hash": "ef32aef5028fbbbf59dac9fabcc0f4eb"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/photos/WhatsApp Image 2026-06-25 at 16.10.12.webp": {
+    "mtime": 1784882166000,
+    "hash": "dce50dbd4c0e14b18972a13c64f343c0"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/photos/WhatsApp Image 2026-06-25 at 16.10.13.webp": {
+    "mtime": 1784882170000,
+    "hash": "962adeaf1888b291f6e14298e9190347"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/photos/WhatsApp Image 2026-06-25 at 16.10.15.webp": {
+    "mtime": 1784882174000,
+    "hash": "bbc2b5fbc9b2e7620504958452739054"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/photos/WhatsApp Image 2026-06-25 at 16.10.21.webp": {
+    "mtime": 1784882178000,
+    "hash": "7269e8b617e03a134432c264f0bb5b54"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/photos/WhatsApp Image 2026-06-25 at 16.10.26.webp": {
+    "mtime": 1784882182000,
+    "hash": "aac9d5fb58e0c64a6c864fd2ee8a78d9"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/photos/WhatsApp Image 2026-06-25 at 16.10.29.webp": {
+    "mtime": 1784882186000,
+    "hash": "4e8e6db02c2ae9be22be8b9abcd6381b"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/photos/WhatsApp Image 2026-06-25 at 16.10.30.webp": {
+    "mtime": 1784882188000,
+    "hash": "655e68e8dac6d12eeb29e2fc47a96707"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/photos/WhatsApp Image 2026-06-25 at 16.10.31.webp": {
+    "mtime": 1784882194000,
+    "hash": "eb8f2f414787d9616bdabe0561f7dcf0"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/photos/WhatsApp Image 2026-06-25 at 16.10.32.webp": {
+    "mtime": 1784882196000,
+    "hash": "a3f1275a0418ddb0d3d6a2a796fbac29"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/photos/WhatsApp Image 2026-06-25 at 16.10.35.webp": {
+    "mtime": 1784882200000,
+    "hash": "90603a3f62c6a687af0249bd3e0a2e03"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/photos/orpianesi1.webp": {
+    "mtime": 1784882108000,
+    "hash": "1f6f1bd63794b6b1ffa91a00f4ef20fc"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/photos/orpianesi2.webp": {
+    "mtime": 1784882116000,
+    "hash": "83d25e1037f1f6c9be687780cd4fac96"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/sakura_petal_1.webp": {
+    "mtime": 1785036036000.0063,
+    "hash": "4344ca5266ce5d8981b5080fb5853d4f"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/sakura_petal_2.webp": {
+    "mtime": 1785036036002.5117,
+    "hash": "f70fcb09afc7ce0bffc7936d3e588807"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/sakura_petal_3.webp": {
+    "mtime": 1785036036005.5305,
+    "hash": "5814fab39e3f914ba215f1f87cc0807f"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_1.png": {
+    "mtime": 1785009416933.608,
+    "hash": "fc7d219e9dac70f2d88fd022aa412212"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_1.webp": {
+    "mtime": 1785009417289.4678,
+    "hash": "1eeed22e284aefbdc16f68cb4665e4c2"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_2.png": {
+    "mtime": 1785009417425.7847,
+    "hash": "bb15609d7e006c3a5ccb6e437522050a"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_2.svg": {
+    "mtime": 1785009014430.3816,
+    "hash": "968e31bc6b7119307dcaea4a453bad45"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_2.webp": {
+    "mtime": 1785009730543.383,
+    "hash": "b04c890c8a7bc163aa677a76f577b6d1"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_3.png": {
+    "mtime": 1785009418136.0808,
+    "hash": "c754f8c082504458c9c166aaead3dd78"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_3.webp": {
+    "mtime": 1785009419056.2258,
+    "hash": "6bdfc943b02d32bd43bd4eeca44b7e0a"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_4.png": {
+    "mtime": 1785009419166.8276,
+    "hash": "23f88f4cba925313f7070c6513d7a332"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_4.webp": {
+    "mtime": 1785009419970.6826,
+    "hash": "3423fab324218a7dd0bcd0d2c00187fe"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_5.png": {
+    "mtime": 1785009420267.465,
+    "hash": "c624ba4ebb6078d7b35c80a8beea66dc"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_5.webp": {
+    "mtime": 1785009421282.1914,
+    "hash": "f7f62dfe880e659d329f04e62672f6ff"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_6.png": {
+    "mtime": 1785009421411.9453,
+    "hash": "89890aef82f6bc2e6c71b88929ccd2cf"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_6.webp": {
+    "mtime": 1785009422250.9563,
+    "hash": "f9fc625319d49e3d465b9ef76970ce60"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_7.png": {
+    "mtime": 1785009422275.8037,
+    "hash": "0b2fbeedfdc9aab7f628ef85275bfd5a"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_7.webp": {
+    "mtime": 1785009422658.0012,
+    "hash": "0fe6303c4b9b1c0fa04697768d6262ca"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_8.png": {
+    "mtime": 1785009422678.6445,
+    "hash": "e878b803d9a012254ec88c50f46fd9e4"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_8.webp": {
+    "mtime": 1785009423070.88,
+    "hash": "0b8aa3bded031e463db78a3cc253bdb5"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_9.png": {
+    "mtime": 1785009423088.3296,
+    "hash": "9215b9512ec3248ff65572e045b19412"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/assets/svg_true_layer_9.webp": {
+    "mtime": 1785009423427.385,
+    "hash": "dd7956a5b0d85e904bc0b5883d988612"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/photos/WhatsApp Image 2026-06-25 at 16.10.09.webp": {
+    "mtime": 1784882144000,
+    "hash": "1bdd6b51adefb9367e4dd1d0a00f1452"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/photos/WhatsApp Image 2026-06-25 at 16.10.10.webp": {
+    "mtime": 1784882162000,
+    "hash": "ef32aef5028fbbbf59dac9fabcc0f4eb"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/photos/WhatsApp Image 2026-06-25 at 16.10.12.webp": {
+    "mtime": 1784882166000,
+    "hash": "dce50dbd4c0e14b18972a13c64f343c0"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/photos/WhatsApp Image 2026-06-25 at 16.10.13.webp": {
+    "mtime": 1784882170000,
+    "hash": "962adeaf1888b291f6e14298e9190347"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/photos/WhatsApp Image 2026-06-25 at 16.10.15.webp": {
+    "mtime": 1784882174000,
+    "hash": "bbc2b5fbc9b2e7620504958452739054"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/photos/WhatsApp Image 2026-06-25 at 16.10.21.webp": {
+    "mtime": 1784882178000,
+    "hash": "7269e8b617e03a134432c264f0bb5b54"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/photos/WhatsApp Image 2026-06-25 at 16.10.26.webp": {
+    "mtime": 1784882182000,
+    "hash": "aac9d5fb58e0c64a6c864fd2ee8a78d9"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/photos/WhatsApp Image 2026-06-25 at 16.10.29.webp": {
+    "mtime": 1784882186000,
+    "hash": "4e8e6db02c2ae9be22be8b9abcd6381b"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/photos/WhatsApp Image 2026-06-25 at 16.10.30.webp": {
+    "mtime": 1784882188000,
+    "hash": "655e68e8dac6d12eeb29e2fc47a96707"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/photos/WhatsApp Image 2026-06-25 at 16.10.31.webp": {
+    "mtime": 1784882194000,
+    "hash": "eb8f2f414787d9616bdabe0561f7dcf0"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/photos/WhatsApp Image 2026-06-25 at 16.10.32.webp": {
+    "mtime": 1784882196000,
+    "hash": "a3f1275a0418ddb0d3d6a2a796fbac29"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/photos/WhatsApp Image 2026-06-25 at 16.10.35.webp": {
+    "mtime": 1784882200000,
+    "hash": "90603a3f62c6a687af0249bd3e0a2e03"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/photos/castillo_sengoku.webp": {
+    "mtime": 1784882144000,
+    "hash": "1bdd6b51adefb9367e4dd1d0a00f1452"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/photos/cueva_reigando.webp": {
+    "mtime": 1784882170000,
+    "hash": "962adeaf1888b291f6e14298e9190347"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/photos/jardin_zen.webp": {
+    "mtime": 1784882174000,
+    "hash": "bbc2b5fbc9b2e7620504958452739054"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/photos/orpianesi1.webp": {
+    "mtime": 1784882108000,
+    "hash": "1f6f1bd63794b6b1ffa91a00f4ef20fc"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/public/photos/orpianesi2.webp": {
+    "mtime": 1784882116000,
+    "hash": "83d25e1037f1f6c9be687780cd4fac96"
+  }
+}

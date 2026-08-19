@@ -4,6 +4,7 @@
     "sections_toggle": {
       "hero": true,
       "ediciones": true,
+      "opiniones": true,
       "autor": true,
       "galeria": true,
       "blog": true,
@@ -11,6 +12,7 @@
     },
     "navigation_menu": [
       { "id": "nav-1", "label": "Ediciones", "url": "#ediciones", "visible": true },
+      { "id": "nav-1b", "label": "Opiniones", "url": "#opiniones", "visible": true },
       { "id": "nav-2", "label": "Autor", "url": "#autor", "visible": true },
       { "id": "nav-3", "label": "Galería", "url": "#galeria", "visible": true },
       { "id": "nav-4", "label": "Blog", "url": "#blog", "visible": true },

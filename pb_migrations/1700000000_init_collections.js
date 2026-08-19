@@ -18,11 +18,11 @@ migrate((db) => {
       });
     }
 
-    collection.listRule = null;
-    collection.viewRule = null;
-    collection.createRule = null;
-    collection.updateRule = null;
-    collection.deleteRule = null;
+    collection.listRule = "";
+    collection.viewRule = "";
+    collection.createRule = "";
+    collection.updateRule = "";
+    collection.deleteRule = "";
 
     for (const f of fields) {
       try {

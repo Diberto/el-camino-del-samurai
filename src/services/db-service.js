@@ -22,6 +22,9 @@ class DatabaseService {
   getUsers() { return this.adapter.getUsers(); }
   saveUser(u) { return this.adapter.saveUser(u); }
   uploadMedia(f) { return this.adapter.uploadMedia(f); }
+  getOpinions(page, perPage, filter) { return this.adapter.getOpinions(page, perPage, filter); }
+  saveOpinion(o) { return this.adapter.saveOpinion(o); }
+  deleteOpinion(id) { return this.adapter.deleteOpinion(id); }
   getBackups() { return this.adapter.getBackups(); }
   createBackup(n) { return this.adapter.createBackup(n); }
   restoreBackup(k) { return this.adapter.restoreBackup(k); }

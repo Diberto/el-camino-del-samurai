@@ -36,17 +36,42 @@ document.addEventListener('DOMContentLoaded', () => {
     function applyDynamicSettings(settings) {
         if (!settings) return;
         if (settings.sections_toggle) {
+            if (settings.sections_toggle.opiniones === undefined) {
+                settings.sections_toggle.opiniones = true;
+            }
             Object.entries(settings.sections_toggle).forEach(([sec, active]) => {
                 const el = document.getElementById(sec) || document.querySelector(`.${sec}-section`) || document.querySelector(`.${sec}`);
-                if (el) el.style.display = active ? '' : 'none';
+                if (el) {
+                    if (sec === 'opiniones' && active !== false) {
+                        el.style.display = '';
+                    } else {
+                        el.style.display = active ? '' : 'none';
+                    }
+                }
             });
+            // Guarantee opinions section is displayed if not explicitly disabled
+            const opinionesEl = document.getElementById('opiniones');
+            if (opinionesEl && settings.sections_toggle.opiniones !== false) {
+                opinionesEl.style.display = '';
+            }
         }
 
         if (settings.navigation_menu) {
             const navUl = document.querySelector('#nav-menu ul');
             if (navUl) {
-                navUl.innerHTML = settings.navigation_menu
-                    .filter(item => item.visible !== false)
+                let menuItems = Array.isArray(settings.navigation_menu) ? [...settings.navigation_menu] : [];
+                const hasOpiniones = menuItems.some(i => i && i.url === '#opiniones');
+                if (!hasOpiniones) {
+                    const autorIdx = menuItems.findIndex(i => i && i.url === '#autor');
+                    const opinionesItem = { label: 'Opiniones', url: '#opiniones', visible: true };
+                    if (autorIdx !== -1) {
+                        menuItems.splice(autorIdx, 0, opinionesItem);
+                    } else {
+                        menuItems.push(opinionesItem);
+                    }
+                }
+                navUl.innerHTML = menuItems
+                    .filter(item => item && item.visible !== false)
                     .map((item, idx) => {
                         const isComprar = item.url === '#contacto' || item.label.toLowerCase().includes('comprar');
                         const linkClass = isComprar ? 'btn btn-nav' : 'nav-link';
@@ -1154,4 +1179,337 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     initGalleryLightbox();
+
+    // 14. OPINIONS MANAGEMENT & SLIDER SYSTEM (CRUD + LOCALSTORAGE)
+    function initOpinionsManager() {
+        const DEFAULT_OPINIONS = [
+            {
+                id: "1",
+                name: "Carlos Mendoza",
+                role: "Practicante de Kendo & Lector",
+                rating: 5,
+                body: "Un libro imprescindible para todo amante del Bushido. La rigurosidad histórica de Jorge combinada con su experiencia en viajes por Japón te transporta directamente a los castillos y dojos antiguos.",
+                avatar: "assets/photos/reader_1.webp",
+                verified: true
+            },
+            {
+                id: "2",
+                name: "Ana Laura Fernández",
+                role: "Apasionada por la cultura japonesa",
+                rating: 5,
+                body: "La calidad de las fotografías y la narrativa de 'La Ruta del Samurái' son excepcionales. Sirve tanto como guía de viaje única como una enciclopedia sobre la casta guerrera feudal.",
+                avatar: "assets/photos/reader_2.webp",
+                verified: true
+            },
+            {
+                id: "3",
+                name: "Martín Soria",
+                role: "Instructor de Iaido",
+                rating: 5,
+                body: "Superó todas mis expectativas. 'El Paso de las Luciérnagas' profundiza en relatos poco conocidos y la experiencia interactiva del oráculo complementa perfectamente la lectura.",
+                avatar: "assets/photos/reader_3.webp",
+                verified: true
+            },
+            {
+                id: "4",
+                name: "Elena Rostova",
+                role: "Investigadora & Creadora de Contenido",
+                rating: 5,
+                body: "La presentación, las ilustraciones y la profundidad con la que Orpianesi trata cada ubicación histórica convierten a esta obra en una pieza de colección invaluable.",
+                avatar: "assets/photos/reader_4.webp",
+                verified: true
+            }
+        ];
+
+        async function fetchOpinions() {
+            try {
+                const res = await dbService.getOpinions(1, 100);
+                if (res && res.items && res.items.length > 0) {
+                    opinions = res.items.filter(item => item.status !== 'pending');
+                    renderCards();
+                    return;
+                }
+            } catch (e) {
+                console.warn("Could not fetch opinions from backend:", e);
+            }
+            opinions = DEFAULT_OPINIONS;
+            renderCards();
+        }
+
+        let opinions = [...DEFAULT_OPINIONS];
+        fetchOpinions();
+
+        const track = document.getElementById('testimonials-track');
+        const prevBtn = document.getElementById('testimonials-prev');
+        const nextBtn = document.getElementById('testimonials-next');
+        const dotsContainer = document.getElementById('testimonials-dots');
+        
+        // Modal & Form elements
+        const modal = document.getElementById('opinion-modal');
+        const modalTitle = document.getElementById('opinion-modal-title');
+        const btnOpenModal = document.getElementById('btn-open-opinion-modal');
+        const btnCloseModal = document.getElementById('btn-close-opinion-modal');
+        const btnCancelModal = document.getElementById('btn-cancel-opinion-modal');
+        const opinionForm = document.getElementById('opinion-form');
+        const starSelectContainer = document.getElementById('star-rating-select');
+        const ratingInput = document.getElementById('opinion-rating');
+
+        let currentIndex = 0;
+        let startX = 0;
+        let isDragging = false;
+
+        function renderStarsHTML(rating) {
+            const count = Math.max(1, Math.min(5, parseInt(rating) || 5));
+            return '★'.repeat(count) + '☆'.repeat(5 - count);
+        }
+
+        function renderCards() {
+            if (!track) return;
+            track.innerHTML = '';
+
+            opinions.forEach((item) => {
+                const article = document.createElement('article');
+                article.className = 'testimonial-card glass-card';
+                article.setAttribute('data-id', item.id);
+
+                const avatarSrc = item.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=d97706&color=fff`;
+
+                article.innerHTML = `
+                    <div class="testimonial-header">
+                        <img src="${avatarSrc}" alt="Foto de ${item.name}" class="testimonial-avatar" width="56" height="56" loading="lazy" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=d97706&color=fff'">
+                        <div class="testimonial-info">
+                            <h3 class="testimonial-name">${item.name}</h3>
+                            <p class="testimonial-role">${item.role}</p>
+                            <div class="testimonial-stars" aria-label="Calificación ${item.rating} de 5 estrellas">
+                                ${renderStarsHTML(item.rating)}
+                            </div>
+                        </div>
+                    </div>
+                    <blockquote class="testimonial-body">
+                        "${item.body}"
+                    </blockquote>
+                    <div class="testimonial-footer">
+                        ${item.verified ? '<span class="verified-badge">✓ Compra Verificada</span>' : '<span></span>'}
+                    </div>
+                `;
+
+                track.appendChild(article);
+            });
+
+            buildDots();
+            updateSlider();
+        }
+
+        function getCardsPerView() {
+            return window.innerWidth <= 768 ? 1 : 2;
+        }
+
+        function getMaxIndex() {
+            return Math.max(0, opinions.length - getCardsPerView());
+        }
+
+        function updateSlider() {
+            if (!track || opinions.length === 0) return;
+            const cards = Array.from(track.children);
+            if (!cards[0]) return;
+
+            const cardWidth = cards[0].getBoundingClientRect().width;
+            const gap = 24;
+            const moveAmount = (cardWidth + gap) * currentIndex;
+            track.style.transform = `translateX(-${moveAmount}px)`;
+            
+            if (dotsContainer) {
+                const dots = Array.from(dotsContainer.children);
+                dots.forEach((dot, idx) => {
+                    dot.classList.toggle('active', idx === currentIndex);
+                    dot.setAttribute('aria-selected', idx === currentIndex ? 'true' : 'false');
+                });
+            }
+            
+            if (prevBtn) {
+                prevBtn.style.opacity = currentIndex === 0 ? '0.4' : '1';
+                prevBtn.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
+            }
+            
+            if (nextBtn) {
+                nextBtn.style.opacity = currentIndex >= getMaxIndex() ? '0.4' : '1';
+                nextBtn.style.pointerEvents = currentIndex >= getMaxIndex() ? 'none' : 'auto';
+            }
+        }
+
+        function buildDots() {
+            if (!dotsContainer) return;
+            dotsContainer.innerHTML = '';
+            const totalDots = getMaxIndex() + 1;
+            
+            for (let i = 0; i < totalDots; i++) {
+                const dot = document.createElement('button');
+                dot.className = `dot ${i === 0 ? 'active' : ''}`;
+                dot.setAttribute('aria-label', `Ir a opinión ${i + 1}`);
+                dot.addEventListener('click', () => {
+                    currentIndex = i;
+                    updateSlider();
+                });
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        // Modal Controls
+        function openModalForCreate() {
+            if (!modal || !opinionForm) return;
+            opinionForm.reset();
+            document.getElementById('opinion-id').value = '';
+            document.getElementById('opinion-rating').value = '5';
+            if (modalTitle) modalTitle.textContent = 'Agregar Opinión';
+            updateStarSelector(5);
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+        }
+
+        function openModalForEdit(id) {
+            const item = opinions.find(o => o.id === id);
+            if (!item || !modal || !opinionForm) return;
+            
+            document.getElementById('opinion-id').value = item.id;
+            document.getElementById('opinion-name').value = item.name;
+            document.getElementById('opinion-role').value = item.role;
+            document.getElementById('opinion-body').value = item.body;
+            document.getElementById('opinion-avatar').value = item.avatar || '';
+            document.getElementById('opinion-verified').checked = !!item.verified;
+            document.getElementById('opinion-rating').value = item.rating;
+
+            if (modalTitle) modalTitle.textContent = 'Editar Opinión';
+            updateStarSelector(item.rating);
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeModal() {
+            if (!modal) return;
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+        }
+
+        function updateStarSelector(rating) {
+            if (!starSelectContainer) return;
+            const val = parseInt(rating) || 5;
+            const stars = starSelectContainer.querySelectorAll('span');
+            stars.forEach((s) => {
+                const starVal = parseInt(s.getAttribute('data-value'));
+                s.classList.toggle('active', starVal <= val);
+            });
+            if (ratingInput) ratingInput.value = val;
+        }
+
+        // Star Selection Events
+        if (starSelectContainer) {
+            starSelectContainer.querySelectorAll('span').forEach(span => {
+                span.addEventListener('click', () => {
+                    const val = span.getAttribute('data-value');
+                    updateStarSelector(val);
+                });
+            });
+        }
+
+        // Submit Form Handler
+        if (opinionForm) {
+            opinionForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const id = document.getElementById('opinion-id').value;
+                const name = document.getElementById('opinion-name').value.trim();
+                const role = document.getElementById('opinion-role').value.trim();
+                const body = document.getElementById('opinion-body').value.trim();
+                const avatar = document.getElementById('opinion-avatar').value.trim();
+                const verified = document.getElementById('opinion-verified').checked;
+                const rating = parseInt(document.getElementById('opinion-rating').value) || 5;
+
+                if (!name || !role || !body) return;
+
+                await dbService.saveOpinion({
+                    id,
+                    name,
+                    role,
+                    body,
+                    avatar,
+                    verified,
+                    rating,
+                    status: 'approved'
+                });
+
+                closeModal();
+                await fetchOpinions();
+            });
+        }
+
+        async function deleteOpinion(id) {
+            if (!confirm('¿Estás seguro de que deseas eliminar esta opinión?')) return;
+            await dbService.deleteOpinion(id);
+            await fetchOpinions();
+        }
+
+        // Event listeners para Modal
+        if (btnOpenModal) btnOpenModal.addEventListener('click', openModalForCreate);
+        if (btnCloseModal) btnCloseModal.addEventListener('click', closeModal);
+        if (btnCancelModal) btnCancelModal.addEventListener('click', closeModal);
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+        }
+
+        // Slider Arrows Events
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateSlider();
+                }
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                if (currentIndex < getMaxIndex()) {
+                    currentIndex++;
+                    updateSlider();
+                }
+            });
+        }
+
+        // Touch Events (Swipe)
+        if (track) {
+            track.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    startX = e.touches[0].clientX;
+                    isDragging = true;
+                }
+            }, { passive: true });
+
+            track.addEventListener('touchend', (e) => {
+                if (!isDragging || e.changedTouches.length === 0) return;
+                isDragging = false;
+                const endX = e.changedTouches[0].clientX;
+                const diffX = startX - endX;
+
+                if (Math.abs(diffX) > 40) {
+                    if (diffX > 0 && currentIndex < getMaxIndex()) {
+                        currentIndex++;
+                    } else if (diffX < 0 && currentIndex > 0) {
+                        currentIndex--;
+                    }
+                    updateSlider();
+                }
+            });
+        }
+
+        window.addEventListener('resize', () => {
+            buildDots();
+            if (currentIndex > getMaxIndex()) currentIndex = getMaxIndex();
+            updateSlider();
+        });
+
+        renderCards();
+    }
+
+    initOpinionsManager();
 });

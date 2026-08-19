@@ -125,7 +125,7 @@ export class PocketBaseAdapter {
 
     return {
       sections_toggle: {
-        inicio: true, sinopsis: true, virtudes: true, oraculo: true, capitulos: true, ediciones: true, autor: true, galeria: true, blog: true, contacto: true
+        inicio: true, sinopsis: true, virtudes: true, oraculo: true, capitulos: true, ediciones: true, opiniones: true, autor: true, galeria: true, blog: true, contacto: true
       },
       navigation_menu: [
         { id: '1', label: 'Inicio', url: '#inicio', visible: true },
@@ -133,6 +133,7 @@ export class PocketBaseAdapter {
         { id: '3', label: 'Las Virtudes', url: '#virtudes', visible: true },
         { id: '4', label: 'El Oráculo', url: '#oraculo', visible: true },
         { id: '5', label: 'Ediciones', url: '#ediciones', visible: true },
+        { id: '5b', label: 'Opiniones', url: '#opiniones', visible: true },
         { id: '6', label: 'Autor', url: '#autor', visible: true },
         { id: '7', label: 'Galería', url: '#galeria', visible: true },
         { id: '8', label: 'Blog', url: '#blog', visible: true },
@@ -397,6 +398,148 @@ export class PocketBaseAdapter {
   getDownloadBackupUrl(key) {
     const tokenParam = this.token ? `?token=${encodeURIComponent(this.token)}` : '';
     return `${this.baseUrl}/api/backups/${encodeURIComponent(key)}${tokenParam}`;
+  }
+
+  async getOpinions(page = 1, perPage = 50, filter = '') {
+    try {
+      let query = `/api/collections/opinions/records?page=${page}&perPage=${perPage}&sort=-created`;
+      if (filter) query += `&filter=(${encodeURIComponent(filter)})`;
+      const res = await this.request(query);
+      if (res && res.items) {
+        if (res.items.length > 0) {
+          const items = res.items.map(item => ({
+            id: item.id,
+            name: item.name,
+            role: item.role,
+            body: item.body,
+            rating: item.rating || 5,
+            avatar: item.avatar || '',
+            verified: item.verified !== false,
+            status: item.status || 'approved',
+            created_at: item.created
+          }));
+          return { items, totalItems: res.totalItems, totalPages: res.totalPages, page: res.page };
+        }
+      }
+    } catch {}
+
+    try {
+      const saved = localStorage.getItem('samurai_opinions_list');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return { items: parsed, totalItems: parsed.length, totalPages: 1, page: 1 };
+        }
+      }
+    } catch {}
+
+    const defaults = [
+      {
+        id: 'default-op-1',
+        name: 'Carlos Mendoza',
+        role: 'Practicante de Kendo & Lector',
+        rating: 5,
+        body: 'Un libro imprescindible para todo amante del Bushido. La rigurosidad histórica de Jorge combinada con su experiencia en viajes por Japón te transporta directamente a los castillos y dojos antiguos.',
+        avatar: 'assets/photos/reader_1.webp',
+        verified: true,
+        status: 'approved'
+      },
+      {
+        id: 'default-op-2',
+        name: 'Ana Laura Fernández',
+        role: 'Historiadora & Apasionada del Arte Marcial',
+        rating: 5,
+        body: 'La calidad fotográfica y la narrativa son excepcionales. El Paso de las Luciérnagas me permitió entender aspectos del feudalismo japonés que ningún otro libro en español aborda con tanta pasión.',
+        avatar: 'assets/photos/reader_2.webp',
+        verified: true,
+        status: 'approved'
+      },
+      {
+        id: 'default-op-3',
+        name: 'Sensei Roberto Gómez',
+        role: 'Instructor de Iaido (6° Dan)',
+        rating: 5,
+        body: 'Le recomiendo esta obra a todos mis alumnos. No es solo una guía geográfica de Japón, es un tratado sobre el carácter, la ética y la espiritualidad del verdadero budoka.',
+        avatar: 'assets/photos/reader_3.webp',
+        verified: true,
+        status: 'approved'
+      },
+      {
+        id: 'default-op-4',
+        name: 'Elena Rostova',
+        role: 'Investigadora & Creadora de Contenido',
+        rating: 5,
+        body: 'La presentación, las ilustraciones y la profundidad con la que Orpianesi trata cada ubicación histórica convierten a esta obra en una pieza de colección invaluable.',
+        avatar: 'assets/photos/reader_4.webp',
+        verified: true,
+        status: 'approved'
+      }
+    ];
+
+    return { items: defaults, totalItems: defaults.length, totalPages: 1, page: 1 };
+  }
+
+  async saveOpinion(opinionData) {
+    const payload = {
+      name: opinionData.name || '',
+      role: opinionData.role || 'Lector',
+      body: opinionData.body || '',
+      rating: parseInt(opinionData.rating) || 5,
+      avatar: opinionData.avatar || '',
+      verified: opinionData.verified !== false,
+      status: opinionData.status || 'approved'
+    };
+
+    try {
+      if (opinionData.id && !opinionData.id.startsWith('default-op-')) {
+        const res = await this.request(`/api/collections/opinions/records/${opinionData.id}`, {
+          method: 'PATCH',
+          body: JSON.stringify(payload)
+        });
+        if (res) return res;
+      } else {
+        const res = await this.request('/api/collections/opinions/records', {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+        if (res) return res;
+      }
+    } catch {}
+
+    try {
+      const saved = localStorage.getItem('samurai_opinions_list');
+      let opinions = saved ? JSON.parse(saved) : [];
+      if (opinionData.id) {
+        const idx = opinions.findIndex(o => o.id === opinionData.id);
+        if (idx !== -1) opinions[idx] = { ...opinions[idx], ...payload };
+        else opinions.unshift({ id: opinionData.id, ...payload });
+      } else {
+        opinions.unshift({ id: 'op_' + Date.now(), ...payload });
+      }
+      localStorage.setItem('samurai_opinions_list', JSON.stringify(opinions));
+      return { id: opinionData.id || 'local_' + Date.now(), ...payload };
+    } catch {
+      return null;
+    }
+  }
+
+  async deleteOpinion(id) {
+    try {
+      if (!id.startsWith('default-op-') && !id.startsWith('local_')) {
+        await this.request(`/api/collections/opinions/records/${id}`, { method: 'DELETE' });
+      }
+    } catch {}
+
+    try {
+      const saved = localStorage.getItem('samurai_opinions_list');
+      if (saved) {
+        let opinions = JSON.parse(saved);
+        opinions = opinions.filter(o => o.id !== id);
+        localStorage.setItem('samurai_opinions_list', JSON.stringify(opinions));
+      }
+    } catch {}
+
+    return { success: true };
   }
 }
 

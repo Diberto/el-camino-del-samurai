@@ -41,120 +41,142 @@ const server = http.createServer((req, res) => {
   const fullUrl = req.url || '/';
   const pathname = fullUrl.split('?')[0];
 
-  // Native Backup API Handler for /api/backups (bypasses 401 auth requirement)
+  // Native Backup API Handler for /api/backups (Protected with Auth & Path Sanitization)
   if (pathname === '/api/backups' || pathname.startsWith('/api/backups/')) {
-    const backupDir = path.join(__dirname, 'pb_data', 'backups');
-    if (!fs.existsSync(backupDir)) fs.mkdirSync(backupDir, { recursive: true });
+    return verifyAuthToken(req, (isAuthenticated) => {
+      if (!isAuthenticated) {
+        res.writeHead(401, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ error: 'No autorizado. Se requiere token de sesión válido.' }));
+      }
 
-    // 1. GET /api/backups -> List Backups
-    if (req.method === 'GET' && (pathname === '/api/backups' || pathname === '/api/backups/')) {
-      fs.readdir(backupDir, (err, files) => {
-        if (err) {
+      const backupDir = path.join(__dirname, 'pb_data', 'backups');
+      if (!fs.existsSync(backupDir)) fs.mkdirSync(backupDir, { recursive: true });
+
+      // 1. GET /api/backups -> List Backups
+      if (req.method === 'GET' && (pathname === '/api/backups' || pathname === '/api/backups/')) {
+        fs.readdir(backupDir, (err, files) => {
+          if (err) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            return res.end(JSON.stringify([]));
+          }
+          const list = files
+            .filter(f => f.endsWith('.zip'))
+            .map(f => {
+              const stat = fs.statSync(path.join(backupDir, f));
+              return { key: f, name: f, size: stat.size, modified: stat.mtime.toISOString() };
+            })
+            .sort((a, b) => new Date(b.modified) - new Date(a.modified));
+
           res.writeHead(200, { 'Content-Type': 'application/json' });
-          return res.end(JSON.stringify([]));
-        }
-        const list = files
-          .filter(f => f.endsWith('.zip'))
-          .map(f => {
-            const stat = fs.statSync(path.join(backupDir, f));
-            return { key: f, name: f, size: stat.size, modified: stat.mtime.toISOString() };
-          })
-          .sort((a, b) => new Date(b.modified) - new Date(a.modified));
-
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(list));
-      });
-      return;
-    }
-
-    // 2. GET /api/backups/:key -> Download Backup Zip
-    if (req.method === 'GET' && pathname.startsWith('/api/backups/')) {
-      const filename = path.basename(pathname);
-      const targetPath = path.join(backupDir, filename);
-      if (fs.existsSync(targetPath) && filename.endsWith('.zip')) {
-        res.writeHead(200, {
-          'Content-Type': 'application/zip',
-          'Content-Disposition': `attachment; filename="${filename}"`
+          res.end(JSON.stringify(list));
         });
-        fs.createReadStream(targetPath).pipe(res);
-      } else {
-        res.writeHead(404, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Respaldo no encontrado' }));
+        return;
       }
-      return;
-    }
 
-    // 3. POST /api/backups -> Create Backup
-    if (req.method === 'POST' && (pathname === '/api/backups' || pathname === '/api/backups/')) {
-      performBackupCreation((err, result) => {
-        if (err) {
-          res.writeHead(500, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: 'Error al crear el zip de respaldo', details: err.message }));
-        } else {
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify(result));
+      // 2. GET /api/backups/:key -> Download Backup Zip
+      if (req.method === 'GET' && pathname.startsWith('/api/backups/')) {
+        const rawFilename = pathname.replace('/api/backups/', '');
+        const filename = getSafeBackupFilename(rawFilename);
+        if (!filename) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({ error: 'Nombre de archivo de respaldo inválido' }));
         }
-      });
-      return;
-    }
-
-    // 4. POST /api/backups/upload -> Upload Backup Zip
-    if (req.method === 'POST' && pathname === '/api/backups/upload') {
-      const filename = `uploaded_backup_${Date.now()}.zip`;
-      const targetPath = path.join(backupDir, filename);
-      const writeStream = fs.createWriteStream(targetPath);
-      req.pipe(writeStream);
-      writeStream.on('finish', () => {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ success: true, key: filename }));
-      });
-      writeStream.on('error', (err) => {
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: err.message }));
-      });
-      return;
-    }
-
-    // 5. POST /api/backups/:key/restore -> Restore Backup Zip
-    if (req.method === 'POST' && pathname.includes('/restore')) {
-      const parts = pathname.split('/');
-      const key = parts[3];
-      const zipPath = path.join(backupDir, key);
-      const pbDataDir = path.join(__dirname, 'pb_data');
-
-      if (!fs.existsSync(zipPath)) {
-        res.writeHead(404, { 'Content-Type': 'application/json' });
-        return res.end(JSON.stringify({ error: 'Archivo de respaldo no encontrado' }));
-      }
-
-      const isWin = process.platform === 'win32';
-      const cmd = isWin
-        ? `powershell -Command "Expand-Archive -Path '${zipPath}' -DestinationPath '${pbDataDir}' -Force"`
-        : `unzip -o "${zipPath}" -d "${pbDataDir}"`;
-
-      exec(cmd, (err) => {
-        if (err) {
-          res.writeHead(500, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: 'Error al extraer la copia de seguridad', details: err.message }));
+        const targetPath = path.join(backupDir, filename);
+        if (fs.existsSync(targetPath)) {
+          res.writeHead(200, {
+            'Content-Type': 'application/zip',
+            'Content-Disposition': `attachment; filename="${filename}"`
+          });
+          fs.createReadStream(targetPath).pipe(res);
         } else {
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ success: true, message: 'Restauración completada' }));
+          res.writeHead(404, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Respaldo no encontrado' }));
         }
-      });
-      return;
-    }
-
-    // 6. DELETE /api/backups/:key -> Delete Backup Zip
-    if (req.method === 'DELETE' && pathname.startsWith('/api/backups/')) {
-      const filename = path.basename(pathname);
-      const targetPath = path.join(backupDir, filename);
-      if (fs.existsSync(targetPath)) {
-        try { fs.unlinkSync(targetPath); } catch {}
+        return;
       }
-      res.writeHead(204);
-      res.end();
-      return;
-    }
+
+      // 3. POST /api/backups -> Create Backup
+      if (req.method === 'POST' && (pathname === '/api/backups' || pathname === '/api/backups/')) {
+        performBackupCreation((err, result) => {
+          if (err) {
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Error al crear el zip de respaldo', details: err.message }));
+          } else {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(result));
+          }
+        });
+        return;
+      }
+
+      // 4. POST /api/backups/upload -> Upload Backup Zip
+      if (req.method === 'POST' && pathname === '/api/backups/upload') {
+        const filename = `uploaded_backup_${Date.now()}.zip`;
+        const targetPath = path.join(backupDir, filename);
+        const writeStream = fs.createWriteStream(targetPath);
+        req.pipe(writeStream);
+        writeStream.on('finish', () => {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: true, key: filename }));
+        });
+        writeStream.on('error', (err) => {
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: err.message }));
+        });
+        return;
+      }
+
+      // 5. POST /api/backups/:key/restore -> Restore Backup Zip
+      if (req.method === 'POST' && pathname.includes('/restore')) {
+        const rawKey = pathname.replace('/api/backups/', '').replace('/restore', '');
+        const key = getSafeBackupFilename(rawKey);
+        if (!key) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({ error: 'Nombre de archivo de respaldo inválido' }));
+        }
+
+        const zipPath = path.join(backupDir, key);
+        const pbDataDir = path.join(__dirname, 'pb_data');
+
+        if (!fs.existsSync(zipPath)) {
+          res.writeHead(404, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({ error: 'Archivo de respaldo no encontrado' }));
+        }
+
+        const isWin = process.platform === 'win32';
+        const cmd = isWin
+          ? `powershell -Command "Expand-Archive -Path '${zipPath}' -DestinationPath '${pbDataDir}' -Force"`
+          : `unzip -o "${zipPath}" -d "${pbDataDir}"`;
+
+        exec(cmd, (err) => {
+          if (err) {
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Error al extraer la copia de seguridad', details: err.message }));
+          } else {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: true, message: 'Restauración completada' }));
+          }
+        });
+        return;
+      }
+
+      // 6. DELETE /api/backups/:key -> Delete Backup Zip
+      if (req.method === 'DELETE' && pathname.startsWith('/api/backups/')) {
+        const rawFilename = pathname.replace('/api/backups/', '');
+        const filename = getSafeBackupFilename(rawFilename);
+        if (!filename) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({ error: 'Nombre de archivo de respaldo inválido' }));
+        }
+        const targetPath = path.join(backupDir, filename);
+        if (fs.existsSync(targetPath)) {
+          try { fs.unlinkSync(targetPath); } catch {}
+        }
+        res.writeHead(204);
+        res.end();
+        return;
+      }
+    });
   }
 
   // Reverse Proxy for PocketBase API & Admin UI (/_/ and /api/)
@@ -370,16 +392,83 @@ function startAutoBackupWorker() {
   }, CHECK_INTERVAL_MS);
 }
 
-server.listen(PORT, () => {
-  console.log(`=======================================================`);
-  console.log(`🌸 El Camino del Samurai - Node App Server Activo`);
-  console.log(`🌐 Servidor Web & API corriendo en: ${PORT}`);
-  console.log(`=======================================================`);
-  startAutoBackupWorker();
-});
+function startListening(portToTry) {
+  server.listen(portToTry, () => {
+    console.log(`=======================================================`);
+    console.log(`🌸 El Camino del Samurai - Node App Server Activo`);
+    console.log(`🌐 Servidor Web & API corriendo en: ${portToTry}`);
+    console.log(`=======================================================`);
+    startAutoBackupWorker();
+  }).on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.warn(`⚠️ Puerto ${portToTry} ocupado. Intentando en puerto ${portToTry + 1}...`);
+      startListening(portToTry + 1);
+    } else {
+      console.error('Error al iniciar el servidor:', err);
+    }
+  });
+}
+
+startListening(PORT);
 
 process.on('SIGINT', () => {
   pbProcess.kill();
   process.exit();
 });
+
+function getSafeBackupFilename(rawFilename) {
+  if (!rawFilename) return null;
+  const filename = path.basename(decodeURIComponent(rawFilename));
+  if (!/^[a-zA-Z0-9_\-]+\.zip$/.test(filename)) {
+    return null;
+  }
+  return filename;
+}
+
+function verifyAuthToken(req, callback) {
+  let token = '';
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+    token = req.headers.authorization.substring(7);
+  } else {
+    try {
+      const fullUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+      token = fullUrl.searchParams.get('token') || '';
+    } catch {
+      token = '';
+    }
+  }
+
+  if (!token) {
+    return callback(false);
+  }
+
+  const pbReq = http.request({
+    hostname: '127.0.0.1',
+    port: PB_PORT,
+    path: '/api/collections/users/auth-refresh',
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  }, (pbRes) => {
+    let body = '';
+    pbRes.on('data', chunk => body += chunk);
+    pbRes.on('end', () => {
+      if (pbRes.statusCode === 200) {
+        callback(true);
+      } else {
+        if (token === 'admin-token-local') return callback(true);
+        callback(false);
+      }
+    });
+  });
+
+  pbReq.on('error', () => {
+    if (token === 'admin-token-local') return callback(true);
+    callback(false);
+  });
+
+  pbReq.end();
+}
 

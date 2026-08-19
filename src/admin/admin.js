@@ -2,6 +2,7 @@ import { dbService } from '../services/db-service.js';
 import { initSectionsManager } from './modules/sections-menu-manager.js';
 import { initGpuManager } from './modules/gpu-config-manager.js';
 import { initBlogManager } from './modules/blog-cms-manager.js';
+import { initOpinionesManager } from './modules/opiniones-manager.js';
 import { initUserManager } from './modules/user-manager.js';
 import { initMediaManager } from './modules/media-manager.js';
 import { initBackupManager } from './modules/backup-manager.js';
@@ -68,6 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const blogEl = document.getElementById('tab-blog');
       if (blogEl) await initBlogManager(blogEl).catch(e => console.warn('Error loading blog manager:', e));
+
+      const opinionesEl = document.getElementById('tab-opiniones');
+      if (opinionesEl) await initOpinionesManager(opinionesEl).catch(e => console.warn('Error loading opiniones manager:', e));
 
       const mediaEl = document.getElementById('tab-media');
       if (mediaEl) await initMediaManager(mediaEl).catch(e => console.warn('Error loading media manager:', e));

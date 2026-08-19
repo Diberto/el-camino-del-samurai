@@ -35,8 +35,8 @@
     "semantic_hash": "b735b760a8159344588644c7f4123449"
   },
   "scripts/start-pocketbase.js": {
-    "mtime": 1785269191.4779298,
-    "ast_hash": "1d7438bd41685fb819538d76982a2bbd",
+    "mtime": 1785269895.628799,
+    "ast_hash": "40618def65533bdc6089d09f9ca0c147",
     "semantic_hash": ""
   },
   "server.js": {
