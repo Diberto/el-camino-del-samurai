@@ -33,13 +33,26 @@ const MIME_TYPES = {
   '.jpg': 'image/jpeg',
   '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon',
-  '.woff2': 'font/woff2'
+  '.woff2': 'font/woff2',
+  '.xml': 'application/xml; charset=utf-8'
+};
+
+const SECURITY_HEADERS = {
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'SAMEORIGIN',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()'
 };
 
 // 2. Main Node.js Web & Proxy Server
 const server = http.createServer((req, res) => {
   const fullUrl = req.url || '/';
   const pathname = fullUrl.split('?')[0];
+
+  // Dynamic Sitemap Generator (/sitemap.xml)
+  if (pathname === '/sitemap.xml') {
+    return serveDynamicSitemap(req, res);
+  }
 
   // Native Backup API Handler for /api/backups (Protected with Auth & Path Sanitization)
   if (pathname === '/api/backups' || pathname.startsWith('/api/backups/')) {
@@ -263,7 +276,7 @@ function serveStaticFile(filePath, req, res) {
 
   fs.readFile(filePath, (err, content) => {
     if (err) {
-      res.writeHead(500, { 'Content-Type': 'text/plain' });
+      res.writeHead(500, { 'Content-Type': 'text/plain', ...SECURITY_HEADERS });
       return res.end('500 Internal Server Error');
     }
 
@@ -273,39 +286,70 @@ function serveStaticFile(filePath, req, res) {
     if (compressable && acceptEncoding.includes('gzip')) {
       zlib.gzip(content, (zerr, compressed) => {
         if (zerr) {
-          res.writeHead(200, { 'Content-Type': contentType, 'Cache-Control': cacheHeader });
+          res.writeHead(200, { 'Content-Type': contentType, 'Cache-Control': cacheHeader, ...SECURITY_HEADERS });
           return res.end(content);
         }
         res.writeHead(200, {
           'Content-Type': contentType,
           'Content-Encoding': 'gzip',
           'Cache-Control': cacheHeader,
-          'Vary': 'Accept-Encoding'
+          'Vary': 'Accept-Encoding',
+          ...SECURITY_HEADERS
         });
         res.end(compressed);
       });
     } else if (compressable && acceptEncoding.includes('deflate')) {
       zlib.deflate(content, (zerr, compressed) => {
         if (zerr) {
-          res.writeHead(200, { 'Content-Type': contentType, 'Cache-Control': cacheHeader });
+          res.writeHead(200, { 'Content-Type': contentType, 'Cache-Control': cacheHeader, ...SECURITY_HEADERS });
           return res.end(content);
         }
         res.writeHead(200, {
           'Content-Type': contentType,
           'Content-Encoding': 'deflate',
           'Cache-Control': cacheHeader,
-          'Vary': 'Accept-Encoding'
+          'Vary': 'Accept-Encoding',
+          ...SECURITY_HEADERS
         });
         res.end(compressed);
       });
     } else {
-      res.writeHead(200, { 'Content-Type': contentType, 'Cache-Control': cacheHeader });
+      res.writeHead(200, { 'Content-Type': contentType, 'Cache-Control': cacheHeader, ...SECURITY_HEADERS });
       res.end(content);
     }
   });
 }
 
-function performBackupCreation(callback) {
+function cleanOldBackups(backupDir, maxRetention = 10) {
+  if (!fs.existsSync(backupDir) || maxRetention <= 0) return;
+  fs.readdir(backupDir, (err, files) => {
+    if (err) return;
+    const zips = files
+      .filter(f => f.endsWith('.zip'))
+      .map(f => {
+        try {
+          const stat = fs.statSync(path.join(backupDir, f));
+          return { name: f, time: stat.mtimeMs };
+        } catch {
+          return null;
+        }
+      })
+      .filter(Boolean)
+      .sort((a, b) => b.time - a.time);
+
+    if (zips.length > maxRetention) {
+      const toDelete = zips.slice(maxRetention);
+      toDelete.forEach(fileObj => {
+        try {
+          fs.unlinkSync(path.join(backupDir, fileObj.name));
+          console.log(`🧹 Respaldo antiguo depurado por política de retención: ${fileObj.name}`);
+        } catch {}
+      });
+    }
+  });
+}
+
+function performBackupCreation(callback, maxRetention = 10) {
   const backupDir = path.join(__dirname, 'pb_data', 'backups');
   const dbPath = path.join(__dirname, 'pb_data', 'data.db');
   const storagePath = path.join(__dirname, 'pb_data', 'storage');
@@ -325,12 +369,69 @@ function performBackupCreation(callback) {
   exec(cmd, (err) => {
     if (err) return callback(err);
     try {
+      cleanOldBackups(backupDir, maxRetention);
       const stat = fs.statSync(zipPath);
       callback(null, { key: zipName, name: zipName, size: stat.size, modified: stat.mtime.toISOString() });
     } catch (e) {
       callback(e);
     }
   });
+}
+
+function serveDynamicSitemap(req, res) {
+  const pbReq = http.request({
+    hostname: '127.0.0.1',
+    port: PB_PORT,
+    path: '/api/collections/posts/records?filter=(status=\'published\')&perPage=100',
+    method: 'GET'
+  }, (pbRes) => {
+    let body = '';
+    pbRes.on('data', chunk => body += chunk);
+    pbRes.on('end', () => {
+      let posts = [];
+      if (pbRes.statusCode === 200) {
+        try {
+          const data = JSON.parse(body);
+          posts = data.items || [];
+        } catch {}
+      }
+
+      const today = new Date().toISOString().split('T')[0];
+      let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+      xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+      xml += `  <url>\n    <loc>https://larutadelsamurai.com/</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>1.0</priority>\n  </url>\n`;
+      xml += `  <url>\n    <loc>https://larutadelsamurai.com/blog.html</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>daily</changefreq>\n    <priority>0.8</priority>\n  </url>\n`;
+      xml += `  <url>\n    <loc>https://larutadelsamurai.com/gpu.html</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.5</priority>\n  </url>\n`;
+
+      posts.forEach(post => {
+        const postSlug = post.slug || post.id;
+        const postDate = (post.updated || post.created || today).split(' ')[0];
+        xml += `  <url>\n    <loc>https://larutadelsamurai.com/blog.html?post=${encodeURIComponent(postSlug)}</loc>\n    <lastmod>${postDate}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
+      });
+
+      xml += `</urlset>\n`;
+
+      res.writeHead(200, {
+        'Content-Type': 'application/xml; charset=utf-8',
+        'Cache-Control': 'public, max-age=3600',
+        ...SECURITY_HEADERS
+      });
+      res.end(xml);
+    });
+  });
+
+  pbReq.on('error', () => {
+    // Fallback to static sitemap file
+    const staticSitemap = path.join(PUBLIC_DIR, 'sitemap.xml');
+    if (fs.existsSync(staticSitemap)) {
+      serveStaticFile(staticSitemap, req, res);
+    } else {
+      res.writeHead(404, { 'Content-Type': 'text/plain', ...SECURITY_HEADERS });
+      res.end('404 Not Found');
+    }
+  });
+
+  pbReq.end();
 }
 
 function startAutoBackupWorker() {
@@ -364,6 +465,7 @@ function startAutoBackupWorker() {
 
             if (now - lastRun >= intervalMs) {
               console.log(`⏰ Ejecutando respaldo automático programado (${autoConfig.frequency})...`);
+              const maxRetention = autoConfig.retention || 10;
               performBackupCreation((err, result) => {
                 if (!err && result) {
                   console.log(`✅ Respaldo automático completado con éxito: ${result.key}`);
@@ -381,7 +483,7 @@ function startAutoBackupWorker() {
                   updateReq.write(JSON.stringify({ settings_data: JSON.stringify(parsedData) }));
                   updateReq.end();
                 }
-              });
+              }, maxRetention);
             }
           } catch {}
         });
@@ -458,17 +560,18 @@ function verifyAuthToken(req, callback) {
       if (pbRes.statusCode === 200) {
         callback(true);
       } else {
-        if (token === 'admin-token-local') return callback(true);
+        if (token === 'admin-token-local' && process.env.NODE_ENV !== 'production') return callback(true);
         callback(false);
       }
     });
   });
 
   pbReq.on('error', () => {
-    if (token === 'admin-token-local') return callback(true);
+    if (token === 'admin-token-local' && process.env.NODE_ENV !== 'production') return callback(true);
     callback(false);
   });
 
   pbReq.end();
 }
+
 

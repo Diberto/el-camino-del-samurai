@@ -21,6 +21,8 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@084f7f65ac489b466551503932c496329c5363be": "084f7f6 docs: add walkthrough documentation" | kind=Commit | source=git | neighbors=[master, 7e7ab65 docs: update design spec for un…, c0749a0 feat: complete Admin Backend, C…]
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@0e4583a967cf03e4969d92250990e87fa1fd88a3": "0e4583a checkpoint: volumetric clouds engine, deep royal blue sky, bottom mist …" | kind=Commit | source=git | neighbors=[master, 02fe36c feat(mobile): position logo bel…, 732199f feat(clouds): transition from m…]
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@0f896e433f3fa1cfc8d50015aecb57832646e534": "0f896e4 add design spec for animated day night sky" | kind=Commit | source=git | neighbors=[master, 3e1faf4 add implementation plan for ani…, 18d586b feat: scroll empuja particulas,…]
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@13fc8dfcb7c7934b3a8fe0cc6ec202afc5c2816d": "13fc8df docs: update walkthrough for Hostinger deployment log analysis" | kind=Commit | source=git | neighbors=[master, 8656858 feat: make PocketBase exclusive…, b4f93cc fix: bind server.js to 0.0.0.0 …]
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@1549879a0873aa083fba39194f7e0c247e158b23": "1549879 docs: update implementation plan for unified samurai admin and real-tim…" | kind=Commit | source=git | neighbors=[master, 48d0413 feat: align admin shell with sa…, 7e7ab65 docs: update design spec for un…]
@@ -59,8 +61,6 @@ one-sentence description — no prose, no markdown fences.
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@7179ed10f6596ce90f8ab7c0608a7696f2c96002": "7179ed1 feat(css): add styles for Day/Night skies, clouds drifting, and theme t…" | kind=Commit | source=git | neighbors=[master, e123a8e feat(js): add Day/Night theme m…, c8d7182 feat(html): add sky container m…]
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@73225bf46de61d298aae6f4d4826ccdf6cd7aad6": "73225bf docs: update plan for Blog catalog and reader views" | kind=Commit | source=git | neighbors=[5d50db6 docs: update design spec for Bl…, master, 102b502 feat: add dynamic top 3 posts w…]
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@7710994b45eb195575451aa3efd49a96105e3434": "7710994 docs: update plan for Strapi Headless CMS integration" | kind=Commit | source=git | neighbors=[master, 7af96be feat: integrate Strapi Headless…, e4a2547 docs: update design spec for St…]
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@7a6f4db3564b7a9e04bbbeed0d5c1a9a3a5fdd04": "7a6f4db docs: update walkthrough for final 400 Bad Request resolution" | kind=Commit | source=git | neighbors=[40ba44b fix: eliminate POST auto-seedin…, master, 8a1ce7e fix: sanitize savePost payloads…]
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@7e6eae11b0815b2656b033f4fdfea482b1f98946": "7e6eae1 assets: add Logo.webp" | kind=Commit | source=git | neighbors=[master, c642b72 fix(clouds): restore missing cl…, e46bc8f fix(layout): wrap hero parallax…]
 
 ## Instructions
 

@@ -175,21 +175,31 @@ export class PocketBaseAdapter {
     try {
       const res = await this.request('/api/collections/posts/records?sort=-created');
       if (res && res.items && res.items.length > 0) {
-        return res.items.map(item => ({
+        const posts = res.items.map(item => ({
           id: item.id,
           title: item.title,
           slug: item.slug,
           excerpt: item.excerpt,
           content: item.content,
-          cover_image: item.cover_image ? (item.cover_image.startsWith('http') || item.cover_image.startsWith('photos/') ? item.cover_image : `${this.baseUrl}/api/files/posts/${item.id}/${item.cover_image}`) : 'photos/cueva_reigando.webp',
+          cover_image: item.cover_image ? (item.cover_image.startsWith('http') || item.cover_image.startsWith('photos/') || item.cover_image.startsWith('data:') ? item.cover_image : `${this.baseUrl}/api/files/posts/${item.id}/${item.cover_image}`) : 'photos/cueva_reigando.webp',
           status: item.status || 'published',
           author: item.author || 'Jorge Orpianesi',
           created_at: item.created || item.created_at
         }));
+        try { localStorage.setItem('local_samurai_posts', JSON.stringify(posts)); } catch {}
+        return posts;
       }
     } catch {}
 
-    return [
+    try {
+      const saved = localStorage.getItem('local_samurai_posts');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {}
+
+    const defaults = [
       {
         id: 'default-post-1',
         title: 'Los Secretos de Miyamoto Musashi en la Cueva Reigando',
@@ -198,7 +208,8 @@ export class PocketBaseAdapter {
         content: `<p class="text-large">En las profundidades de las montañas de Kumamoto se encuentra Reigando, la cueva sagrada donde el legendario Miyamoto Musashi pasó sus últimos años dictando su legado al mundo.</p><p>Al visitar este santuario rodeado de estatuas de piedra cubiertas de musgo, se respira una solemnidad única.</p>`,
         cover_image: 'photos/cueva_reigando.webp',
         status: 'published',
-        author: 'Jorge Orpianesi'
+        author: 'Jorge Orpianesi',
+        created_at: new Date().toISOString()
       },
       {
         id: 'default-post-2',
@@ -208,7 +219,8 @@ export class PocketBaseAdapter {
         content: `<p class="text-large">Las fortalezas del Japón feudal no solo eran baluartes inexpugnables de guerra, sino también expresiones sublimes de la estética Zen.</p>`,
         cover_image: 'photos/castillo_sengoku.webp',
         status: 'published',
-        author: 'Jorge Orpianesi'
+        author: 'Jorge Orpianesi',
+        created_at: new Date().toISOString()
       },
       {
         id: 'default-post-3',
@@ -218,95 +230,165 @@ export class PocketBaseAdapter {
         content: `<p class="text-large">El camino del guerrero (Bushido) transciende el campo de batalla. En la era digital, sus principios ofrecen un faro ético inquebrantable.</p>`,
         cover_image: 'photos/jardin_zen.webp',
         status: 'published',
-        author: 'Jorge Orpianesi'
+        author: 'Jorge Orpianesi',
+        created_at: new Date().toISOString()
       }
     ];
+
+    try { localStorage.setItem('local_samurai_posts', JSON.stringify(defaults)); } catch {}
+    return defaults;
   }
 
   async savePost(postData) {
-    try {
-      const payload = {
-        title: postData.title || '',
-        slug: postData.slug || '',
-        excerpt: postData.excerpt || '',
-        content: postData.content || '',
-        cover_image: postData.cover_image || 'photos/cueva_reigando.webp',
-        status: postData.status || 'published',
-        author: postData.author || 'Jorge Orpianesi'
-      };
+    const payload = {
+      title: postData.title || '',
+      slug: postData.slug || (postData.title ? postData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : 'post-' + Date.now()),
+      excerpt: postData.excerpt || '',
+      content: postData.content || '',
+      cover_image: postData.cover_image || 'photos/cueva_reigando.webp',
+      status: postData.status || 'published',
+      author: postData.author || 'Jorge Orpianesi',
+      created_at: postData.created_at || new Date().toISOString()
+    };
 
-      if (postData.id && !postData.id.startsWith('default-post-')) {
-        return await this.request(`/api/collections/posts/records/${postData.id}`, {
+    let pbRecord = null;
+    try {
+      if (postData.id && !postData.id.startsWith('default-post-') && !postData.id.startsWith('local_post_')) {
+        pbRecord = await this.request(`/api/collections/posts/records/${postData.id}`, {
           method: 'PATCH',
           body: JSON.stringify(payload)
         });
       } else {
-        return await this.request('/api/collections/posts/records', {
+        pbRecord = await this.request('/api/collections/posts/records', {
           method: 'POST',
           body: JSON.stringify(payload)
         });
       }
+    } catch {}
+
+    try {
+      const saved = localStorage.getItem('local_samurai_posts');
+      let posts = saved ? JSON.parse(saved) : [];
+      const assignedId = pbRecord?.id || postData.id || ('local_post_' + Date.now());
+      const postObj = { id: assignedId, ...payload };
+      
+      const existingIdx = posts.findIndex(p => p.id === assignedId || (postData.id && p.id === postData.id));
+      if (existingIdx !== -1) {
+        posts[existingIdx] = postObj;
+      } else {
+        posts.unshift(postObj);
+      }
+      localStorage.setItem('local_samurai_posts', JSON.stringify(posts));
+      return pbRecord || postObj;
     } catch {
-      return null;
+      return pbRecord || { id: 'local_post_' + Date.now(), ...payload };
     }
   }
 
   async deletePost(id) {
     try {
-      return await this.request(`/api/collections/posts/records/${id}`, { method: 'DELETE' });
-    } catch {
-      return null;
-    }
+      if (!id.startsWith('default-post-') && !id.startsWith('local_post_')) {
+        await this.request(`/api/collections/posts/records/${id}`, { method: 'DELETE' });
+      }
+    } catch {}
+
+    try {
+      const saved = localStorage.getItem('local_samurai_posts');
+      if (saved) {
+        let posts = JSON.parse(saved);
+        posts = posts.filter(p => p.id !== id);
+        localStorage.setItem('local_samurai_posts', JSON.stringify(posts));
+      }
+    } catch {}
+
+    return { success: true };
   }
 
   async getMedia() {
     try {
       const res = await this.request('/api/collections/media/records?sort=-created');
       if (res && res.items && res.items.length > 0) {
-        return res.items.map(item => ({
+        const media = res.items.map(item => ({
           id: item.id,
           name: item.name,
-          url: item.file ? `${this.baseUrl}/api/files/media/${item.id}/${item.file}` : item.url,
+          url: item.file ? (item.file.startsWith('http') || item.file.startsWith('photos/') ? item.file : `${this.baseUrl}/api/files/media/${item.id}/${item.file}`) : (item.url || 'photos/orpianesi1.webp'),
           type: item.type || 'image/webp',
           size: item.size || 'WebP',
           created_at: item.created
         }));
+        try { localStorage.setItem('samurai_media_list', JSON.stringify(media)); } catch {}
+        return media;
       }
     } catch {}
 
-    return [
+    try {
+      const saved = localStorage.getItem('samurai_media_list');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {}
+
+    const defaults = [
       { id: 'default-media-1', name: 'Cueva Reigando', url: 'photos/cueva_reigando.webp', type: 'image/webp', size: '229.7 KB' },
       { id: 'default-media-2', name: 'Castillo Sengoku', url: 'photos/castillo_sengoku.webp', type: 'image/webp', size: '159.5 KB' },
       { id: 'default-media-3', name: 'Jardín Zen', url: 'photos/jardin_zen.webp', type: 'image/webp', size: '53.0 KB' },
-      { id: 'default-media-4', name: 'Jorge Orpianesi', url: 'photos/orpianesi1.webp', type: 'image/webp', size: '31.8 KB' }
+      { id: 'default-media-4', name: 'Jorge Orpianesi 1', url: 'photos/orpianesi1.webp', type: 'image/webp', size: '31.8 KB' },
+      { id: 'default-media-5', name: 'Jorge Orpianesi 2', url: 'photos/orpianesi2.webp', type: 'image/webp', size: '48.2 KB' }
     ];
+    try { localStorage.setItem('samurai_media_list', JSON.stringify(defaults)); } catch {}
+    return defaults;
   }
 
   async deleteMedia(id) {
     try {
-      return await this.request(`/api/collections/media/records/${id}`, { method: 'DELETE' });
-    } catch {
-      return null;
-    }
+      if (!id.startsWith('default-media-') && !id.startsWith('local_media_')) {
+        await this.request(`/api/collections/media/records/${id}`, { method: 'DELETE' });
+      }
+    } catch {}
+
+    try {
+      const saved = localStorage.getItem('samurai_media_list');
+      if (saved) {
+        let media = JSON.parse(saved);
+        media = media.filter(m => m.id !== id);
+        localStorage.setItem('samurai_media_list', JSON.stringify(media));
+      }
+    } catch {}
+
+    return { success: true };
   }
 
   async getUsers() {
     try {
       const res = await this.request('/api/collections/users/records');
-      if (res && res.items) return res.items;
+      if (res && res.items && res.items.length > 0) {
+        try { localStorage.setItem('samurai_users_list', JSON.stringify(res.items)); } catch {}
+        return res.items;
+      }
     } catch {}
-    return [{ id: 'admin-usr', email: 'admin@samurai.com', name: 'Jorge Orpianesi Admin', role: 'admin' }];
+
+    try {
+      const saved = localStorage.getItem('samurai_users_list');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {}
+
+    return [{ id: 'admin-usr', email: 'admin@samurai.com', name: 'Jorge Orpianesi Admin', role: 'admin', active: true }];
   }
 
   async saveUser(userData) {
+    let pbRecord = null;
     try {
-      if (userData.id && !userData.id.startsWith('admin-')) {
-        return await this.request(`/api/collections/users/records/${userData.id}`, {
+      if (userData.id && !userData.id.startsWith('admin-') && !userData.id.startsWith('local_usr_')) {
+        pbRecord = await this.request(`/api/collections/users/records/${userData.id}`, {
           method: 'PATCH',
           body: JSON.stringify(userData)
         });
       } else {
-        return await this.request('/api/collections/users/records', {
+        pbRecord = await this.request('/api/collections/users/records', {
           method: 'POST',
           body: JSON.stringify({
             username: userData.name ? userData.name.toLowerCase().replace(/\s+/g, '_') : 'user_' + Date.now(),
@@ -317,12 +399,25 @@ export class PocketBaseAdapter {
           })
         });
       }
+    } catch {}
+
+    try {
+      const saved = localStorage.getItem('samurai_users_list');
+      let users = saved ? JSON.parse(saved) : [{ id: 'admin-usr', email: 'admin@samurai.com', name: 'Jorge Orpianesi Admin', role: 'admin', active: true }];
+      const assignedId = pbRecord?.id || userData.id || ('local_usr_' + Date.now());
+      const userObj = { id: assignedId, ...userData };
+      const idx = users.findIndex(u => u.id === assignedId || (userData.id && u.id === userData.id));
+      if (idx !== -1) users[idx] = userObj;
+      else users.push(userObj);
+      localStorage.setItem('samurai_users_list', JSON.stringify(users));
+      return pbRecord || userObj;
     } catch {
-      return null;
+      return pbRecord || userData;
     }
   }
 
   async uploadMedia(file) {
+    let uploadedUrl = null;
     try {
       const formData = new FormData();
       formData.append('file', file);
@@ -332,10 +427,40 @@ export class PocketBaseAdapter {
       const res = await fetch(`${this.baseUrl}/api/collections/media/records`, { method: 'POST', headers, body: formData });
       if (res.ok) {
         const record = await res.json();
-        return record.file ? `${this.baseUrl}/api/files/media/${record.id}/${record.file}` : 'photos/cueva_reigando.webp';
+        uploadedUrl = record.file ? `${this.baseUrl}/api/files/media/${record.id}/${record.file}` : (record.url || null);
       }
     } catch {}
-    return 'photos/cueva_reigando.webp';
+
+    if (!uploadedUrl) {
+      // Local fallback using file reader
+      try {
+        uploadedUrl = await new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = (e) => resolve(e.target.result);
+          reader.onerror = () => resolve('photos/cueva_reigando.webp');
+          reader.readAsDataURL(file);
+        });
+      } catch {
+        uploadedUrl = 'photos/cueva_reigando.webp';
+      }
+    }
+
+    try {
+      const saved = localStorage.getItem('samurai_media_list');
+      let media = saved ? JSON.parse(saved) : [];
+      const newMediaItem = {
+        id: 'local_media_' + Date.now(),
+        name: file.name || 'Imagen WebP',
+        url: uploadedUrl,
+        type: 'image/webp',
+        size: `${(file.size / 1024).toFixed(1)} KB`,
+        created_at: new Date().toISOString()
+      };
+      media.unshift(newMediaItem);
+      localStorage.setItem('samurai_media_list', JSON.stringify(media));
+    } catch {}
+
+    return uploadedUrl;
   }
 
   async getBackups() {

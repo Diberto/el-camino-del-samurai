@@ -26,6 +26,7 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@e8d36e00b58d7afd33c9936a556f385d1a738e22": "e8d36e0 revert(fuji): restore original exact SVG layer rendering without pixel …" | kind=Commit | source=git | neighbors=[02b0dd5 fix(fuji): fill true peak tip c…, master, 2f73c41 feat(sky): add dual background/…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@e8e6597e0a6406d904d950773c4f095176f2a282": "e8e6597 fix: remove admin panel link from public footer" | kind=Commit | source=git | neighbors=[9db1bb9 docs: update walkthrough for 2-…, master, 9a29bbf fix: update Hero section action…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@eaa4638bf3342a78375f19b74cbc3998b85ba5c5": "eaa4638 fix: samurai detras del texto hero en mobile (z-index)" | kind=Commit | source=git | neighbors=[a6e9380 Initial commit, master, e629f53 feat: petals afectados por vien…] | lang=es
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@f2e9dd0967b61b1274e09023751527320a415bb6": "f2e9dd0 docs: update walkthrough for Hostinger static hosting 404 resolution" | kind=Commit | source=git | neighbors=[cd5a935 fix: resolve static hosting Hos…, master, ff28459 fix: smart environment provider…] | lang=en
@@ -36,36 +37,35 @@ one-sentence description — no prose, no markdown fences.
 - "gpu_config_gpuconfigengine_loadcurrentconfig": ".loadCurrentConfig()" | kind=code-symbol | source=gpu-config.js:L58 | neighbors=[GpuConfigEngine, .constructor(), .mergeWithDefault()] | lang=en
 - "gpu_config_gpuconfigengine_savenewpreset": ".saveNewPreset()" | kind=code-symbol | source=gpu-config.js:L109 | neighbors=[GpuConfigEngine, .importPresetJSON(), .mergeWithDefault()] | lang=en
 - "gpu_panel_updateuifromconfig": "updateUIFromConfig()" | kind=code-symbol | source=gpu-panel.js:L80 | neighbors=[gpu-panel.js, applySkyGradients(), updatePresetDropdown()] | lang=en
+- "modules_opiniones_manager": "opiniones-manager.js" | kind=code-symbol | source=src/admin/modules/opiniones-manager.js:L1 | neighbors=[1f0cf3c feat(opiniones): modulo CRUD en…, initOpinionesManager(), dbService] | lang=en
 - "modules_user_manager": "user-manager.js" | kind=code-symbol | source=src/admin/modules/user-manager.js:L1 | neighbors=[c0749a0 feat: complete Admin Backend, C…, initUserManager(), dbService] | lang=en
-- "public_blog_escapehtml": "escapeHTML()" | kind=code-symbol | source=src/public/blog.js:L36 | neighbors=[blog.js, renderCatalog(), renderSinglePost()] | lang=en
-- "public_blog_rendercatalog": "renderCatalog()" | kind=code-symbol | source=src/public/blog.js:L46 | neighbors=[blog.js, escapeHTML(), renderView()] | lang=en
-- "public_blog_rendersinglepost": "renderSinglePost()" | kind=code-symbol | source=src/public/blog.js:L99 | neighbors=[blog.js, escapeHTML(), renderView()] | lang=en
-- "script_sakurapetal_reset": ".reset()" | kind=code-symbol | source=script.js:L707 | neighbors=[SakuraPetal, .constructor(), .update()] | lang=en
+- "pb_migrations_1700000001_unlock_collections": "1700000001_unlock_collections.js" | kind=code-symbol | source=pb_migrations/1700000001_unlock_collections.js:L1 | neighbors=[1728be7 fix: use raw SQL UPDATE query i…, 1f0cf3c feat(opiniones): modulo CRUD en…, 6fcf262 feat: add 1700000001_unlock_col…] | lang=en
+- "public_blog_escapehtml": "escapeHTML()" | kind=code-symbol | source=src/public/blog.js:L91 | neighbors=[blog.js, renderCatalog(), renderSinglePost()] | lang=en
+- "public_blog_rendercatalog": "renderCatalog()" | kind=code-symbol | source=src/public/blog.js:L101 | neighbors=[blog.js, escapeHTML(), renderView()] | lang=en
+- "public_blog_rendersinglepost": "renderSinglePost()" | kind=code-symbol | source=src/public/blog.js:L154 | neighbors=[blog.js, escapeHTML(), renderView()] | lang=en
+- "script_sakurapetal_reset": ".reset()" | kind=code-symbol | source=script.js:L753 | neighbors=[SakuraPetal, .constructor(), .update()] | lang=en
 - "utils_webp_converter_converttowebp": "convertToWebP()" | kind=code-symbol | source=src/utils/webp-converter.js:L2 | neighbors=[wysiwyg-editor.js, media-manager.js, webp-converter.js] | lang=en
 - "utils_youtube_embed": "youtube-embed.js" | kind=code-symbol | source=src/utils/youtube-embed.js:L1 | neighbors=[a4cbf51 feat: add WebP Canvas image con…, extractYouTubeId(), generateYouTubeEmbedHTML()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_createbackup": ".createBackup()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L349 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_deletebackup": ".deleteBackup()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L370 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_deletemedia": ".deleteMedia()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L284 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_deletepost": ".deletePost()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L253 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_getbackups": ".getBackups()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L340 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_getmedia": ".getMedia()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L261 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_getposts": ".getPosts()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L173 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_createbackup": ".createBackup()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L475 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_deletebackup": ".deleteBackup()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L496 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_deletemedia": ".deleteMedia()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L343 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_deleteopinion": ".deleteOpinion()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L651 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_deletepost": ".deletePost()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L288 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_getbackups": ".getBackups()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L466 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_getmedia": ".getMedia()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L307 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_getopinions": ".getOpinions()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L528 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_getposts": ".getPosts()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L174 | neighbors=[PocketBaseAdapter, .request()] | lang=en
 - "adapters_pocketbase_adapter_pocketbaseadapter_getsettings": ".getSettings()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L103 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_getusers": ".getUsers()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L292 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_getusers": ".getUsers()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L362 | neighbors=[PocketBaseAdapter, .request()] | lang=en
 - "adapters_pocketbase_adapter_pocketbaseadapter_login": ".login()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L30 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_restorebackup": ".restoreBackup()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L360 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_savepost": ".savePost()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L225 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_savesettings": ".saveSettings()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L144 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_saveuser": ".saveUser()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L300 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "admin_admin_checkauth": "checkAuth()" | kind=code-symbol | source=src/admin/admin.js:L16 | neighbors=[admin.js, loadModules()] | lang=en
-- "admin_admin_loadmodules": "loadModules()" | kind=code-symbol | source=src/admin/admin.js:L61 | neighbors=[admin.js, checkAuth()] | lang=en
-- "components_wysiwyg_editor_wysiwygeditor_constructor": ".constructor()" | kind=code-symbol | source=src/admin/components/wysiwyg-editor.js:L6 | neighbors=[WysiwygEditor, .render()] | lang=en
-- "components_wysiwyg_editor_wysiwygeditor_render": ".render()" | kind=code-symbol | source=src/admin/components/wysiwyg-editor.js:L12 | neighbors=[WysiwygEditor, .constructor()] | lang=en
-- "gpu_config_default_preset": "DEFAULT_PRESET" | kind=code-symbol | source=gpu-config.js:L5 | neighbors=[gpu-config.js, gpu-panel.js] | lang=en
-- "gpu_config_gpuconfigengine_importpresetjson": ".importPresetJSON()" | kind=code-symbol | source=gpu-config.js:L137 | neighbors=[GpuConfigEngine, .saveNewPreset()] | lang=en
-- "gpu_config_gpuconfigengine_loadpresets": ".loadPresets()" | kind=code-symbol | source=gpu-config.js:L84 | neighbors=[GpuConfigEngine, .constructor()] | lang=en
-- "gpu_config_gpuconfigengine_savecurrentconfig": ".saveCurrentConfig()" | kind=code-symbol | source=gpu-config.js:L97 | neighbors=[GpuConfigEngine, .mergeWithDefault()] | lang=en
-- "gpu_panel_applyskygradients": "applySkyGradients()" | kind=code-symbol | source=gpu-panel.js:L127 | neighbors=[gpu-panel.js, updateUIFromConfig()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_restorebackup": ".restoreBackup()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L486 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_saveopinion": ".saveOpinion()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L607 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_savepost": ".savePost()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L242 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_savesettings": ".saveSettings()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L145 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_saveuser": ".saveUser()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L382 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "admin_admin_checkauth": "checkAuth()" | kind=code-symbol | source=src/admin/admin.js:L17 | neighbors=[admin.js, loadModules()] | lang=en
+- "admin_admin_loadmodules": "loadModules()" | kind=code-symbol | source=src/admin/admin.js:L62 | neighbors=[admin.js, checkAuth()] | lang=en
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@40f7e13e4933a212508c2666e48191350fcec3ad": "40f7e13 fix(ui): suavizado y fusion de bordes y niebla inferior en la seccion h…" | kind=Commit | source=git | neighbors=[1f0cf3c feat(opiniones): modulo CRUD en…, master] | lang=es
 
 ## Instructions
 

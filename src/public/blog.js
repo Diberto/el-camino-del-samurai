@@ -7,6 +7,59 @@ document.addEventListener('DOMContentLoaded', async () => {
     .filter(p => p.status === 'published')
     .sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
 
+  const DEFAULT_TITLE = 'Blog de Artículos | La Ruta del Samurái';
+  const DEFAULT_DESC = 'Artículos, crónicas y reflexiones sobre artes marciales, historia feudal japonesa y la filosofía Bushido por Jorge Orpianesi.';
+
+  function updateDynamicSEO(post) {
+    let schemaScript = document.getElementById('dynamic-blog-jsonld');
+    if (post) {
+      if (!schemaScript) {
+        schemaScript = document.createElement('script');
+        schemaScript.id = 'dynamic-blog-jsonld';
+        schemaScript.type = 'application/ld+json';
+        document.head.appendChild(schemaScript);
+      }
+      document.title = `${post.title} | La Ruta del Samurái`;
+      const metaDesc = document.querySelector('meta[name="description"]');
+      const excerptText = post.excerpt || (post.content ? post.content.replace(/<[^>]*>?/gm, '').substring(0, 150) + '...' : post.title);
+      if (metaDesc) metaDesc.setAttribute('content', excerptText);
+
+      const origin = typeof window !== 'undefined' ? window.location.origin : 'https://larutadelsamurai.com';
+      const postUrl = `${origin}/blog.html?post=${encodeURIComponent(post.id || post.slug)}`;
+      const schemaData = {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        'mainEntityOfPage': {
+          '@type': 'WebPage',
+          '@id': postUrl
+        },
+        'headline': post.title,
+        'description': excerptText,
+        'image': post.cover_image || `${origin}/assets/logo_typography_light.webp`,
+        'datePublished': post.created_at || new Date().toISOString(),
+        'dateModified': post.updated_at || post.created_at || new Date().toISOString(),
+        'author': {
+          '@type': 'Person',
+          'name': post.author || 'Jorge Orpianesi'
+        },
+        'publisher': {
+          '@type': 'Organization',
+          'name': 'La Ruta del Samurái',
+          'logo': {
+            '@type': 'ImageObject',
+            'url': `${origin}/assets/logo_typography_light.webp`
+          }
+        }
+      };
+      schemaScript.textContent = JSON.stringify(schemaData, null, 2);
+    } else {
+      document.title = DEFAULT_TITLE;
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) metaDesc.setAttribute('content', DEFAULT_DESC);
+      if (schemaScript) schemaScript.remove();
+    }
+  }
+
   function getTargetPostId() {
     const params = new URLSearchParams(window.location.search);
     const postParam = params.get('post');
@@ -25,11 +78,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         (p.slug && String(p.slug).toLowerCase() === String(postId).toLowerCase())
       );
       if (selectedPost) {
+        updateDynamicSEO(selectedPost);
         renderSinglePost(selectedPost);
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
     }
+    updateDynamicSEO(null);
     renderCatalog();
   }
 

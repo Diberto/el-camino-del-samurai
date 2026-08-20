@@ -3534,3 +3534,34 @@ body.theme-night .hero-overlay-bottom {
     transform: translateY(-3px);
     box-shadow: 0 4px 12px var(--accent-gold-glow);
 }
+
+/* ==========================================================================
+   ACCESSIBILITY: PREFERS REDUCED MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    #sakura-canvas,
+    #starfield-canvas,
+    #clouds-bg-canvas,
+    #clouds-fg-canvas {
+        opacity: 0.3 !important;
+        pointer-events: none !important;
+    }
+
+    .parallax-layer {
+        transform: none !important;
+    }
+
+    .book-3d-card {
+        transition: transform 0.2s ease !important;
+    }
+}
+

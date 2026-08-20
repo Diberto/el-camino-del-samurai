@@ -17,14 +17,26 @@ import { dbService } from './src/services/db-service.js';
 import { syncService } from './src/services/sync-service.js';
 
 let isAppTabVisible = !document.hidden;
+let isHeroVisible = true;
+const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function escapeHTML(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
 
 document.addEventListener('visibilitychange', () => {
     const wasHidden = !isAppTabVisible;
     isAppTabVisible = !document.hidden;
     if (wasHidden && isAppTabVisible) {
-        if (typeof animateVolumetricClouds === 'function') requestAnimationFrame(animateVolumetricClouds);
-        if (typeof animateStars === 'function') requestAnimationFrame(animateStars);
-        if (typeof animateParallax === 'function') requestAnimationFrame(animateParallax);
+        if (typeof animateVolumetricClouds === 'function' && isHeroVisible) requestAnimationFrame(animateVolumetricClouds);
+        if (typeof animateStars === 'function' && isHeroVisible) requestAnimationFrame(animateStars);
+        if (typeof animateParallax === 'function' && isHeroVisible) requestAnimationFrame(animateParallax);
         if (typeof animatePetals === 'function') requestAnimationFrame(animatePetals);
         if (typeof animate3DBook === 'function') requestAnimationFrame(animate3DBook);
     }
@@ -86,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (menuToggle && navMenu) {
                             menuToggle.classList.remove('active');
                             navMenu.classList.remove('active');
+                            menuToggle.setAttribute('aria-expanded', 'false');
                         }
                     });
                 });
@@ -370,7 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            if (isAppTabVisible) {
+            if (isAppTabVisible && isHeroVisible && !prefersReducedMotion) {
                 requestAnimationFrame(animateVolumetricClouds);
             }
         }
@@ -488,7 +501,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             
-            if (isAppTabVisible) {
+            if (isAppTabVisible && isHeroVisible && !prefersReducedMotion) {
                 requestAnimationFrame(animateStars);
             }
         }
@@ -498,7 +511,22 @@ document.addEventListener('DOMContentLoaded', () => {
     
     initStarfield();
 
-
+    // Hero Section IntersectionObserver to save GPU/CPU cycles when scrolled out
+    const heroSectionEl = document.getElementById('inicio');
+    if (heroSectionEl && 'IntersectionObserver' in window) {
+        const heroObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const wasVisible = isHeroVisible;
+                isHeroVisible = entry.isIntersecting;
+                if (!wasVisible && isHeroVisible && isAppTabVisible && !prefersReducedMotion) {
+                    requestAnimationFrame(animateVolumetricClouds);
+                    requestAnimationFrame(animateStars);
+                    requestAnimationFrame(animateParallax);
+                }
+            });
+        }, { threshold: 0.05 });
+        heroObserver.observe(heroSectionEl);
+    }
 
     // 1. MOBILE MENU TOGGLE
     const menuToggle = document.getElementById('menu-toggle');
@@ -507,8 +535,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (menuToggle && navMenu) {
         menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('active');
+            const isActive = menuToggle.classList.toggle('active');
             navMenu.classList.toggle('active');
+            menuToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
         });
 
         // Close menu when a link is clicked
@@ -516,6 +545,7 @@ document.addEventListener('DOMContentLoaded', () => {
             link.addEventListener('click', () => {
                 menuToggle.classList.remove('active');
                 navMenu.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
             });
         });
     }
@@ -642,7 +672,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (layerText) layerText.style.transform = `translate3d(${mTextX}px, ${sTextY + mTextY}px, 0)`;
         }
 
-        requestAnimationFrame(animateParallax);
+        if (isAppTabVisible && isHeroVisible && !prefersReducedMotion) {
+            requestAnimationFrame(animateParallax);
+        }
     }
 
     animateParallax();
@@ -1091,12 +1123,33 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('mouseup', onDragEnd);
         window.addEventListener('touchend', onDragEnd);
 
-        // 4. Slow Idle Animation Loop
+        // 4. Keyboard accessibility navigation for 3D book
+        const bookContainer = document.getElementById('book-3d-container');
+        if (bookContainer) {
+            bookContainer.setAttribute('tabindex', '0');
+            bookContainer.setAttribute('role', 'region');
+            bookContainer.setAttribute('aria-label', 'Visor interactivo de libros en 3D. Usa flechas para rotar y barra espaciadora para girar.');
+            bookContainer.addEventListener('keydown', (e) => {
+                if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Space', 'Enter'].includes(e.code) || ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', ' '].includes(e.key)) {
+                    e.preventDefault();
+                    if (e.key === 'ArrowLeft') targetRotY -= 15;
+                    if (e.key === 'ArrowRight') targetRotY += 15;
+                    if (e.key === 'ArrowUp') targetRotX = Math.min(35, targetRotX + 10);
+                    if (e.key === 'ArrowDown') targetRotX = Math.max(-35, targetRotX - 10);
+                    if (e.key === ' ' || e.key === 'Enter') {
+                        if (btnFlipSingle) btnFlipSingle.click();
+                    }
+                    lastInteractionTime = Date.now();
+                }
+            });
+        }
+
+        // 5. Slow Idle Animation Loop
         function animate3DBook() {
             const now = Date.now();
             const timeSinceInteraction = now - lastInteractionTime;
 
-            if (!isDragging && timeSinceInteraction > 1200) {
+            if (!isDragging && timeSinceInteraction > 1200 && !prefersReducedMotion) {
                 idleAngle += 0.015;
                 const swayY = Math.sin(idleAngle) * 8;
                 const swayX = Math.cos(idleAngle * 0.7) * 3;
@@ -1272,21 +1325,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 article.className = 'testimonial-card glass-card';
                 article.setAttribute('data-id', item.id);
 
-                const avatarSrc = item.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=d97706&color=fff`;
+                const safeName = escapeHTML(item.name || 'Lector Anónimo');
+                const safeRole = escapeHTML(item.role || 'Lector');
+                const safeBody = escapeHTML(item.body || '');
+                const safeAvatar = item.avatar ? escapeHTML(item.avatar) : `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name || 'Lector')}&background=d97706&color=fff`;
 
                 article.innerHTML = `
                     <div class="testimonial-header">
-                        <img src="${avatarSrc}" alt="Foto de ${item.name}" class="testimonial-avatar" width="56" height="56" loading="lazy" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=d97706&color=fff'">
+                        <img src="${safeAvatar}" alt="Foto de ${safeName}" class="testimonial-avatar" width="56" height="56" loading="lazy" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(item.name || 'Lector')}&background=d97706&color=fff'">
                         <div class="testimonial-info">
-                            <h3 class="testimonial-name">${item.name}</h3>
-                            <p class="testimonial-role">${item.role}</p>
-                            <div class="testimonial-stars" aria-label="Calificación ${item.rating} de 5 estrellas">
+                            <h3 class="testimonial-name">${safeName}</h3>
+                            <p class="testimonial-role">${safeRole}</p>
+                            <div class="testimonial-stars" aria-label="Calificación ${escapeHTML(item.rating)} de 5 estrellas">
                                 ${renderStarsHTML(item.rating)}
                             </div>
                         </div>
                     </div>
                     <blockquote class="testimonial-body">
-                        "${item.body}"
+                        "${safeBody}"
                     </blockquote>
                     <div class="testimonial-footer">
                         ${item.verified ? '<span class="verified-badge">✓ Compra Verificada</span>' : '<span></span>'}
