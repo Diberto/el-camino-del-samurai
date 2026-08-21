@@ -1,4 +1,4 @@
-# Node Description Batch 5 of 9
+# Node Description Batch 5 of 10
 
 Graphify is running in assistant/skill mode (no API key). You are the host
 assistant (Claude Code / Codex / Gemini CLI). Read the prompt below and write
@@ -23,6 +23,10 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@6cb0334d31de0c1de4f27a143e4338742849fdab": "6cb0334 docs: update walkthrough documentation for unified samurai admin and re…" | kind=Commit | source=git | neighbors=[48d0413 feat: align admin shell with sa…, master, 2fcb02d fix: map admin section toggles …] | lang=en
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@7179ed10f6596ce90f8ab7c0608a7696f2c96002": "7179ed1 feat(css): add styles for Day/Night skies, clouds drifting, and theme t…" | kind=Commit | source=git | neighbors=[master, e123a8e feat(js): add Day/Night theme m…, c8d7182 feat(html): add sky container m…] | lang=en
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@73225bf46de61d298aae6f4d4826ccdf6cd7aad6": "73225bf docs: update plan for Blog catalog and reader views" | kind=Commit | source=git | neighbors=[5d50db6 docs: update design spec for Bl…, master, 102b502 feat: add dynamic top 3 posts w…] | lang=en
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@7710994b45eb195575451aa3efd49a96105e3434": "7710994 docs: update plan for Strapi Headless CMS integration" | kind=Commit | source=git | neighbors=[master, 7af96be feat: integrate Strapi Headless…, e4a2547 docs: update design spec for St…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@7a6f4db3564b7a9e04bbbeed0d5c1a9a3a5fdd04": "7a6f4db docs: update walkthrough for final 400 Bad Request resolution" | kind=Commit | source=git | neighbors=[40ba44b fix: eliminate POST auto-seedin…, master, 8a1ce7e fix: sanitize savePost payloads…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@7e6eae11b0815b2656b033f4fdfea482b1f98946": "7e6eae1 assets: add Logo.webp" | kind=Commit | source=git | neighbors=[master, c642b72 fix(clouds): restore missing cl…, e46bc8f fix(layout): wrap hero parallax…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@7e7ab65a86ce20af655e96ff470b96da802520ce": "7e7ab65 docs: update design spec for unified samurai admin and real-time synchr…" | kind=Commit | source=git | neighbors=[084f7f6 docs: add walkthrough documenta…, master, 1549879 docs: update implementation pla…] | lang=en
@@ -59,10 +63,6 @@ one-sentence description — no prose, no markdown fences.
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@d7168e89998664540262286ae27dbc261dcee45a": "d7168e8 feat(design): implement white sticky navbar in day mode with bottom tra…" | kind=Commit | source=git | neighbors=[785f410 fix(logo): maintain white typog…, master, 52462a2 style(navbar): transition stick…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@dc40c3bb455e620e79e4c4821a3a389e2eb084c9": "dc40c3b docs: update walkthrough for final 404 elimination fix" | kind=Commit | source=git | neighbors=[17c5296 fix: eliminate 404 network fetc…, master, b4f93cc fix: bind server.js to 0.0.0.0 …] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@dcd02583257f018d08c4ad297c18c8a0e0157c0a": "dcd0258 docs: update walkthrough for public photos static path fix" | kind=Commit | source=git | neighbors=[5b744f6 fix: move blog and media photos…, master, 5d50db6 docs: update design spec for Bl…] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@dcfdfe401e973845c8bef47efa30db098f9c803e": "dcfdfe4 docs: update walkthrough for scrollspy and menu button fixes" | kind=Commit | source=git | neighbors=[94208da fix: auto-sync section toggles …, master, 8334dc5 feat: add Samurai Blog section …] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@e127af57f29b721cea9b732c0ee9a9fe1d021025": "e127af5 docs: add implementation plan for admin backend, cms and user management" | kind=Commit | source=git | neighbors=[16d9a6e docs: add design spec for admin…, master, 9b5d761 feat: add DatabaseService abstr…] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@e4a2547da7c672097af04e04aa35a50d7e84d9f9": "e4a2547 docs: update design spec for Strapi Headless CMS integration" | kind=Commit | source=git | neighbors=[1c33ae2 docs: update walkthrough for Bl…, master, 7710994 docs: update plan for Strapi He…] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@e7c6b2fb9c14cee3399ca07296a2372fe20b12d0": "e7c6b2f docs: update walkthrough for 502 Bad Gateway resolution" | kind=Commit | source=git | neighbors=[d46f078 fix: resolve 502 Bad Gateway by…, master, 165b44d fix: make entire blog catalog c…] | lang=en
 
 ## Instructions
 

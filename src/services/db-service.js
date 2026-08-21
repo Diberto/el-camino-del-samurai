@@ -18,6 +18,7 @@ class DatabaseService {
   savePost(p) { return this.adapter.savePost(p); }
   deletePost(id) { return this.adapter.deletePost(id); }
   getMedia() { return this.adapter.getMedia(); }
+  updateMedia(id, d) { return this.adapter.updateMedia(id, d); }
   deleteMedia(id) { return this.adapter.deleteMedia(id); }
   getUsers() { return this.adapter.getUsers(); }
   saveUser(u) { return this.adapter.saveUser(u); }
@@ -31,6 +32,7 @@ class DatabaseService {
   deleteBackup(k) { return this.adapter.deleteBackup(k); }
   uploadBackup(f) { return this.adapter.uploadBackup(f); }
   getDownloadBackupUrl(k) { return this.adapter.getDownloadBackupUrl(k); }
+  getSystemDiagnostics() { return this.adapter.getSystemDiagnostics(); }
 }
 
 export const dbService = new DatabaseService();

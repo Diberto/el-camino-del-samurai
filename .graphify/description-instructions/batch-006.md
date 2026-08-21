@@ -1,4 +1,4 @@
-# Node Description Batch 7 of 9
+# Node Description Batch 7 of 10
 
 Graphify is running in assistant/skill mode (no API key). You are the host
 assistant (Claude Code / Codex / Gemini CLI). Read the prompt below and write
@@ -17,6 +17,10 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "adapters_pocketbase_adapter_pocketbaseadapter_saveuser": ".saveUser()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L458 | neighbors=[PocketBaseAdapter, .request()]
+- "adapters_pocketbase_adapter_pocketbaseadapter_updatemedia": ".updateMedia()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L345 | neighbors=[PocketBaseAdapter, .request()]
+- "admin_admin_checkauth": "checkAuth()" | kind=code-symbol | source=src/admin/admin.js:L18 | neighbors=[admin.js, loadModules()]
+- "admin_admin_loadmodules": "loadModules()" | kind=code-symbol | source=src/admin/admin.js:L63 | neighbors=[admin.js, checkAuth()]
 - "components_wysiwyg_editor_wysiwygeditor_constructor": ".constructor()" | kind=code-symbol | source=src/admin/components/wysiwyg-editor.js:L6 | neighbors=[WysiwygEditor, .render()]
 - "components_wysiwyg_editor_wysiwygeditor_render": ".render()" | kind=code-symbol | source=src/admin/components/wysiwyg-editor.js:L12 | neighbors=[WysiwygEditor, .constructor()]
 - "gpu_config_default_preset": "DEFAULT_PRESET" | kind=code-symbol | source=gpu-config.js:L5 | neighbors=[gpu-config.js, gpu-panel.js]
@@ -34,29 +38,25 @@ one-sentence description — no prose, no markdown fences.
 - "modules_user_manager_initusermanager": "initUserManager()" | kind=code-symbol | source=src/admin/modules/user-manager.js:L3 | neighbors=[admin.js, user-manager.js]
 - "public_blog_gettargetpostid": "getTargetPostId()" | kind=code-symbol | source=src/public/blog.js:L63 | neighbors=[blog.js, renderView()]
 - "public_blog_updatedynamicseo": "updateDynamicSEO()" | kind=code-symbol | source=src/public/blog.js:L13 | neighbors=[blog.js, renderView()]
-- "script_sakurapetal_constructor": ".constructor()" | kind=code-symbol | source=script.js:L748 | neighbors=[SakuraPetal, .reset()]
-- "script_sakurapetal_update": ".update()" | kind=code-symbol | source=script.js:L773 | neighbors=[SakuraPetal, .reset()]
+- "script_sakurapetal_constructor": ".constructor()" | kind=code-symbol | source=script.js:L799 | neighbors=[SakuraPetal, .reset()]
+- "script_sakurapetal_update": ".update()" | kind=code-symbol | source=script.js:L824 | neighbors=[SakuraPetal, .reset()]
 - "scripts_start_pocketbase_downloadfile": "downloadFile()" | kind=code-symbol | source=scripts/start-pocketbase.js:L37 | neighbors=[start-pocketbase.js, ensureBinary()]
 - "scripts_start_pocketbase_getdownloadurl": "getDownloadUrl()" | kind=code-symbol | source=scripts/start-pocketbase.js:L20 | neighbors=[start-pocketbase.js, ensureBinary()]
 - "scripts_start_pocketbase_main": "main()" | kind=code-symbol | source=scripts/start-pocketbase.js:L113 | neighbors=[start-pocketbase.js, ensureBinary()]
+- "server_checkpocketbasehealth": "checkPocketBaseHealth()" | kind=code-symbol | source=server.js:L659 | neighbors=[server.js, serveDiagnosticsHealth()]
+- "server_fetchcollectioncount": "fetchCollectionCount()" | kind=code-symbol | source=server.js:L631 | neighbors=[server.js, serveDiagnosticsHealth()]
+- "server_getdirectorysize": "getDirectorySize()" | kind=code-symbol | source=server.js:L607 | neighbors=[server.js, serveDiagnosticsHealth()]
 - "services_sync_service": "sync-service.js" | kind=code-symbol | source=src/services/sync-service.js:L1 | neighbors=[48d0413 feat: align admin shell with sa…, SyncService]
 - "utils_webp_converter": "webp-converter.js" | kind=code-symbol | source=src/utils/webp-converter.js:L1 | neighbors=[a4cbf51 feat: add WebP Canvas image con…, convertToWebP()]
 - "utils_youtube_embed_extractyoutubeid": "extractYouTubeId()" | kind=code-symbol | source=src/utils/youtube-embed.js:L2 | neighbors=[wysiwyg-editor.js, youtube-embed.js]
 - "utils_youtube_embed_generateyoutubeembedhtml": "generateYouTubeEmbedHTML()" | kind=code-symbol | source=src/utils/youtube-embed.js:L12 | neighbors=[wysiwyg-editor.js, youtube-embed.js]
 - "adapters_pocketbase_adapter_pocketbaseadapter_constructor": ".constructor()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L3 | neighbors=[PocketBaseAdapter]
 - "adapters_pocketbase_adapter_pocketbaseadapter_getcurrentuser": ".getCurrentUser()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L96 | neighbors=[PocketBaseAdapter]
-- "adapters_pocketbase_adapter_pocketbaseadapter_getdownloadbackupurl": ".getDownloadBackupUrl()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L523 | neighbors=[PocketBaseAdapter]
+- "adapters_pocketbase_adapter_pocketbaseadapter_getdownloadbackupurl": ".getDownloadBackupUrl()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L599 | neighbors=[PocketBaseAdapter]
 - "adapters_pocketbase_adapter_pocketbaseadapter_logout": ".logout()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L89 | neighbors=[PocketBaseAdapter]
-- "adapters_pocketbase_adapter_pocketbaseadapter_uploadbackup": ".uploadBackup()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L506 | neighbors=[PocketBaseAdapter]
-- "adapters_pocketbase_adapter_pocketbaseadapter_uploadmedia": ".uploadMedia()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L419 | neighbors=[PocketBaseAdapter]
+- "adapters_pocketbase_adapter_pocketbaseadapter_uploadbackup": ".uploadBackup()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L582 | neighbors=[PocketBaseAdapter]
+- "adapters_pocketbase_adapter_pocketbaseadapter_uploadmedia": ".uploadMedia()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L495 | neighbors=[PocketBaseAdapter]
 - "components_wysiwyg_editor_wysiwygeditor_getcontent": ".getContent()" | kind=code-symbol | source=src/admin/components/wysiwyg-editor.js:L185 | neighbors=[WysiwygEditor]
-- "components_wysiwyg_editor_wysiwygeditor_handleimagefile": ".handleImageFile()" | kind=code-symbol | source=src/admin/components/wysiwyg-editor.js:L174 | neighbors=[WysiwygEditor]
-- "gpu_config_gpuconfigengine_exportpresetjson": ".exportPresetJSON()" | kind=code-symbol | source=gpu-config.js:L133 | neighbors=[GpuConfigEngine]
-- "gpu_config_gpuconfigengine_resettodefault": ".resetToDefault()" | kind=code-symbol | source=gpu-config.js:L124 | neighbors=[GpuConfigEngine]
-- "gpu_panel_initliveclouds": "initLiveClouds()" | kind=code-symbol | source=gpu-panel.js:L298 | neighbors=[gpu-panel.js]
-- "gpu_panel_initlivesakura": "initLiveSakura()" | kind=code-symbol | source=gpu-panel.js:L443 | neighbors=[gpu-panel.js]
-- "gpu_panel_initlivestars": "initLiveStars()" | kind=code-symbol | source=gpu-panel.js:L395 | neighbors=[gpu-panel.js]
-- "gpu_panel_renderliveclouds": "renderLiveClouds()" | kind=code-symbol | source=gpu-panel.js:L343 | neighbors=[gpu-panel.js]
 
 ## Instructions
 

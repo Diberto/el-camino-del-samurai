@@ -6,6 +6,7 @@ import { initOpinionesManager } from './modules/opiniones-manager.js';
 import { initUserManager } from './modules/user-manager.js';
 import { initMediaManager } from './modules/media-manager.js';
 import { initBackupManager } from './modules/backup-manager.js';
+import { initDiagnosticsManager } from './modules/diagnostics-manager.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const loginModal = document.getElementById('login-modal');
@@ -81,6 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const backupsEl = document.getElementById('tab-backups');
       if (backupsEl) await initBackupManager(backupsEl).catch(e => console.warn('Error loading backup manager:', e));
+
+      const diagnosticsEl = document.getElementById('tab-diagnostics');
+      if (diagnosticsEl) await initDiagnosticsManager(diagnosticsEl).catch(e => console.warn('Error loading diagnostics manager:', e));
     } catch (err) {
       console.warn('Error in loadModules:', err);
     }

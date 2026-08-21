@@ -44,6 +44,25 @@ const SECURITY_HEADERS = {
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=()'
 };
 
+// System Event Logs Buffer (In-memory, last 100 entries)
+const SYSTEM_LOGS = [
+  { timestamp: new Date().toISOString(), level: 'INFO', message: 'Servidor Node.js inicializado correctamente.' },
+  { timestamp: new Date().toISOString(), level: 'INFO', message: 'Servicio PocketBase levantado en puerto ' + PB_PORT }
+];
+
+function addSystemLog(level, message, details = null) {
+  const entry = {
+    timestamp: new Date().toISOString(),
+    level: level.toUpperCase(),
+    message,
+    details
+  };
+  SYSTEM_LOGS.push(entry);
+  if (SYSTEM_LOGS.length > 100) SYSTEM_LOGS.shift();
+  if (level === 'ERROR') console.error(`[SYSTEM ERROR] ${message}`, details || '');
+  else if (level === 'WARN') console.warn(`[SYSTEM WARN] ${message}`, details || '');
+}
+
 // 2. Main Node.js Web & Proxy Server
 const server = http.createServer((req, res) => {
   const fullUrl = req.url || '/';
@@ -52,6 +71,17 @@ const server = http.createServer((req, res) => {
   // Dynamic Sitemap Generator (/sitemap.xml)
   if (pathname === '/sitemap.xml') {
     return serveDynamicSitemap(req, res);
+  }
+
+  // System Diagnostics & Health Check (/api/diagnostics/health)
+  if (pathname === '/api/diagnostics/health') {
+    return verifyAuthToken(req, (isAuthenticated) => {
+      if (!isAuthenticated) {
+        res.writeHead(401, { 'Content-Type': 'application/json', ...SECURITY_HEADERS });
+        return res.end(JSON.stringify({ error: 'No autorizado para acceder a diagnósticos' }));
+      }
+      return serveDiagnosticsHealth(req, res);
+    });
   }
 
   // Native Backup API Handler for /api/backups (Protected with Auth & Path Sanitization)
@@ -573,5 +603,163 @@ function verifyAuthToken(req, callback) {
 
   pbReq.end();
 }
+
+function getDirectorySize(dirPath) {
+  let size = 0;
+  let count = 0;
+  if (!fs.existsSync(dirPath)) return { size: 0, count: 0 };
+  try {
+    const files = fs.readdirSync(dirPath, { withFileTypes: true });
+    for (const f of files) {
+      const full = path.join(dirPath, f.name);
+      if (f.isDirectory()) {
+        const sub = getDirectorySize(full);
+        size += sub.size;
+        count += sub.count;
+      } else if (f.isFile()) {
+        try {
+          const stat = fs.statSync(full);
+          size += stat.size;
+          count++;
+        } catch {}
+      }
+    }
+  } catch {}
+  return { size, count };
+}
+
+function fetchCollectionCount(collectionName) {
+  return new Promise((resolve) => {
+    const pbReq = http.request({
+      hostname: '127.0.0.1',
+      port: PB_PORT,
+      path: `/api/collections/${collectionName}/records?perPage=1`,
+      method: 'GET'
+    }, (res) => {
+      let body = '';
+      res.on('data', chunk => body += chunk);
+      res.on('end', () => {
+        try {
+          const data = JSON.parse(body);
+          resolve(data.totalItems || 0);
+        } catch {
+          resolve(0);
+        }
+      });
+    });
+    pbReq.on('error', () => resolve(0));
+    pbReq.setTimeout(2000, () => {
+      try { pbReq.destroy(); } catch {}
+      resolve(0);
+    });
+    pbReq.end();
+  });
+}
+
+function checkPocketBaseHealth() {
+  return new Promise((resolve) => {
+    const startTime = Date.now();
+    const pbReq = http.request({
+      hostname: '127.0.0.1',
+      port: PB_PORT,
+      path: '/api/health',
+      method: 'GET'
+    }, (res) => {
+      const latency = Date.now() - startTime;
+      resolve({
+        online: res.statusCode === 200,
+        statusCode: res.statusCode,
+        latencyMs: latency
+      });
+    });
+    pbReq.on('error', (err) => {
+      resolve({
+        online: false,
+        statusCode: 0,
+        latencyMs: -1,
+        error: err.message
+      });
+    });
+    pbReq.setTimeout(2500, () => {
+      try { pbReq.destroy(); } catch {}
+      resolve({
+        online: false,
+        statusCode: 504,
+        latencyMs: -1,
+        error: 'Timeout al contactar PocketBase'
+      });
+    });
+    pbReq.end();
+  });
+}
+
+async function serveDiagnosticsHealth(req, res) {
+  const pbHealth = await checkPocketBaseHealth();
+  const memory = process.memoryUsage();
+  
+  const pbDataDir = path.join(__dirname, 'pb_data');
+  const dbFile = path.join(pbDataDir, 'data.db');
+  let dbSize = 0;
+  try {
+    if (fs.existsSync(dbFile)) {
+      dbSize = fs.statSync(dbFile).size;
+    }
+  } catch {}
+
+  const storageStats = getDirectorySize(path.join(pbDataDir, 'storage'));
+  const backupsStats = getDirectorySize(path.join(pbDataDir, 'backups'));
+
+  const [postsCount, opinionsCount, mediaCount, usersCount] = await Promise.all([
+    fetchCollectionCount('posts'),
+    fetchCollectionCount('opinions'),
+    fetchCollectionCount('media'),
+    fetchCollectionCount('users')
+  ]);
+
+  const diagnosticsData = {
+    timestamp: new Date().toISOString(),
+    status: pbHealth.online ? 'HEALTHY' : 'DEGRADED',
+    system: {
+      nodeVersion: process.version,
+      platform: process.platform,
+      arch: process.arch,
+      uptimeSeconds: Math.floor(process.uptime()),
+      memory: {
+        rssMb: (memory.rss / 1024 / 1024).toFixed(2),
+        heapUsedMb: (memory.heapUsed / 1024 / 1024).toFixed(2),
+        heapTotalMb: (memory.heapTotal / 1024 / 1024).toFixed(2)
+      }
+    },
+    pocketbase: {
+      port: PB_PORT,
+      status: pbHealth.online ? 'ONLINE' : 'OFFLINE',
+      latencyMs: pbHealth.latencyMs,
+      statusCode: pbHealth.statusCode
+    },
+    storage: {
+      databaseSizeBytes: dbSize,
+      databaseSizeFormatted: (dbSize / 1024).toFixed(1) + ' KB',
+      mediaStorageSizeBytes: storageStats.size,
+      mediaStorageCount: storageStats.count,
+      backupsCount: backupsStats.count,
+      backupsTotalSizeBytes: backupsStats.size
+    },
+    collections: {
+      posts: postsCount,
+      opinions: opinionsCount,
+      media: mediaCount,
+      users: usersCount
+    },
+    logs: SYSTEM_LOGS.slice().reverse()
+  };
+
+  res.writeHead(200, {
+    'Content-Type': 'application/json',
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+    ...SECURITY_HEADERS
+  });
+  res.end(JSON.stringify(diagnosticsData, null, 2));
+}
+
 
 

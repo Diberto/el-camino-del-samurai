@@ -310,7 +310,9 @@ export class PocketBaseAdapter {
       if (res && res.items && res.items.length > 0) {
         const media = res.items.map(item => ({
           id: item.id,
-          name: item.name,
+          name: item.name || 'Imagen WebP',
+          alt: item.alt || item.name || 'Fotografía de El Camino del Samurai',
+          caption: item.caption || '',
           url: item.file ? (item.file.startsWith('http') || item.file.startsWith('photos/') ? item.file : `${this.baseUrl}/api/files/media/${item.id}/${item.file}`) : (item.url || 'photos/orpianesi1.webp'),
           type: item.type || 'image/webp',
           size: item.size || 'WebP',
@@ -330,14 +332,43 @@ export class PocketBaseAdapter {
     } catch {}
 
     const defaults = [
-      { id: 'default-media-1', name: 'Cueva Reigando', url: 'photos/cueva_reigando.webp', type: 'image/webp', size: '229.7 KB' },
-      { id: 'default-media-2', name: 'Castillo Sengoku', url: 'photos/castillo_sengoku.webp', type: 'image/webp', size: '159.5 KB' },
-      { id: 'default-media-3', name: 'Jardín Zen', url: 'photos/jardin_zen.webp', type: 'image/webp', size: '53.0 KB' },
-      { id: 'default-media-4', name: 'Jorge Orpianesi 1', url: 'photos/orpianesi1.webp', type: 'image/webp', size: '31.8 KB' },
-      { id: 'default-media-5', name: 'Jorge Orpianesi 2', url: 'photos/orpianesi2.webp', type: 'image/webp', size: '48.2 KB' }
+      { id: 'default-media-1', name: 'Cueva Reigando', alt: 'Entrada a la mítica Cueva Reigando donde meditó Miyamoto Musashi', caption: 'Lugar sagrado de retiro y redacción de El Libro de los Cinco Anillos.', url: 'photos/cueva_reigando.webp', type: 'image/webp', size: '229.7 KB' },
+      { id: 'default-media-2', name: 'Castillo Sengoku', alt: 'Castillo y fortaleza feudal de la era Sengoku en Japón', caption: 'Arquitectura defensiva tradicional de la casta guerrera samurái.', url: 'photos/castillo_sengoku.webp', type: 'image/webp', size: '159.5 KB' },
+      { id: 'default-media-3', name: 'Jardín Zen', alt: 'Jardín seco de piedras y arena rastrillada para meditación Zen', caption: 'Espacio de introspección y serenidad para cultores del Budo.', url: 'photos/jardin_zen.webp', type: 'image/webp', size: '53.0 KB' },
+      { id: 'default-media-4', name: 'Jorge Orpianesi 1', alt: 'Jorge Orpianesi en dojo tradicional sosteniendo katana', caption: 'Instructor e investigador en la senda del guerrero.', url: 'photos/orpianesi1.webp', type: 'image/webp', size: '31.8 KB' },
+      { id: 'default-media-5', name: 'Jorge Orpianesi 2', alt: 'Jorge Orpianesi con vestimenta tradicional de Iaido', caption: 'Práctica y preservación de las artes marciales japonesas.', url: 'photos/orpianesi2.webp', type: 'image/webp', size: '48.2 KB' }
     ];
     try { localStorage.setItem('samurai_media_list', JSON.stringify(defaults)); } catch {}
     return defaults;
+  }
+
+  async updateMedia(id, mediaData) {
+    try {
+      if (!id.startsWith('default-media-') && !id.startsWith('local_media_')) {
+        await this.request(`/api/collections/media/records/${id}`, {
+          method: 'PATCH',
+          body: JSON.stringify({
+            name: mediaData.name,
+            alt: mediaData.alt,
+            caption: mediaData.caption
+          })
+        });
+      }
+    } catch {}
+
+    try {
+      const saved = localStorage.getItem('samurai_media_list');
+      if (saved) {
+        let media = JSON.parse(saved);
+        const idx = media.findIndex(m => m.id === id);
+        if (idx !== -1) {
+          media[idx] = { ...media[idx], ...mediaData };
+          localStorage.setItem('samurai_media_list', JSON.stringify(media));
+        }
+      }
+    } catch {}
+
+    return { success: true };
   }
 
   async deleteMedia(id) {
@@ -357,6 +388,51 @@ export class PocketBaseAdapter {
     } catch {}
 
     return { success: true };
+  }
+
+  async getSystemDiagnostics() {
+    try {
+      const res = await this.request('/api/diagnostics/health');
+      if (res && res.system) {
+        return res;
+      }
+    } catch {}
+
+    // Offline / Mock fallback diagnostics
+    return {
+      timestamp: new Date().toISOString(),
+      status: this.isBackendOffline ? 'DEGRADED' : 'HEALTHY',
+      system: {
+        nodeVersion: 'v20.x (Local Browser Mode)',
+        platform: typeof navigator !== 'undefined' ? navigator.platform : 'Unknown',
+        arch: 'x64',
+        uptimeSeconds: Math.floor(performance.now() / 1000),
+        memory: { rssMb: '42.50', heapUsedMb: '18.20', heapTotalMb: '32.00' }
+      },
+      pocketbase: {
+        port: 8090,
+        status: this.isBackendOffline ? 'OFFLINE' : 'ONLINE',
+        latencyMs: this.isBackendOffline ? -1 : 12,
+        statusCode: this.isBackendOffline ? 502 : 200
+      },
+      storage: {
+        databaseSizeBytes: 65536,
+        databaseSizeFormatted: '64.0 KB',
+        mediaStorageSizeBytes: 1048576,
+        mediaStorageCount: 5,
+        backupsCount: 1,
+        backupsTotalSizeBytes: 204800
+      },
+      collections: {
+        posts: 2,
+        opinions: 4,
+        media: 5,
+        users: 1
+      },
+      logs: [
+        { timestamp: new Date().toISOString(), level: 'INFO', message: 'Panel de diagnóstico cargado correctamente.' }
+      ]
+    };
   }
 
   async getUsers() {

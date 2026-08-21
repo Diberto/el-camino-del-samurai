@@ -1,4 +1,4 @@
-# Node Description Batch 2 of 9
+# Node Description Batch 2 of 10
 
 Graphify is running in assistant/skill mode (no API key). You are the host
 assistant (Claude Code / Codex / Gemini CLI). Read the prompt below and write
@@ -26,6 +26,7 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@40ba44bac9b409dd9e7d1f3931bddc6ad5dcbd87": "40ba44b fix: eliminate POST auto-seeding side effects on GET requests and fix P…" | kind=Commit | source=git | neighbors=[pocketbase-adapter.js, master, 7a6f4db docs: update walkthrough for fi…, 1700000000_init_collections.js, b552139 docs: update walkthrough for fi…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@52de155d879e9290bfe3226f8d98898687e42f48": "52de155 fix(server & auth): add native backup proxy handler in server.js and im…" | kind=Commit | source=git | neighbors=[pocketbase-adapter.js, master, 101f3c3 fix(server): resolve storage di…, server.js, daecf0d feat(admin): add backup manager…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@7af96be55f5a4bce2d02ab2373c538c7bae73af4": "7af96be feat: integrate Strapi Headless CMS adapter and add backend provider se…" | kind=Commit | source=git | neighbors=[7710994 docs: update plan for Strapi He…, admin.js, master, 2e08ad4 docs: update walkthrough for St…, db-service.js] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@7cfa4b6f5502bd8a1a88d4e613f5af26cd650e66": "7cfa4b6 fix: add autocomplete attributes to login inputs, add login provider se…" | kind=Commit | source=git | neighbors=[43b96bb docs: update walkthrough for WY…, pocketbase-adapter.js, admin.js, master, 441d589 docs: update walkthrough for au…] | lang=en
@@ -39,7 +40,7 @@ one-sentence description — no prose, no markdown fences.
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@dec3efb4ee76aa8ffadb8756e6b0afcc08d3ee56": "dec3efb feat(db-service): add PocketBase backup management API methods" | kind=Commit | source=git | neighbors=[16ee04a docs(plan): add implementation …, pocketbase-adapter.js, master, 0a8d211 feat(server): add scheduled aut…, db-service.js] | lang=en
 - "modules_gpu_config_manager": "gpu-config-manager.js" | kind=code-symbol | source=src/admin/modules/gpu-config-manager.js:L1 | neighbors=[48d0413 feat: align admin shell with sa…, c0749a0 feat: complete Admin Backend, C…, initGpuManager(), dbService, SyncService] | lang=en
 - "public_blog_renderview": "renderView()" | kind=code-symbol | source=src/public/blog.js:L71 | neighbors=[blog.js, getTargetPostId(), renderCatalog(), renderSinglePost(), updateDynamicSEO()] | lang=en
-- "script_sakurapetal": "SakuraPetal" | kind=code-symbol | source=script.js:L747 | neighbors=[script.js, .constructor(), .draw(), .reset(), .update()] | lang=en
+- "script_sakurapetal": "SakuraPetal" | kind=code-symbol | source=script.js:L798 | neighbors=[script.js, .constructor(), .draw(), .reset(), .update()] | lang=en
 - "vite_config": "vite.config.js" | kind=code-symbol | source=vite.config.js:L1 | neighbors=[28ed22a feat(gpu): add /gpu configurati…, 48b349d feat: add HTML rewrites to vite…, c0749a0 feat: complete Admin Backend, C…, eea1ef3 fix: resolve PocketBase 502/404…, configureServer()] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@0405449f71204f86cbf03fa3642ecd79e5b24481": "0405449 fix(logo): restore white typography logo (logo_typography_light.webp) w…" | kind=Commit | source=git | neighbors=[master, fae5c61 fix(logo): ensure maximum contr…, script.js, ec4f3b1 fix(mobile): resolve asset load…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@0a8d211cdac0681d034c0ef4e012b8c78e42a179": "0a8d211 feat(server): add scheduled auto-backup background worker" | kind=Commit | source=git | neighbors=[master, daecf0d feat(admin): add backup manager…, server.js, dec3efb feat(db-service): add PocketBas…] | lang=pt
@@ -65,7 +66,6 @@ one-sentence description — no prose, no markdown fences.
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@54c49f42e8af16d2e7f4dcd8e2216ab1693a8763": "54c49f4 feat(gallery): integrate author portrait (orpianesi1.webp) and add inte…" | kind=Commit | source=git | neighbors=[master, 5290f56 fix(lightbox): extract loaded i…, script.js, 5ae8c77 feat(mobile): maximize Enso cir…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@5b744f6f596eeba2a57685a65d5e430dd5aa564e": "5b744f6 fix: move blog and media photos to public/photos directory for clean st…" | kind=Commit | source=git | neighbors=[26bbdaa docs: update walkthrough for Me…, master, dcd0258 docs: update walkthrough for pu…, blog-cms-manager.js] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@5ea7b41f5e91d47da32b28104d590a483588e9a1": "5ea7b41 feat(clouds): integrate WebGPU dynamic atmospheric clouds shader with W…" | kind=Commit | source=git | neighbors=[master, c4fc262 fix(fuji): resolve fuji snow tr…, script.js, 7f08f53 fix(fuji): resolve fuji snow ca…] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@69a07f6f6d1de13133ad6e285b218423e3305a36": "69a07f6 feat: petals 3D con Three.js y viento del mouse" | kind=Commit | source=git | neighbors=[master, 9e88171 Revert "feat: petals 3D con Thr…, script.js, e629f53 feat: petals afectados por vien…] | lang=es
 
 ## Instructions
 

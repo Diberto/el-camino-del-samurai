@@ -1,4 +1,4 @@
-# Node Description Batch 3 of 9
+# Node Description Batch 3 of 10
 
 Graphify is running in assistant/skill mode (no API key). You are the host
 assistant (Claude Code / Codex / Gemini CLI). Read the prompt below and write
@@ -26,6 +26,7 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@69a07f6f6d1de13133ad6e285b218423e3305a36": "69a07f6 feat: petals 3D con Three.js y viento del mouse" | kind=Commit | source=git | neighbors=[master, 9e88171 Revert "feat: petals 3D con Thr…, script.js, e629f53 feat: petals afectados por vien…] | lang=es
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@6d2db3a7dfc0b5db471837b4fac2122e421a67c2": "6d2db3a feat(sakura): implement high-performance dynamic 3D-flipping sakura fal…" | kind=Commit | source=git | neighbors=[master, 514414b fix(sakura): restore original s…, script.js, 9c9ebe0 fix(fuji): resolve transparent …] | lang=pt
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@6d400fe2303dcbd4138bb6e2488bdf6580e766fe": "6d400fe fix: update server.listen for Unix Socket support in Hostinger Node man…" | kind=Commit | source=git | neighbors=[469434d fix: bypass redundant 502 auth …, master, 992fa5d chore: update graphify manifest…, server.js] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@6e2187739fd9bc13e8e79393728ee14dde2cb331": "6e21877 feat(sky): convert red sun into dynamic celestial orb morphing into mys…" | kind=Commit | source=git | neighbors=[5650d5b fix(sky): make mountain backdro…, master, 3f7d802 feat(sky): implement azure sky …, script.js] | lang=en
@@ -60,12 +61,11 @@ one-sentence description — no prose, no markdown fences.
 - "gpu_config_gpuconfigengine_mergewithdefault": ".mergeWithDefault()" | kind=code-symbol | source=gpu-config.js:L71 | neighbors=[GpuConfigEngine, .loadCurrentConfig(), .saveCurrentConfig(), .saveNewPreset()] | lang=en
 - "modules_backup_manager": "backup-manager.js" | kind=code-symbol | source=src/admin/modules/backup-manager.js:L1 | neighbors=[daecf0d feat(admin): add backup manager…, initBackupManager(), dbService, SyncService] | lang=en
 - "modules_media_manager": "media-manager.js" | kind=code-symbol | source=src/admin/modules/media-manager.js:L1 | neighbors=[fd36f9a feat: add Media Library Manager…, initMediaManager(), dbService, convertToWebP()] | lang=en
+- "modules_opiniones_manager": "opiniones-manager.js" | kind=code-symbol | source=src/admin/modules/opiniones-manager.js:L1 | neighbors=[1f0cf3c feat(opiniones): modulo CRUD en…, 6e84b4a feat(optimizations): mejoras de…, initOpinionesManager(), dbService] | lang=en
 - "scripts_start_pocketbase_ensurebinary": "ensureBinary()" | kind=code-symbol | source=scripts/start-pocketbase.js:L66 | neighbors=[start-pocketbase.js, downloadFile(), getDownloadUrl(), main()] | lang=en
+- "server_servediagnosticshealth": "serveDiagnosticsHealth()" | kind=code-symbol | source=server.js:L696 | neighbors=[server.js, checkPocketBaseHealth(), fetchCollectionCount(), getDirectorySize()] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@0065d031aeccba19fb32bf3932e271e594b53998": "0065d03 chore(cleanup): remove 97 unused asset files, update metadata reference…" | kind=Commit | source=git | neighbors=[master, 02b0dd5 fix(fuji): fill true peak tip c…, c4fc262 fix(fuji): resolve fuji snow tr…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@02b0dd5bbd79b19b9286a398563140cdf6d72d76": "02b0dd5 fix(fuji): fill true peak tip coordinates (y:0..65 in layer 1) with sol…" | kind=Commit | source=git | neighbors=[0065d03 chore(cleanup): remove 97 unuse…, master, e8d36e0 revert(fuji): restore original …] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@02fe36cbc512e4baa12bc7e49b33a8f195422ac4": "02fe36c feat(mobile): position logo below parallax objects, adjust top margin, …" | kind=Commit | source=git | neighbors=[master, 2228b27 feat(mobile): align Enso artwor…, 0e4583a checkpoint: volumetric clouds e…] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@0390b13bdec77b6f847f8544e67f0ccb238435f6": "0390b13 docs: update walkthrough for smart environment provider detection" | kind=Commit | source=git | neighbors=[master, 215584e fix: restore PocketBase as defa…, ff28459 fix: smart environment provider…] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@05628146c25a62991f290a79a8d16a7d43ff60e3": "0562814 docs: update design spec for Media Library and blog image integration" | kind=Commit | source=git | neighbors=[master, f3c80ce docs: update plan for Media Lib…, 441d589 docs: update walkthrough for au…] | lang=en
 
 ## Instructions
 
