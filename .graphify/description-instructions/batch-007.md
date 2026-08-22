@@ -17,6 +17,7 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "script_sakurapetal_update": ".update()" | kind=code-symbol | source=script.js:L899 | neighbors=[SakuraPetal, .reset()]
 - "scripts_start_pocketbase_downloadfile": "downloadFile()" | kind=code-symbol | source=scripts/start-pocketbase.js:L37 | neighbors=[start-pocketbase.js, ensureBinary()]
 - "scripts_start_pocketbase_getdownloadurl": "getDownloadUrl()" | kind=code-symbol | source=scripts/start-pocketbase.js:L20 | neighbors=[start-pocketbase.js, ensureBinary()]
 - "scripts_start_pocketbase_main": "main()" | kind=code-symbol | source=scripts/start-pocketbase.js:L113 | neighbors=[start-pocketbase.js, ensureBinary()]
@@ -25,8 +26,8 @@ one-sentence description — no prose, no markdown fences.
 - "server_generatesitemapxml": "generateSitemapXml()" | kind=code-symbol | source=server.js:L475 | neighbors=[server.js, serveDynamicSitemap()]
 - "server_getdirectorysize": "getDirectorySize()" | kind=code-symbol | source=server.js:L698 | neighbors=[server.js, serveDiagnosticsHealth()]
 - "server_servedynamicsitemap": "serveDynamicSitemap()" | kind=code-symbol | source=server.js:L495 | neighbors=[server.js, generateSitemapXml()]
-- "services_native_store_readbody": "readBody()" | kind=code-symbol | source=src/services/native-store.js:L176 | neighbors=[native-store.js, handleNativeDataStore()]
-- "services_native_store_writestore": "writeStore()" | kind=code-symbol | source=src/services/native-store.js:L165 | neighbors=[native-store.js, handleNativeDataStore()]
+- "services_native_store_readbody": "readBody()" | kind=code-symbol | source=src/services/native-store.js:L193 | neighbors=[native-store.js, handleNativeDataStore()]
+- "services_native_store_writestore": "writeStore()" | kind=code-symbol | source=src/services/native-store.js:L182 | neighbors=[native-store.js, handleNativeDataStore()]
 - "services_sync_service": "sync-service.js" | kind=code-symbol | source=src/services/sync-service.js:L1 | neighbors=[48d0413 feat: align admin shell with sa…, SyncService]
 - "utils_webp_converter": "webp-converter.js" | kind=code-symbol | source=src/utils/webp-converter.js:L1 | neighbors=[a4cbf51 feat: add WebP Canvas image con…, convertToWebP()]
 - "utils_youtube_embed_extractyoutubeid": "extractYouTubeId()" | kind=code-symbol | source=src/utils/youtube-embed.js:L2 | neighbors=[wysiwyg-editor.js, youtube-embed.js]
@@ -56,7 +57,6 @@ one-sentence description — no prose, no markdown fences.
 - "pb_migrations_1700000002_opinions_collection": "1700000002_opinions_collection.js" | kind=code-symbol | source=pb_migrations/1700000002_opinions_collection.js:L1 | neighbors=[1f0cf3c feat(opiniones): modulo CRUD en…]
 - "script_animateparallax": "animateParallax()" | kind=code-symbol | source=script.js:L743 | neighbors=[script.js]
 - "script_animatepetals": "animatePetals()" | kind=code-symbol | source=script.js:L975 | neighbors=[script.js]
-- "script_applygpuskycolors": "applyGpuSkyColors()" | kind=code-symbol | source=script.js:L338 | neighbors=[script.js]
 
 ## Instructions
 

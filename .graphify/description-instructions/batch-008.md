@@ -17,6 +17,7 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "script_applygpuskycolors": "applyGpuSkyColors()" | kind=code-symbol | source=script.js:L338 | neighbors=[script.js]
 - "script_escapehtml": "escapeHTML()" | kind=code-symbol | source=script.js:L23 | neighbors=[script.js]
 - "script_handlescrolleffects": "handleScrollEffects()" | kind=code-symbol | source=script.js:L682 | neighbors=[script.js]
 - "script_init3dbookengine": "init3DBookEngine()" | kind=code-symbol | source=script.js:L1133 | neighbors=[script.js]
@@ -56,7 +57,6 @@ one-sentence description — no prose, no markdown fences.
 - "services_db_service_databaseservice_constructor": ".constructor()" | kind=code-symbol | source=src/services/db-service.js:L5 | neighbors=[DatabaseService]
 - "services_db_service_databaseservice_createbackup": ".createBackup()" | kind=code-symbol | source=src/services/db-service.js:L30 | neighbors=[DatabaseService]
 - "services_db_service_databaseservice_deletebackup": ".deleteBackup()" | kind=code-symbol | source=src/services/db-service.js:L32 | neighbors=[DatabaseService]
-- "services_db_service_databaseservice_deletemedia": ".deleteMedia()" | kind=code-symbol | source=src/services/db-service.js:L22 | neighbors=[DatabaseService]
 
 ## Instructions
 

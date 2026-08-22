@@ -15,11 +15,20 @@ export async function initBackupManager(container) {
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
         <div>
           <h2 class="samurai-title" style="margin:0 0 0.3rem 0;">Gestión y Resguardo del Sitio (Respaldos)</h2>
-          <p style="color:var(--text-secondary); font-size:0.85rem; margin:0;">Crea copias de seguridad completas (.zip) con la base de datos y todas las imágenes subidas.</p>
+          <p style="color:var(--text-secondary); font-size:0.85rem; margin:0;">Crea copias de seguridad completas (.zip o .json) con la base de datos, galería y configuraciones.</p>
         </div>
-        <button id="manual-backup-btn" class="btn-samurai-red" style="display:flex; align-items:center; gap:0.5rem;">
-          <span>⚡</span> Crear Respaldo Manual Ahora
-        </button>
+        <div style="display:flex; gap:0.8rem; flex-wrap:wrap;">
+          <button id="export-json-btn" class="btn-samurai-outline" style="display:flex; align-items:center; gap:0.5rem; padding:0.6rem 1.2rem; cursor:pointer;">
+            <span>📥</span> Exportar Configuración (.json)
+          </button>
+          <input type="file" id="import-json-input" accept=".json" style="display:none;">
+          <button id="import-json-btn" class="btn-samurai-outline" style="display:flex; align-items:center; gap:0.5rem; padding:0.6rem 1.2rem; cursor:pointer;">
+            <span>📤</span> Importar Configuración (.json)
+          </button>
+          <button id="manual-backup-btn" class="btn-samurai-red" style="display:flex; align-items:center; gap:0.5rem; padding:0.6rem 1.2rem; cursor:pointer;">
+            <span>⚡</span> Crear Respaldo Completo (.zip)
+          </button>
+        </div>
       </div>
 
       <div id="backup-status-msg" style="margin-bottom:1rem; font-weight:600; color:var(--accent-gold);"></div>
@@ -53,7 +62,7 @@ export async function initBackupManager(container) {
               Último respaldo auto: <strong style="color:var(--text-primary);">${scheduleConfig.last_backup_at ? new Date(scheduleConfig.last_backup_at).toLocaleString('es-ES') : 'Nunca'}</strong>
             </div>
 
-            <button id="save-schedule-btn" class="btn-samurai-outline" style="align-self:start; font-size:0.85rem;">
+            <button id="save-schedule-btn" class="btn-samurai-outline" style="align-self:start; font-size:0.85rem; cursor:pointer;">
               Guardar Configuración
             </button>
           </div>
@@ -61,13 +70,13 @@ export async function initBackupManager(container) {
 
         <!-- Card 2: Restaurar / Subir Respaldo (.zip) -->
         <div class="samurai-card" style="padding: 1.5rem;">
-          <h3 class="samurai-title" style="font-size: 1.15rem; margin-bottom: 1rem;">📤 Subir y Restaurar Respaldo External (.zip)</h3>
+          <h3 class="samurai-title" style="font-size: 1.15rem; margin-bottom: 1rem;">📤 Subir y Restaurar Respaldo (.zip)</h3>
           <p style="color:var(--text-secondary); font-size:0.85rem; margin-bottom:1rem;">Arrastra o selecciona un archivo de copia de seguridad descargado previamente en tu computadora para restaurarlo:</p>
           
           <div id="drop-zone" style="border: 2px dashed rgba(255,255,255,0.2); border-radius: 8px; padding: 1.5rem; text-align: center; background: rgba(0,0,0,0.2); cursor: pointer; transition: background 0.3s ease;">
             <span style="font-size: 2rem; display:block; margin-bottom:0.5rem;">📦</span>
             <span style="font-size: 0.85rem; color: var(--text-primary); font-weight:600; display:block;">Haz clic o arrastra aquí tu archivo .zip</span>
-            <span style="font-size: 0.75rem; color: var(--text-muted);">Formatos admitidos: .zip exportados por PocketBase</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Formatos admitidos: .zip exportados por el servidor</span>
             <input type="file" id="zip-file-input" accept=".zip" style="display:none;">
           </div>
         </div>
@@ -75,7 +84,7 @@ export async function initBackupManager(container) {
 
       <!-- Tabla de Historial de Respaldos -->
       <div class="samurai-card" style="padding: 1.5rem;">
-        <h3 class="samurai-title" style="font-size: 1.15rem; margin-bottom: 1rem;">📁 Archivos de Respaldo Disponibles</h3>
+        <h3 class="samurai-title" style="font-size: 1.15rem; margin-bottom: 1rem;">📁 Archivos de Respaldo Disponibles en Servidor</h3>
         <div id="backups-table-container">
           <p style="color:var(--text-muted); text-align:center; padding:1.5rem 0;">Cargando historial de respaldos...</p>
         </div>
@@ -91,7 +100,7 @@ export async function initBackupManager(container) {
     const backups = await dbService.getBackups();
 
     if (!backups || backups.length === 0) {
-      tableContainer.innerHTML = `<p style="color:var(--text-muted); text-align:center; padding:2rem 0;">No hay respaldos generados aún en el servidor. Presiona "Crear Respaldo Manual Ahora" para generar el primero.</p>`;
+      tableContainer.innerHTML = `<p style="color:var(--text-muted); text-align:center; padding:2rem 0;">No hay respaldos generados aún en el servidor. Presiona "Crear Respaldo Completo (.zip)" para generar el primero.</p>`;
       return;
     }
 
@@ -99,23 +108,37 @@ export async function initBackupManager(container) {
       <div style="overflow-x:auto;">
         <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.88rem;">
           <thead>
-            <tr style="border-bottom:1px solid var(--border-color); color:var(--accent-gold); font-family:var(--font-title);">
-              <th style="padding:0.8rem;">Archivo</th>
-              <th style="padding:0.8rem;">Modificado</th>
-              <th style="padding:0.8rem;">Tamaño</th>
-              <th style="padding:0.8rem; text-align:right;">Acciones</th>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.1); color:var(--text-secondary);">
+              <th style="padding:0.75rem 0.5rem;">Archivo</th>
+              <th style="padding:0.75rem 0.5rem;">Tamaño</th>
+              <th style="padding:0.75rem 0.5rem;">Fecha de Creación</th>
+              <th style="padding:0.75rem 0.5rem; text-align:right;">Acciones</th>
             </tr>
           </thead>
           <tbody>
             ${backups.map(b => `
               <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
-                <td style="padding:0.8rem; font-weight:600; color:var(--text-primary);">${b.key || b.name}</td>
-                <td style="padding:0.8rem; color:var(--text-secondary);">${b.modified ? new Date(b.modified).toLocaleString('es-ES') : '-'}</td>
-                <td style="padding:0.8rem; color:var(--text-muted);">${(b.size / (1024 * 1024)).toFixed(2)} MB</td>
-                <td style="padding:0.8rem; text-align:right; display:flex; gap:0.5rem; justify-content:flex-end;">
-                  <a href="${dbService.getDownloadBackupUrl(b.key)}" download class="btn-samurai-outline" style="font-size:0.75rem; padding:0.3rem 0.6rem; text-decoration:none; display:inline-block;">📥 Descargar</a>
-                  <button data-action="restore" data-key="${b.key}" class="btn-samurai-outline" style="font-size:0.75rem; padding:0.3rem 0.6rem; color:var(--accent-gold);">🔄 Restaurar</button>
-                  <button data-action="delete" data-key="${b.key}" class="btn-samurai-outline" style="font-size:0.75rem; padding:0.3rem 0.6rem; color:#f56565; border-color:rgba(245,101,101,0.3);">🗑️ Eliminar</button>
+                <td style="padding:0.75rem 0.5rem; font-weight:600; color:#fff;">
+                  📦 ${b.name || b.key}
+                </td>
+                <td style="padding:0.75rem 0.5rem; color:var(--text-secondary);">
+                  ${b.size ? (b.size / 1024 / 1024).toFixed(2) + ' MB' : 'N/A'}
+                </td>
+                <td style="padding:0.75rem 0.5rem; color:var(--text-muted);">
+                  ${b.modified ? new Date(b.modified).toLocaleString('es-ES') : 'Reciente'}
+                </td>
+                <td style="padding:0.75rem 0.5rem; text-align:right;">
+                  <div style="display:inline-flex; gap:0.5rem;">
+                    <a href="/api/backups/${encodeURIComponent(b.key || b.name)}?token=${encodeURIComponent(dbService.token || '')}" download class="btn-samurai-outline" style="padding:0.3rem 0.6rem; font-size:0.75rem; text-decoration:none;">
+                      ⬇️ Descargar
+                    </a>
+                    <button class="btn-samurai-red restore-btn" data-key="${b.key || b.name}" style="padding:0.3rem 0.6rem; font-size:0.75rem;">
+                      🔄 Restaurar
+                    </button>
+                    <button class="btn-samurai-outline delete-btn" data-key="${b.key || b.name}" style="padding:0.3rem 0.6rem; font-size:0.75rem; color:#ff8585; border-color:rgba(218,68,83,0.3);">
+                      🗑️
+                    </button>
+                  </div>
                 </td>
               </tr>
             `).join('')}
@@ -124,16 +147,16 @@ export async function initBackupManager(container) {
       </div>
     `;
 
-    // Row Actions
-    tableContainer.querySelectorAll('button[data-action="restore"]').forEach(btn => {
+    // Bind action buttons in table
+    tableContainer.querySelectorAll('.restore-btn').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         const key = e.target.dataset.key;
-        if (confirm(`⚠️ ATENCIÓN: Se restaurará el sitio al respaldo "${key}". Todos los cambios posteriores a ese respaldo se sobrescribirán. ¿Deseas continuar?`)) {
-          showMsg('🔄 Restaurando copia de seguridad... Por favor espera...');
-          const res = await dbService.restoreBackup(key);
-          if (res) {
-            showMsg('✨ ¡Restauración completada con éxito!');
-            setTimeout(() => window.location.reload(), 1500);
+        if (confirm(`¿Restaurar el sitio al estado del respaldo "${key}"? Esta acción reemplazará la base de datos actual.`)) {
+          showMsg(`⏳ Restaurando respaldo "${key}"...`);
+          const success = await dbService.restoreBackup(key);
+          if (success) {
+            showMsg('✅ Sitio restaurado con éxito. Recargando datos...');
+            setTimeout(() => { window.location.reload(); }, 2000);
           } else {
             showMsg('❌ Error al restaurar el respaldo.');
           }
@@ -141,40 +164,45 @@ export async function initBackupManager(container) {
       });
     });
 
-    tableContainer.querySelectorAll('button[data-action="delete"]').forEach(btn => {
+    tableContainer.querySelectorAll('.delete-btn').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         const key = e.target.dataset.key;
-        if (confirm(`¿Seguro que deseas eliminar el respaldo "${key}"?`)) {
-          await dbService.deleteBackup(key);
-          showMsg('🗑️ Respaldo eliminado.');
-          fetchAndRenderTable();
+        if (confirm(`¿Eliminar el archivo de respaldo "${key}"?`)) {
+          showMsg(`⏳ Eliminando "${key}"...`);
+          const success = await dbService.deleteBackup(key);
+          if (success) {
+            showMsg('🗑️ Respaldo eliminado.');
+            await fetchAndRenderTable();
+          } else {
+            showMsg('❌ Error al eliminar el respaldo.');
+          }
         }
       });
     });
   }
 
-  function showMsg(text) {
-    const statusMsg = container.querySelector('#backup-status-msg');
-    if (statusMsg) {
-      statusMsg.textContent = text;
-      setTimeout(() => { if (statusMsg) statusMsg.textContent = ''; }, 4000);
+  function showMsg(msg) {
+    const el = container.querySelector('#backup-status-msg');
+    if (el) {
+      el.textContent = msg;
+      setTimeout(() => { if (el.textContent === msg) el.textContent = ''; }, 4500);
     }
   }
 
   function bindEvents() {
     // Manual Backup
     container.querySelector('#manual-backup-btn').addEventListener('click', async () => {
-      showMsg('⏳ Empaquetando base de datos e imágenes... Esto puede demorar unos segundos...');
+      showMsg('⏳ Generando respaldo completo en el servidor...');
       const res = await dbService.createBackup();
-      if (res !== null) {
-        showMsg('✅ Respaldo manual generado con éxito.');
+      if (res && (res.key || res.name)) {
+        showMsg(`✅ Respaldo "${res.name || res.key}" creado exitosamente.`);
         await fetchAndRenderTable();
       } else {
-        showMsg('❌ Ocurrió un error al generar el respaldo.');
+        showMsg('❌ Error al generar el respaldo.');
       }
     });
 
-    // Save Schedule Config
+    // Save Schedule
     container.querySelector('#save-schedule-btn').addEventListener('click', async () => {
       const freq = container.querySelector('#auto-frequency-select').value;
       const ret = Number(container.querySelector('#auto-retention-select').value);
@@ -189,7 +217,73 @@ export async function initBackupManager(container) {
       showMsg('💾 Configuración de respaldo automático guardada.');
     });
 
-    // File Drop Zone
+    // JSON Export
+    const exportJsonBtn = container.querySelector('#export-json-btn');
+    if (exportJsonBtn) {
+      exportJsonBtn.addEventListener('click', async () => {
+        showMsg('⏳ Preparando exportación completa en formato JSON...');
+        try {
+          const [curSettings, posts, opinions, media] = await Promise.all([
+            dbService.getSettings() || {},
+            dbService.getPosts() || [],
+            dbService.getOpinions() || [],
+            dbService.getMedia() || []
+          ]);
+
+          const exportPayload = {
+            version: '1.0',
+            exported_at: new Date().toISOString(),
+            website: 'El Camino del Samurai',
+            settings: curSettings,
+            posts: posts,
+            opinions: opinions,
+            media: media
+          };
+
+          const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportPayload, null, 2));
+          const downloadAnchor = document.createElement('a');
+          const dateSlug = new Date().toISOString().split('T')[0];
+          downloadAnchor.setAttribute("href", dataStr);
+          downloadAnchor.setAttribute("download", `samurai_backup_${dateSlug}.json`);
+          document.body.appendChild(downloadAnchor);
+          downloadAnchor.click();
+          downloadAnchor.remove();
+
+          showMsg('✅ Archivo de respaldo JSON descargado exitosamente.');
+        } catch (err) {
+          showMsg('❌ Error al exportar: ' + err.message);
+        }
+      });
+    }
+
+    // JSON Import
+    const importJsonBtn = container.querySelector('#import-json-btn');
+    const importJsonInput = container.querySelector('#import-json-input');
+    if (importJsonBtn && importJsonInput) {
+      importJsonBtn.addEventListener('click', () => importJsonInput.click());
+      importJsonInput.addEventListener('change', async (e) => {
+        if (e.target.files && e.target.files[0]) {
+          const file = e.target.files[0];
+          try {
+            showMsg(`⏳ Leyendo y restaurando desde "${file.name}"...`);
+            const fileText = await file.text();
+            const parsed = JSON.parse(fileText);
+
+            if (parsed.settings) {
+              await dbService.saveSettings(parsed.settings);
+              syncService.broadcast('SETTINGS_UPDATED', parsed.settings);
+            }
+
+            showMsg('✅ Configuración y personalización restauradas con éxito.');
+            setTimeout(() => { window.location.reload(); }, 1500);
+          } catch (err) {
+            showMsg('❌ Error al restaurar archivo JSON: ' + err.message);
+          }
+        }
+      });
+    }
+
+    // File Drop Zone for ZIP
     const dropZone = container.querySelector('#drop-zone');
     const zipInput = container.querySelector('#zip-file-input');
 

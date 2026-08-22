@@ -155,7 +155,24 @@ export function readStore(filename, fallback = []) {
       return fallback;
     }
     const content = fs.readFileSync(filePath, 'utf-8');
-    return JSON.parse(content);
+    const parsed = JSON.parse(content);
+    if (filename === 'settings.json' && parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+      return {
+        ...DEFAULT_SETTINGS,
+        ...parsed,
+        sections_toggle: {
+          ...DEFAULT_SETTINGS.sections_toggle,
+          ...(parsed.sections_toggle || {})
+        },
+        social_links: {
+          ...DEFAULT_SETTINGS.social_links,
+          ...(parsed.social_links || {})
+        },
+        navigation_menu: (Array.isArray(parsed.navigation_menu) && parsed.navigation_menu.length > 0) ? parsed.navigation_menu : DEFAULT_SETTINGS.navigation_menu,
+        gallery_items: (Array.isArray(parsed.gallery_items) && parsed.gallery_items.length > 0) ? parsed.gallery_items : DEFAULT_SETTINGS.gallery_items
+      };
+    }
+    return parsed;
   } catch (err) {
     console.error(`Error reading ${filename}:`, err.message);
     return fallback;
@@ -406,12 +423,16 @@ export async function handleNativeDataStore(req, res, pathname) {
             .replace(/\.[^/.]+$/, '');
           const filename = `upload_${Date.now()}_${cleanName}.webp`;
 
+          const rootUploads = path.join(rootDir, 'uploads');
           const publicUploads = path.join(rootDir, 'public', 'uploads');
           const distUploads = path.join(rootDir, 'dist', 'uploads');
+          
+          if (!fs.existsSync(rootUploads)) fs.mkdirSync(rootUploads, { recursive: true });
           if (!fs.existsSync(publicUploads)) fs.mkdirSync(publicUploads, { recursive: true });
           if (!fs.existsSync(distUploads)) fs.mkdirSync(distUploads, { recursive: true });
 
-          fs.writeFileSync(path.join(publicUploads, filename), buffer);
+          fs.writeFileSync(path.join(rootUploads, filename), buffer);
+          try { fs.writeFileSync(path.join(publicUploads, filename), buffer); } catch {}
           try { fs.writeFileSync(path.join(distUploads, filename), buffer); } catch {}
 
           finalUrl = `uploads/${filename}`;

@@ -1,25 +1,25 @@
 # Graph Report - .  (2026-08-22)
 
 ## Corpus Check
-- 132 files · ~268.661 words
+- 133 files · ~269.226 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 396 nodes · 815 edges · 18 communities detected
+- 397 nodes · 818 edges · 18 communities detected
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
-- Edge kinds: ON_BRANCH: 184 · PARENT_OF: 183 · MODIFIES: 173 · contains: 111 · method: 73 · calls: 51 · imports: 40
+- Edge kinds: ON_BRANCH: 185 · PARENT_OF: 184 · MODIFIES: 174 · contains: 111 · method: 73 · calls: 51 · imports: 40
 
 
 ## Input Scope
 - Requested: auto
 - Resolved: committed (source: default-auto)
-- Included files: 132 · Candidates: 236
-- Excluded: 2 untracked · 1449 ignored · 0 sensitive · 0 missing committed
+- Included files: 133 · Candidates: 239
+- Excluded: 1 untracked · 1452 ignored · 0 sensitive · 0 missing committed
 - Recommendation: Use --scope all or graphify.yaml inputs.corpus for a knowledge-base folder.
 
 ## Graph Freshness
-- Built from Git commit: `86a8e0f`
+- Built from Git commit: `94e9395`
 - Compare this hash to `git rev-parse HEAD` before trusting freshness-sensitive graph output.
 ## God Nodes (most connected - your core abstractions)
 1. `PocketBaseAdapter` - 28 edges
@@ -35,21 +35,21 @@
 
 ## Surprising Connections (you probably didn't know these)
 - `0065d03 chore(cleanup): remove 97 unused asset files, update metadata references, and optimize site production bundle` --ON_BRANCH--> `master`  [EXTRACTED]
-  git → git  _Bridges community 13 → community 3_
+  git → git  _Bridges community 13 → community 5_
 - `0390b13 docs: update walkthrough for smart environment provider detection` --ON_BRANCH--> `master`  [EXTRACTED]
-  git → git  _Bridges community 2 → community 3_
+  git → git  _Bridges community 2 → community 5_
 - `0405449 fix(logo): restore white typography logo (logo_typography_light.webp) with enhanced drop-shadow for 100% legibility on both mobile and desktop` --ON_BRANCH--> `master`  [EXTRACTED]
-  git → git  _Bridges community 6 → community 3_
+  git → git  _Bridges community 6 → community 5_
 - `0562814 docs: update design spec for Media Library and blog image integration` --ON_BRANCH--> `master`  [EXTRACTED]
-  git → git  _Bridges community 10 → community 3_
+  git → git  _Bridges community 10 → community 5_
 - `084f7f6 docs: add walkthrough documentation` --ON_BRANCH--> `master`  [EXTRACTED]
-  git → git  _Bridges community 0 → community 3_
+  git → git  _Bridges community 0 → community 5_
 
 ## Communities
 
 ### Community 0 - "Community 0"
 Cohesion: 0.06
-Nodes (39): checkAuth(), loadModules(), 084f7f6 docs: add walkthrough documentation, 1549879 docs: update implementation plan for unified samurai admin and real-time live sync, 1f0cf3c feat(opiniones): modulo CRUD en admin, galeria corregida y seccion de redes sociales (Instagram, YouTube, Facebook), 26bbdaa docs: update walkthrough for Media Library implementation, 2fcb02d fix: map admin section toggles and menu items to exact index.html DOM elements, 40f7e13 fix(ui): suavizado y fusion de bordes y niebla inferior en la seccion hero (+31 more)
+Nodes (40): checkAuth(), loadModules(), 084f7f6 docs: add walkthrough documentation, 1549879 docs: update implementation plan for unified samurai admin and real-time live sync, 1f0cf3c feat(opiniones): modulo CRUD en admin, galeria corregida y seccion de redes sociales (Instagram, YouTube, Facebook), 26bbdaa docs: update walkthrough for Media Library implementation, 2fcb02d fix: map admin section toggles and menu items to exact index.html DOM elements, 40f7e13 fix(ui): suavizado y fusion de bordes y niebla inferior en la seccion hero (+32 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.05
@@ -57,19 +57,19 @@ Nodes (40): 101f3c3 fix(server): resolve storage dir auto-creation and internal 
 
 ### Community 2 - "Community 2"
 Cohesion: 0.07
-Nodes (35): 0390b13 docs: update walkthrough for smart environment provider detection, 0a8d211 feat(server): add scheduled auto-backup background worker, 0da1f79 refactor: remove unused local SQLite and Strapi adapters, UI selectors, and clean up codebase for pure PocketBase architecture, 13fc8df docs: update walkthrough for Hostinger deployment log analysis, 14d3d80 fix: resolve PocketBase collection 404 errors with auto-migration and remove stray AudioContext on page load, 17c5296 fix: eliminate 404 network fetch errors on static hosting by conditionally querying PocketBase when base URL is configured, 196097e fix: resolve PocketBase 400 Bad Request error by sending native json payload and adding site-config fallback, 215584e fix: restore PocketBase as default backend provider and enable Dual Sync for global persistence (+27 more)
+Nodes (38): 0390b13 docs: update walkthrough for smart environment provider detection, 0a8d211 feat(server): add scheduled auto-backup background worker, 0da1f79 refactor: remove unused local SQLite and Strapi adapters, UI selectors, and clean up codebase for pure PocketBase architecture, 13fc8df docs: update walkthrough for Hostinger deployment log analysis, 14d3d80 fix: resolve PocketBase collection 404 errors with auto-migration and remove stray AudioContext on page load, 17c5296 fix: eliminate 404 network fetch errors on static hosting by conditionally querying PocketBase when base URL is configured, 196097e fix: resolve PocketBase 400 Bad Request error by sending native json payload and adding site-config fallback, 1d552ed feat: integrate PocketBase as default provider with cross-platform (Linux/Windows) runner script and auto-seeding (+30 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.13
-Nodes (29): master, 02fe36c feat(mobile): position logo below parallax objects, adjust top margin, add left-to-right transparent glass sliding menu and left-aligned hamburger button, 16d9a6e docs: add design spec for admin backend, cms and user management, 1dae309 fix(menu): lock all menu text link colors to light white (#f8f9fa) with shadow in all modes for perfect legibility, 1fe3520 feat(audio): implement traditional Japanese Shakuhachi procedural flute audio engine with Zen temple reverb, pitch bends, and header toggle, 2228b27 feat(mobile): align Enso artwork to top below navbar and position logo typography cleanly below circle, 241dc91 docs: update walkthrough for home blog link navigation fix, 28cd58f docs: update walkthrough for PocketBase cross-platform service (+21 more)
-
-### Community 4 - "Community 4"
 Cohesion: 0.07
 Nodes (1): DatabaseService
 
-### Community 5 - "Community 5"
+### Community 4 - "Community 4"
 Cohesion: 0.13
 Nodes (1): PocketBaseAdapter
+
+### Community 5 - "Community 5"
+Cohesion: 0.14
+Nodes (27): master, 02fe36c feat(mobile): position logo below parallax objects, adjust top margin, add left-to-right transparent glass sliding menu and left-aligned hamburger button, 16d9a6e docs: add design spec for admin backend, cms and user management, 1dae309 fix(menu): lock all menu text link colors to light white (#f8f9fa) with shadow in all modes for perfect legibility, 1fe3520 feat(audio): implement traditional Japanese Shakuhachi procedural flute audio engine with Zen temple reverb, pitch bends, and header toggle, 2228b27 feat(mobile): align Enso artwork to top below navbar and position logo typography cleanly below circle, 241dc91 docs: update walkthrough for home blog link navigation fix, 28cd58f docs: update walkthrough for PocketBase cross-platform service (+19 more)
 
 ### Community 6 - "Community 6"
 Cohesion: 0.11
@@ -80,12 +80,12 @@ Cohesion: 0.12
 Nodes (7): 28ed22a feat(gpu): add /gpu configuration control panel with live real-time preview, cloud/particle/sky controls, user/global presets, and JSON export/import, DEFAULT_PRESET, gpuConfig, GpuConfigEngine, applySkyGradients(), updatePresetDropdown(), updateUIFromConfig()
 
 ### Community 8 - "Community 8"
-Cohesion: 0.11
-Nodes (20): 165b44d fix: make entire blog catalog cards and buttons clickable and support fallback slug/ID navigation, 1728be7 fix: use raw SQL UPDATE query in migration and pre-launch to forcefully set collection rules to NULL in SQLite, 6d400fe fix: update server.listen for Unix Socket support in Hostinger Node manager, 6fcf262 feat: add 1700000001_unlock_collections migration to unblock 403 collection rules in PocketBase, 992fa5d chore: update graphify manifest and sync repository, a3e96d1 fix: return 404 for missing static assets to prevent Strict MIME type checking error, d46f078 fix: resolve 502 Bad Gateway by adding multi-method zip extraction on Linux and zero-downtime reverse proxy fallback, dd3ad3e fix: use native node:sqlite module in start-pocketbase.js to unlock PocketBase collection rules on Hostinger (+12 more)
+Cohesion: 0.12
+Nodes (21): 102b502 feat: add dynamic top 3 posts widget to home and 2-stage blog catalog and single post reader view, 165b44d fix: make entire blog catalog cards and buttons clickable and support fallback slug/ID navigation, 16ee04a docs(plan): add implementation plan for backup system, 3b9e154 fix: resolve query string routing bug in server.js so blog.html?post=... opens blog.html instead of falling back to index.html, 452ac9f docs: update walkthrough for blog query parameter routing fix, 5d50db6 docs: update design spec for Blog catalog and reader views, 73225bf docs: update plan for Blog catalog and reader views, 9a29bbf fix: update Hero section action button from Oráculo Zen to Comprar (#contacto) (+13 more)
 
 ### Community 9 - "Community 9"
 Cohesion: 0.13
-Nodes (19): 102b502 feat: add dynamic top 3 posts widget to home and 2-stage blog catalog and single post reader view, 16ee04a docs(plan): add implementation plan for backup system, 1d552ed feat: integrate PocketBase as default provider with cross-platform (Linux/Windows) runner script and auto-seeding, 5d50db6 docs: update design spec for Blog catalog and reader views, 73225bf docs: update plan for Blog catalog and reader views, 9a29bbf fix: update Hero section action button from Oráculo Zen to Comprar (#contacto), 9db1bb9 docs: update walkthrough for 2-stage blog catalog and reader router, ad996eb docs(spec): add backup system design specification (+11 more)
+Nodes (17): 1728be7 fix: use raw SQL UPDATE query in migration and pre-launch to forcefully set collection rules to NULL in SQLite, 6d400fe fix: update server.listen for Unix Socket support in Hostinger Node manager, 6fcf262 feat: add 1700000001_unlock_collections migration to unblock 403 collection rules in PocketBase, 992fa5d chore: update graphify manifest and sync repository, a3e96d1 fix: return 404 for missing static assets to prevent Strict MIME type checking error, dd3ad3e fix: use native node:sqlite module in start-pocketbase.js to unlock PocketBase collection rules on Hostinger, binDir, binPath (+9 more)
 
 ### Community 10 - "Community 10"
 Cohesion: 0.15
@@ -122,9 +122,9 @@ Nodes (1): SakuraPetal
 ## Knowledge Gaps
 - **31 isolated node(s):** `__filename`, `__dirname`, `rootDir`, `binDir`, `dataDir` (+26 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **Thin community `Community 4`** (1 nodes): `DatabaseService`
+- **Thin community `Community 3`** (1 nodes): `DatabaseService`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 5`** (1 nodes): `PocketBaseAdapter`
+- **Thin community `Community 4`** (1 nodes): `PocketBaseAdapter`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Community 17`** (1 nodes): `SakuraPetal`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
@@ -132,17 +132,17 @@ Nodes (1): SakuraPetal
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `DatabaseService` connect `Community 4` to `Community 2`?**
+- **Why does `DatabaseService` connect `Community 3` to `Community 2`?**
   _High betweenness centrality (0.132) - this node is a cross-community bridge._
-- **Why does `PocketBaseAdapter` connect `Community 5` to `Community 2`?**
+- **Why does `PocketBaseAdapter` connect `Community 4` to `Community 2`?**
   _High betweenness centrality (0.126) - this node is a cross-community bridge._
 - **What connects `__filename`, `__dirname`, `rootDir` to the rest of the system?**
   _31 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.061952861952861954 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06038961038961039 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.05176470588235294 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.07422402159244265 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06852497096399536 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**
-  _Cohesion score 0.12807881773399016 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected._

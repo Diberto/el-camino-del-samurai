@@ -17,6 +17,7 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "adapters_pocketbase_adapter_pocketbaseadapter_deletepost": ".deletePost()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L288 | neighbors=[PocketBaseAdapter, .request()]
 - "adapters_pocketbase_adapter_pocketbaseadapter_getbackups": ".getBackups()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L561 | neighbors=[PocketBaseAdapter, .request()]
 - "adapters_pocketbase_adapter_pocketbaseadapter_getmedia": ".getMedia()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L307 | neighbors=[PocketBaseAdapter, .request()]
 - "adapters_pocketbase_adapter_pocketbaseadapter_getopinions": ".getOpinions()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L623 | neighbors=[PocketBaseAdapter, .request()]
@@ -56,7 +57,6 @@ one-sentence description — no prose, no markdown fences.
 - "script_applydynamicsettings": "applyDynamicSettings()" | kind=code-symbol | source=script.js:L48 | neighbors=[script.js, initGalleryLightbox()]
 - "script_initgallerylightbox": "initGalleryLightbox()" | kind=code-symbol | source=script.js:L186 | neighbors=[script.js, applyDynamicSettings()]
 - "script_sakurapetal_constructor": ".constructor()" | kind=code-symbol | source=script.js:L874 | neighbors=[SakuraPetal, .reset()]
-- "script_sakurapetal_update": ".update()" | kind=code-symbol | source=script.js:L899 | neighbors=[SakuraPetal, .reset()]
 
 ## Instructions
 

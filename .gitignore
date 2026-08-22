@@ -2,3 +2,9 @@ node_modules
 dist
 pb_data
 bin/pocketbase
+data/*.json
+!data/.gitkeep
+uploads/
+!uploads/.gitkeep
+public/uploads/
+!public/uploads/.gitkeep

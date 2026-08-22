@@ -9,9 +9,6 @@ your JSON answer to the answer file.
 You are documenting nodes in a knowledge graph.
 For each entry below, write ONE concise factual plain-language sentence
 describing what it is or does. Use only the provided context.
-For a code symbol (kind=code-symbol — a function, class, or constant),
-describe what the function/symbol does based on its name, source location
-and neighbors — e.g. "Resolves the configured ontology profile from graphify.yaml.".
 For an entity node (any other kind — e.g. a person, place, event, object),
 describe what the entity is and its role, grounded in its type, its
 relations (neighbors) and the provided citations/evidence — e.g.
@@ -42,6 +39,7 @@ one-sentence description — no prose, no markdown fences.
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@732199f569e19c5dd53482427a8e7fa9c22579d5": "732199f feat(clouds): transition from mathematical shaders to organic volumetri…" | kind=Commit | source=git | neighbors=[2f73c41 feat(sky): add dual background/…, master, 0e4583a checkpoint: volumetric clouds e…, script.js] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@773c0b57b6b27d4f2a7432fc7bef7fe501ce750d": "773c0b5 fix(assets): bundle WebP logo and cloud assets via ES imports in script…" | kind=Commit | source=git | neighbors=[master, d6f8411 fix(mobile): lock hero height t…, script.js, f7921ed fix(canvas): prevent InvalidSta…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@785f410c0adb3c19e5c6623f209dab3ae952f1ed": "785f410 fix(logo): maintain white typography logo in desktop mode for both day …" | kind=Commit | source=git | neighbors=[master, d7168e8 feat(design): implement white s…, script.js, c4adbee fix(header): preserve translate…] | lang=en
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@86a8e0f5eb72fe39c505d407666265d5fa6d3ded": "86a8e0f feat(gallery): area independiente en admin con subida directa, selector…" | kind=Commit | source=git | neighbors=[master, 94e9395 fix(static): decodificacion de …, gallery-manager.js, 90ed50e feat(admin): seccion y pestaña …] | lang=es
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@8a1ce7ee04a6b7ee454e1fa48426f3e96e394b29": "8a1ce7e fix: sanitize savePost payloads and auto-provision admin user on login …" | kind=Commit | source=git | neighbors=[7a6f4db docs: update walkthrough for fi…, pocketbase-adapter.js, master, 5961996 docs: update walkthrough for ad…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@9cb9cbc96db0a2fbbf82a62c13c96fcd96556f92": "9cb9cbc fix: resolve navigation conflict on home blog cards by using clean anch…" | kind=Commit | source=git | neighbors=[8cd8d91 docs: update walkthrough for bl…, master, 241dc91 docs: update walkthrough for ho…, script.js] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@9e88171030a8a3cc7363d918fcb3d6112e6ba2d1": "9e88171 Revert \"feat: petals 3D con Three.js y viento del mouse\"" | kind=Commit | source=git | neighbors=[69a07f6 feat: petals 3D con Three.js y …, master, 336d2f1 feat: viento del mouse mucho ma…, script.js] | lang=es
@@ -65,7 +63,6 @@ one-sentence description — no prose, no markdown fences.
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@f7921ed33cae053da033b8d7cf9e0f4b2a2bc058": "f7921ed fix(canvas): prevent InvalidStateError in drawImage by checking texture…" | kind=Commit | source=git | neighbors=[master, 773c0b5 fix(assets): bundle WebP logo a…, script.js, fae5c61 fix(logo): ensure maximum contr…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@fae5c61b9f378edb70689d0aa9ee1bd86c975405": "fae5c61 fix(logo): ensure maximum contrast and prevent overflow clipping for ty…" | kind=Commit | source=git | neighbors=[0405449 fix(logo): restore white typogr…, master, f7921ed fix(canvas): prevent InvalidSta…, script.js] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@ff284595efa6ba015f9a4fa4aa1facf7af635500": "ff28459 fix: smart environment provider detection to prevent PocketBase 404 net…" | kind=Commit | source=git | neighbors=[f2e9dd0 docs: update walkthrough for Ho…, master, 0390b13 docs: update walkthrough for sm…, db-service.js] | lang=en
-- "gpu_config": "gpu-config.js" | kind=code-symbol | source=gpu-config.js:L1 | neighbors=[28ed22a feat(gpu): add /gpu configurati…, DEFAULT_PRESET, gpuConfig, GpuConfigEngine] | lang=en
 
 ## Instructions
 
