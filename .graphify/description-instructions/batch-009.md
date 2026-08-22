@@ -17,6 +17,11 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "services_db_service_databaseservice_savesettings": ".saveSettings()" | kind=code-symbol | source=src/services/db-service.js:L16 | neighbors=[DatabaseService]
+- "services_db_service_databaseservice_saveuser": ".saveUser()" | kind=code-symbol | source=src/services/db-service.js:L24 | neighbors=[DatabaseService]
+- "services_db_service_databaseservice_setprovider": ".setProvider()" | kind=code-symbol | source=src/services/db-service.js:L10 | neighbors=[DatabaseService]
+- "services_db_service_databaseservice_updatemedia": ".updateMedia()" | kind=code-symbol | source=src/services/db-service.js:L21 | neighbors=[DatabaseService]
+- "services_db_service_databaseservice_uploadbackup": ".uploadBackup()" | kind=code-symbol | source=src/services/db-service.js:L33 | neighbors=[DatabaseService]
 - "services_db_service_databaseservice_uploadmedia": ".uploadMedia()" | kind=code-symbol | source=src/services/db-service.js:L25 | neighbors=[DatabaseService]
 - "services_sync_service_syncservice_broadcast": ".broadcast()" | kind=code-symbol | source=src/services/sync-service.js:L12 | neighbors=[SyncService]
 - "services_sync_service_syncservice_constructor": ".constructor()" | kind=code-symbol | source=src/services/sync-service.js:L3 | neighbors=[SyncService]

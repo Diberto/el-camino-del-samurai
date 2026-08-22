@@ -17,6 +17,11 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "adapters_pocketbase_adapter_pocketbaseadapter_getdownloadbackupurl": ".getDownloadBackupUrl()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L599 | neighbors=[PocketBaseAdapter]
+- "adapters_pocketbase_adapter_pocketbaseadapter_logout": ".logout()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L89 | neighbors=[PocketBaseAdapter]
+- "adapters_pocketbase_adapter_pocketbaseadapter_uploadbackup": ".uploadBackup()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L582 | neighbors=[PocketBaseAdapter]
+- "adapters_pocketbase_adapter_pocketbaseadapter_uploadmedia": ".uploadMedia()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L495 | neighbors=[PocketBaseAdapter]
+- "components_wysiwyg_editor_wysiwygeditor_getcontent": ".getContent()" | kind=code-symbol | source=src/admin/components/wysiwyg-editor.js:L185 | neighbors=[WysiwygEditor]
 - "components_wysiwyg_editor_wysiwygeditor_handleimagefile": ".handleImageFile()" | kind=code-symbol | source=src/admin/components/wysiwyg-editor.js:L174 | neighbors=[WysiwygEditor]
 - "gpu_config_gpuconfigengine_exportpresetjson": ".exportPresetJSON()" | kind=code-symbol | source=gpu-config.js:L133 | neighbors=[GpuConfigEngine]
 - "gpu_config_gpuconfigengine_resettodefault": ".resetToDefault()" | kind=code-symbol | source=gpu-config.js:L124 | neighbors=[GpuConfigEngine]
@@ -52,11 +57,6 @@ one-sentence description — no prose, no markdown fences.
 - "scripts_start_pocketbase_filename": "__filename" | kind=code-symbol | source=scripts/start-pocketbase.js:L8 | neighbors=[start-pocketbase.js]
 - "scripts_start_pocketbase_migrationsdir": "migrationsDir" | kind=code-symbol | source=scripts/start-pocketbase.js:L13 | neighbors=[start-pocketbase.js]
 - "scripts_start_pocketbase_rootdir": "rootDir" | kind=code-symbol | source=scripts/start-pocketbase.js:L10 | neighbors=[start-pocketbase.js]
-- "server_addsystemlog": "addSystemLog()" | kind=code-symbol | source=server.js:L53 | neighbors=[server.js]
-- "server_cleanoldbackups": "cleanOldBackups()" | kind=code-symbol | source=server.js:L353 | neighbors=[server.js]
-- "server_dirname": "__dirname" | kind=code-symbol | source=server.js:L10 | neighbors=[server.js]
-- "server_dist_dir": "DIST_DIR" | kind=code-symbol | source=server.js:L13 | neighbors=[server.js]
-- "server_filename": "__filename" | kind=code-symbol | source=server.js:L9 | neighbors=[server.js]
 
 ## Instructions
 

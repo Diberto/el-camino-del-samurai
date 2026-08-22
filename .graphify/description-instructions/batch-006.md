@@ -17,6 +17,8 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "adapters_pocketbase_adapter_pocketbaseadapter_savepost": ".savePost()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L242 | neighbors=[PocketBaseAdapter, .request()]
+- "adapters_pocketbase_adapter_pocketbaseadapter_savesettings": ".saveSettings()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L145 | neighbors=[PocketBaseAdapter, .request()]
 - "adapters_pocketbase_adapter_pocketbaseadapter_saveuser": ".saveUser()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L458 | neighbors=[PocketBaseAdapter, .request()]
 - "adapters_pocketbase_adapter_pocketbaseadapter_updatemedia": ".updateMedia()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L345 | neighbors=[PocketBaseAdapter, .request()]
 - "admin_admin_checkauth": "checkAuth()" | kind=code-symbol | source=src/admin/admin.js:L18 | neighbors=[admin.js, loadModules()]
@@ -31,6 +33,7 @@ one-sentence description — no prose, no markdown fences.
 - "gpu_panel_updatepresetdropdown": "updatePresetDropdown()" | kind=code-symbol | source=gpu-panel.js:L116 | neighbors=[gpu-panel.js, updateUIFromConfig()]
 - "modules_backup_manager_initbackupmanager": "initBackupManager()" | kind=code-symbol | source=src/admin/modules/backup-manager.js:L5 | neighbors=[admin.js, backup-manager.js]
 - "modules_blog_cms_manager_initblogmanager": "initBlogManager()" | kind=code-symbol | source=src/admin/modules/blog-cms-manager.js:L5 | neighbors=[admin.js, blog-cms-manager.js]
+- "modules_diagnostics_manager_initdiagnosticsmanager": "initDiagnosticsManager()" | kind=code-symbol | source=src/admin/modules/diagnostics-manager.js:L4 | neighbors=[admin.js, diagnostics-manager.js]
 - "modules_gpu_config_manager_initgpumanager": "initGpuManager()" | kind=code-symbol | source=src/admin/modules/gpu-config-manager.js:L4 | neighbors=[admin.js, gpu-config-manager.js]
 - "modules_media_manager_initmediamanager": "initMediaManager()" | kind=code-symbol | source=src/admin/modules/media-manager.js:L4 | neighbors=[admin.js, media-manager.js]
 - "modules_opiniones_manager_initopinionesmanager": "initOpinionesManager()" | kind=code-symbol | source=src/admin/modules/opiniones-manager.js:L3 | neighbors=[admin.js, opiniones-manager.js]
@@ -43,20 +46,17 @@ one-sentence description — no prose, no markdown fences.
 - "scripts_start_pocketbase_downloadfile": "downloadFile()" | kind=code-symbol | source=scripts/start-pocketbase.js:L37 | neighbors=[start-pocketbase.js, ensureBinary()]
 - "scripts_start_pocketbase_getdownloadurl": "getDownloadUrl()" | kind=code-symbol | source=scripts/start-pocketbase.js:L20 | neighbors=[start-pocketbase.js, ensureBinary()]
 - "scripts_start_pocketbase_main": "main()" | kind=code-symbol | source=scripts/start-pocketbase.js:L113 | neighbors=[start-pocketbase.js, ensureBinary()]
-- "server_checkpocketbasehealth": "checkPocketBaseHealth()" | kind=code-symbol | source=server.js:L659 | neighbors=[server.js, serveDiagnosticsHealth()]
-- "server_fetchcollectioncount": "fetchCollectionCount()" | kind=code-symbol | source=server.js:L631 | neighbors=[server.js, serveDiagnosticsHealth()]
-- "server_getdirectorysize": "getDirectorySize()" | kind=code-symbol | source=server.js:L607 | neighbors=[server.js, serveDiagnosticsHealth()]
+- "server_checkpocketbasehealth": "checkPocketBaseHealth()" | kind=code-symbol | source=server.js:L736 | neighbors=[server.js, serveDiagnosticsHealth()]
+- "server_fetchcollectioncount": "fetchCollectionCount()" | kind=code-symbol | source=server.js:L692 | neighbors=[server.js, serveDiagnosticsHealth()]
+- "server_generatesitemapxml": "generateSitemapXml()" | kind=code-symbol | source=server.js:L445 | neighbors=[server.js, serveDynamicSitemap()]
+- "server_getdirectorysize": "getDirectorySize()" | kind=code-symbol | source=server.js:L668 | neighbors=[server.js, serveDiagnosticsHealth()]
+- "server_servedynamicsitemap": "serveDynamicSitemap()" | kind=code-symbol | source=server.js:L465 | neighbors=[server.js, generateSitemapXml()]
 - "services_sync_service": "sync-service.js" | kind=code-symbol | source=src/services/sync-service.js:L1 | neighbors=[48d0413 feat: align admin shell with sa…, SyncService]
 - "utils_webp_converter": "webp-converter.js" | kind=code-symbol | source=src/utils/webp-converter.js:L1 | neighbors=[a4cbf51 feat: add WebP Canvas image con…, convertToWebP()]
 - "utils_youtube_embed_extractyoutubeid": "extractYouTubeId()" | kind=code-symbol | source=src/utils/youtube-embed.js:L2 | neighbors=[wysiwyg-editor.js, youtube-embed.js]
 - "utils_youtube_embed_generateyoutubeembedhtml": "generateYouTubeEmbedHTML()" | kind=code-symbol | source=src/utils/youtube-embed.js:L12 | neighbors=[wysiwyg-editor.js, youtube-embed.js]
 - "adapters_pocketbase_adapter_pocketbaseadapter_constructor": ".constructor()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L3 | neighbors=[PocketBaseAdapter]
 - "adapters_pocketbase_adapter_pocketbaseadapter_getcurrentuser": ".getCurrentUser()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L96 | neighbors=[PocketBaseAdapter]
-- "adapters_pocketbase_adapter_pocketbaseadapter_getdownloadbackupurl": ".getDownloadBackupUrl()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L599 | neighbors=[PocketBaseAdapter]
-- "adapters_pocketbase_adapter_pocketbaseadapter_logout": ".logout()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L89 | neighbors=[PocketBaseAdapter]
-- "adapters_pocketbase_adapter_pocketbaseadapter_uploadbackup": ".uploadBackup()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L582 | neighbors=[PocketBaseAdapter]
-- "adapters_pocketbase_adapter_pocketbaseadapter_uploadmedia": ".uploadMedia()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L495 | neighbors=[PocketBaseAdapter]
-- "components_wysiwyg_editor_wysiwygeditor_getcontent": ".getContent()" | kind=code-symbol | source=src/admin/components/wysiwyg-editor.js:L185 | neighbors=[WysiwygEditor]
 
 ## Instructions
 

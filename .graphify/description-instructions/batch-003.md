@@ -23,6 +23,7 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@02b0dd5bbd79b19b9286a398563140cdf6d72d76": "02b0dd5 fix(fuji): fill true peak tip coordinates (y:0..65 in layer 1) with sol…" | kind=Commit | source=git | neighbors=[0065d03 chore(cleanup): remove 97 unuse…, master, e8d36e0 revert(fuji): restore original …] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@02fe36cbc512e4baa12bc7e49b33a8f195422ac4": "02fe36c feat(mobile): position logo below parallax objects, adjust top margin, …" | kind=Commit | source=git | neighbors=[master, 2228b27 feat(mobile): align Enso artwor…, 0e4583a checkpoint: volumetric clouds e…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@0390b13bdec77b6f847f8544e67f0ccb238435f6": "0390b13 docs: update walkthrough for smart environment provider detection" | kind=Commit | source=git | neighbors=[master, 215584e fix: restore PocketBase as defa…, ff28459 fix: smart environment provider…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@05628146c25a62991f290a79a8d16a7d43ff60e3": "0562814 docs: update design spec for Media Library and blog image integration" | kind=Commit | source=git | neighbors=[master, f3c80ce docs: update plan for Media Lib…, 441d589 docs: update walkthrough for au…] | lang=en
@@ -62,7 +63,6 @@ one-sentence description — no prose, no markdown fences.
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@5d50db607e4f0ac9cd37bc870aca8404c5328bfa": "5d50db6 docs: update design spec for Blog catalog and reader views" | kind=Commit | source=git | neighbors=[master, 73225bf docs: update plan for Blog cata…, dcd0258 docs: update walkthrough for pu…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@603d5fe531667b664d0c9faab80b190b4d1ae954": "603d5fe fix(navbar): keep sticky menu styling identical and unified in all modes" | kind=Commit | source=git | neighbors=[master, 1dae309 fix(menu): lock all menu text l…, 90fc3cd feat(theme): extend Day/Night m…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@6114a72782c51df36fdc07f7168fdbb8cd114351": "6114a72 fix(navbar): lock desktop menu text link color to bright white (#f8f9fa…" | kind=Commit | source=git | neighbors=[111a100 fix(3d-book): repair 3d box geo…, master, cc310b4 feat(theme): implement interact…] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@61d9e5483e9ad7a86a84e695dbd92b521dd81274": "61d9e54 docs: update design spec for Unified Node App server" | kind=Commit | source=git | neighbors=[4cfca8e docs: update walkthrough for Po…, master, 21e2a6e docs: update plan for Unified N…] | lang=en
 
 ## Instructions
 

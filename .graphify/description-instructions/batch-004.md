@@ -23,6 +23,7 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@61d9e5483e9ad7a86a84e695dbd92b521dd81274": "61d9e54 docs: update design spec for Unified Node App server" | kind=Commit | source=git | neighbors=[4cfca8e docs: update walkthrough for Po…, master, 21e2a6e docs: update plan for Unified N…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@6cb0334d31de0c1de4f27a143e4338742849fdab": "6cb0334 docs: update walkthrough documentation for unified samurai admin and re…" | kind=Commit | source=git | neighbors=[48d0413 feat: align admin shell with sa…, master, 2fcb02d fix: map admin section toggles …] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@7179ed10f6596ce90f8ab7c0608a7696f2c96002": "7179ed1 feat(css): add styles for Day/Night skies, clouds drifting, and theme t…" | kind=Commit | source=git | neighbors=[master, e123a8e feat(js): add Day/Night theme m…, c8d7182 feat(html): add sky container m…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@73225bf46de61d298aae6f4d4826ccdf6cd7aad6": "73225bf docs: update plan for Blog catalog and reader views" | kind=Commit | source=git | neighbors=[5d50db6 docs: update design spec for Bl…, master, 102b502 feat: add dynamic top 3 posts w…] | lang=en
@@ -62,7 +63,6 @@ one-sentence description — no prose, no markdown fences.
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@d6f84111a925239648c691290857e13f9429bce6": "d6f8411 fix(mobile): lock hero height to 100vh with seamless bottom gradient ov…" | kind=Commit | source=git | neighbors=[773c0b5 fix(assets): bundle WebP logo a…, master, 5ae8c77 feat(mobile): maximize Enso cir…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@d7168e89998664540262286ae27dbc261dcee45a": "d7168e8 feat(design): implement white sticky navbar in day mode with bottom tra…" | kind=Commit | source=git | neighbors=[785f410 fix(logo): maintain white typog…, master, 52462a2 style(navbar): transition stick…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@dc40c3bb455e620e79e4c4821a3a389e2eb084c9": "dc40c3b docs: update walkthrough for final 404 elimination fix" | kind=Commit | source=git | neighbors=[17c5296 fix: eliminate 404 network fetc…, master, b4f93cc fix: bind server.js to 0.0.0.0 …] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@dcd02583257f018d08c4ad297c18c8a0e0157c0a": "dcd0258 docs: update walkthrough for public photos static path fix" | kind=Commit | source=git | neighbors=[5b744f6 fix: move blog and media photos…, master, 5d50db6 docs: update design spec for Bl…] | lang=en
 
 ## Instructions
 

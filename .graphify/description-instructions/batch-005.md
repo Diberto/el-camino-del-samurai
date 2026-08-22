@@ -26,6 +26,7 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@dcd02583257f018d08c4ad297c18c8a0e0157c0a": "dcd0258 docs: update walkthrough for public photos static path fix" | kind=Commit | source=git | neighbors=[5b744f6 fix: move blog and media photos…, master, 5d50db6 docs: update design spec for Bl…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@dcfdfe401e973845c8bef47efa30db098f9c803e": "dcfdfe4 docs: update walkthrough for scrollspy and menu button fixes" | kind=Commit | source=git | neighbors=[94208da fix: auto-sync section toggles …, master, 8334dc5 feat: add Samurai Blog section …] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@e127af57f29b721cea9b732c0ee9a9fe1d021025": "e127af5 docs: add implementation plan for admin backend, cms and user management" | kind=Commit | source=git | neighbors=[16d9a6e docs: add design spec for admin…, master, 9b5d761 feat: add DatabaseService abstr…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@e4a2547da7c672097af04e04aa35a50d7e84d9f9": "e4a2547 docs: update design spec for Strapi Headless CMS integration" | kind=Commit | source=git | neighbors=[1c33ae2 docs: update walkthrough for Bl…, master, 7710994 docs: update plan for Strapi He…] | lang=en
@@ -41,6 +42,7 @@ one-sentence description — no prose, no markdown fences.
 - "gpu_config_gpuconfigengine_loadcurrentconfig": ".loadCurrentConfig()" | kind=code-symbol | source=gpu-config.js:L58 | neighbors=[GpuConfigEngine, .constructor(), .mergeWithDefault()] | lang=en
 - "gpu_config_gpuconfigengine_savenewpreset": ".saveNewPreset()" | kind=code-symbol | source=gpu-config.js:L109 | neighbors=[GpuConfigEngine, .importPresetJSON(), .mergeWithDefault()] | lang=en
 - "gpu_panel_updateuifromconfig": "updateUIFromConfig()" | kind=code-symbol | source=gpu-panel.js:L80 | neighbors=[gpu-panel.js, applySkyGradients(), updatePresetDropdown()] | lang=en
+- "modules_diagnostics_manager": "diagnostics-manager.js" | kind=code-symbol | source=src/admin/modules/diagnostics-manager.js:L1 | neighbors=[cf9d01a feat(admin): modulo de diagnost…, initDiagnosticsManager(), dbService] | lang=en
 - "modules_user_manager": "user-manager.js" | kind=code-symbol | source=src/admin/modules/user-manager.js:L1 | neighbors=[c0749a0 feat: complete Admin Backend, C…, initUserManager(), dbService] | lang=en
 - "pb_migrations_1700000001_unlock_collections": "1700000001_unlock_collections.js" | kind=code-symbol | source=pb_migrations/1700000001_unlock_collections.js:L1 | neighbors=[1728be7 fix: use raw SQL UPDATE query i…, 1f0cf3c feat(opiniones): modulo CRUD en…, 6fcf262 feat: add 1700000001_unlock_col…] | lang=en
 - "public_blog_escapehtml": "escapeHTML()" | kind=code-symbol | source=src/public/blog.js:L91 | neighbors=[blog.js, renderCatalog(), renderSinglePost()] | lang=en
@@ -64,8 +66,6 @@ one-sentence description — no prose, no markdown fences.
 - "adapters_pocketbase_adapter_pocketbaseadapter_login": ".login()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L30 | neighbors=[PocketBaseAdapter, .request()] | lang=en
 - "adapters_pocketbase_adapter_pocketbaseadapter_restorebackup": ".restoreBackup()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L562 | neighbors=[PocketBaseAdapter, .request()] | lang=en
 - "adapters_pocketbase_adapter_pocketbaseadapter_saveopinion": ".saveOpinion()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L683 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_savepost": ".savePost()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L242 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_savesettings": ".saveSettings()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L145 | neighbors=[PocketBaseAdapter, .request()] | lang=en
 
 ## Instructions
 

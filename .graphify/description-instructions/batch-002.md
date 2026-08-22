@@ -26,6 +26,8 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@5b744f6f596eeba2a57685a65d5e430dd5aa564e": "5b744f6 fix: move blog and media photos to public/photos directory for clean st…" | kind=Commit | source=git | neighbors=[26bbdaa docs: update walkthrough for Me…, master, dcd0258 docs: update walkthrough for pu…, blog-cms-manager.js] | lang=en
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@5ea7b41f5e91d47da32b28104d590a483588e9a1": "5ea7b41 feat(clouds): integrate WebGPU dynamic atmospheric clouds shader with W…" | kind=Commit | source=git | neighbors=[master, c4fc262 fix(fuji): resolve fuji snow tr…, script.js, 7f08f53 fix(fuji): resolve fuji snow ca…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@69a07f6f6d1de13133ad6e285b218423e3305a36": "69a07f6 feat: petals 3D con Three.js y viento del mouse" | kind=Commit | source=git | neighbors=[master, 9e88171 Revert "feat: petals 3D con Thr…, script.js, e629f53 feat: petals afectados por vien…] | lang=es
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@6d2db3a7dfc0b5db471837b4fac2122e421a67c2": "6d2db3a feat(sakura): implement high-performance dynamic 3D-flipping sakura fal…" | kind=Commit | source=git | neighbors=[master, 514414b fix(sakura): restore original s…, script.js, 9c9ebe0 fix(fuji): resolve transparent …] | lang=pt
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@6d400fe2303dcbd4138bb6e2488bdf6580e766fe": "6d400fe fix: update server.listen for Unix Socket support in Hostinger Node man…" | kind=Commit | source=git | neighbors=[469434d fix: bypass redundant 502 auth …, master, 992fa5d chore: update graphify manifest…, server.js] | lang=en
@@ -60,12 +62,10 @@ one-sentence description — no prose, no markdown fences.
 - "gpu_config": "gpu-config.js" | kind=code-symbol | source=gpu-config.js:L1 | neighbors=[28ed22a feat(gpu): add /gpu configurati…, DEFAULT_PRESET, gpuConfig, GpuConfigEngine] | lang=en
 - "gpu_config_gpuconfigengine_mergewithdefault": ".mergeWithDefault()" | kind=code-symbol | source=gpu-config.js:L71 | neighbors=[GpuConfigEngine, .loadCurrentConfig(), .saveCurrentConfig(), .saveNewPreset()] | lang=en
 - "modules_backup_manager": "backup-manager.js" | kind=code-symbol | source=src/admin/modules/backup-manager.js:L1 | neighbors=[daecf0d feat(admin): add backup manager…, initBackupManager(), dbService, SyncService] | lang=en
-- "modules_media_manager": "media-manager.js" | kind=code-symbol | source=src/admin/modules/media-manager.js:L1 | neighbors=[fd36f9a feat: add Media Library Manager…, initMediaManager(), dbService, convertToWebP()] | lang=en
 - "modules_opiniones_manager": "opiniones-manager.js" | kind=code-symbol | source=src/admin/modules/opiniones-manager.js:L1 | neighbors=[1f0cf3c feat(opiniones): modulo CRUD en…, 6e84b4a feat(optimizations): mejoras de…, initOpinionesManager(), dbService] | lang=en
 - "scripts_start_pocketbase_ensurebinary": "ensureBinary()" | kind=code-symbol | source=scripts/start-pocketbase.js:L66 | neighbors=[start-pocketbase.js, downloadFile(), getDownloadUrl(), main()] | lang=en
-- "server_servediagnosticshealth": "serveDiagnosticsHealth()" | kind=code-symbol | source=server.js:L696 | neighbors=[server.js, checkPocketBaseHealth(), fetchCollectionCount(), getDirectorySize()] | lang=en
+- "server_servediagnosticshealth": "serveDiagnosticsHealth()" | kind=code-symbol | source=server.js:L773 | neighbors=[server.js, checkPocketBaseHealth(), fetchCollectionCount(), getDirectorySize()] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@0065d031aeccba19fb32bf3932e271e594b53998": "0065d03 chore(cleanup): remove 97 unused asset files, update metadata reference…" | kind=Commit | source=git | neighbors=[master, 02b0dd5 fix(fuji): fill true peak tip c…, c4fc262 fix(fuji): resolve fuji snow tr…] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@02b0dd5bbd79b19b9286a398563140cdf6d72d76": "02b0dd5 fix(fuji): fill true peak tip coordinates (y:0..65 in layer 1) with sol…" | kind=Commit | source=git | neighbors=[0065d03 chore(cleanup): remove 97 unuse…, master, e8d36e0 revert(fuji): restore original …] | lang=en
 
 ## Instructions
 
