@@ -26,6 +26,7 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "modules_opiniones_manager": "opiniones-manager.js" | kind=code-symbol | source=src/admin/modules/opiniones-manager.js:L1 | neighbors=[1f0cf3c feat(opiniones): modulo CRUD en…, 6e84b4a feat(optimizations): mejoras de…, initOpinionesManager(), dbService] | lang=en
 - "scripts_start_pocketbase_ensurebinary": "ensureBinary()" | kind=code-symbol | source=scripts/start-pocketbase.js:L66 | neighbors=[start-pocketbase.js, downloadFile(), getDownloadUrl(), main()] | lang=en
 - "server_servediagnosticshealth": "serveDiagnosticsHealth()" | kind=code-symbol | source=server.js:L773 | neighbors=[server.js, checkPocketBaseHealth(), fetchCollectionCount(), getDirectorySize()] | lang=en
 - "services_native_store_readstore": "readStore()" | kind=code-symbol | source=src/services/native-store.js:L150 | neighbors=[server.js, native-store.js, handleNativeDataStore(), ensureFile()] | lang=en
@@ -65,7 +66,6 @@ one-sentence description — no prose, no markdown fences.
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@5650d5b79491e3223229b24304a1fbdcb1fef96f": "5650d5b fix(sky): make mountain backdrop sky transparent so animated day/night …" | kind=Commit | source=git | neighbors=[master, 6e21877 feat(sky): convert red sun into…, f8e6b94 chore: complete Day/Night sky s…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@596199673ac88a0980bc4cb36a534e19b98f4bac": "5961996 docs: update walkthrough for admin auto-provisioning and payload saniti…" | kind=Commit | source=git | neighbors=[master, d46f078 fix: resolve 502 Bad Gateway by…, 8a1ce7e fix: sanitize savePost payloads…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@5ae8c77ec1ed6453b5deb5ca0d30afbd15fd8230": "5ae8c77 feat(mobile): maximize Enso circle artwork and typography logo size, re…" | kind=Commit | source=git | neighbors=[master, 54c49f4 feat(gallery): integrate author…, d6f8411 fix(mobile): lock hero height t…] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@5b9e94966328a099e66d0956ae9d0914228c91bd": "5b9e949 fix(fuji): reconstruct Mount Fuji snow peak with 100% opaque bright whi…" | kind=Commit | source=git | neighbors=[3f7d802 feat(sky): implement azure sky …, master, 9c9ebe0 fix(fuji): resolve transparent …] | lang=en
 
 ## Instructions
 

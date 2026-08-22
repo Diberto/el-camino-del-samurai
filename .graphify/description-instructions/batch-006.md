@@ -17,6 +17,7 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "adapters_pocketbase_adapter_pocketbaseadapter_getposts": ".getPosts()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L174 | neighbors=[PocketBaseAdapter, .request()]
 - "adapters_pocketbase_adapter_pocketbaseadapter_getsettings": ".getSettings()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L103 | neighbors=[PocketBaseAdapter, .request()]
 - "adapters_pocketbase_adapter_pocketbaseadapter_getsystemdiagnostics": ".getSystemDiagnostics()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L393 | neighbors=[PocketBaseAdapter, .request()]
 - "adapters_pocketbase_adapter_pocketbaseadapter_getusers": ".getUsers()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L438 | neighbors=[PocketBaseAdapter, .request()]
@@ -28,8 +29,8 @@ one-sentence description — no prose, no markdown fences.
 - "adapters_pocketbase_adapter_pocketbaseadapter_saveuser": ".saveUser()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L458 | neighbors=[PocketBaseAdapter, .request()]
 - "adapters_pocketbase_adapter_pocketbaseadapter_updatemedia": ".updateMedia()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L345 | neighbors=[PocketBaseAdapter, .request()]
 - "adapters_pocketbase_adapter_pocketbaseadapter_uploadmedia": ".uploadMedia()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L495 | neighbors=[PocketBaseAdapter, .request()]
-- "admin_admin_checkauth": "checkAuth()" | kind=code-symbol | source=src/admin/admin.js:L18 | neighbors=[admin.js, loadModules()]
-- "admin_admin_loadmodules": "loadModules()" | kind=code-symbol | source=src/admin/admin.js:L63 | neighbors=[admin.js, checkAuth()]
+- "admin_admin_checkauth": "checkAuth()" | kind=code-symbol | source=src/admin/admin.js:L19 | neighbors=[admin.js, loadModules()]
+- "admin_admin_loadmodules": "loadModules()" | kind=code-symbol | source=src/admin/admin.js:L64 | neighbors=[admin.js, checkAuth()]
 - "components_wysiwyg_editor_wysiwygeditor_constructor": ".constructor()" | kind=code-symbol | source=src/admin/components/wysiwyg-editor.js:L6 | neighbors=[WysiwygEditor, .render()]
 - "components_wysiwyg_editor_wysiwygeditor_render": ".render()" | kind=code-symbol | source=src/admin/components/wysiwyg-editor.js:L12 | neighbors=[WysiwygEditor, .constructor()]
 - "gpu_config_default_preset": "DEFAULT_PRESET" | kind=code-symbol | source=gpu-config.js:L5 | neighbors=[gpu-config.js, gpu-panel.js]
@@ -44,7 +45,7 @@ one-sentence description — no prose, no markdown fences.
 - "modules_gpu_config_manager_initgpumanager": "initGpuManager()" | kind=code-symbol | source=src/admin/modules/gpu-config-manager.js:L4 | neighbors=[admin.js, gpu-config-manager.js]
 - "modules_media_manager_initmediamanager": "initMediaManager()" | kind=code-symbol | source=src/admin/modules/media-manager.js:L4 | neighbors=[admin.js, media-manager.js]
 - "modules_opiniones_manager_initopinionesmanager": "initOpinionesManager()" | kind=code-symbol | source=src/admin/modules/opiniones-manager.js:L3 | neighbors=[admin.js, opiniones-manager.js]
-- "modules_sections_menu_manager_initsectionsmanager": "initSectionsManager()" | kind=code-symbol | source=src/admin/modules/sections-menu-manager.js:L41 | neighbors=[admin.js, sections-menu-manager.js]
+- "modules_sections_menu_manager_initsectionsmanager": "initSectionsManager()" | kind=code-symbol | source=src/admin/modules/sections-menu-manager.js:L32 | neighbors=[admin.js, sections-menu-manager.js]
 - "modules_user_manager_initusermanager": "initUserManager()" | kind=code-symbol | source=src/admin/modules/user-manager.js:L3 | neighbors=[admin.js, user-manager.js]
 - "public_blog_gettargetpostid": "getTargetPostId()" | kind=code-symbol | source=src/public/blog.js:L63 | neighbors=[blog.js, renderView()]
 - "public_blog_updatedynamicseo": "updateDynamicSEO()" | kind=code-symbol | source=src/public/blog.js:L13 | neighbors=[blog.js, renderView()]
@@ -56,7 +57,6 @@ one-sentence description — no prose, no markdown fences.
 - "scripts_start_pocketbase_getdownloadurl": "getDownloadUrl()" | kind=code-symbol | source=scripts/start-pocketbase.js:L20 | neighbors=[start-pocketbase.js, ensureBinary()]
 - "scripts_start_pocketbase_main": "main()" | kind=code-symbol | source=scripts/start-pocketbase.js:L113 | neighbors=[start-pocketbase.js, ensureBinary()]
 - "server_checkpocketbasehealth": "checkPocketBaseHealth()" | kind=code-symbol | source=server.js:L736 | neighbors=[server.js, serveDiagnosticsHealth()]
-- "server_fetchcollectioncount": "fetchCollectionCount()" | kind=code-symbol | source=server.js:L692 | neighbors=[server.js, serveDiagnosticsHealth()]
 
 ## Instructions
 

@@ -17,6 +17,7 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "server_fetchcollectioncount": "fetchCollectionCount()" | kind=code-symbol | source=server.js:L692 | neighbors=[server.js, serveDiagnosticsHealth()]
 - "server_generatesitemapxml": "generateSitemapXml()" | kind=code-symbol | source=server.js:L445 | neighbors=[server.js, serveDynamicSitemap()]
 - "server_getdirectorysize": "getDirectorySize()" | kind=code-symbol | source=server.js:L668 | neighbors=[server.js, serveDiagnosticsHealth()]
 - "server_servedynamicsitemap": "serveDynamicSitemap()" | kind=code-symbol | source=server.js:L465 | neighbors=[server.js, generateSitemapXml()]
@@ -56,7 +57,6 @@ one-sentence description — no prose, no markdown fences.
 - "script_initopinionsmanager": "initOpinionsManager()" | kind=code-symbol | source=script.js:L1363 | neighbors=[script.js]
 - "script_initstarfield": "initStarfield()" | kind=code-symbol | source=script.js:L521 | neighbors=[script.js]
 - "script_inittestimonialsslider": "initTestimonialsSlider()" | kind=code-symbol | source=script.js:L1159 | neighbors=[script.js]
-- "script_initvolumetricclouds": "initVolumetricClouds()" | kind=code-symbol | source=script.js:L353 | neighbors=[script.js]
 
 ## Instructions
 

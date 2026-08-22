@@ -1,5 +1,6 @@
 import { dbService } from '../services/db-service.js';
 import { initSectionsManager } from './modules/sections-menu-manager.js';
+import { initGalleryManager } from './modules/gallery-manager.js';
 import { initGpuManager } from './modules/gpu-config-manager.js';
 import { initBlogManager } from './modules/blog-cms-manager.js';
 import { initOpinionesManager } from './modules/opiniones-manager.js';
@@ -64,6 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const sectionsEl = document.getElementById('tab-sections');
       if (sectionsEl) await initSectionsManager(sectionsEl).catch(e => console.warn('Error loading sections manager:', e));
+
+      const galleryEl = document.getElementById('tab-gallery');
+      if (galleryEl) await initGalleryManager(galleryEl).catch(e => console.warn('Error loading gallery manager:', e));
 
       const gpuEl = document.getElementById('tab-gpu');
       if (gpuEl) await initGpuManager(gpuEl).catch(e => console.warn('Error loading gpu manager:', e));

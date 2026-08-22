@@ -29,22 +29,11 @@ const SECTION_URL_MAP = {
   contacto: '#contacto'
 };
 
-const DEFAULT_GALLERY_ITEMS = [
-  { id: 'gal_1', title: 'Castillo de Himeji y Fortalezas Feudales', tag: 'Patrimonio Histórico', image_url: 'photos/castillo_sengoku.webp', alt: 'Castillo de Himeji Japón', visible: true },
-  { id: 'gal_2', title: 'Meditación Zen en Templos de Kioto', tag: 'Naturaleza & Zen', image_url: 'photos/jardin_zen.webp', alt: 'Jardín Zen y templo en Kioto', visible: true },
-  { id: 'gal_3', title: 'Huellas de Miyamoto Musashi', tag: 'Ruta del Budo', image_url: 'photos/cueva_reigando.webp', alt: 'Cueva Reigando y estatuas de piedra', visible: true },
-  { id: 'gal_4', title: 'Entrenamiento Tradicional y Filosofía', tag: 'Artes Marciales', image_url: 'photos/orpianesi1.webp', alt: 'Jorge Orpianesi en dojo', visible: true },
-  { id: 'gal_5', title: 'Puentes y Pasos Legendarios', tag: 'Patrimonio Histórico', image_url: 'photos/WhatsApp Image 2026-06-25 at 16.10.29.webp', alt: 'Puentes históricos', visible: true },
-  { id: 'gal_6', title: 'Esculturas y Monumentos del Budo', tag: 'Cultura & Tradición', image_url: 'photos/WhatsApp Image 2026-06-25 at 16.10.35.webp', alt: 'Esculturas tradicionales', visible: true }
-];
-
 export async function initSectionsManager(container) {
-  const [loadedSettings, availableMedia] = await Promise.all([
-    dbService.getSettings() || {},
-    dbService.getMedia() || []
-  ]);
+  const loadedSettings = (await dbService.getSettings()) || {};
 
   const settings = {
+    ...loadedSettings,
     sections_toggle: {
       inicio: true,
       sinopsis: true,
@@ -79,8 +68,7 @@ export async function initSectionsManager(container) {
       facebook: { url: 'https://www.facebook.com/larutadelsamurai', handle: 'La Ruta del Samurái', desc: 'Comunidad de lectores, eventos, debates marciales y transmisiones especiales.', visible: true },
       whatsapp: { url: 'https://wa.me/5491100000000', handle: 'Contacto WhatsApp', desc: 'Consultas directas sobre ejemplares físicos autografiados y expediciones.', visible: false },
       ...(loadedSettings.social_links || {})
-    },
-    gallery_items: loadedSettings.gallery_items || DEFAULT_GALLERY_ITEMS
+    }
   };
 
   function escapeHTML(str) {
@@ -90,7 +78,7 @@ export async function initSectionsManager(container) {
 
   function renderUI() {
     container.innerHTML = `
-      <h2 class="samurai-title" style="margin-bottom: 1.5rem;">Control de Secciones, Menú, Redes y Galería</h2>
+      <h2 class="samurai-title" style="margin-bottom: 1.5rem;">Control de Secciones, Menú y Redes Sociales</h2>
       <div style="display: grid; gap: 2rem;">
         
         <!-- Secciones de la Landing Page -->
@@ -121,67 +109,6 @@ export async function initSectionsManager(container) {
             `).join('')}
           </div>
           <button id="add-menu-item-btn" class="btn-samurai-outline" style="margin-top:1rem; cursor:pointer;">+ Agregar Ítem al Menú</button>
-        </div>
-
-        <!-- Galería Fotográfica Interactiva -->
-        <div class="samurai-card" style="padding: 1.5rem;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:1rem;">
-            <div>
-              <h3 class="samurai-title" style="font-size: 1.2rem; margin:0;">📸 Galería Fotográfica (#galeria)</h3>
-              <p style="color:var(--text-secondary); font-size:0.85rem; margin:0.3rem 0 0 0;">Personaliza las fotos, títulos, categorías (tags) y textos SEO de la galería interactiva:</p>
-            </div>
-            <button id="add-gallery-item-btn" class="btn-samurai-outline" style="padding:0.5rem 1rem; font-size:0.85rem; cursor:pointer;">➕ Añadir Foto a la Galería</button>
-          </div>
-
-          <div id="gallery-items-list" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:1.2rem;">
-            ${settings.gallery_items.map((item) => `
-              <div class="samurai-card gal-card-editor" style="padding:1rem; background:rgba(0,0,0,0.35); border:1px solid rgba(255,255,255,0.08); display:flex; flex-direction:column; gap:0.6rem; position:relative;" data-id="${item.id}">
-                <button type="button" class="del-gal-item-btn" data-id="${item.id}" style="position:absolute; top:0.6rem; right:0.6rem; background:rgba(218,68,83,0.2); border:1px solid #da4453; color:#ff8585; border-radius:4px; cursor:pointer; font-size:0.75rem; padding:0.2rem 0.5rem; z-index:2;">🗑️ Eliminar</button>
-                
-                <div style="width:100%; height:140px; background:#111; border-radius:4px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); position:relative;">
-                  <img src="${escapeHTML(item.image_url)}" class="gal-preview-img" data-id="${item.id}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='photos/cueva_reigando.webp'">
-                </div>
-
-                <div>
-                  <label style="font-size:0.75rem; color:var(--text-secondary); display:block; margin-bottom:0.2rem;">Título de la Foto</label>
-                  <input type="text" class="gal-title-input" data-id="${item.id}" value="${escapeHTML(item.title)}" placeholder="Título descriptivo..." style="width:100%; padding:0.5rem; background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:4px; font-size:0.85rem;">
-                </div>
-
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
-                  <div>
-                    <label style="font-size:0.75rem; color:var(--text-secondary); display:block; margin-bottom:0.2rem;">Categoría / Tag</label>
-                    <input type="text" class="gal-tag-input" data-id="${item.id}" value="${escapeHTML(item.tag)}" placeholder="Ej: Ruta del Budo" style="width:100%; padding:0.5rem; background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:4px; font-size:0.85rem;">
-                  </div>
-                  <div>
-                    <label style="font-size:0.75rem; color:var(--text-secondary); display:block; margin-bottom:0.2rem;">Visibilidad</label>
-                    <label style="display:flex; align-items:center; gap:0.3rem; color:var(--text-primary); font-size:0.85rem; height:34px; cursor:pointer;">
-                      <input type="checkbox" class="gal-vis-chk" data-id="${item.id}" ${item.visible ? 'checked' : ''} style="accent-color:var(--accent-red);"> Activa
-                    </label>
-                  </div>
-                </div>
-
-                <div>
-                  <label style="font-size:0.75rem; color:var(--text-secondary); display:block; margin-bottom:0.2rem;">URL de Imagen</label>
-                  <input type="text" class="gal-url-input" data-id="${item.id}" value="${escapeHTML(item.image_url)}" placeholder="photos/... o uploads/..." style="width:100%; padding:0.5rem; background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:4px; font-size:0.8rem;">
-                </div>
-
-                ${availableMedia && availableMedia.length > 0 ? `
-                  <div>
-                    <label style="font-size:0.75rem; color:var(--accent-gold); display:block; margin-bottom:0.2rem;">O seleccionar de Galería de Medios:</label>
-                    <select class="gal-media-select" data-id="${item.id}" style="width:100%; padding:0.4rem; background:#1a1a1a; border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:4px; font-size:0.8rem;">
-                      <option value="">-- Seleccionar imagen subida --</option>
-                      ${availableMedia.map(m => `<option value="${escapeHTML(m.url)}" ${m.url === item.image_url ? 'selected' : ''}>${escapeHTML(m.name)} (${escapeHTML(m.url)})</option>`).join('')}
-                    </select>
-                  </div>
-                ` : ''}
-
-                <div>
-                  <label style="font-size:0.75rem; color:var(--text-secondary); display:block; margin-bottom:0.2rem;">Texto Alt (SEO)</label>
-                  <input type="text" class="gal-alt-input" data-id="${item.id}" value="${escapeHTML(item.alt || '')}" placeholder="Descripción precisa para buscadores..." style="width:100%; padding:0.5rem; background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:4px; font-size:0.8rem;">
-                </div>
-              </div>
-            `).join('')}
-          </div>
         </div>
 
         <!-- Configuración de Redes Sociales -->
@@ -251,56 +178,7 @@ export async function initSectionsManager(container) {
       renderUI();
     });
 
-    document.getElementById('add-gallery-item-btn').addEventListener('click', () => {
-      syncCurrentFormState();
-      const newId = 'gal_' + Date.now();
-      settings.gallery_items.push({
-        id: newId,
-        title: 'Nueva Foto',
-        tag: 'Ruta del Budo',
-        image_url: 'photos/cueva_reigando.webp',
-        alt: 'Fotografía en Japón',
-        visible: true
-      });
-      renderUI();
-    });
-
-    container.querySelectorAll('.del-gal-item-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const id = e.target.dataset.id;
-        if (confirm('¿Eliminar esta foto de la galería?')) {
-          syncCurrentFormState();
-          settings.gallery_items = settings.gallery_items.filter(g => g.id !== id);
-          renderUI();
-        }
-      });
-    });
-
-    // Gallery Select Media Handler
-    container.querySelectorAll('.gal-media-select').forEach(sel => {
-      sel.addEventListener('change', (e) => {
-        const id = e.target.dataset.id;
-        const selectedUrl = e.target.value;
-        if (selectedUrl) {
-          const urlInput = container.querySelector(`.gal-url-input[data-id="${id}"]`);
-          const previewImg = container.querySelector(`.gal-preview-img[data-id="${id}"]`);
-          if (urlInput) urlInput.value = selectedUrl;
-          if (previewImg) previewImg.src = selectedUrl;
-        }
-      });
-    });
-
-    // Gallery URL live preview change
-    container.querySelectorAll('.gal-url-input').forEach(input => {
-      input.addEventListener('input', (e) => {
-        const id = e.target.dataset.id;
-        const previewImg = container.querySelector(`.gal-preview-img[data-id="${id}"]`);
-        if (previewImg) previewImg.src = e.target.value;
-      });
-    });
-
     function syncCurrentFormState() {
-      // Menu items
       settings.navigation_menu = settings.navigation_menu.map(item => {
         const labelInput = container.querySelector(`input[data-key="label"][data-id="${item.id}"]`);
         const urlInput = container.querySelector(`input[data-key="url"][data-id="${item.id}"]`);
@@ -309,23 +187,6 @@ export async function initSectionsManager(container) {
           id: item.id,
           label: labelInput ? labelInput.value : item.label,
           url: urlInput ? urlInput.value : item.url,
-          visible: visChk ? visChk.checked : item.visible
-        };
-      });
-
-      // Gallery items
-      settings.gallery_items = settings.gallery_items.map(item => {
-        const titleInput = container.querySelector(`.gal-title-input[data-id="${item.id}"]`);
-        const tagInput = container.querySelector(`.gal-tag-input[data-id="${item.id}"]`);
-        const urlInput = container.querySelector(`.gal-url-input[data-id="${item.id}"]`);
-        const altInput = container.querySelector(`.gal-alt-input[data-id="${item.id}"]`);
-        const visChk = container.querySelector(`.gal-vis-chk[data-id="${item.id}"]`);
-        return {
-          id: item.id,
-          title: titleInput ? titleInput.value : item.title,
-          tag: tagInput ? tagInput.value : item.tag,
-          image_url: urlInput ? urlInput.value : item.image_url,
-          alt: altInput ? altInput.value : item.alt,
           visible: visChk ? visChk.checked : item.visible
         };
       });
@@ -357,8 +218,12 @@ export async function initSectionsManager(container) {
       settings.sections_toggle = updatedToggles;
       settings.social_links = updatedSocial;
 
-      await dbService.saveSettings(settings);
-      syncService.broadcast('SETTINGS_UPDATED', settings);
+      // Ensure latest settings from server are merged
+      const currentFullSettings = (await dbService.getSettings()) || {};
+      const mergedSettings = { ...currentFullSettings, ...settings };
+
+      await dbService.saveSettings(mergedSettings);
+      syncService.broadcast('SETTINGS_UPDATED', mergedSettings);
 
       document.getElementById('save-sections-msg').textContent = '¡Sincronizado exitosamente con la Landing Page!';
       setTimeout(() => { document.getElementById('save-sections-msg').textContent = ''; }, 3000);

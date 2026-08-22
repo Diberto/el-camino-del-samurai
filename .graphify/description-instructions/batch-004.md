@@ -23,6 +23,7 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@5b9e94966328a099e66d0956ae9d0914228c91bd": "5b9e949 fix(fuji): reconstruct Mount Fuji snow peak with 100% opaque bright whi…" | kind=Commit | source=git | neighbors=[3f7d802 feat(sky): implement azure sky …, master, 9c9ebe0 fix(fuji): resolve transparent …] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@5cec31a68f6197daddbd54b047f7b51f9ab55d64": "5cec31a docs: update walkthrough for exclusive PocketBase provider and public A…" | kind=Commit | source=git | neighbors=[master, 0da1f79 refactor: remove unused local S…, 8656858 feat: make PocketBase exclusive…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@5d50db607e4f0ac9cd37bc870aca8404c5328bfa": "5d50db6 docs: update design spec for Blog catalog and reader views" | kind=Commit | source=git | neighbors=[master, 73225bf docs: update plan for Blog cata…, dcd0258 docs: update walkthrough for pu…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@603d5fe531667b664d0c9faab80b190b4d1ae954": "603d5fe fix(navbar): keep sticky menu styling identical and unified in all modes" | kind=Commit | source=git | neighbors=[master, 1dae309 fix(menu): lock all menu text l…, 90fc3cd feat(theme): extend Day/Night m…] | lang=en
@@ -62,7 +63,6 @@ one-sentence description — no prose, no markdown fences.
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@c4fc262b2584b2a80f8dbebe91857889f8251465": "c4fc262 fix(fuji): resolve fuji snow transparency using precise scanline fill b…" | kind=Commit | source=git | neighbors=[5ea7b41 feat(clouds): integrate WebGPU …, master, 0065d03 chore(cleanup): remove 97 unuse…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@c8d71822b8acf9308f72f0e77b7ffc6b00c2b68c": "c8d7182 feat(html): add sky container markup and theme toggle button" | kind=Commit | source=git | neighbors=[3e1faf4 add implementation plan for ani…, master, 7179ed1 feat(css): add styles for Day/N…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@c9842faa45f5ab5cd3d8df179549566473365e8b": "c9842fa docs: update walkthrough for final PocketBase exclusivity verification" | kind=Commit | source=git | neighbors=[4a8d488 fix: HTML structure in admin.ht…, master, 196097e fix: resolve PocketBase 400 Bad…] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@cbacb099be765c50f4aa2c3aa2441f35841c48a8": "cbacb09 fix(hero): contain hero logo and artwork within 1200px max-width center…" | kind=Commit | source=git | neighbors=[master, 443707e feat(parallax): restrict deskto…, e0b581f feat(parallax): restrict parall…] | lang=en
 
 ## Instructions
 

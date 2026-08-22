@@ -17,6 +17,7 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "script_initvolumetricclouds": "initVolumetricClouds()" | kind=code-symbol | source=script.js:L353 | neighbors=[script.js]
 - "script_renderhomeblogposts": "renderHomeBlogPosts()" | kind=code-symbol | source=script.js:L239 | neighbors=[script.js]
 - "script_sakurapetal_draw": ".draw()" | kind=code-symbol | source=script.js:L950 | neighbors=[SakuraPetal]
 - "scripts_start_pocketbase_bindir": "binDir" | kind=code-symbol | source=scripts/start-pocketbase.js:L11 | neighbors=[start-pocketbase.js]
@@ -56,7 +57,6 @@ one-sentence description — no prose, no markdown fences.
 - "services_db_service_databaseservice_getdownloadbackupurl": ".getDownloadBackupUrl()" | kind=code-symbol | source=src/services/db-service.js:L34 | neighbors=[DatabaseService]
 - "services_db_service_databaseservice_getmedia": ".getMedia()" | kind=code-symbol | source=src/services/db-service.js:L20 | neighbors=[DatabaseService]
 - "services_db_service_databaseservice_getopinions": ".getOpinions()" | kind=code-symbol | source=src/services/db-service.js:L26 | neighbors=[DatabaseService]
-- "services_db_service_databaseservice_getposts": ".getPosts()" | kind=code-symbol | source=src/services/db-service.js:L17 | neighbors=[DatabaseService]
 
 ## Instructions
 
