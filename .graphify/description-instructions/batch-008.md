@@ -17,6 +17,15 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "script_renderhomeblogposts": "renderHomeBlogPosts()" | kind=code-symbol | source=script.js:L239 | neighbors=[script.js]
+- "script_sakurapetal_draw": ".draw()" | kind=code-symbol | source=script.js:L950 | neighbors=[SakuraPetal]
+- "scripts_start_pocketbase_bindir": "binDir" | kind=code-symbol | source=scripts/start-pocketbase.js:L11 | neighbors=[start-pocketbase.js]
+- "scripts_start_pocketbase_binpath": "binPath" | kind=code-symbol | source=scripts/start-pocketbase.js:L16 | neighbors=[start-pocketbase.js]
+- "scripts_start_pocketbase_datadir": "dataDir" | kind=code-symbol | source=scripts/start-pocketbase.js:L12 | neighbors=[start-pocketbase.js]
+- "scripts_start_pocketbase_dirname": "__dirname" | kind=code-symbol | source=scripts/start-pocketbase.js:L9 | neighbors=[start-pocketbase.js]
+- "scripts_start_pocketbase_filename": "__filename" | kind=code-symbol | source=scripts/start-pocketbase.js:L8 | neighbors=[start-pocketbase.js]
+- "scripts_start_pocketbase_migrationsdir": "migrationsDir" | kind=code-symbol | source=scripts/start-pocketbase.js:L13 | neighbors=[start-pocketbase.js]
+- "scripts_start_pocketbase_rootdir": "rootDir" | kind=code-symbol | source=scripts/start-pocketbase.js:L10 | neighbors=[start-pocketbase.js]
 - "server_addsystemlog": "addSystemLog()" | kind=code-symbol | source=server.js:L86 | neighbors=[server.js]
 - "server_checkpbliveness": "checkPbLiveness()" | kind=code-symbol | source=server.js:L22 | neighbors=[server.js]
 - "server_cleanoldbackups": "cleanOldBackups()" | kind=code-symbol | source=server.js:L387 | neighbors=[server.js]
@@ -48,15 +57,6 @@ one-sentence description — no prose, no markdown fences.
 - "services_db_service_databaseservice_getmedia": ".getMedia()" | kind=code-symbol | source=src/services/db-service.js:L20 | neighbors=[DatabaseService]
 - "services_db_service_databaseservice_getopinions": ".getOpinions()" | kind=code-symbol | source=src/services/db-service.js:L26 | neighbors=[DatabaseService]
 - "services_db_service_databaseservice_getposts": ".getPosts()" | kind=code-symbol | source=src/services/db-service.js:L17 | neighbors=[DatabaseService]
-- "services_db_service_databaseservice_getprovider": ".getProvider()" | kind=code-symbol | source=src/services/db-service.js:L9 | neighbors=[DatabaseService]
-- "services_db_service_databaseservice_getsettings": ".getSettings()" | kind=code-symbol | source=src/services/db-service.js:L15 | neighbors=[DatabaseService]
-- "services_db_service_databaseservice_getsystemdiagnostics": ".getSystemDiagnostics()" | kind=code-symbol | source=src/services/db-service.js:L35 | neighbors=[DatabaseService]
-- "services_db_service_databaseservice_getusers": ".getUsers()" | kind=code-symbol | source=src/services/db-service.js:L23 | neighbors=[DatabaseService]
-- "services_db_service_databaseservice_login": ".login()" | kind=code-symbol | source=src/services/db-service.js:L12 | neighbors=[DatabaseService]
-- "services_db_service_databaseservice_logout": ".logout()" | kind=code-symbol | source=src/services/db-service.js:L13 | neighbors=[DatabaseService]
-- "services_db_service_databaseservice_restorebackup": ".restoreBackup()" | kind=code-symbol | source=src/services/db-service.js:L31 | neighbors=[DatabaseService]
-- "services_db_service_databaseservice_saveopinion": ".saveOpinion()" | kind=code-symbol | source=src/services/db-service.js:L27 | neighbors=[DatabaseService]
-- "services_db_service_databaseservice_savepost": ".savePost()" | kind=code-symbol | source=src/services/db-service.js:L18 | neighbors=[DatabaseService]
 
 ## Instructions
 

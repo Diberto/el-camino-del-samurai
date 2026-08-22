@@ -156,10 +156,85 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        if (settings.gallery_items && Array.isArray(settings.gallery_items)) {
+            const galleryGrid = document.querySelector('#galeria .gallery-grid');
+            if (galleryGrid) {
+                const activeItems = settings.gallery_items.filter(item => item && item.visible !== false);
+                if (activeItems.length > 0) {
+                    galleryGrid.innerHTML = activeItems.map(item => `
+                        <div class="gallery-card" data-src="${escapeHTML(item.image_url)}" data-title="${escapeHTML(item.title)}" data-tag="${escapeHTML(item.tag || '')}">
+                            <div class="gallery-thumb-wrapper">
+                                <img src="${escapeHTML(item.image_url)}" alt="${escapeHTML(item.alt || item.title)}" loading="lazy" onerror="this.src='photos/cueva_reigando.webp'">
+                                <div class="gallery-overlay">
+                                    ${item.tag ? `<span class="gallery-tag">${escapeHTML(item.tag)}</span>` : ''}
+                                    <h4 class="gallery-card-title">${escapeHTML(item.title)}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+        }
+
+        initGalleryLightbox();
+
         if (settings.gpu_config) {
             Object.assign(gpuConfig, settings.gpu_config);
         }
     }
+
+    function initGalleryLightbox() {
+        const cards = document.querySelectorAll('#galeria .gallery-card');
+        let lightbox = document.getElementById('samurai-gallery-lightbox');
+        if (!lightbox) {
+            lightbox = document.createElement('div');
+            lightbox.id = 'samurai-gallery-lightbox';
+            lightbox.className = 'gallery-lightbox';
+            lightbox.innerHTML = `
+                <div class="lightbox-backdrop"></div>
+                <div class="lightbox-container">
+                    <button class="lightbox-close" aria-label="Cerrar">&times;</button>
+                    <img src="" alt="Vista previa de galería">
+                    <div class="lightbox-info">
+                        <div class="lightbox-tag"></div>
+                        <h3 class="lightbox-title" style="color:#fff; margin:0.3rem 0 0 0; font-size:1.1rem;"></h3>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(lightbox);
+
+            const close = () => lightbox.classList.remove('active');
+            lightbox.querySelector('.lightbox-close').addEventListener('click', close);
+            lightbox.querySelector('.lightbox-backdrop').addEventListener('click', close);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && lightbox.classList.contains('active')) close();
+            });
+        }
+
+        cards.forEach(card => {
+            card.style.cursor = 'pointer';
+            card.onclick = () => {
+                const src = card.getAttribute('data-src') || card.querySelector('img')?.src;
+                const title = card.getAttribute('data-title') || card.querySelector('.gallery-card-title')?.textContent || '';
+                const tag = card.getAttribute('data-tag') || card.querySelector('.gallery-tag')?.textContent || '';
+                
+                const imgEl = lightbox.querySelector('.lightbox-container img');
+                const titleEl = lightbox.querySelector('.lightbox-title');
+                const tagEl = lightbox.querySelector('.lightbox-tag');
+
+                if (imgEl) imgEl.src = src;
+                if (titleEl) titleEl.textContent = title;
+                if (tagEl) {
+                    tagEl.textContent = tag;
+                    tagEl.style.display = tag ? 'inline-block' : 'none';
+                }
+                lightbox.classList.add('active');
+            };
+        });
+    }
+
+    // Inicializar lightbox para las tarjetas iniciales
+    setTimeout(initGalleryLightbox, 300);
 
     async function renderHomeBlogPosts() {
         const grid = document.getElementById('home-blog-posts-grid');

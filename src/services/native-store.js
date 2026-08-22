@@ -41,7 +41,15 @@ const DEFAULT_SETTINGS = {
     youtube: { url: 'https://www.youtube.com/@larutadelsamurai', handle: 'La Ruta del Samurái', desc: 'Documentales de viaje, técnicas de artes marciales y charlas sobre filosofía samurái.', visible: true },
     facebook: { url: 'https://www.facebook.com/larutadelsamurai', handle: 'La Ruta del Samurái', desc: 'Comunidad de lectores, eventos, debates marciales y transmisiones especiales.', visible: true },
     whatsapp: { url: 'https://wa.me/5491100000000', handle: 'Contacto WhatsApp', desc: 'Consultas directas sobre ejemplares físicos autografiados y expediciones.', visible: false }
-  }
+  },
+  gallery_items: [
+    { id: 'gal_1', title: 'Castillo de Himeji y Fortalezas Feudales', tag: 'Patrimonio Histórico', image_url: 'photos/castillo_sengoku.webp', alt: 'Castillo de Himeji Japón', visible: true },
+    { id: 'gal_2', title: 'Meditación Zen en Templos de Kioto', tag: 'Naturaleza & Zen', image_url: 'photos/jardin_zen.webp', alt: 'Jardín Zen y templo en Kioto', visible: true },
+    { id: 'gal_3', title: 'Huellas de Miyamoto Musashi', tag: 'Ruta del Budo', image_url: 'photos/cueva_reigando.webp', alt: 'Cueva Reigando y estatuas de piedra', visible: true },
+    { id: 'gal_4', title: 'Entrenamiento Tradicional y Filosofía', tag: 'Artes Marciales', image_url: 'photos/orpianesi1.webp', alt: 'Jorge Orpianesi en dojo', visible: true },
+    { id: 'gal_5', title: 'Puentes y Pasos Legendarios', tag: 'Patrimonio Histórico', image_url: 'photos/WhatsApp Image 2026-06-25 at 16.10.29.webp', alt: 'Puentes históricos', visible: true },
+    { id: 'gal_6', title: 'Esculturas y Monumentos del Budo', tag: 'Cultura & Tradición', image_url: 'photos/WhatsApp Image 2026-06-25 at 16.10.35.webp', alt: 'Esculturas tradicionales', visible: true }
+  ]
 };
 
 const DEFAULT_POSTS = [
@@ -382,14 +390,49 @@ export async function handleNativeDataStore(req, res, pathname) {
 
     if (method === 'POST') {
       const body = await readBody(req);
+      let finalUrl = body.url || '';
+      let fileSizeStr = body.size ? (typeof body.size === 'number' ? `${(body.size / 1024).toFixed(1)} KB` : body.size) : 'WebP';
+
+      if (body.data || body.file_base64 || body.dataUrl) {
+        try {
+          const rawBase64 = body.data || body.file_base64 || body.dataUrl;
+          const cleanBase64 = rawBase64.includes(';base64,') ? rawBase64.split(';base64,')[1] : rawBase64;
+          const buffer = Buffer.from(cleanBase64, 'base64');
+          
+          const originalName = body.name || body.filename || 'image';
+          const cleanName = originalName
+            .toLowerCase()
+            .replace(/[^a-z0-9_\-\.]/g, '_')
+            .replace(/\.[^/.]+$/, '');
+          const filename = `upload_${Date.now()}_${cleanName}.webp`;
+
+          const publicUploads = path.join(rootDir, 'public', 'uploads');
+          const distUploads = path.join(rootDir, 'dist', 'uploads');
+          if (!fs.existsSync(publicUploads)) fs.mkdirSync(publicUploads, { recursive: true });
+          if (!fs.existsSync(distUploads)) fs.mkdirSync(distUploads, { recursive: true });
+
+          fs.writeFileSync(path.join(publicUploads, filename), buffer);
+          try { fs.writeFileSync(path.join(distUploads, filename), buffer); } catch {}
+
+          finalUrl = `uploads/${filename}`;
+          fileSizeStr = `${(buffer.length / 1024).toFixed(1)} KB`;
+        } catch (errUpload) {
+          console.error('Error al guardar archivo en uploads/:', errUpload.message);
+        }
+      }
+
+      if (!finalUrl) {
+        finalUrl = (body.dataUrl && body.dataUrl.startsWith('data:')) ? body.dataUrl : 'photos/cueva_reigando.webp';
+      }
+
       const newItem = {
         id: 'media_' + Date.now(),
         name: body.name || 'Imagen WebP',
         alt: body.alt || body.name || '',
         caption: body.caption || '',
-        url: body.url || 'photos/cueva_reigando.webp',
+        url: finalUrl,
         type: body.type || 'image/webp',
-        size: body.size || 'WebP',
+        size: fileSizeStr,
         created: new Date().toISOString()
       };
       media.unshift(newItem);

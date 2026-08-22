@@ -9,6 +9,9 @@ your JSON answer to the answer file.
 You are documenting nodes in a knowledge graph.
 For each entry below, write ONE concise factual plain-language sentence
 describing what it is or does. Use only the provided context.
+For a code symbol (kind=code-symbol — a function, class, or constant),
+describe what the function/symbol does based on its name, source location
+and neighbors — e.g. "Resolves the configured ontology profile from graphify.yaml.".
 For an entity node (any other kind — e.g. a person, place, event, object),
 describe what the entity is and its role, grounded in its type, its
 relations (neighbors) and the provided citations/evidence — e.g.
@@ -23,6 +26,10 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "scripts_start_pocketbase_ensurebinary": "ensureBinary()" | kind=code-symbol | source=scripts/start-pocketbase.js:L66 | neighbors=[start-pocketbase.js, downloadFile(), getDownloadUrl(), main()] | lang=en
+- "server_servediagnosticshealth": "serveDiagnosticsHealth()" | kind=code-symbol | source=server.js:L773 | neighbors=[server.js, checkPocketBaseHealth(), fetchCollectionCount(), getDirectorySize()] | lang=en
+- "services_native_store_readstore": "readStore()" | kind=code-symbol | source=src/services/native-store.js:L150 | neighbors=[server.js, native-store.js, handleNativeDataStore(), ensureFile()] | lang=en
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@0065d031aeccba19fb32bf3932e271e594b53998": "0065d03 chore(cleanup): remove 97 unused asset files, update metadata reference…" | kind=Commit | source=git | neighbors=[master, 02b0dd5 fix(fuji): fill true peak tip c…, c4fc262 fix(fuji): resolve fuji snow tr…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@02b0dd5bbd79b19b9286a398563140cdf6d72d76": "02b0dd5 fix(fuji): fill true peak tip coordinates (y:0..65 in layer 1) with sol…" | kind=Commit | source=git | neighbors=[0065d03 chore(cleanup): remove 97 unuse…, master, e8d36e0 revert(fuji): restore original …] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@02fe36cbc512e4baa12bc7e49b33a8f195422ac4": "02fe36c feat(mobile): position logo below parallax objects, adjust top margin, …" | kind=Commit | source=git | neighbors=[master, 2228b27 feat(mobile): align Enso artwor…, 0e4583a checkpoint: volumetric clouds e…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@0390b13bdec77b6f847f8544e67f0ccb238435f6": "0390b13 docs: update walkthrough for smart environment provider detection" | kind=Commit | source=git | neighbors=[master, 215584e fix: restore PocketBase as defa…, ff28459 fix: smart environment provider…] | lang=en
@@ -59,10 +66,6 @@ one-sentence description — no prose, no markdown fences.
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@596199673ac88a0980bc4cb36a534e19b98f4bac": "5961996 docs: update walkthrough for admin auto-provisioning and payload saniti…" | kind=Commit | source=git | neighbors=[master, d46f078 fix: resolve 502 Bad Gateway by…, 8a1ce7e fix: sanitize savePost payloads…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@5ae8c77ec1ed6453b5deb5ca0d30afbd15fd8230": "5ae8c77 feat(mobile): maximize Enso circle artwork and typography logo size, re…" | kind=Commit | source=git | neighbors=[master, 54c49f4 feat(gallery): integrate author…, d6f8411 fix(mobile): lock hero height t…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@5b9e94966328a099e66d0956ae9d0914228c91bd": "5b9e949 fix(fuji): reconstruct Mount Fuji snow peak with 100% opaque bright whi…" | kind=Commit | source=git | neighbors=[3f7d802 feat(sky): implement azure sky …, master, 9c9ebe0 fix(fuji): resolve transparent …] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@5cec31a68f6197daddbd54b047f7b51f9ab55d64": "5cec31a docs: update walkthrough for exclusive PocketBase provider and public A…" | kind=Commit | source=git | neighbors=[master, 0da1f79 refactor: remove unused local S…, 8656858 feat: make PocketBase exclusive…] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@5d50db607e4f0ac9cd37bc870aca8404c5328bfa": "5d50db6 docs: update design spec for Blog catalog and reader views" | kind=Commit | source=git | neighbors=[master, 73225bf docs: update plan for Blog cata…, dcd0258 docs: update walkthrough for pu…] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@603d5fe531667b664d0c9faab80b190b4d1ae954": "603d5fe fix(navbar): keep sticky menu styling identical and unified in all modes" | kind=Commit | source=git | neighbors=[master, 1dae309 fix(menu): lock all menu text l…, 90fc3cd feat(theme): extend Day/Night m…] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@6114a72782c51df36fdc07f7168fdbb8cd114351": "6114a72 fix(navbar): lock desktop menu text link color to bright white (#f8f9fa…" | kind=Commit | source=git | neighbors=[111a100 fix(3d-book): repair 3d box geo…, master, cc310b4 feat(theme): implement interact…] | lang=en
 
 ## Instructions
 

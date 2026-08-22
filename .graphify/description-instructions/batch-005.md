@@ -26,6 +26,10 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@cc310b468c3a08e0602bf0fc3e952ead86f01106": "cc310b4 feat(theme): implement interactive micro sky engine inside day/night to…" | kind=Commit | source=git | neighbors=[6114a72 fix(navbar): lock desktop menu …, master, d6df3b9 feat(sakura): replace particle …] | lang=en
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@d6f84111a925239648c691290857e13f9429bce6": "d6f8411 fix(mobile): lock hero height to 100vh with seamless bottom gradient ov…" | kind=Commit | source=git | neighbors=[773c0b5 fix(assets): bundle WebP logo a…, master, 5ae8c77 feat(mobile): maximize Enso cir…] | lang=en
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@d7168e89998664540262286ae27dbc261dcee45a": "d7168e8 feat(design): implement white sticky navbar in day mode with bottom tra…" | kind=Commit | source=git | neighbors=[785f410 fix(logo): maintain white typog…, master, 52462a2 style(navbar): transition stick…] | lang=en
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@dc40c3bb455e620e79e4c4821a3a389e2eb084c9": "dc40c3b docs: update walkthrough for final 404 elimination fix" | kind=Commit | source=git | neighbors=[17c5296 fix: eliminate 404 network fetc…, master, b4f93cc fix: bind server.js to 0.0.0.0 …] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@dcd02583257f018d08c4ad297c18c8a0e0157c0a": "dcd0258 docs: update walkthrough for public photos static path fix" | kind=Commit | source=git | neighbors=[5b744f6 fix: move blog and media photos…, master, 5d50db6 docs: update design spec for Bl…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@dcfdfe401e973845c8bef47efa30db098f9c803e": "dcfdfe4 docs: update walkthrough for scrollspy and menu button fixes" | kind=Commit | source=git | neighbors=[94208da fix: auto-sync section toggles …, master, 8334dc5 feat: add Samurai Blog section …] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@e127af57f29b721cea9b732c0ee9a9fe1d021025": "e127af5 docs: add implementation plan for admin backend, cms and user management" | kind=Commit | source=git | neighbors=[16d9a6e docs: add design spec for admin…, master, 9b5d761 feat: add DatabaseService abstr…] | lang=en
@@ -48,24 +52,20 @@ one-sentence description — no prose, no markdown fences.
 - "public_blog_escapehtml": "escapeHTML()" | kind=code-symbol | source=src/public/blog.js:L91 | neighbors=[blog.js, renderCatalog(), renderSinglePost()] | lang=en
 - "public_blog_rendercatalog": "renderCatalog()" | kind=code-symbol | source=src/public/blog.js:L101 | neighbors=[blog.js, escapeHTML(), renderView()] | lang=en
 - "public_blog_rendersinglepost": "renderSinglePost()" | kind=code-symbol | source=src/public/blog.js:L154 | neighbors=[blog.js, escapeHTML(), renderView()] | lang=en
-- "script_sakurapetal_reset": ".reset()" | kind=code-symbol | source=script.js:L804 | neighbors=[SakuraPetal, .constructor(), .update()] | lang=en
+- "script_sakurapetal_reset": ".reset()" | kind=code-symbol | source=script.js:L879 | neighbors=[SakuraPetal, .constructor(), .update()] | lang=en
+- "services_native_store_ensurefile": "ensureFile()" | kind=code-symbol | source=src/services/native-store.js:L139 | neighbors=[native-store.js, initDataStore(), readStore()] | lang=en
+- "services_native_store_initdatastore": "initDataStore()" | kind=code-symbol | source=src/services/native-store.js:L127 | neighbors=[server.js, native-store.js, ensureFile()] | lang=en
 - "utils_webp_converter_converttowebp": "convertToWebP()" | kind=code-symbol | source=src/utils/webp-converter.js:L2 | neighbors=[wysiwyg-editor.js, media-manager.js, webp-converter.js] | lang=en
 - "utils_youtube_embed": "youtube-embed.js" | kind=code-symbol | source=src/utils/youtube-embed.js:L1 | neighbors=[a4cbf51 feat: add WebP Canvas image con…, extractYouTubeId(), generateYouTubeEmbedHTML()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_createbackup": ".createBackup()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L551 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_deletebackup": ".deleteBackup()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L572 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_createbackup": ".createBackup()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L570 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_deletebackup": ".deleteBackup()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L591 | neighbors=[PocketBaseAdapter, .request()] | lang=en
 - "adapters_pocketbase_adapter_pocketbaseadapter_deletemedia": ".deleteMedia()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L374 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_deleteopinion": ".deleteOpinion()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L727 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_deleteopinion": ".deleteOpinion()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L746 | neighbors=[PocketBaseAdapter, .request()] | lang=en
 - "adapters_pocketbase_adapter_pocketbaseadapter_deletepost": ".deletePost()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L288 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_getbackups": ".getBackups()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L542 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_getbackups": ".getBackups()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L561 | neighbors=[PocketBaseAdapter, .request()] | lang=en
 - "adapters_pocketbase_adapter_pocketbaseadapter_getmedia": ".getMedia()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L307 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_getopinions": ".getOpinions()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L604 | neighbors=[PocketBaseAdapter, .request()] | lang=en
+- "adapters_pocketbase_adapter_pocketbaseadapter_getopinions": ".getOpinions()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L623 | neighbors=[PocketBaseAdapter, .request()] | lang=en
 - "adapters_pocketbase_adapter_pocketbaseadapter_getposts": ".getPosts()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L174 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_getsettings": ".getSettings()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L103 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_getsystemdiagnostics": ".getSystemDiagnostics()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L393 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_getusers": ".getUsers()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L438 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_login": ".login()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L30 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_restorebackup": ".restoreBackup()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L562 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_saveopinion": ".saveOpinion()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L683 | neighbors=[PocketBaseAdapter, .request()] | lang=en
 
 ## Instructions
 

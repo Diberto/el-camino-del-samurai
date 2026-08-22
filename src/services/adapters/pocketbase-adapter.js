@@ -492,43 +492,62 @@ export class PocketBaseAdapter {
     }
   }
 
-  async uploadMedia(file) {
+  async uploadMedia(file, metadata = {}) {
     let uploadedUrl = null;
+    let base64Data = null;
+
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('name', file.name || 'WebP Image');
-      const headers = {};
-      if (this.token) headers['Authorization'] = `Bearer ${this.token}`;
-      const res = await fetch(`${this.baseUrl}/api/collections/media/records`, { method: 'POST', headers, body: formData });
-      if (res.ok) {
-        const record = await res.json();
-        uploadedUrl = record.file ? `${this.baseUrl}/api/files/media/${record.id}/${record.file}` : (record.url || null);
-      }
+      base64Data = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target.result);
+        reader.onerror = (e) => reject(e);
+        reader.readAsDataURL(file);
+      });
     } catch {}
 
-    if (!uploadedUrl) {
-      // Local fallback using file reader
-      try {
-        uploadedUrl = await new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onload = (e) => resolve(e.target.result);
-          reader.onerror = () => resolve('photos/cueva_reigando.webp');
-          reader.readAsDataURL(file);
-        });
-      } catch {
-        uploadedUrl = 'photos/cueva_reigando.webp';
+    try {
+      const payload = {
+        name: metadata.name || file.name || 'Imagen WebP',
+        filename: file.name || 'image.webp',
+        data: base64Data,
+        size: file.size,
+        type: file.type || 'image/webp',
+        alt: metadata.alt || '',
+        caption: metadata.caption || ''
+      };
+
+      const res = await this.request('/api/collections/media/records', {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      });
+
+      if (res && res.url) {
+        uploadedUrl = res.url;
+      } else if (res && res.file) {
+        uploadedUrl = `${this.baseUrl}/api/files/media/${res.id}/${res.file}`;
       }
+    } catch (e) {
+      console.warn('Error al subir media vía API:', e);
+    }
+
+    if (!uploadedUrl && base64Data) {
+      uploadedUrl = base64Data;
+    }
+
+    if (!uploadedUrl) {
+      uploadedUrl = 'photos/cueva_reigando.webp';
     }
 
     try {
       const saved = localStorage.getItem('samurai_media_list');
       let media = saved ? JSON.parse(saved) : [];
       const newMediaItem = {
-        id: 'local_media_' + Date.now(),
-        name: file.name || 'Imagen WebP',
+        id: 'media_' + Date.now(),
+        name: metadata.name || file.name || 'Imagen WebP',
+        alt: metadata.alt || file.name || '',
+        caption: metadata.caption || '',
         url: uploadedUrl,
-        type: 'image/webp',
+        type: file.type || 'image/webp',
         size: `${(file.size / 1024).toFixed(1)} KB`,
         created_at: new Date().toISOString()
       };
