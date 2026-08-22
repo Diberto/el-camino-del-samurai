@@ -288,41 +288,71 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // Static File Resolver using clean pathname
-  let filePath = path.join(DIST_DIR, pathname);
-  if (pathname === '/' || pathname === '') {
+  // Decode URL encoded characters (e.g. spaces %20, accents, etc.)
+  let cleanPathname = pathname;
+  try {
+    cleanPathname = decodeURIComponent(pathname);
+  } catch (e) {
+    cleanPathname = pathname;
+  }
+
+  // Dedicated Favicon Handler
+  if (cleanPathname === '/favicon.ico' || cleanPathname === '/favicon.png' || cleanPathname === '/favicon.webp') {
+    const favDist = path.join(DIST_DIR, 'favicon.ico');
+    const favPublic = path.join(PUBLIC_DIR, 'favicon.ico');
+    const favStamp = path.join(__dirname, 'assets', 'kanji_stamp.webp');
+    const favLogo = path.join(__dirname, 'assets', 'Logo.webp');
+
+    const targetFav = [favDist, favPublic, favStamp, favLogo].find(p => fs.existsSync(p));
+    if (targetFav) {
+      return serveStaticFile(targetFav, req, res);
+    }
+  }
+
+  // Static File Resolver using decoded pathname
+  let filePath = path.join(DIST_DIR, cleanPathname);
+  if (cleanPathname === '/' || cleanPathname === '') {
     filePath = path.join(DIST_DIR, 'index.html');
-  } else if (pathname === '/admin' || pathname === '/admin/' || pathname === '/admin.html') {
+  } else if (cleanPathname === '/admin' || cleanPathname === '/admin/' || cleanPathname === '/admin.html') {
     filePath = path.join(DIST_DIR, 'admin.html');
-  } else if (pathname === '/blog' || pathname === '/blog/' || pathname === '/blog.html') {
+  } else if (cleanPathname === '/blog' || cleanPathname === '/blog/' || cleanPathname === '/blog.html') {
     filePath = path.join(DIST_DIR, 'blog.html');
-  } else if (pathname === '/gpu' || pathname === '/gpu/' || pathname === '/gpu.html') {
+  } else if (cleanPathname === '/gpu' || cleanPathname === '/gpu/' || cleanPathname === '/gpu.html') {
     filePath = path.join(DIST_DIR, 'gpu.html');
   }
 
-  // Check if file exists in dist, fallback to public or index.html
+  // Check if file exists in dist, fallback to public or root or SPA index.html
   fs.stat(filePath, (err, stats) => {
     if (err || !stats.isFile()) {
       // Try public dir
-      const publicPath = path.join(PUBLIC_DIR, pathname);
+      const publicPath = path.join(PUBLIC_DIR, cleanPathname);
       fs.stat(publicPath, (errPub, statsPub) => {
         if (!errPub && statsPub.isFile()) {
           serveStaticFile(publicPath, req, res);
         } else {
-          // Return 404 for missing static asset files (.js, .css, etc.) or /assets/ paths
-          const ext = path.extname(pathname);
-          if (pathname.startsWith('/assets/') || ext) {
-            res.writeHead(404, { 'Content-Type': 'text/plain' });
-            return res.end('404 Not Found');
-          }
-          // SPA Fallback to index.html only for page navigation routes
-          const fallbackPath = path.join(DIST_DIR, 'index.html');
-          fs.stat(fallbackPath, (errFb) => {
-            if (!errFb) serveStaticFile(fallbackPath, req, res);
-            else {
-              res.writeHead(404, { 'Content-Type': 'text/plain' });
-              res.end('404 Not Found');
+          // Try root dir for photos/, uploads/, assets/
+          const rootRelPath = path.join(__dirname, cleanPathname);
+          fs.stat(rootRelPath, (errRoot, statsRoot) => {
+            if (!errRoot && statsRoot.isFile()) {
+              return serveStaticFile(rootRelPath, req, res);
             }
+
+            // Return 404 for missing static asset files (.js, .css, .webp, .png, etc.) or /assets/ paths
+            const ext = path.extname(cleanPathname);
+            if (cleanPathname.startsWith('/assets/') || ext) {
+              res.writeHead(404, { 'Content-Type': 'text/plain', ...SECURITY_HEADERS });
+              return res.end('404 Not Found');
+            }
+
+            // SPA Fallback to index.html only for page navigation routes
+            const fallbackPath = path.join(DIST_DIR, 'index.html');
+            fs.stat(fallbackPath, (errFb) => {
+              if (!errFb) serveStaticFile(fallbackPath, req, res);
+              else {
+                res.writeHead(404, { 'Content-Type': 'text/plain', ...SECURITY_HEADERS });
+                res.end('404 Not Found');
+              }
+            });
           });
         }
       });

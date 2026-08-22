@@ -17,6 +17,7 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "services_db_service_databaseservice_deleteopinion": ".deleteOpinion()" | kind=code-symbol | source=src/services/db-service.js:L28 | neighbors=[DatabaseService]
 - "services_db_service_databaseservice_deletepost": ".deletePost()" | kind=code-symbol | source=src/services/db-service.js:L19 | neighbors=[DatabaseService]
 - "services_db_service_databaseservice_getbackups": ".getBackups()" | kind=code-symbol | source=src/services/db-service.js:L29 | neighbors=[DatabaseService]
 - "services_db_service_databaseservice_getcurrentuser": ".getCurrentUser()" | kind=code-symbol | source=src/services/db-service.js:L14 | neighbors=[DatabaseService]

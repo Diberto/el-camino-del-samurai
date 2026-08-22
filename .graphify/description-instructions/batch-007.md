@@ -17,13 +17,14 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "scripts_start_pocketbase_downloadfile": "downloadFile()" | kind=code-symbol | source=scripts/start-pocketbase.js:L37 | neighbors=[start-pocketbase.js, ensureBinary()]
 - "scripts_start_pocketbase_getdownloadurl": "getDownloadUrl()" | kind=code-symbol | source=scripts/start-pocketbase.js:L20 | neighbors=[start-pocketbase.js, ensureBinary()]
 - "scripts_start_pocketbase_main": "main()" | kind=code-symbol | source=scripts/start-pocketbase.js:L113 | neighbors=[start-pocketbase.js, ensureBinary()]
-- "server_checkpocketbasehealth": "checkPocketBaseHealth()" | kind=code-symbol | source=server.js:L736 | neighbors=[server.js, serveDiagnosticsHealth()]
-- "server_fetchcollectioncount": "fetchCollectionCount()" | kind=code-symbol | source=server.js:L692 | neighbors=[server.js, serveDiagnosticsHealth()]
-- "server_generatesitemapxml": "generateSitemapXml()" | kind=code-symbol | source=server.js:L445 | neighbors=[server.js, serveDynamicSitemap()]
-- "server_getdirectorysize": "getDirectorySize()" | kind=code-symbol | source=server.js:L668 | neighbors=[server.js, serveDiagnosticsHealth()]
-- "server_servedynamicsitemap": "serveDynamicSitemap()" | kind=code-symbol | source=server.js:L465 | neighbors=[server.js, generateSitemapXml()]
+- "server_checkpocketbasehealth": "checkPocketBaseHealth()" | kind=code-symbol | source=server.js:L766 | neighbors=[server.js, serveDiagnosticsHealth()]
+- "server_fetchcollectioncount": "fetchCollectionCount()" | kind=code-symbol | source=server.js:L722 | neighbors=[server.js, serveDiagnosticsHealth()]
+- "server_generatesitemapxml": "generateSitemapXml()" | kind=code-symbol | source=server.js:L475 | neighbors=[server.js, serveDynamicSitemap()]
+- "server_getdirectorysize": "getDirectorySize()" | kind=code-symbol | source=server.js:L698 | neighbors=[server.js, serveDiagnosticsHealth()]
+- "server_servedynamicsitemap": "serveDynamicSitemap()" | kind=code-symbol | source=server.js:L495 | neighbors=[server.js, generateSitemapXml()]
 - "services_native_store_readbody": "readBody()" | kind=code-symbol | source=src/services/native-store.js:L176 | neighbors=[native-store.js, handleNativeDataStore()]
 - "services_native_store_writestore": "writeStore()" | kind=code-symbol | source=src/services/native-store.js:L165 | neighbors=[native-store.js, handleNativeDataStore()]
 - "services_sync_service": "sync-service.js" | kind=code-symbol | source=src/services/sync-service.js:L1 | neighbors=[48d0413 feat: align admin shell with sa…, SyncService]
@@ -56,7 +57,6 @@ one-sentence description — no prose, no markdown fences.
 - "script_animateparallax": "animateParallax()" | kind=code-symbol | source=script.js:L743 | neighbors=[script.js]
 - "script_animatepetals": "animatePetals()" | kind=code-symbol | source=script.js:L975 | neighbors=[script.js]
 - "script_applygpuskycolors": "applyGpuSkyColors()" | kind=code-symbol | source=script.js:L338 | neighbors=[script.js]
-- "script_escapehtml": "escapeHTML()" | kind=code-symbol | source=script.js:L23 | neighbors=[script.js]
 
 ## Instructions
 

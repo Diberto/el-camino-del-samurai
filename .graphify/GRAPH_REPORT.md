@@ -1,25 +1,25 @@
 # Graph Report - .  (2026-08-22)
 
 ## Corpus Check
-- 132 files · ~268.481 words
+- 132 files · ~268.661 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 395 nodes · 812 edges · 18 communities detected
+- 396 nodes · 815 edges · 18 communities detected
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
-- Edge kinds: ON_BRANCH: 183 · PARENT_OF: 182 · MODIFIES: 172 · contains: 111 · method: 73 · calls: 51 · imports: 40
+- Edge kinds: ON_BRANCH: 184 · PARENT_OF: 183 · MODIFIES: 173 · contains: 111 · method: 73 · calls: 51 · imports: 40
 
 
 ## Input Scope
 - Requested: auto
 - Resolved: committed (source: default-auto)
-- Included files: 132 · Candidates: 235
-- Excluded: 0 untracked · 1447 ignored · 0 sensitive · 0 missing committed
+- Included files: 132 · Candidates: 236
+- Excluded: 2 untracked · 1449 ignored · 0 sensitive · 0 missing committed
 - Recommendation: Use --scope all or graphify.yaml inputs.corpus for a knowledge-base folder.
 
 ## Graph Freshness
-- Built from Git commit: `90ed50e`
+- Built from Git commit: `86a8e0f`
 - Compare this hash to `git rev-parse HEAD` before trusting freshness-sensitive graph output.
 ## God Nodes (most connected - your core abstractions)
 1. `PocketBaseAdapter` - 28 edges
@@ -49,7 +49,7 @@
 
 ### Community 0 - "Community 0"
 Cohesion: 0.06
-Nodes (38): checkAuth(), loadModules(), 084f7f6 docs: add walkthrough documentation, 1549879 docs: update implementation plan for unified samurai admin and real-time live sync, 1f0cf3c feat(opiniones): modulo CRUD en admin, galeria corregida y seccion de redes sociales (Instagram, YouTube, Facebook), 26bbdaa docs: update walkthrough for Media Library implementation, 2fcb02d fix: map admin section toggles and menu items to exact index.html DOM elements, 40f7e13 fix(ui): suavizado y fusion de bordes y niebla inferior en la seccion hero (+30 more)
+Nodes (39): checkAuth(), loadModules(), 084f7f6 docs: add walkthrough documentation, 1549879 docs: update implementation plan for unified samurai admin and real-time live sync, 1f0cf3c feat(opiniones): modulo CRUD en admin, galeria corregida y seccion de redes sociales (Instagram, YouTube, Facebook), 26bbdaa docs: update walkthrough for Media Library implementation, 2fcb02d fix: map admin section toggles and menu items to exact index.html DOM elements, 40f7e13 fix(ui): suavizado y fusion de bordes y niebla inferior en la seccion hero (+31 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.05
@@ -133,16 +133,16 @@ Nodes (1): SakuraPetal
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `DatabaseService` connect `Community 4` to `Community 2`?**
-  _High betweenness centrality (0.133) - this node is a cross-community bridge._
+  _High betweenness centrality (0.132) - this node is a cross-community bridge._
 - **Why does `PocketBaseAdapter` connect `Community 5` to `Community 2`?**
-  _High betweenness centrality (0.127) - this node is a cross-community bridge._
-- **Why does `dbService` connect `Community 0` to `Community 11`, `Community 9`, `Community 6`, `Community 2`?**
-  _High betweenness centrality (0.045) - this node is a cross-community bridge._
+  _High betweenness centrality (0.126) - this node is a cross-community bridge._
 - **What connects `__filename`, `__dirname`, `rootDir` to the rest of the system?**
   _31 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.06289308176100629 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.061952861952861954 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.05176470588235294 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.07422402159244265 - nodes in this community are weakly interconnected._
+- **Should `Community 3` be split into smaller, more focused modules?**
+  _Cohesion score 0.12807881773399016 - nodes in this community are weakly interconnected._
