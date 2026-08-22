@@ -452,48 +452,48 @@
     "hash": "24f02d21ea9f2e3972fad84e965183f9"
   },
   "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/.graphify/GRAPH_REPORT.md": {
-    "mtime": 1787425442923.4941,
-    "hash": "b45ed8c620a4e3974b4522c278370efe"
+    "mtime": 1787429621281.3933,
+    "hash": "0b310d8d635218f237446654eb9facf3"
   },
   "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/.graphify/description-instructions/batch-000.md": {
-    "mtime": 1787425442848.7783,
-    "hash": "23e715318e9273e8ce4d797fe2e80690"
+    "mtime": 1787429621182.4304,
+    "hash": "f3d9c8936a0834f467c19d4c39714939"
   },
   "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/.graphify/description-instructions/batch-001.md": {
-    "mtime": 1787425442848.7783,
-    "hash": "66392fa94164873836c37e6c07f48a60"
+    "mtime": 1787429621182.4304,
+    "hash": "46dd3ab5ab1690de9c05f3d9fab9784b"
   },
   "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/.graphify/description-instructions/batch-002.md": {
-    "mtime": 1787425442849.7874,
-    "hash": "2523378e2a3afd93076b29d6b99c9eb3"
+    "mtime": 1787429621183.4348,
+    "hash": "d1ea578bf867ca8d29c410feaf8d81a1"
   },
   "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/.graphify/description-instructions/batch-003.md": {
-    "mtime": 1787425442849.7874,
-    "hash": "81441bbad6799ccf0cb147eb84368e31"
+    "mtime": 1787429621183.4348,
+    "hash": "0ac87a8994393fc27abc85c610c1df01"
   },
   "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/.graphify/description-instructions/batch-004.md": {
-    "mtime": 1787425442849.7874,
-    "hash": "4fb19ede68956d397210dd1c4b4b3bc1"
+    "mtime": 1787429621184.4314,
+    "hash": "258e0ad7bbfd262ed9f837fbdce8e8e4"
   },
   "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/.graphify/description-instructions/batch-005.md": {
-    "mtime": 1787425442849.7874,
-    "hash": "9431b7953438d6e5abf53c9ddd0a6fc0"
+    "mtime": 1787429621185.43,
+    "hash": "b5f7206b0bac998c2df71834d98a077b"
   },
   "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/.graphify/description-instructions/batch-006.md": {
-    "mtime": 1787425442850.7874,
-    "hash": "a87620b254cf8a1f652af43f14b0a203"
+    "mtime": 1787429621185.43,
+    "hash": "fafdad54dc994c4ad6af1c2f03d7026e"
   },
   "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/.graphify/description-instructions/batch-007.md": {
-    "mtime": 1787425442850.7874,
-    "hash": "22f5fffbd9152df8e85ecbdc5e79ac49"
+    "mtime": 1787429621186.9568,
+    "hash": "4b09266c42803f70a789d200ebe61e84"
   },
   "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/.graphify/description-instructions/batch-008.md": {
-    "mtime": 1787425442851.788,
-    "hash": "f6b9d8edb31f67a9b1602e804a6f12a9"
+    "mtime": 1787429621186.9568,
+    "hash": "27de755fe607f2d56fba2c119cf9235b"
   },
   "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/.graphify/label-instructions/communities.md": {
-    "mtime": 1787425442696.7686,
-    "hash": "c174381398ef67e11f0d8d3e995729f3"
+    "mtime": 1787429621028.7148,
+    "hash": "54864ec59adefceb9fe4d2f275595520"
   },
   "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/docs/superpowers/plans/2026-08-17-opiniones-crud.md": {
     "mtime": 1787004506355.8936,
@@ -516,11 +516,15 @@
     "hash": "9c9368c7f2f3948b220c354e7149c58f"
   },
   "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/.graphify/description-instructions/batch-009.md": {
-    "mtime": 1787425442851.788,
-    "hash": "a63ac437055c3f41f74b19c0946b5eda"
+    "mtime": 1787429621187.9607,
+    "hash": "b47176b39d1c1f65604c54fdae1e5573"
   },
   "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/services/native-store.js": {
     "mtime": 1787425224468.1516,
     "hash": "c84cbfed2236392d1cfed0060f2b6672"
+  },
+  "D:/Documentos/Work/hummus/samurai/el-camino-del-samurai/src/admin/modules/gallery-manager.js": {
+    "mtime": 1787430617548.2954,
+    "hash": "4aa636654d40688913d8c92dcbdc4fec"
   }
 }

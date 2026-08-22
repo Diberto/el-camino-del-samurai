@@ -17,6 +17,12 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "script_handlescrolleffects": "handleScrollEffects()" | kind=code-symbol | source=script.js:L682 | neighbors=[script.js]
+- "script_init3dbookengine": "init3DBookEngine()" | kind=code-symbol | source=script.js:L1133 | neighbors=[script.js]
+- "script_initdaynightcycle": "initDayNightCycle()" | kind=code-symbol | source=script.js:L290 | neighbors=[script.js]
+- "script_initopinionsmanager": "initOpinionsManager()" | kind=code-symbol | source=script.js:L1363 | neighbors=[script.js]
+- "script_initstarfield": "initStarfield()" | kind=code-symbol | source=script.js:L521 | neighbors=[script.js]
+- "script_inittestimonialsslider": "initTestimonialsSlider()" | kind=code-symbol | source=script.js:L1159 | neighbors=[script.js]
 - "script_initvolumetricclouds": "initVolumetricClouds()" | kind=code-symbol | source=script.js:L353 | neighbors=[script.js]
 - "script_renderhomeblogposts": "renderHomeBlogPosts()" | kind=code-symbol | source=script.js:L239 | neighbors=[script.js]
 - "script_sakurapetal_draw": ".draw()" | kind=code-symbol | source=script.js:L950 | neighbors=[SakuraPetal]
@@ -51,12 +57,6 @@ one-sentence description — no prose, no markdown fences.
 - "services_db_service_databaseservice_deletebackup": ".deleteBackup()" | kind=code-symbol | source=src/services/db-service.js:L32 | neighbors=[DatabaseService]
 - "services_db_service_databaseservice_deletemedia": ".deleteMedia()" | kind=code-symbol | source=src/services/db-service.js:L22 | neighbors=[DatabaseService]
 - "services_db_service_databaseservice_deleteopinion": ".deleteOpinion()" | kind=code-symbol | source=src/services/db-service.js:L28 | neighbors=[DatabaseService]
-- "services_db_service_databaseservice_deletepost": ".deletePost()" | kind=code-symbol | source=src/services/db-service.js:L19 | neighbors=[DatabaseService]
-- "services_db_service_databaseservice_getbackups": ".getBackups()" | kind=code-symbol | source=src/services/db-service.js:L29 | neighbors=[DatabaseService]
-- "services_db_service_databaseservice_getcurrentuser": ".getCurrentUser()" | kind=code-symbol | source=src/services/db-service.js:L14 | neighbors=[DatabaseService]
-- "services_db_service_databaseservice_getdownloadbackupurl": ".getDownloadBackupUrl()" | kind=code-symbol | source=src/services/db-service.js:L34 | neighbors=[DatabaseService]
-- "services_db_service_databaseservice_getmedia": ".getMedia()" | kind=code-symbol | source=src/services/db-service.js:L20 | neighbors=[DatabaseService]
-- "services_db_service_databaseservice_getopinions": ".getOpinions()" | kind=code-symbol | source=src/services/db-service.js:L26 | neighbors=[DatabaseService]
 
 ## Instructions
 

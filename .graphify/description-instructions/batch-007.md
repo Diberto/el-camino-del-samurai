@@ -17,6 +17,9 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "scripts_start_pocketbase_getdownloadurl": "getDownloadUrl()" | kind=code-symbol | source=scripts/start-pocketbase.js:L20 | neighbors=[start-pocketbase.js, ensureBinary()]
+- "scripts_start_pocketbase_main": "main()" | kind=code-symbol | source=scripts/start-pocketbase.js:L113 | neighbors=[start-pocketbase.js, ensureBinary()]
+- "server_checkpocketbasehealth": "checkPocketBaseHealth()" | kind=code-symbol | source=server.js:L736 | neighbors=[server.js, serveDiagnosticsHealth()]
 - "server_fetchcollectioncount": "fetchCollectionCount()" | kind=code-symbol | source=server.js:L692 | neighbors=[server.js, serveDiagnosticsHealth()]
 - "server_generatesitemapxml": "generateSitemapXml()" | kind=code-symbol | source=server.js:L445 | neighbors=[server.js, serveDynamicSitemap()]
 - "server_getdirectorysize": "getDirectorySize()" | kind=code-symbol | source=server.js:L668 | neighbors=[server.js, serveDiagnosticsHealth()]
@@ -42,6 +45,9 @@ one-sentence description — no prose, no markdown fences.
 - "gpu_panel_renderliveclouds": "renderLiveClouds()" | kind=code-symbol | source=gpu-panel.js:L343 | neighbors=[gpu-panel.js]
 - "gpu_panel_renderlivesakura": "renderLiveSakura()" | kind=code-symbol | source=gpu-panel.js:L469 | neighbors=[gpu-panel.js]
 - "gpu_panel_renderlivestars": "renderLiveStars()" | kind=code-symbol | source=gpu-panel.js:L416 | neighbors=[gpu-panel.js]
+- "modules_gallery_manager_converttowebp": "convertToWebP()" | kind=code-symbol | source=src/admin/modules/gallery-manager.js:L24 | neighbors=[gallery-manager.js]
+- "modules_gallery_manager_default_gallery_items": "DEFAULT_GALLERY_ITEMS" | kind=code-symbol | source=src/admin/modules/gallery-manager.js:L4 | neighbors=[gallery-manager.js]
+- "modules_gallery_manager_suggested_tags": "SUGGESTED_TAGS" | kind=code-symbol | source=src/admin/modules/gallery-manager.js:L13 | neighbors=[gallery-manager.js]
 - "modules_sections_menu_manager_default_gallery_items": "DEFAULT_GALLERY_ITEMS" | kind=code-symbol | source=src/admin/modules/sections-menu-manager.js:L32 | neighbors=[sections-menu-manager.js]
 - "modules_sections_menu_manager_section_labels": "SECTION_LABELS" | kind=code-symbol | source=src/admin/modules/sections-menu-manager.js:L4 | neighbors=[sections-menu-manager.js]
 - "modules_sections_menu_manager_section_url_map": "SECTION_URL_MAP" | kind=code-symbol | source=src/admin/modules/sections-menu-manager.js:L18 | neighbors=[sections-menu-manager.js]
@@ -51,12 +57,6 @@ one-sentence description — no prose, no markdown fences.
 - "script_animatepetals": "animatePetals()" | kind=code-symbol | source=script.js:L975 | neighbors=[script.js]
 - "script_applygpuskycolors": "applyGpuSkyColors()" | kind=code-symbol | source=script.js:L338 | neighbors=[script.js]
 - "script_escapehtml": "escapeHTML()" | kind=code-symbol | source=script.js:L23 | neighbors=[script.js]
-- "script_handlescrolleffects": "handleScrollEffects()" | kind=code-symbol | source=script.js:L682 | neighbors=[script.js]
-- "script_init3dbookengine": "init3DBookEngine()" | kind=code-symbol | source=script.js:L1133 | neighbors=[script.js]
-- "script_initdaynightcycle": "initDayNightCycle()" | kind=code-symbol | source=script.js:L290 | neighbors=[script.js]
-- "script_initopinionsmanager": "initOpinionsManager()" | kind=code-symbol | source=script.js:L1363 | neighbors=[script.js]
-- "script_initstarfield": "initStarfield()" | kind=code-symbol | source=script.js:L521 | neighbors=[script.js]
-- "script_inittestimonialsslider": "initTestimonialsSlider()" | kind=code-symbol | source=script.js:L1159 | neighbors=[script.js]
 
 ## Instructions
 

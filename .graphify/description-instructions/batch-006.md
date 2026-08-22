@@ -17,6 +17,8 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "adapters_pocketbase_adapter_pocketbaseadapter_getmedia": ".getMedia()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L307 | neighbors=[PocketBaseAdapter, .request()]
+- "adapters_pocketbase_adapter_pocketbaseadapter_getopinions": ".getOpinions()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L623 | neighbors=[PocketBaseAdapter, .request()]
 - "adapters_pocketbase_adapter_pocketbaseadapter_getposts": ".getPosts()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L174 | neighbors=[PocketBaseAdapter, .request()]
 - "adapters_pocketbase_adapter_pocketbaseadapter_getsettings": ".getSettings()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L103 | neighbors=[PocketBaseAdapter, .request()]
 - "adapters_pocketbase_adapter_pocketbaseadapter_getsystemdiagnostics": ".getSystemDiagnostics()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L393 | neighbors=[PocketBaseAdapter, .request()]
@@ -42,6 +44,7 @@ one-sentence description — no prose, no markdown fences.
 - "modules_backup_manager_initbackupmanager": "initBackupManager()" | kind=code-symbol | source=src/admin/modules/backup-manager.js:L5 | neighbors=[admin.js, backup-manager.js]
 - "modules_blog_cms_manager_initblogmanager": "initBlogManager()" | kind=code-symbol | source=src/admin/modules/blog-cms-manager.js:L5 | neighbors=[admin.js, blog-cms-manager.js]
 - "modules_diagnostics_manager_initdiagnosticsmanager": "initDiagnosticsManager()" | kind=code-symbol | source=src/admin/modules/diagnostics-manager.js:L4 | neighbors=[admin.js, diagnostics-manager.js]
+- "modules_gallery_manager_initgallerymanager": "initGalleryManager()" | kind=code-symbol | source=src/admin/modules/gallery-manager.js:L57 | neighbors=[admin.js, gallery-manager.js]
 - "modules_gpu_config_manager_initgpumanager": "initGpuManager()" | kind=code-symbol | source=src/admin/modules/gpu-config-manager.js:L4 | neighbors=[admin.js, gpu-config-manager.js]
 - "modules_media_manager_initmediamanager": "initMediaManager()" | kind=code-symbol | source=src/admin/modules/media-manager.js:L4 | neighbors=[admin.js, media-manager.js]
 - "modules_opiniones_manager_initopinionesmanager": "initOpinionesManager()" | kind=code-symbol | source=src/admin/modules/opiniones-manager.js:L3 | neighbors=[admin.js, opiniones-manager.js]
@@ -54,9 +57,6 @@ one-sentence description — no prose, no markdown fences.
 - "script_sakurapetal_constructor": ".constructor()" | kind=code-symbol | source=script.js:L874 | neighbors=[SakuraPetal, .reset()]
 - "script_sakurapetal_update": ".update()" | kind=code-symbol | source=script.js:L899 | neighbors=[SakuraPetal, .reset()]
 - "scripts_start_pocketbase_downloadfile": "downloadFile()" | kind=code-symbol | source=scripts/start-pocketbase.js:L37 | neighbors=[start-pocketbase.js, ensureBinary()]
-- "scripts_start_pocketbase_getdownloadurl": "getDownloadUrl()" | kind=code-symbol | source=scripts/start-pocketbase.js:L20 | neighbors=[start-pocketbase.js, ensureBinary()]
-- "scripts_start_pocketbase_main": "main()" | kind=code-symbol | source=scripts/start-pocketbase.js:L113 | neighbors=[start-pocketbase.js, ensureBinary()]
-- "server_checkpocketbasehealth": "checkPocketBaseHealth()" | kind=code-symbol | source=server.js:L736 | neighbors=[server.js, serveDiagnosticsHealth()]
 
 ## Instructions
 

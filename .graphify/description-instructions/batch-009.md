@@ -17,6 +17,12 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "services_db_service_databaseservice_deletepost": ".deletePost()" | kind=code-symbol | source=src/services/db-service.js:L19 | neighbors=[DatabaseService]
+- "services_db_service_databaseservice_getbackups": ".getBackups()" | kind=code-symbol | source=src/services/db-service.js:L29 | neighbors=[DatabaseService]
+- "services_db_service_databaseservice_getcurrentuser": ".getCurrentUser()" | kind=code-symbol | source=src/services/db-service.js:L14 | neighbors=[DatabaseService]
+- "services_db_service_databaseservice_getdownloadbackupurl": ".getDownloadBackupUrl()" | kind=code-symbol | source=src/services/db-service.js:L34 | neighbors=[DatabaseService]
+- "services_db_service_databaseservice_getmedia": ".getMedia()" | kind=code-symbol | source=src/services/db-service.js:L20 | neighbors=[DatabaseService]
+- "services_db_service_databaseservice_getopinions": ".getOpinions()" | kind=code-symbol | source=src/services/db-service.js:L26 | neighbors=[DatabaseService]
 - "services_db_service_databaseservice_getposts": ".getPosts()" | kind=code-symbol | source=src/services/db-service.js:L17 | neighbors=[DatabaseService]
 - "services_db_service_databaseservice_getprovider": ".getProvider()" | kind=code-symbol | source=src/services/db-service.js:L9 | neighbors=[DatabaseService]
 - "services_db_service_databaseservice_getsettings": ".getSettings()" | kind=code-symbol | source=src/services/db-service.js:L15 | neighbors=[DatabaseService]

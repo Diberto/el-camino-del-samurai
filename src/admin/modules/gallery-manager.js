@@ -21,8 +21,41 @@ const SUGGESTED_TAGS = [
   'Expediciones'
 ];
 
+async function convertToWebP(file, quality = 0.85) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (e) => {
+      const img = new Image();
+      img.src = e.target.result;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              const baseName = file.name.replace(/\.[^/.]+$/, '');
+              const newFile = new File([blob], `${baseName}.webp`, { type: 'image/webp' });
+              resolve(newFile);
+            } else {
+              reject(new Error('Fallo al convertir a WebP'));
+            }
+          },
+          'image/webp',
+          quality
+        );
+      };
+      img.onerror = (err) => reject(err);
+    };
+    reader.onerror = (err) => reject(err);
+  });
+}
+
 export async function initGalleryManager(container) {
-  const [loadedSettings, availableMedia] = await Promise.all([
+  let [loadedSettings, availableMedia] = await Promise.all([
     dbService.getSettings() || {},
     dbService.getMedia() || []
   ]);
@@ -31,6 +64,8 @@ export async function initGalleryManager(container) {
   if (!settings.gallery_items || !Array.isArray(settings.gallery_items)) {
     settings.gallery_items = DEFAULT_GALLERY_ITEMS;
   }
+
+  let activeMediaModalTargetId = null;
 
   function escapeHTML(str) {
     if (str === null || str === undefined) return '';
@@ -43,28 +78,37 @@ export async function initGalleryManager(container) {
     const hiddenCount = totalCount - activeCount;
 
     container.innerHTML = `
+      <!-- Encabezado de la Sección -->
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
         <div>
           <h2 class="samurai-title" style="margin:0;">📸 Gestión de Galería Fotográfica</h2>
           <p style="color:var(--text-secondary); font-size:0.85rem; margin:0.3rem 0 0 0;">
-            Administra las imágenes, títulos, etiquetas de categoría y textos SEO de la sección <strong>#galeria</strong> en la Landing Page.
+            Área exclusiva para modificar, agregar, ordenar o quitar fotos de la sección <strong>#galeria</strong> en la web.
           </p>
         </div>
-        <div style="display:flex; gap:0.8rem;">
-          <button id="add-gal-photo-btn" class="btn-samurai-outline" style="padding:0.7rem 1.2rem; cursor:pointer; font-weight:600;">➕ Nueva Foto</button>
-          <button id="save-gal-btn" class="btn-samurai-red" style="padding:0.7rem 1.6rem; cursor:pointer; font-weight:700;">💾 Guardar Cambios</button>
+        <div style="display:flex; gap:0.8rem; flex-wrap:wrap;">
+          <input type="file" id="gal-direct-upload-input" accept="image/*" style="display:none;">
+          <button id="gal-direct-upload-btn" class="btn-samurai-outline" style="padding:0.7rem 1.2rem; cursor:pointer; font-weight:600; display:flex; align-items:center; gap:0.4rem;">
+            📤 Subir Foto Directa
+          </button>
+          <button id="add-gal-photo-btn" class="btn-samurai-outline" style="padding:0.7rem 1.2rem; cursor:pointer; font-weight:600; display:flex; align-items:center; gap:0.4rem;">
+            ➕ Nueva Tarjeta
+          </button>
+          <button id="save-gal-btn" class="btn-samurai-red" style="padding:0.7rem 1.6rem; cursor:pointer; font-weight:700;">
+            💾 Guardar y Sincronizar
+          </button>
         </div>
       </div>
 
-      <!-- Resumen de Métricas -->
+      <!-- Tarjetas de Métricas -->
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:1rem; margin-bottom:1.5rem;">
         <div class="samurai-card" style="padding:1rem; text-align:center; background:rgba(0,0,0,0.3);">
           <div style="font-size:1.6rem; font-weight:700; color:var(--accent-gold);">${totalCount}</div>
-          <div style="font-size:0.8rem; color:var(--text-secondary);">Fotos Totales</div>
+          <div style="font-size:0.8rem; color:var(--text-secondary);">Fotos en la Galería</div>
         </div>
         <div class="samurai-card" style="padding:1rem; text-align:center; background:rgba(0,0,0,0.3);">
           <div style="font-size:1.6rem; font-weight:700; color:#48bb78;">${activeCount}</div>
-          <div style="font-size:0.8rem; color:var(--text-secondary);">Visibles en Home</div>
+          <div style="font-size:0.8rem; color:var(--text-secondary);">Visibles en la Landing Page</div>
         </div>
         <div class="samurai-card" style="padding:1rem; text-align:center; background:rgba(0,0,0,0.3);">
           <div style="font-size:1.6rem; font-weight:700; color:#ecc94b;">${hiddenCount}</div>
@@ -72,24 +116,40 @@ export async function initGalleryManager(container) {
         </div>
       </div>
 
+      <!-- Mensaje de Feedback de Subida -->
+      <div id="gal-upload-status" style="margin-bottom:1rem; font-size:0.9rem; font-weight:600; color:var(--accent-gold);"></div>
+
       <!-- Cuadrícula de Edición de Fotos -->
-      <div id="gallery-cards-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:1.5rem;">
+      <div id="gallery-cards-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr)); gap:1.5rem;">
         ${settings.gallery_items.map((item, index) => `
           <div class="samurai-card gal-edit-card" data-id="${item.id}" style="padding:1.2rem; background:var(--bg-card); border:1px solid rgba(255,255,255,0.08); display:flex; flex-direction:column; gap:0.8rem; position:relative; border-radius:8px;">
+            
+            <!-- Barra Superior de Control de Tarjeta -->
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-size:0.8rem; font-weight:700; color:var(--accent-gold); letter-spacing:0.05em;">#${index + 1} &bull; ID: ${item.id}</span>
-              <button type="button" class="del-gal-btn" data-id="${item.id}" style="background:rgba(218,68,83,0.15); border:1px solid #da4453; color:#ff8585; border-radius:4px; cursor:pointer; font-size:0.75rem; padding:0.25rem 0.6rem;">🗑️ Eliminar</button>
-            </div>
+              <div style="display:flex; align-items:center; gap:0.4rem;">
+                <span style="font-size:0.85rem; font-weight:700; color:var(--accent-gold); letter-spacing:0.05em;">#${index + 1}</span>
+                <button type="button" class="move-up-btn" data-index="${index}" title="Subir posición" style="background:rgba(255,255,255,0.08); border:none; color:#fff; border-radius:3px; cursor:pointer; padding:0.15rem 0.4rem; font-size:0.75rem;" ${index === 0 ? 'disabled style="opacity:0.3;"' : ''}>▲</button>
+                <button type="button" class="move-down-btn" data-index="${index}" title="Bajar posición" style="background:rgba(255,255,255,0.08); border:none; color:#fff; border-radius:3px; cursor:pointer; padding:0.15rem 0.4rem; font-size:0.75rem;" ${index === totalCount - 1 ? 'disabled style="opacity:0.3;"' : ''}>▼</button>
+              </div>
 
-            <!-- Preview Imagen -->
-            <div style="width:100%; height:180px; background:#0c0d12; border-radius:6px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); position:relative;">
-              <img src="${escapeHTML(item.image_url)}" class="gal-card-img" data-id="${item.id}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='photos/cueva_reigando.webp'">
-              <div style="position:absolute; bottom:6px; left:6px; background:rgba(0,0,0,0.7); backdrop-filter:blur(4px); padding:2px 8px; border-radius:4px; font-size:0.7rem; color:var(--accent-gold); font-weight:600;">
-                ${escapeHTML(item.tag || 'Sin Categoría')}
+              <div style="display:flex; gap:0.4rem;">
+                <button type="button" class="clone-gal-btn" data-id="${item.id}" title="Duplicar tarjeta" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:4px; cursor:pointer; font-size:0.75rem; padding:0.25rem 0.5rem;">📋 Duplicar</button>
+                <button type="button" class="del-gal-btn" data-id="${item.id}" style="background:rgba(218,68,83,0.15); border:1px solid #da4453; color:#ff8585; border-radius:4px; cursor:pointer; font-size:0.75rem; padding:0.25rem 0.6rem;">🗑️ Quitar</button>
               </div>
             </div>
 
-            <!-- Título -->
+            <!-- Preview Imagen con botón de cambio directo -->
+            <div style="width:100%; height:190px; background:#0c0d12; border-radius:6px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); position:relative; group;">
+              <img src="${escapeHTML(item.image_url)}" class="gal-card-img" data-id="${item.id}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='photos/cueva_reigando.webp'">
+              <div style="position:absolute; bottom:6px; left:6px; background:rgba(0,0,0,0.75); backdrop-filter:blur(4px); padding:3px 8px; border-radius:4px; font-size:0.75rem; color:var(--accent-gold); font-weight:600;">
+                🏷️ ${escapeHTML(item.tag || 'Sin Categoría')}
+              </div>
+              <button type="button" class="open-media-modal-btn" data-id="${item.id}" style="position:absolute; top:6px; right:6px; background:rgba(0,0,0,0.8); border:1px solid rgba(255,255,255,0.3); color:#fff; padding:0.3rem 0.6rem; border-radius:4px; font-size:0.75rem; cursor:pointer; font-weight:600;">
+                🖼️ Cambiar Imagen
+              </button>
+            </div>
+
+            <!-- Título de la Foto -->
             <div>
               <label style="font-size:0.75rem; color:var(--text-secondary); display:block; margin-bottom:0.2rem; font-weight:600;">Título de la Fotografía</label>
               <input type="text" class="gal-input-title" data-id="${item.id}" value="${escapeHTML(item.title)}" placeholder="Nombre o ubicación..." style="width:100%; padding:0.6rem; background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:4px; font-size:0.9rem;">
@@ -116,51 +176,118 @@ export async function initGalleryManager(container) {
               `).join('')}
             </div>
 
-            <!-- URL de Imagen -->
+            <!-- URL de Imagen / Ruta -->
             <div>
               <label style="font-size:0.75rem; color:var(--text-secondary); display:block; margin-bottom:0.2rem; font-weight:600;">Ruta / URL de la Imagen</label>
-              <input type="text" class="gal-input-url" data-id="${item.id}" value="${escapeHTML(item.image_url)}" placeholder="photos/... o uploads/..." style="width:100%; padding:0.5rem; background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:4px; font-size:0.8rem;">
-            </div>
-
-            <!-- Selector de Medios Subidos -->
-            ${availableMedia && availableMedia.length > 0 ? `
-              <div>
-                <label style="font-size:0.75rem; color:var(--accent-gold); display:block; margin-bottom:0.2rem; font-weight:600;">📂 Seleccionar de Galería de Medios:</label>
-                <select class="gal-select-media" data-id="${item.id}" style="width:100%; padding:0.5rem; background:#12131a; border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:4px; font-size:0.8rem; cursor:pointer;">
-                  <option value="">-- Elige una imagen subida --</option>
-                  ${availableMedia.map(m => `
-                    <option value="${escapeHTML(m.url)}" ${m.url === item.image_url ? 'selected' : ''}>
-                      ${escapeHTML(m.name || 'Imagen')} (${escapeHTML(m.url)})
-                    </option>
-                  `).join('')}
-                </select>
+              <div style="display:flex; gap:0.4rem;">
+                <input type="text" class="gal-input-url" data-id="${item.id}" value="${escapeHTML(item.image_url)}" placeholder="photos/... o uploads/..." style="flex:1; padding:0.5rem; background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:4px; font-size:0.8rem;">
+                <button type="button" class="open-media-modal-btn btn-samurai-outline" data-id="${item.id}" style="padding:0.4rem 0.7rem; font-size:0.75rem; white-space:nowrap; cursor:pointer;">📂 Elegir</button>
               </div>
-            ` : ''}
+            </div>
 
             <!-- Texto Alt SEO -->
             <div>
               <label style="font-size:0.75rem; color:var(--text-secondary); display:block; margin-bottom:0.2rem; font-weight:600;">
                 Texto Alternativo Alt (SEO & Google Images)
               </label>
-              <input type="text" class="gal-input-alt" data-id="${item.id}" value="${escapeHTML(item.alt || '')}" placeholder="Descripción detallada de la imagen..." style="width:100%; padding:0.5rem; background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:4px; font-size:0.8rem;">
+              <input type="text" class="gal-input-alt" data-id="${item.id}" value="${escapeHTML(item.alt || '')}" placeholder="Descripción visual para buscadores..." style="width:100%; padding:0.5rem; background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:4px; font-size:0.8rem;">
             </div>
           </div>
         `).join('')}
       </div>
 
-      <div style="margin-top:2rem; display:flex; align-items:center; gap:1rem;">
-        <button id="save-gal-btn-bottom" class="btn-samurai-red" style="padding:0.8rem 2rem; font-weight:700; cursor:pointer;">💾 Guardar y Sincronizar con la Web</button>
-        <div id="gal-feedback-msg" style="color:var(--accent-gold); font-weight:600;"></div>
+      <!-- Barra Inferior de Guardado -->
+      <div style="margin-top:2.5rem; padding:1.5rem; background:rgba(0,0,0,0.3); border-radius:8px; border:1px solid rgba(255,255,255,0.08); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <h4 style="margin:0 0 0.3rem 0; color:#fff;">¿Listo para publicar tus cambios?</h4>
+          <p style="margin:0; font-size:0.85rem; color:var(--text-secondary);">Al guardar, la sección de galería y su lightbox se actualizarán instantáneamente en toda la web.</p>
+        </div>
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <div id="gal-feedback-msg" style="color:var(--accent-gold); font-weight:600;"></div>
+          <button id="save-gal-btn-bottom" class="btn-samurai-red" style="padding:0.8rem 2.2rem; font-weight:700; cursor:pointer;">💾 Guardar y Sincronizar Galería</button>
+        </div>
+      </div>
+
+      <!-- Modal Visual de Selección de Medios -->
+      <div id="gal-media-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); z-index:9999; align-items:center; justify-content:center;">
+        <div class="samurai-card" style="width:90%; max-width:840px; max-height:85vh; padding:1.5rem; display:flex; flex-direction:column; background:var(--bg-card); position:relative; border-radius:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.8rem;">
+            <h3 class="samurai-title" style="margin:0; font-size:1.2rem;">📂 Seleccionar Imagen de la Biblioteca de Medios</h3>
+            <button id="close-media-modal-btn" style="background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <input type="file" id="modal-upload-input" accept="image/*" style="display:none;">
+            <button id="modal-upload-btn" class="btn-samurai-outline" style="padding:0.5rem 1rem; font-size:0.85rem; cursor:pointer;">📤 Subir Nueva Imagen Aquí</button>
+            <span style="font-size:0.8rem; color:var(--text-secondary);">Haz clic en cualquier imagen para asignarla a la foto</span>
+          </div>
+
+          <div id="modal-media-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:1rem; overflow-y:auto; padding-right:0.5rem; max-height:55vh;">
+            ${availableMedia.map(m => `
+              <div class="media-pick-item" data-url="${escapeHTML(m.url)}" data-name="${escapeHTML(m.name || '')}" data-alt="${escapeHTML(m.alt || '')}" style="cursor:pointer; border:1px solid rgba(255,255,255,0.1); border-radius:6px; overflow:hidden; background:#0c0d12; transition:transform 0.2s, border-color 0.2s;">
+                <div style="width:100%; height:100px;">
+                  <img src="${escapeHTML(m.url)}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='photos/cueva_reigando.webp'">
+                </div>
+                <div style="padding:0.4rem; font-size:0.75rem; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                  ${escapeHTML(m.name || m.url)}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
       </div>
     `;
 
-    // Add Photo Button
+    // 1. Direct File Upload to Gallery
+    const directUploadInput = container.querySelector('#gal-direct-upload-input');
+    const directUploadBtn = container.querySelector('#gal-direct-upload-btn');
+    const uploadStatus = container.querySelector('#gal-upload-status');
+
+    if (directUploadBtn && directUploadInput) {
+      directUploadBtn.addEventListener('click', () => directUploadInput.click());
+      directUploadInput.addEventListener('change', async (e) => {
+        if (e.target.files && e.target.files[0]) {
+          await handleFileUploadDirectly(e.target.files[0]);
+        }
+      });
+    }
+
+    async function handleFileUploadDirectly(file) {
+      try {
+        if (uploadStatus) uploadStatus.textContent = `⏳ Optimizando y subiendo "${file.name}" a la galería...`;
+        const webpFile = await convertToWebP(file);
+        const uploadedUrl = await dbService.uploadMedia(webpFile, { name: file.name });
+        
+        syncStateFromInputs();
+        const newId = 'gal_' + Date.now();
+        const baseName = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+        settings.gallery_items.unshift({
+          id: newId,
+          title: baseName.charAt(0).toUpperCase() + baseName.slice(1),
+          tag: 'Expediciones',
+          image_url: uploadedUrl,
+          alt: file.name,
+          visible: true
+        });
+
+        availableMedia = (await dbService.getMedia()) || [];
+        if (uploadStatus) {
+          uploadStatus.textContent = `¡Imagen "${file.name}" subida y agregada a la galería con éxito! Recuerda hacer clic en "Guardar Cambios".`;
+          setTimeout(() => { uploadStatus.textContent = ''; }, 4500);
+        }
+        renderUI();
+      } catch (err) {
+        if (uploadStatus) uploadStatus.textContent = 'Error al subir imagen: ' + err.message;
+      }
+    }
+
+    // 2. Add New Blank Card
     const addBtn = container.querySelector('#add-gal-photo-btn');
     if (addBtn) {
       addBtn.addEventListener('click', () => {
         syncStateFromInputs();
         const newId = 'gal_' + Date.now();
-        settings.gallery_items.push({
+        settings.gallery_items.unshift({
           id: newId,
           title: 'Nueva Fotografía',
           tag: 'Ruta del Budo',
@@ -172,7 +299,49 @@ export async function initGalleryManager(container) {
       });
     }
 
-    // Delete Photo Button
+    // 3. Move Up / Down
+    container.querySelectorAll('.move-up-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const index = parseInt(e.target.dataset.index, 10);
+        if (index > 0) {
+          syncStateFromInputs();
+          const temp = settings.gallery_items[index];
+          settings.gallery_items[index] = settings.gallery_items[index - 1];
+          settings.gallery_items[index - 1] = temp;
+          renderUI();
+        }
+      });
+    });
+
+    container.querySelectorAll('.move-down-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const index = parseInt(e.target.dataset.index, 10);
+        if (index < settings.gallery_items.length - 1) {
+          syncStateFromInputs();
+          const temp = settings.gallery_items[index];
+          settings.gallery_items[index] = settings.gallery_items[index + 1];
+          settings.gallery_items[index + 1] = temp;
+          renderUI();
+        }
+      });
+    });
+
+    // 4. Clone / Duplicate Card
+    container.querySelectorAll('.clone-gal-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = e.target.dataset.id;
+        syncStateFromInputs();
+        const item = settings.gallery_items.find(g => g.id === id);
+        if (item) {
+          const cloned = { ...item, id: 'gal_' + Date.now(), title: item.title + ' (Copia)' };
+          const idx = settings.gallery_items.findIndex(g => g.id === id);
+          settings.gallery_items.splice(idx + 1, 0, cloned);
+          renderUI();
+        }
+      });
+    });
+
+    // 5. Delete Photo Button
     container.querySelectorAll('.del-gal-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const id = e.target.dataset.id;
@@ -184,7 +353,7 @@ export async function initGalleryManager(container) {
       });
     });
 
-    // Quick Tag Buttons
+    // 6. Quick Tag Buttons
     container.querySelectorAll('.quick-tag-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const id = e.target.dataset.id;
@@ -194,21 +363,65 @@ export async function initGalleryManager(container) {
       });
     });
 
-    // Select Media Dropdown
-    container.querySelectorAll('.gal-select-media').forEach(sel => {
-      sel.addEventListener('change', (e) => {
-        const id = e.target.dataset.id;
-        const val = e.target.value;
-        if (val) {
-          const inputUrl = container.querySelector(`.gal-input-url[data-id="${id}"]`);
-          const imgEl = container.querySelector(`.gal-card-img[data-id="${id}"]`);
-          if (inputUrl) inputUrl.value = val;
-          if (imgEl) imgEl.src = val;
-        }
+    // 7. Visual Media Selector Modal
+    const modal = container.querySelector('#gal-media-modal');
+    const closeModalBtn = container.querySelector('#close-media-modal-btn');
+    const modalUploadBtn = container.querySelector('#modal-upload-btn');
+    const modalUploadInput = container.querySelector('#modal-upload-input');
+
+    container.querySelectorAll('.open-media-modal-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        activeMediaModalTargetId = e.currentTarget.dataset.id;
+        if (modal) modal.style.display = 'flex';
       });
     });
 
-    // Live URL Preview Input
+    if (closeModalBtn && modal) {
+      closeModalBtn.addEventListener('click', () => { modal.style.display = 'none'; });
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.style.display = 'none';
+      });
+    }
+
+    if (modalUploadBtn && modalUploadInput) {
+      modalUploadBtn.addEventListener('click', () => modalUploadInput.click());
+      modalUploadInput.addEventListener('change', async (e) => {
+        if (e.target.files && e.target.files[0]) {
+          const file = e.target.files[0];
+          try {
+            const webpFile = await convertToWebP(file);
+            const uploadedUrl = await dbService.uploadMedia(webpFile, { name: file.name });
+            availableMedia = (await dbService.getMedia()) || [];
+            
+            if (activeMediaModalTargetId) {
+              const inputUrl = container.querySelector(`.gal-input-url[data-id="${activeMediaModalTargetId}"]`);
+              const imgEl = container.querySelector(`.gal-card-img[data-id="${activeMediaModalTargetId}"]`);
+              if (inputUrl) inputUrl.value = uploadedUrl;
+              if (imgEl) imgEl.src = uploadedUrl;
+            }
+
+            if (modal) modal.style.display = 'none';
+          } catch (err) {
+            alert('Error al subir imagen: ' + err.message);
+          }
+        }
+      });
+    }
+
+    container.querySelectorAll('.media-pick-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const url = item.dataset.url;
+        if (activeMediaModalTargetId && url) {
+          const inputUrl = container.querySelector(`.gal-input-url[data-id="${activeMediaModalTargetId}"]`);
+          const imgEl = container.querySelector(`.gal-card-img[data-id="${activeMediaModalTargetId}"]`);
+          if (inputUrl) inputUrl.value = url;
+          if (imgEl) imgEl.src = url;
+        }
+        if (modal) modal.style.display = 'none';
+      });
+    });
+
+    // 8. Live URL Preview Input
     container.querySelectorAll('.gal-input-url').forEach(input => {
       input.addEventListener('input', (e) => {
         const id = e.target.dataset.id;
@@ -217,20 +430,23 @@ export async function initGalleryManager(container) {
       });
     });
 
-    // Save Handlers
+    // 9. Save Handlers
     const saveTop = container.querySelector('#save-gal-btn');
     const saveBottom = container.querySelector('#save-gal-btn-bottom');
     const msgEl = container.querySelector('#gal-feedback-msg');
 
     async function handleSave() {
       syncStateFromInputs();
-      if (msgEl) msgEl.textContent = '⏳ Guardando cambios...';
+      if (msgEl) msgEl.textContent = '⏳ Guardando y sincronizando cambios...';
 
       try {
-        await dbService.saveSettings(settings);
-        syncService.broadcast('SETTINGS_UPDATED', settings);
+        const currentFullSettings = (await dbService.getSettings()) || {};
+        const mergedSettings = { ...currentFullSettings, gallery_items: settings.gallery_items };
+
+        await dbService.saveSettings(mergedSettings);
+        syncService.broadcast('SETTINGS_UPDATED', mergedSettings);
         if (msgEl) {
-          msgEl.textContent = '¡Galería fotográfica actualizada y sincronizada con éxito!';
+          msgEl.textContent = '¡Galería fotográfica guardada y sincronizada con éxito en la Landing Page!';
           setTimeout(() => { msgEl.textContent = ''; }, 3500);
         }
       } catch (err) {

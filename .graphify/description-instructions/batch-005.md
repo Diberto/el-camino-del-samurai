@@ -26,6 +26,8 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@c8d71822b8acf9308f72f0e77b7ffc6b00c2b68c": "c8d7182 feat(html): add sky container markup and theme toggle button" | kind=Commit | source=git | neighbors=[3e1faf4 add implementation plan for ani…, master, 7179ed1 feat(css): add styles for Day/N…] | lang=en
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@c9842faa45f5ab5cd3d8df179549566473365e8b": "c9842fa docs: update walkthrough for final PocketBase exclusivity verification" | kind=Commit | source=git | neighbors=[4a8d488 fix: HTML structure in admin.ht…, master, 196097e fix: resolve PocketBase 400 Bad…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@cbacb099be765c50f4aa2c3aa2441f35841c48a8": "cbacb09 fix(hero): contain hero logo and artwork within 1200px max-width center…" | kind=Commit | source=git | neighbors=[master, 443707e feat(parallax): restrict deskto…, e0b581f feat(parallax): restrict parall…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@cc310b468c3a08e0602bf0fc3e952ead86f01106": "cc310b4 feat(theme): implement interactive micro sky engine inside day/night to…" | kind=Commit | source=git | neighbors=[6114a72 fix(navbar): lock desktop menu …, master, d6df3b9 feat(sakura): replace particle …] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@d6f84111a925239648c691290857e13f9429bce6": "d6f8411 fix(mobile): lock hero height to 100vh with seamless bottom gradient ov…" | kind=Commit | source=git | neighbors=[773c0b5 fix(assets): bundle WebP logo a…, master, 5ae8c77 feat(mobile): maximize Enso cir…] | lang=en
@@ -64,8 +66,6 @@ one-sentence description — no prose, no markdown fences.
 - "adapters_pocketbase_adapter_pocketbaseadapter_deleteopinion": ".deleteOpinion()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L746 | neighbors=[PocketBaseAdapter, .request()] | lang=en
 - "adapters_pocketbase_adapter_pocketbaseadapter_deletepost": ".deletePost()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L288 | neighbors=[PocketBaseAdapter, .request()] | lang=en
 - "adapters_pocketbase_adapter_pocketbaseadapter_getbackups": ".getBackups()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L561 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_getmedia": ".getMedia()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L307 | neighbors=[PocketBaseAdapter, .request()] | lang=en
-- "adapters_pocketbase_adapter_pocketbaseadapter_getopinions": ".getOpinions()" | kind=code-symbol | source=src/services/adapters/pocketbase-adapter.js:L623 | neighbors=[PocketBaseAdapter, .request()] | lang=en
 
 ## Instructions
 

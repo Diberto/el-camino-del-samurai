@@ -26,6 +26,8 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "gpu_config_gpuconfigengine_mergewithdefault": ".mergeWithDefault()" | kind=code-symbol | source=gpu-config.js:L71 | neighbors=[GpuConfigEngine, .loadCurrentConfig(), .saveCurrentConfig(), .saveNewPreset()] | lang=en
+- "modules_backup_manager": "backup-manager.js" | kind=code-symbol | source=src/admin/modules/backup-manager.js:L1 | neighbors=[daecf0d feat(admin): add backup manager…, initBackupManager(), dbService, SyncService] | lang=en
 - "modules_opiniones_manager": "opiniones-manager.js" | kind=code-symbol | source=src/admin/modules/opiniones-manager.js:L1 | neighbors=[1f0cf3c feat(opiniones): modulo CRUD en…, 6e84b4a feat(optimizations): mejoras de…, initOpinionesManager(), dbService] | lang=en
 - "scripts_start_pocketbase_ensurebinary": "ensureBinary()" | kind=code-symbol | source=scripts/start-pocketbase.js:L66 | neighbors=[start-pocketbase.js, downloadFile(), getDownloadUrl(), main()] | lang=en
 - "server_servediagnosticshealth": "serveDiagnosticsHealth()" | kind=code-symbol | source=server.js:L773 | neighbors=[server.js, checkPocketBaseHealth(), fetchCollectionCount(), getDirectorySize()] | lang=en
@@ -64,8 +66,6 @@ one-sentence description — no prose, no markdown fences.
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@4cfca8ec314f80c477343168af35664ae0e8f46b": "4cfca8e docs: update walkthrough for PocketBase systemd daemon service" | kind=Commit | source=git | neighbors=[master, 61d9e54 docs: update design spec for Un…, c266afd feat: verify PocketBase as defa…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@52462a2a379623dfd6b1ef7ef9a2af56081883fd": "52462a2 style(navbar): transition sticky header to ultra-translucent frosted gl…" | kind=Commit | source=git | neighbors=[master, 90fc3cd feat(theme): extend Day/Night m…, d7168e8 feat(design): implement white s…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@5650d5b79491e3223229b24304a1fbdcb1fef96f": "5650d5b fix(sky): make mountain backdrop sky transparent so animated day/night …" | kind=Commit | source=git | neighbors=[master, 6e21877 feat(sky): convert red sun into…, f8e6b94 chore: complete Day/Night sky s…] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@596199673ac88a0980bc4cb36a534e19b98f4bac": "5961996 docs: update walkthrough for admin auto-provisioning and payload saniti…" | kind=Commit | source=git | neighbors=[master, d46f078 fix: resolve 502 Bad Gateway by…, 8a1ce7e fix: sanitize savePost payloads…] | lang=en
-- "commit:repo:github.com/Diberto/el-camino-del-samurai@5ae8c77ec1ed6453b5deb5ca0d30afbd15fd8230": "5ae8c77 feat(mobile): maximize Enso circle artwork and typography logo size, re…" | kind=Commit | source=git | neighbors=[master, 54c49f4 feat(gallery): integrate author…, d6f8411 fix(mobile): lock hero height t…] | lang=en
 
 ## Instructions
 

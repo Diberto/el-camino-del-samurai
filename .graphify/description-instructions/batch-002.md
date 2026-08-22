@@ -26,6 +26,8 @@ No marketing language.
 Respond ONLY with a JSON object mapping each node id (as a string) to its
 one-sentence description — no prose, no markdown fences.
 
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@469316f87815eb5d8c55f99758c2a37ce78905d9": "469316f fix: resolve PocketBase 400 Bad Request error by stringifying settings_…" | kind=Commit | source=git | neighbors=[pocketbase-adapter.js, master, bafccaf docs: update walkthrough for Po…, 8161ee0 docs: update walkthrough for cl…] | lang=en
+- "commit:repo:github.com/Diberto/el-camino-del-samurai@469434d73e4e37e70646fcfa679456af7d6052b1": "469434d fix: bypass redundant 502 auth retries when PocketBase server is offline" | kind=Commit | source=git | neighbors=[pocketbase-adapter.js, master, 6d400fe fix: update server.listen for U…, eea1ef3 fix: resolve PocketBase 502/404…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@4882a8802d2f599095992b524524383a0b4419f2": "4882a88 fix(server): replace dynamic await import with static exec import in se…" | kind=Commit | source=git | neighbors=[master, c7cc8d1 fix(pocketbase): enforce chmod …, server.js, ee4947c perf(architecture & memory): im…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@514414bc573478fdc363406f60470f68cd763b56": "514414b fix(sakura): restore original static layer 7 and layer 8 parallax petal…" | kind=Commit | source=git | neighbors=[master, 7f08f53 fix(fuji): resolve fuji snow ca…, script.js, 6d2db3a feat(sakura): implement high-pe…] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@5290f56f695338a2f98cc7aa76fd6c235458f2dd": "5290f56 fix(lightbox): extract loaded image URL directly to fix modal expansion…" | kind=Commit | source=git | neighbors=[master, d85fa73 feat(branding): replace text ka…, script.js, 54c49f4 feat(gallery): integrate author…] | lang=en
@@ -64,8 +66,6 @@ one-sentence description — no prose, no markdown fences.
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@fae5c61b9f378edb70689d0aa9ee1bd86c975405": "fae5c61 fix(logo): ensure maximum contrast and prevent overflow clipping for ty…" | kind=Commit | source=git | neighbors=[0405449 fix(logo): restore white typogr…, master, f7921ed fix(canvas): prevent InvalidSta…, script.js] | lang=en
 - "commit:repo:github.com/Diberto/el-camino-del-samurai@ff284595efa6ba015f9a4fa4aa1facf7af635500": "ff28459 fix: smart environment provider detection to prevent PocketBase 404 net…" | kind=Commit | source=git | neighbors=[f2e9dd0 docs: update walkthrough for Ho…, master, 0390b13 docs: update walkthrough for sm…, db-service.js] | lang=en
 - "gpu_config": "gpu-config.js" | kind=code-symbol | source=gpu-config.js:L1 | neighbors=[28ed22a feat(gpu): add /gpu configurati…, DEFAULT_PRESET, gpuConfig, GpuConfigEngine] | lang=en
-- "gpu_config_gpuconfigengine_mergewithdefault": ".mergeWithDefault()" | kind=code-symbol | source=gpu-config.js:L71 | neighbors=[GpuConfigEngine, .loadCurrentConfig(), .saveCurrentConfig(), .saveNewPreset()] | lang=en
-- "modules_backup_manager": "backup-manager.js" | kind=code-symbol | source=src/admin/modules/backup-manager.js:L1 | neighbors=[daecf0d feat(admin): add backup manager…, initBackupManager(), dbService, SyncService] | lang=en
 
 ## Instructions
 
