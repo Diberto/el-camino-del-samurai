@@ -17,11 +17,11 @@
                 <div class="book-3d-stage tomo-stage active" id="stage-tomo-1">
                     <div class="book-3d-card" id="book-card-1" data-rotated="false">
                         <div class="book-face-front">
-                            <img src="assets/book1_front.webp" alt="La Ruta del Samurái - Portada Tomo 1" loading="lazy" decoding="async">
+                            <img src="assets/book1_front.webp" alt="La Ruta del Samurái - Portada Tomo 1" decoding="async">
                             <div class="book-shine"></div>
                         </div>
                         <div class="book-face-back">
-                            <img src="assets/book1_back.webp" alt="La Ruta del Samurái - Contraportada Tomo 1" loading="lazy" decoding="async">
+                            <img src="assets/book1_back.webp" alt="La Ruta del Samurái - Contraportada Tomo 1" decoding="async">
                             <div class="book-shine"></div>
                         </div>
                         <div class="book-face-spine spine-tomo1">
@@ -40,11 +40,11 @@
                 <div class="book-3d-stage tomo-stage" id="stage-tomo-2" style="display: none;">
                     <div class="book-3d-card" id="book-card-2" data-rotated="false">
                         <div class="book-face-front">
-                            <img src="assets/book2_front.webp" alt="El Paso de las Luciérnagas - Portada Tomo 2" loading="lazy" decoding="async">
+                            <img src="assets/book2_front.webp" alt="El Paso de las Luciérnagas - Portada Tomo 2" decoding="async">
                             <div class="book-shine"></div>
                         </div>
                         <div class="book-face-back">
-                            <img src="assets/book2_back.webp" alt="El Paso de las Luciérnagas - Contraportada Tomo 2" loading="lazy" decoding="async">
+                            <img src="assets/book2_back.webp" alt="El Paso de las Luciérnagas - Contraportada Tomo 2" decoding="async">
                             <div class="book-shine"></div>
                         </div>
                         <div class="book-face-spine spine-tomo2">
@@ -99,16 +99,19 @@
                 
                 <div class="point-item">
                     <div class="point-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                     </div>
                     <div class="point-text">
-                        <h3>Cultura Budoka y Tradición</h3>
-                        <p>Descubre el Kobudo, Iaido y Karate-Do desde su origen espiritual y su aplicación práctica para templar el carácter hoy.</p>
+                        <h3>Filosofía y Valores del Bushido</h3>
+                        <p>Reflexiones prácticas sobre el honor, el coraje, la serenidad y la disciplina para aplicar en la vida moderna.</p>
                     </div>
                 </div>
             </div>
             
-            <a href="#ediciones" class="btn btn-primary btn-margin">Ver las Ediciones</a>
+            <div class="sinopsis-actions">
+                <a href="#ediciones" class="btn btn-primary">Ver Ediciones Disponibles</a>
+                <a href="#autor" class="btn btn-secondary">Conocer al Autor</a>
+            </div>
         </div>
     </div>
 </section>

@@ -1073,26 +1073,34 @@ body.theme-night .hero-overlay-bottom {
 }
 
 /* 6-FACE SOLID 3D BOX GEOMETRY (Depth: 36px, Z-offset: 18px) */
-.book-face-front,
+.book-face-front {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 3px 6px 6px 3px;
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(18px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(216, 17, 36, 0.2);
+    z-index: 10;
+}
+
 .book-face-back {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 4px;
+    border-radius: 6px 3px 3px 6px;
     overflow: hidden;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.65), 0 0 25px rgba(216, 17, 36, 0.15);
-}
-
-.book-face-front {
-    transform: translateZ(18px);
-}
-
-.book-face-back {
     transform: rotateY(180deg) translateZ(18px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(216, 17, 36, 0.2);
+    z-index: 10;
 }
 
 .book-face-front img,
@@ -1101,6 +1109,19 @@ body.theme-night .hero-overlay-bottom {
     height: 100%;
     object-fit: cover;
     display: block;
+    position: relative;
+    z-index: 1;
+}
+
+.book-shine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.25) 100%);
+    pointer-events: none;
+    z-index: 2;
 }
 
 /* Spine at X=0, spanning Z: -18px to +18px */

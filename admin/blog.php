@@ -421,6 +421,14 @@ if ($action === 'edit' && isset($_GET['id'])) {
                     });
                 }
 
+                // Interceptar botón de imagen nativo de la barra de herramientas de Quill
+                quill.getModule('toolbar').addHandler('image', () => {
+                    openMediaPicker((path) => {
+                        const range = quill.getSelection(true);
+                        quill.insertEmbed(range.index, 'image', '../' + path);
+                    });
+                });
+
                 // Botón elegir portada desde la biblioteca
                 const btnPickCover = document.getElementById('btn-pick-cover-media');
                 const coverInput = document.getElementById('cover_image');
@@ -432,7 +440,7 @@ if ($action === 'edit' && isset($_GET['id'])) {
                     });
                 }
 
-                // Botón insertar imagen en el editor Quill
+                // Botón adicional insertar imagen en el editor Quill
                 const btnInsertQuill = document.getElementById('btn-insert-media-quill');
                 if (btnInsertQuill) {
                     btnInsertQuill.addEventListener('click', () => {
