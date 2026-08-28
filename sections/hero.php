@@ -50,9 +50,14 @@
         <div class="parallax-layer parallax-text">
             <div class="hero-content">
                 <div class="hero-main-logo-wrapper">
-                    <img src="assets/logo_hero_complete.svg" 
+                    <img src="assets/enso_illustration_composite.png" 
+                         alt="Emblema Enso Samurái" 
+                         class="hero-logo-emblem" 
+                         fetchpriority="high" 
+                         decoding="async">
+                    <img src="assets/logo_typography_dark.webp" 
                          alt="La Ruta del Samurái - Jorge Orpianesi" 
-                         class="hero-logo-main" 
+                         class="hero-logo-typography" 
                          id="hero-logo-main" 
                          fetchpriority="high" 
                          decoding="async">

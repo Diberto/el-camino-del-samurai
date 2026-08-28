@@ -911,31 +911,86 @@ body.theme-night .layer-svg-6 {
 }
 
 .hero-main-logo-wrapper {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
 }
 
-.hero-logo-main {
-    max-width: 360px;
+.hero-logo-emblem {
+    max-width: 220px;
     width: 100%;
     height: auto;
     filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.45));
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
 }
 
-body.theme-night .hero-logo-main {
+.hero-logo-emblem:hover {
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 25px rgba(216, 17, 36, 0.65));
+}
+
+.hero-logo-typography {
+    max-width: 320px;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.45));
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+}
+
+body.theme-night .hero-logo-emblem {
     filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.25)) drop-shadow(0 0 25px rgba(216, 17, 36, 0.45));
 }
 
-.hero-logo-main:hover {
-    transform: scale(1.03);
-    filter: drop-shadow(0 0 30px rgba(216, 17, 36, 0.7));
+body.theme-night .hero-logo-typography {
+    filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.35));
 }
 
-@media (max-width: 768px) {
-    .hero-logo-main {
-        max-width: 260px;
+@media (max-width: 991px) {
+    .layer-svg-1,
+    .layer-svg-2,
+    .layer-svg-3,
+    .layer-svg-4,
+    .layer-svg-5,
+    .layer-svg-6,
+    .layer-svg-7,
+    .layer-svg-8,
+    .layer-clouds-fg {
+        display: none !important;
+    }
+    .parallax-text {
+        justify-content: center !important;
+        padding-left: 0 !important;
+        padding: 0 1.5rem !important;
+        text-align: center !important;
+    }
+    .hero-content {
+        margin: 0 auto !important;
+        text-align: center !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 100%;
+    }
+    .hero-main-logo-wrapper {
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 0.4rem;
+        margin-bottom: 1.25rem;
+    }
+    .hero-logo-emblem {
+        max-width: 175px !important;
+    }
+    .hero-logo-typography {
+        max-width: 260px !important;
+    }
+    .hero-tagline,
+    .hero-desc {
+        text-align: center !important;
+    }
+    .hero-actions {
+        justify-content: center !important;
     }
 }
 
