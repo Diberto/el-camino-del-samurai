@@ -344,4 +344,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         renderSakura();
     }
+
+    // =========================================================================
+    // 8. SCROLL REVEAL & FADE-IN ANIMATION SYSTEM (INTERSECTION OBSERVER)
+    // =========================================================================
+    const fadeElements = document.querySelectorAll('.fade-in');
+
+    if ('IntersectionObserver' in window) {
+        const observerOptions = {
+            root: null,
+            threshold: 0.02,
+            rootMargin: "0px 0px 100px 0px"
+        };
+
+        const fadeObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('appear');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        fadeElements.forEach(el => fadeObserver.observe(el));
+    } else {
+        fadeElements.forEach(el => el.classList.add('appear'));
+    }
+
+    // Fallback de seguridad inmediato para garantizar que ninguna sección quede oculta
+    setTimeout(() => {
+        fadeElements.forEach(el => el.classList.add('appear'));
+    }, 300);
 });

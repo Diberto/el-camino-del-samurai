@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    EL CAMINO DEL SAMURAI - DESIGN SYSTEM & STYLES
    ========================================================================== */
 
@@ -2666,13 +2666,15 @@ body.theme-night .hero-overlay-bottom {
 /* Scroll Fade In elements support */
 .fade-in {
     opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(25px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
 }
 
 .fade-in.appear {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    visibility: visible !important;
 }
 
 /* 14.5 SCROLL TOP BUTTON */
