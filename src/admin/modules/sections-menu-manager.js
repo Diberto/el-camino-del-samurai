@@ -4,25 +4,23 @@ import { syncService } from '../../services/sync-service.js';
 const SECTION_LABELS = {
   inicio: 'Inicio (Hero Parallax)',
   sinopsis: 'El Libro (Sinopsis & 3D)',
-  virtudes: 'Las Virtudes del Bushido',
-  oraculo: 'El Oráculo Interactivo',
+  opiniones: 'Opiniones de nuestros lectores',
+  redes: 'Sigue la ruta del samurái en las redes',
   capitulos: 'Obras del Autor',
   ediciones: 'Ediciones Disponibles',
-  opiniones: 'Opiniones de Lectores',
   autor: 'Jorge Orpianesi (Autor)',
   galeria: 'Galería Fotográfica',
   blog: 'Blog Samurai (Noticias & Artículos)',
-  contacto: 'Suscripción / Contacto'
+  contacto: 'Contacto Oficial & Pedidos'
 };
 
 const SECTION_URL_MAP = {
   inicio: '#inicio',
   sinopsis: '#sinopsis',
-  virtudes: '#virtudes',
-  oraculo: '#oraculo',
+  opiniones: '#opiniones',
+  redes: '#redes',
   capitulos: '#capitulos',
   ediciones: '#ediciones',
-  opiniones: '#opiniones',
   autor: '#autor',
   galeria: '#galeria',
   blog: '#blog',
@@ -37,36 +35,32 @@ export async function initSectionsManager(container) {
     sections_toggle: {
       inicio: true,
       sinopsis: true,
-      virtudes: true,
-      oraculo: true,
+      opiniones: true,
+      redes: true,
       capitulos: true,
       ediciones: true,
-      opiniones: true,
       autor: true,
       galeria: true,
       blog: true,
-      redes: true,
       contacto: true,
       ...(loadedSettings.sections_toggle || {})
     },
     navigation_menu: loadedSettings.navigation_menu || [
       { id: '1', label: 'Inicio', url: '#inicio', visible: true },
       { id: '2', label: 'El Libro', url: '#sinopsis', visible: true },
-      { id: '3', label: 'Las Virtudes', url: '#virtudes', visible: true },
-      { id: '4', label: 'El Oráculo', url: '#oraculo', visible: true },
+      { id: '3', label: 'Opiniones', url: '#opiniones', visible: true },
+      { id: '4', label: 'Redes', url: '#redes', visible: true },
       { id: '5', label: 'Ediciones', url: '#ediciones', visible: true },
-      { id: '5b', label: 'Opiniones', url: '#opiniones', visible: true },
       { id: '6', label: 'Autor', url: '#autor', visible: true },
       { id: '7', label: 'Galería', url: '#galeria', visible: true },
       { id: '8', label: 'Blog', url: '#blog', visible: true },
-      { id: '8b', label: 'Redes', url: '#redes', visible: true },
-      { id: '9', label: 'Comprar', url: '#contacto', visible: true }
+      { id: '9', label: 'Contacto', url: '#contacto', visible: true }
     ],
     social_links: {
-      instagram: { url: 'https://www.instagram.com/larutadelsamurai', handle: '@larutadelsamurai', desc: 'Fotografías diarias de expediciones, castillos y dojos tradicionales en Japón.', visible: true },
+      instagram: { url: 'https://www.instagram.com/la.ruta.del.samurai/', handle: '@la.ruta.del.samurai', desc: 'Fotografías diarias de expediciones, castillos y dojos tradicionales en Japón.', visible: true },
       youtube: { url: 'https://www.youtube.com/@larutadelsamurai', handle: 'La Ruta del Samurái', desc: 'Documentales de viaje, técnicas de artes marciales y charlas sobre filosofía samurái.', visible: true },
-      facebook: { url: 'https://www.facebook.com/larutadelsamurai', handle: 'La Ruta del Samurái', desc: 'Comunidad de lectores, eventos, debates marciales y transmisiones especiales.', visible: true },
-      whatsapp: { url: 'https://wa.me/5491100000000', handle: 'Contacto WhatsApp', desc: 'Consultas directas sobre ejemplares físicos autografiados y expediciones.', visible: false },
+      facebook: { url: 'https://www.facebook.com/jorgeorpianesi', handle: 'Jorge Orpianesi', desc: 'Comunidad de lectores, eventos, debates marciales y transmisiones especiales.', visible: true },
+      whatsapp: { url: 'https://wa.me/5493513886443', handle: '+549 351 3886443', desc: 'Consultas directas sobre ejemplares físicos autografiados y envíos.', visible: true },
       ...(loadedSettings.social_links || {})
     }
   };

@@ -33,9 +33,9 @@ const DEFAULT_SETTINGS = {
     { id: '9', label: 'Contacto', url: '#contacto', visible: true }
   ],
   social_links: {
-    instagram: { url: 'https://www.instagram.com/larutadelsamurai', handle: '@larutadelsamurai', desc: 'Fotografías diarias de expediciones, castillos y dojos tradicionales en Japón.', visible: true },
+    instagram: { url: 'https://www.instagram.com/la.ruta.del.samurai/', handle: '@la.ruta.del.samurai', desc: 'Fotografías diarias de expediciones, castillos y dojos tradicionales en Japón.', visible: true },
     youtube: { url: 'https://www.youtube.com/@larutadelsamurai', handle: 'La Ruta del Samurái', desc: 'Documentales de viaje, técnicas de artes marciales y charlas sobre filosofía samurái.', visible: true },
-    facebook: { url: 'https://www.facebook.com/larutadelsamurai', handle: 'La Ruta del Samurái', desc: 'Comunidad de lectores, eventos, debates marciales y transmisiones especiales.', visible: true },
+    facebook: { url: 'https://www.facebook.com/jorgeorpianesi', handle: 'Jorge Orpianesi', desc: 'Comunidad de lectores, eventos, debates marciales y transmisiones especiales.', visible: true },
     whatsapp: { url: 'https://wa.me/5493513886443', handle: '+549 351 3886443', desc: 'Consultas directas y pedidos de libros físicos dedicados en Argentina.', visible: true }
   },
   gallery_items: [

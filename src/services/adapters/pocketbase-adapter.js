@@ -120,24 +120,33 @@ export class PocketBaseAdapter {
 
     try {
       const local = localStorage.getItem('local_samurai_settings');
-      if (local) return JSON.parse(local);
+      if (local) {
+        const parsed = JSON.parse(local);
+        if (parsed.navigation_menu) {
+          parsed.navigation_menu = parsed.navigation_menu.filter(i => i && i.url !== '#virtudes' && i.url !== '#oraculo');
+        }
+        if (parsed.sections_toggle) {
+          delete parsed.sections_toggle.virtudes;
+          delete parsed.sections_toggle.oraculo;
+        }
+        return parsed;
+      }
     } catch {}
 
     return {
       sections_toggle: {
-        inicio: true, sinopsis: true, virtudes: true, oraculo: true, capitulos: true, ediciones: true, opiniones: true, autor: true, galeria: true, blog: true, contacto: true
+        inicio: true, sinopsis: true, opiniones: true, redes: true, capitulos: true, ediciones: true, autor: true, galeria: true, blog: true, contacto: true
       },
       navigation_menu: [
         { id: '1', label: 'Inicio', url: '#inicio', visible: true },
         { id: '2', label: 'El Libro', url: '#sinopsis', visible: true },
-        { id: '3', label: 'Las Virtudes', url: '#virtudes', visible: true },
-        { id: '4', label: 'El Oráculo', url: '#oraculo', visible: true },
+        { id: '3', label: 'Opiniones', url: '#opiniones', visible: true },
+        { id: '4', label: 'Redes', url: '#redes', visible: true },
         { id: '5', label: 'Ediciones', url: '#ediciones', visible: true },
-        { id: '5b', label: 'Opiniones', url: '#opiniones', visible: true },
         { id: '6', label: 'Autor', url: '#autor', visible: true },
         { id: '7', label: 'Galería', url: '#galeria', visible: true },
         { id: '8', label: 'Blog', url: '#blog', visible: true },
-        { id: '9', label: 'Comprar', url: '#contacto', visible: true }
+        { id: '9', label: 'Contacto', url: '#contacto', visible: true }
       ]
     };
   }

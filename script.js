@@ -71,7 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (settings.navigation_menu) {
             const navUl = document.querySelector('#nav-menu ul');
             if (navUl) {
-                let menuItems = Array.isArray(settings.navigation_menu) ? [...settings.navigation_menu] : [];
+                let menuItems = Array.isArray(settings.navigation_menu) 
+                    ? settings.navigation_menu.filter(i => i && i.url !== '#virtudes' && i.url !== '#oraculo')
+                    : [];
                 const hasOpiniones = menuItems.some(i => i && i.url === '#opiniones');
                 if (!hasOpiniones) {
                     const autorIdx = menuItems.findIndex(i => i && i.url === '#autor');
@@ -84,8 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 navUl.innerHTML = menuItems
                     .filter(item => item && item.visible !== false)
-                    .map((item, idx) => {
-                        const isComprar = item.url === '#contacto' || item.label.toLowerCase().includes('comprar');
+                    .map((item) => {
+                        const isComprar = item.url === '#contacto' || (item.label && item.label.toLowerCase().includes('contacto'));
                         const linkClass = isComprar ? 'btn btn-nav' : 'nav-link';
                         return `<li><a href="${item.url}" class="${linkClass}">${item.label}</a></li>`;
                     })
@@ -106,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (settings.social_links) {
-            const socialGrid = document.querySelector('#redes .social-cards-grid');
+            const socialGrid = document.querySelector('#redes .social-macro-grid') || document.querySelector('#redes .social-cards-grid');
             const footerSocial = document.querySelector('.footer-social-icons');
             const socials = settings.social_links;
 
@@ -305,9 +307,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         function updateLogoImage() {
             if (!heroLogoImg) return;
-            const isNight = document.body.classList.contains('theme-night');
-            // Usar logo con letras negras originales (logoTypographyDark) para óptima legibilidad en modo diurno y móvil
-            heroLogoImg.src = isNight ? logoTypographyLight : logoTypographyDark;
+            // Usar SIEMPRE el logo original con letras negras y sello kanji (logoTypographyDark) para máxima fidelidad y legibilidad
+            heroLogoImg.src = logoTypographyDark;
         }
 
         updateLogoImage();
