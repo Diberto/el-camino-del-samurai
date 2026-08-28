@@ -12,35 +12,31 @@ const DEFAULT_SETTINGS = {
   sections_toggle: {
     inicio: true,
     sinopsis: true,
-    virtudes: true,
-    oraculo: true,
+    opiniones: true,
+    redes: true,
     capitulos: true,
     ediciones: true,
-    opiniones: true,
     autor: true,
     galeria: true,
     blog: true,
-    redes: true,
     contacto: true
   },
   navigation_menu: [
     { id: '1', label: 'Inicio', url: '#inicio', visible: true },
     { id: '2', label: 'El Libro', url: '#sinopsis', visible: true },
-    { id: '3', label: 'Las Virtudes', url: '#virtudes', visible: true },
-    { id: '4', label: 'El Oráculo', url: '#oraculo', visible: true },
+    { id: '3', label: 'Opiniones', url: '#opiniones', visible: true },
+    { id: '4', label: 'Redes', url: '#redes', visible: true },
     { id: '5', label: 'Ediciones', url: '#ediciones', visible: true },
-    { id: '5b', label: 'Opiniones', url: '#opiniones', visible: true },
     { id: '6', label: 'Autor', url: '#autor', visible: true },
     { id: '7', label: 'Galería', url: '#galeria', visible: true },
     { id: '8', label: 'Blog', url: '#blog', visible: true },
-    { id: '8b', label: 'Redes', url: '#redes', visible: true },
-    { id: '9', label: 'Comprar', url: '#contacto', visible: true }
+    { id: '9', label: 'Contacto', url: '#contacto', visible: true }
   ],
   social_links: {
     instagram: { url: 'https://www.instagram.com/larutadelsamurai', handle: '@larutadelsamurai', desc: 'Fotografías diarias de expediciones, castillos y dojos tradicionales en Japón.', visible: true },
     youtube: { url: 'https://www.youtube.com/@larutadelsamurai', handle: 'La Ruta del Samurái', desc: 'Documentales de viaje, técnicas de artes marciales y charlas sobre filosofía samurái.', visible: true },
     facebook: { url: 'https://www.facebook.com/larutadelsamurai', handle: 'La Ruta del Samurái', desc: 'Comunidad de lectores, eventos, debates marciales y transmisiones especiales.', visible: true },
-    whatsapp: { url: 'https://wa.me/5491100000000', handle: 'Contacto WhatsApp', desc: 'Consultas directas sobre ejemplares físicos autografiados y expediciones.', visible: false }
+    whatsapp: { url: 'https://wa.me/5493513886443', handle: '+549 351 3886443', desc: 'Consultas directas y pedidos de libros físicos dedicados en Argentina.', visible: true }
   },
   gallery_items: [
     { id: 'gal_1', title: 'Castillo de Himeji y Fortalezas Feudales', tag: 'Patrimonio Histórico', image_url: 'photos/castillo_sengoku.webp', alt: 'Castillo de Himeji Japón', visible: true },

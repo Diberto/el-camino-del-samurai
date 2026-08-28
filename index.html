@@ -147,14 +147,13 @@
                 <ul>
                     <li><a href="#" class="nav-link active" aria-current="page">Inicio</a></li>
                     <li><a href="#sinopsis" class="nav-link">El Libro</a></li>
-                    <li><a href="#virtudes" class="nav-link">Las Virtudes</a></li>
-                    <li><a href="#oraculo" class="nav-link">El Oráculo</a></li>
-                    <li><a href="#ediciones" class="nav-link">Ediciones</a></li>
                     <li><a href="#opiniones" class="nav-link">Opiniones</a></li>
+                    <li><a href="#redes" class="nav-link">Redes</a></li>
+                    <li><a href="#ediciones" class="nav-link">Ediciones</a></li>
                     <li><a href="#autor" class="nav-link">Autor</a></li>
                     <li><a href="#galeria" class="nav-link">Galería</a></li>
-                    <li><a href="#redes" class="nav-link">Redes</a></li>
-                    <li><a href="#contacto" class="btn btn-nav">Comprar</a></li>
+                    <li><a href="#blog" class="nav-link">Blog</a></li>
+                    <li><a href="#contacto" class="btn btn-nav">Contacto</a></li>
                 </ul>
             </nav>
             <button class="theme-toggle-btn" id="theme-toggle" aria-label="Cambiar modo día/noche" title="Modo Día (日) / Noche (月)">
@@ -224,17 +223,17 @@
             <div class="parallax-layer layer-svg-7" style="background-image: url('assets/svg_true_layer_7.webp');"></div>
             <div class="parallax-layer layer-svg-8" style="background-image: url('assets/svg_true_layer_8.webp');"></div>
             
-            <!-- Capa 10: Contenido Principal con el Logo Tipográfico Oficial -->
+            <!-- Capa 10: Contenido Principal con el Logo Tipográfico Oficial (Letras Negras Originales) -->
             <div class="parallax-layer parallax-text">
                 <div class="hero-content">
                     <div class="hero-main-logo-wrapper">
-                        <img src="assets/logo_typography_light.webp" alt="La Ruta del Samurái - Jorge Orpianesi" class="hero-logo-main" id="hero-logo-main">
+                        <img src="assets/logo_typography_dark.webp" alt="La Ruta del Samurái - Jorge Orpianesi" class="hero-logo-main" id="hero-logo-main">
                     </div>
                     <h2 class="hero-tagline">LA SENDA DE LA HISTORIA Y EL BUDO</h2>
                     <p class="hero-desc">Sigue las huellas de Miyamoto Musashi. Un fascinante viaje por la geografía, templos y castillos feudales del Japón tradicional.</p>
                     <div class="hero-actions">
                         <a href="#sinopsis" class="btn btn-primary">Explorar Libros</a>
-                        <a href="#contacto" class="btn btn-secondary">Comprar</a>
+                        <a href="#ediciones" class="btn btn-secondary">Comprar</a>
                     </div>
                 </div>
             </div>
@@ -359,136 +358,206 @@
         </div>
     </section>
 
-    <!-- Sección de las Virtudes del Bushido -->
-    <section class="section virtues-section" id="virtudes">
+    <!-- Sección de Opiniones y Testimonios de Lectores -->
+    <section class="section reviews-section" id="opiniones" aria-label="Opiniones de Lectores">
         <div class="container">
             <div class="section-header center fade-in">
-                <span class="section-subtitle">EL CÓDIGO ANCESTRAL</span>
-                <h2 class="section-title">Las Siete Virtudes del Bushido</h2>
-                <p class="section-desc">Los pilares eternos sobre los que se construía el espíritu del guerrero. Principios éticos para el autogobierno.</p>
+                <span class="section-subtitle">TESTIMONIOS & COMUNIDAD</span>
+                <h2 class="section-title">Opiniones de Nuestros Lectores</h2>
+                <p class="section-desc">Experiencias, valoraciones y fotografías de practicantes marciales y apasionados de la cultura japonesa que recorren la senda del samurái.</p>
             </div>
-            
-            <div class="virtues-grid">
-                <!-- 1. Gi (Rectitud) -->
-                <div class="virtue-card fade-in">
-                    <div class="virtue-kanji">義</div>
-                    <h3 class="virtue-title">GI <span class="virtue-trans">(Rectitud / Justicia)</span></h3>
-                    <p class="virtue-desc">Sé sumamente honesto en tus tratos con todo el mundo. Cree en la justicia, no en la que emana de los demás, sino en la tuya propia.</p>
-                </div>
+
+            <!-- Filtros de Opiniones -->
+            <div class="reviews-filter-wrapper fade-in">
+                <button class="review-filter-btn active" data-filter="all">Todas las Opiniones</button>
+                <button class="review-filter-btn" data-filter="photo">📸 Con Foto / Captura</button>
+                <button class="review-filter-btn" data-filter="text">✍️ Reseñas Escritas</button>
+            </div>
+
+            <!-- Grid de Opiniones Mixtas (Fotos y Textos) -->
+            <div class="reviews-grid fade-in" id="reviews-grid">
                 
-                <!-- 2. Yu (Coraje) -->
-                <div class="virtue-card fade-in">
-                    <div class="virtue-kanji">勇</div>
-                    <h3 class="virtue-title">YU <span class="virtue-trans">(Valor Heroico)</span></h3>
-                    <p class="virtue-desc">Alzarse sobre las masas de gente que temen actuar. El coraje no es ciego, es inteligente y fuerte. Reemplaza el miedo por el respeto y la precaución.</p>
-                </div>
-                
-                <!-- 3. Jin (Benevolencia) -->
-                <div class="virtue-card fade-in">
-                    <div class="virtue-kanji">仁</div>
-                    <h3 class="virtue-title">JIN <span class="virtue-trans">(Benevolencia / Compasión)</span></h3>
-                    <p class="virtue-desc">Mediante el entrenamiento y la fuerza interior, el samurai desarrolla compasión. Ayuda a tus semejantes en cada oportunidad.</p>
-                </div>
-                
-                <!-- 4. Rei (Respeto) -->
-                <div class="virtue-card fade-in">
-                    <div class="virtue-kanji">礼</div>
-                    <h3 class="virtue-title">REI <span class="virtue-trans">(Cortesía / Respeto)</span></h3>
-                    <p class="virtue-desc">Los samurai no tienen motivos para ser crueles. No necesitan demostrar su fuerza. Un samurai es cortés incluso con sus enemigos.</p>
-                </div>
-                
-                <!-- 5. Makoto (Honestidad) -->
-                <div class="virtue-card fade-in">
-                    <div class="virtue-kanji">誠</div>
-                    <h3 class="virtue-title">MAKOTO <span class="virtue-trans">(Sinceridad Absoluta)</span></h3>
-                    <p class="virtue-desc">Cuando un samurai dice que hará algo, es como si ya estuviera hecho. Nada en la tierra lo detendrá. Hablar y hacer son la misma acción.</p>
-                </div>
-                
-                <!-- 6. Meiyo (Honor) -->
-                <div class="virtue-card fade-in">
-                    <div class="virtue-kanji">名誉</div>
-                    <h3 class="virtue-title">MEIYO <span class="virtue-trans">(Honor)</span></h3>
-                    <p class="virtue-desc">El verdadero samurai solo tiene un juez de su propio honor, y es él mismo. Las decisiones que tomas y cómo las ejecutas reflejan quién eres en verdad.</p>
-                </div>
-                
-                <!-- 7. Chugi (Lealtad) -->
-                <div class="virtue-card fade-in">
-                    <div class="virtue-kanji">忠義</div>
-                    <h3 class="virtue-title">CHUGI <span class="virtue-trans">(Deber / Lealtad)</span></h3>
-                    <p class="virtue-desc">Haber hecho o dicho algo significa que te pertenece. Eres responsable de ello y de todas sus consecuencias. Leal a quienes están bajo tu cuidado.</p>
-                </div>
+                <!-- Tarjeta 1: Foto Lector -->
+                <article class="review-card review-card-photo" data-type="photo">
+                    <div class="review-photo-wrapper" data-src="photos/WhatsApp Image 2026-06-25 at 16.10.12.webp" data-title="Lector con La Ruta del Samurái">
+                        <img src="photos/WhatsApp Image 2026-06-25 at 16.10.12.webp" alt="Lector disfrutando del libro en dojo" loading="lazy" class="review-photo-img" onerror="this.src='photos/orpianesi1.webp'">
+                        <div class="review-photo-badge">📸 Foto de Lector</div>
+                        <div class="review-photo-overlay">
+                            <span>🔍 Clic para ampliar</span>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-caption">"Una edición visualmente imponente. El trabajo documental en cada templo y castillo es una verdadera joya para quienes practicamos artes marciales tradicionales."</p>
+                        <div class="review-author">
+                            <strong>Carlos Mendoza</strong>
+                            <span>Practicante de Kendo · Córdoba, Arg.</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 2: Texto Destacado -->
+                <article class="review-card review-card-text" data-type="text">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-stars">★★★★★</div>
+                    <blockquote class="review-body">
+                        "Un libro imprescindible para todo amante del Bushido. La rigurosidad histórica de Jorge combinada con su experiencia real en viajes por Japón te transporta directamente a los castillos y dojos antiguos."
+                    </blockquote>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">AL</div>
+                        <div class="review-author">
+                            <strong>Ana Laura Fernández</strong>
+                            <span>Investigadora de Cultura Japonesa</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                </article>
+
+                <!-- Tarjeta 3: Foto Lector -->
+                <article class="review-card review-card-photo" data-type="photo">
+                    <div class="review-photo-wrapper" data-src="photos/WhatsApp Image 2026-06-25 at 16.10.31.webp" data-title="Ejemplar dedicado y mapa histórico">
+                        <img src="photos/WhatsApp Image 2026-06-25 at 16.10.31.webp" alt="Libro físico y mapas históricos" loading="lazy" class="review-photo-img" onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="review-photo-badge">📸 Ejemplar Físico</div>
+                        <div class="review-photo-overlay">
+                            <span>🔍 Clic para ampliar</span>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-caption">"Recibí mi libro dedicado directamente por el autor. La calidad del papel, las fotos a color y los 9 mapas hacen que valga cada centavo."</p>
+                        <div class="review-author">
+                            <strong>Martín Soria</strong>
+                            <span>Instructor de Iaido · Buenos Aires</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 4: Texto Destacado -->
+                <article class="review-card review-card-text" data-type="text">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-stars">★★★★★</div>
+                    <blockquote class="review-body">
+                        "Superó todas mis expectativas. 'El Paso de las Luciérnagas' profundiza en relatos y personajes del Japón feudal que casi ningún otro autor hispanohablante ha documentado con tanta precisión."
+                    </blockquote>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">ER</div>
+                        <div class="review-author">
+                            <strong>Elena Rostova</strong>
+                            <span>Escritora & Divulgadora Marcial</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                </article>
+
+                <!-- Tarjeta 5: Foto Lector -->
+                <article class="review-card review-card-photo" data-type="photo">
+                    <div class="review-photo-wrapper" data-src="photos/WhatsApp Image 2026-06-25 at 16.10.35.webp" data-title="Expedición y lectura en el Dojo">
+                        <img src="photos/WhatsApp Image 2026-06-25 at 16.10.35.webp" alt="Comunidad marcial y lectura de El Camino del Samurái" loading="lazy" class="review-photo-img" onerror="this.src='photos/jardin_zen.webp'">
+                        <div class="review-photo-badge">📸 Comunidad Budo</div>
+                        <div class="review-photo-overlay">
+                            <span>🔍 Clic para ampliar</span>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-caption">"Leído en nuestro dojo y recomendado para todos nuestros alumnos. Es mucho más que un libro de viaje: es un manual de espíritu y disciplina."</p>
+                        <div class="review-author">
+                            <strong>Sensei Roberto G.</strong>
+                            <span>Dojo Budokan · Santa Fe</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Tarjeta 6: Texto Destacado -->
+                <article class="review-card review-card-text" data-type="text">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-stars">★★★★★</div>
+                    <blockquote class="review-body">
+                        "La narración de la senda de Miyamoto Musashi te atrapa desde la primera página. Indispensable tener ambos tomos en la biblioteca de cualquier budoka."
+                    </blockquote>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">DV</div>
+                        <div class="review-author">
+                            <strong>Diego Valenzuela</strong>
+                            <span>Lector Internacional · Chile</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                </article>
+
+            </div>
+
+            <!-- Botón para enviar testimonio por WhatsApp -->
+            <div class="reviews-cta-box center fade-in">
+                <p class="reviews-cta-title">¿Ya leíste el libro o recibiste tu ejemplar?</p>
+                <p class="reviews-cta-desc">Envíanos tu foto o testimonio para publicarlo en la web oficial y redes sociales.</p>
+                <a href="https://wa.me/5493513886443?text=Hola%20Jorge,%20te%20env%C3%ADo%20mi%20opini%C3%B3n/foto%20sobre%20el%20libro%20de%20El%20Camino%20del%20Samur%C3%A1i" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-whatsapp-cta">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.302c-.087.087-.178.181-.077.355.101.173.449.741.964 1.2.662.591 1.221.774 1.394.861.173.087.275.072.376-.043.101-.116.433-.506.549-.679.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/></svg>
+                    <span>Compartir mi Opinión por WhatsApp</span>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Sección Interactiva: Oráculo del Bushido -->
-    <section class="section oracle-section" id="oraculo">
-        <div class="container">
-            <div class="section-header center fade-in">
-                <span class="section-subtitle">INTERACTIVO</span>
-                <h2 class="section-title">Consulta el Oráculo del Bushido</h2>
-                <p class="section-desc">Despeja tu mente, realiza una respiración profunda y haz clic en una de las tres cartas ancestrales. Deja que el destino te revele la virtud que debe guiar tus decisiones hoy.</p>
+    <!-- Sección Redes Sociales y Comunidad Oficial (Macro Enlaces) -->
+    <section class="section social-section" id="redes" aria-label="Redes Sociales y Comunidad Oficial">
+        <div class="container text-center">
+            <div class="section-header fade-in">
+                <span class="section-subtitle">COMUNIDAD Y CONTENIDO EXCLUSIVO</span>
+                <h2 class="section-title">Sigue la Senda en Redes Sociales</h2>
+                <p class="section-desc">Acompáñanos en nuestras expediciones documentales por Japón, análisis históricos del Bushido, videos técnicos y novedades literarias.</p>
             </div>
-            
-            <div class="oracle-container fade-in">
-                <div class="cards-wrapper">
-                    <!-- Carta 1 -->
-                    <div class="oracle-card" data-index="0">
-                        <div class="card-inner">
-                            <div class="card-front">
-                                <div class="card-pattern"></div>
-                                <span class="card-symbol">剣</span>
-                            </div>
-                            <div class="card-back">
-                                <div class="back-content">
-                                    <span class="card-back-kanji">勇</span>
-                                    <h4 class="card-back-title">YŪ - VALOR</h4>
-                                    <p class="card-back-quote">"El coraje es la fuerza del espíritu para ejecutar lo que la razón dicta."</p>
-                                    <p class="card-back-action">Afronta hoy ese problema que has estado posponiendo. Tu fuerza crece al actuar.</p>
-                                </div>
-                            </div>
-                        </div>
+
+            <div class="social-macro-grid fade-in">
+                <!-- Tarjeta YouTube -->
+                <a href="https://www.youtube.com/@larutadelsamurai" target="_blank" rel="noopener noreferrer" class="social-macro-card youtube-macro-card" aria-label="Canal Oficial de YouTube">
+                    <div class="social-macro-icon">
+                        <svg viewBox="0 0 24 24" width="48" height="48" fill="currentColor">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
                     </div>
-                    
-                    <!-- Carta 2 -->
-                    <div class="oracle-card" data-index="1">
-                        <div class="card-inner">
-                            <div class="card-front">
-                                <div class="card-pattern"></div>
-                                <span class="card-symbol">盾</span>
-                            </div>
-                            <div class="card-back">
-                                <div class="back-content">
-                                    <span class="card-back-kanji">義</span>
-                                    <h4 class="card-back-title">GI - RECTITUD</h4>
-                                    <p class="card-back-quote">"La rectitud es el hueso que da soporte. Sin ella la cabeza no puede mantenerse en alto."</p>
-                                    <p class="card-back-action">Haz lo correcto en tus decisiones de hoy, no lo que sea más fácil o rápido.</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="social-macro-content">
+                        <span class="social-macro-platform">CANAL OFICIAL</span>
+                        <h3 class="social-macro-title">YouTube</h3>
+                        <p class="social-macro-handle">@larutadelsamurai</p>
+                        <p class="social-macro-desc">Documentales in situ por castillos, templos y campos de batalla de Japón, entrevistas y técnicas de artes marciales tradicionales.</p>
+                        <span class="social-macro-btn">Ver Videos y Suscribirse &rarr;</span>
                     </div>
-                    
-                    <!-- Carta 3 -->
-                    <div class="oracle-card" data-index="2">
-                        <div class="card-inner">
-                            <div class="card-front">
-                                <div class="card-pattern"></div>
-                                <span class="card-symbol">心</span>
-                            </div>
-                            <div class="card-back">
-                                <div class="back-content">
-                                    <span class="card-back-kanji">仁</span>
-                                    <h4 class="card-back-title">JIN - COMPASIÓN</h4>
-                                    <p class="card-back-quote">"La benevolencia es una virtud real. Hace que el fuerte sea amable con el débil."</p>
-                                    <p class="card-back-action">Hoy, ofrece ayuda genuina a alguien a tu alrededor. La verdadera fuerza protege.</p>
-                                </div>
-                            </div>
-                        </div>
+                </a>
+
+                <!-- Tarjeta Instagram -->
+                <a href="https://www.instagram.com/larutadelsamurai" target="_blank" rel="noopener noreferrer" class="social-macro-card instagram-macro-card" aria-label="Instagram Oficial">
+                    <div class="social-macro-icon">
+                        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
                     </div>
-                </div>
-                
-                <div class="slash-overlay" id="slash-overlay"></div>
-                <button class="btn btn-secondary btn-reset" id="btn-reset-oracle">Meditar Nuevamente</button>
+                    <div class="social-macro-content">
+                        <span class="social-macro-platform">FOTOGRAFÍA & HISTORIAS</span>
+                        <h3 class="social-macro-title">Instagram</h3>
+                        <p class="social-macro-handle">@larutadelsamurai</p>
+                        <p class="social-macro-desc">Fotografías diarias de expediciones, dojos ancestrales, arquitectura samurai y el día a día de Jorge Orpianesi en Japón.</p>
+                        <span class="social-macro-btn">Seguir en Instagram &rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Tarjeta Facebook -->
+                <a href="https://www.facebook.com/larutadelsamurai" target="_blank" rel="noopener noreferrer" class="social-macro-card facebook-macro-card" aria-label="Página de Facebook Oficial">
+                    <div class="social-macro-icon">
+                        <svg viewBox="0 0 24 24" width="48" height="48" fill="currentColor">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </div>
+                    <div class="social-macro-content">
+                        <span class="social-macro-platform">COMUNIDAD OFICIAL</span>
+                        <h3 class="social-macro-title">Facebook</h3>
+                        <p class="social-macro-handle">La Ruta del Samurái</p>
+                        <p class="social-macro-desc">Punto de encuentro para lectores, debates marciales, presentaciones de libros, transmisiones en vivo y eventos especiales.</p>
+                        <span class="social-macro-btn">Unirse a la Comunidad &rarr;</span>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
@@ -521,149 +590,41 @@
             </div>
             
             <div class="editions-wrapper fade-in" id="ediciones">
-                <span class="section-subtitle text-center block">ELIGE TU SENDA</span>
+                <span class="section-subtitle text-center block">ELIGE TU FORMATO</span>
                 <h2 class="section-title text-center">Ediciones Disponibles</h2>
                 
                 <div class="editions-cards">
-                    <!-- Edición Digital -->
+                    <!-- Edición 1: Digital y Físico (Amazon) -->
                     <div class="edition-card">
-                        <div class="edition-badge">DIGITAL</div>
-                        <h3 class="edition-title">Formatos eBook</h3>
-                        <p class="edition-format">Dispositivos Amazon Kindle</p>
-                        <div class="edition-price">Digital</div>
+                        <div class="edition-badge">AMAZON GLOBAL</div>
+                        <h3 class="edition-title">Digital y Físico</h3>
+                        <p class="edition-format">Envío Internacional por Amazon</p>
+                        <div class="edition-price">Internacional</div>
                         <ul class="edition-benefits">
-                            <li>Disponible para descarga instantánea</li>
-                            <li>Optimizado para Kindle y e-readers</li>
-                            <li>Acceso rápido a los itinerarios de viaje</li>
+                            <li>Disponible en formato eBook Kindle para descarga inmediata</li>
+                            <li>Edición impresa en tapa blanda y tapa dura</li>
+                            <li>Envíos a todo el mundo con la garantía de Amazon</li>
+                            <li>Acceso completo a fotos y mapas de las rutas</li>
                         </ul>
-                        <a href="https://www.amazon.com/s?k=jorge+orpianesi" target="_blank" class="btn btn-primary block text-center">Comprar en Amazon</a>
+                        <a href="https://www.amazon.com/s?k=jorge+orpianesi" target="_blank" rel="noopener noreferrer" class="btn btn-primary block text-center">Comprar en Amazon</a>
                     </div>
                     
-                    <!-- Edición Física -->
+                    <!-- Edición 2: Físico para Argentina -->
                     <div class="edition-card premium">
-                        <div class="edition-badge gold">FÍSICA</div>
-                        <h3 class="edition-title">Edición Impresa</h3>
-                        <p class="edition-format">Libro de Papel Premium</p>
-                        <div class="edition-price">Papel</div>
+                        <div class="edition-badge gold">ARGENTINA</div>
+                        <h3 class="edition-title">Físico para Argentina</h3>
+                        <p class="edition-format">Ejemplar Directo del Autor</p>
+                        <div class="edition-price">Envíos Nacionales</div>
                         <ul class="edition-benefits">
-                            <li>Papel ahuesado y portadas a todo color</li>
-                            <li>Más de 200 fotografías exclusivas</li>
-                            <li>9 mapas detallados de los recorridos</li>
-                            <li>Firmado y enviado directamente por el autor</li>
+                            <li>Envíos a todas las provincias de la República Argentina</li>
+                            <li>Ejemplar firmado y dedicado por Jorge Orpianesi</li>
+                            <li>Papel ahuesado premium con más de 200 fotografías a color</li>
+                            <li>9 mapas detallados de los recorridos por Japón</li>
                         </ul>
-                        <a href="#contacto" class="btn btn-primary block text-center">Consultar al Autor</a>
+                        <a href="https://wa.me/5493513886443?text=Hola%20Jorge,%20quiero%20adquirir%20el%20libro%20f%C3%ADsico%20en%20Argentina" target="_blank" rel="noopener noreferrer" class="btn btn-primary block text-center">Pedir por WhatsApp</a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Sección Opiniones de Lectores -->
-    <section class="opiniones-section" id="opiniones" aria-label="Opiniones de Lectores">
-        <div class="container">
-            <div class="section-header text-center">
-                <span class="section-subtitle">TESTIMONIOS DE LA COMUNIDAD</span>
-                <h2 class="section-title">Lo que dicen los lectores</h2>
-                <p class="section-desc">Experiencias y valoraciones de quienes se han adentrado en la historia, geografía y filosofía de las obras.</p>
-            </div>
-
-            <div class="testimonials-slider-wrapper">
-                <button class="slider-arrow prev" id="testimonials-prev" aria-label="Opinión anterior">
-                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-                </button>
-                
-                <div class="testimonials-track-container" id="testimonials-track-container">
-                    <div class="testimonials-track" id="testimonials-track">
-                        
-                        <!-- Tarjeta 1 -->
-                        <article class="testimonial-card glass-card">
-                            <div class="testimonial-header">
-                                <img src="assets/photos/reader_1.webp" alt="Foto de Carlos Mendoza" class="testimonial-avatar" width="64" height="64" loading="lazy" onerror="this.src='https://ui-avatars.com/api/?name=Carlos+Mendoza&background=d97706&color=fff'">
-                                <div class="testimonial-info">
-                                    <h3 class="testimonial-name">Carlos Mendoza</h3>
-                                    <p class="testimonial-role">Practicante de Kendo & Lector</p>
-                                    <div class="testimonial-stars" aria-label="Calificación 5 de 5 estrellas">
-                                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <blockquote class="testimonial-body">
-                                "Un libro imprescindible para todo amante del Bushido. La rigurosidad histórica de Jorge combinada con su experiencia en viajes por Japón te transporta directamente a los castillos y dojos antiguos."
-                            </blockquote>
-                            <div class="testimonial-footer">
-                                <span class="verified-badge">✓ Compra Verificada</span>
-                            </div>
-                        </article>
-
-                        <!-- Tarjeta 2 -->
-                        <article class="testimonial-card glass-card">
-                            <div class="testimonial-header">
-                                <img src="assets/photos/reader_2.webp" alt="Foto de Ana Laura Fernández" class="testimonial-avatar" width="64" height="64" loading="lazy" onerror="this.src='https://ui-avatars.com/api/?name=Ana+Fernandez&background=d97706&color=fff'">
-                                <div class="testimonial-info">
-                                    <h3 class="testimonial-name">Ana Laura Fernández</h3>
-                                    <p class="testimonial-role">Apasionada por la cultura japonesa</p>
-                                    <div class="testimonial-stars" aria-label="Calificación 5 de 5 estrellas">
-                                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <blockquote class="testimonial-body">
-                                "La calidad de las fotografías y la narrativa de 'La Ruta del Samurái' son excepcionales. Sirve tanto como guía de viaje única como una enciclopedia sobre la casta guerrera feudal."
-                            </blockquote>
-                            <div class="testimonial-footer">
-                                <span class="verified-badge">✓ Compra Verificada</span>
-                            </div>
-                        </article>
-
-                        <!-- Tarjeta 3 -->
-                        <article class="testimonial-card glass-card">
-                            <div class="testimonial-header">
-                                <img src="assets/photos/reader_3.webp" alt="Foto de Martín Soria" class="testimonial-avatar" width="64" height="64" loading="lazy" onerror="this.src='https://ui-avatars.com/api/?name=Martin+Soria&background=d97706&color=fff'">
-                                <div class="testimonial-info">
-                                    <h3 class="testimonial-name">Martín Soria</h3>
-                                    <p class="testimonial-role">Instructor de Iaido</p>
-                                    <div class="testimonial-stars" aria-label="Calificación 5 de 5 estrellas">
-                                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <blockquote class="testimonial-body">
-                                "Superó todas mis expectativas. 'El Paso de las Luciérnagas' profundiza en relatos poco conocidos y la experiencia interactiva del oráculo complementa perfectamente la lectura."
-                            </blockquote>
-                            <div class="testimonial-footer">
-                                <span class="verified-badge">✓ Compra Verificada</span>
-                            </div>
-                        </article>
-
-                        <!-- Tarjeta 4 -->
-                        <article class="testimonial-card glass-card">
-                            <div class="testimonial-header">
-                                <img src="assets/photos/reader_4.webp" alt="Foto de Elena Rostova" class="testimonial-avatar" width="64" height="64" loading="lazy" onerror="this.src='https://ui-avatars.com/api/?name=Elena+Rostova&background=d97706&color=fff'">
-                                <div class="testimonial-info">
-                                    <h3 class="testimonial-name">Elena Rostova</h3>
-                                    <p class="testimonial-role">Investigadora & Creadora de Contenido</p>
-                                    <div class="testimonial-stars" aria-label="Calificación 5 de 5 estrellas">
-                                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <blockquote class="testimonial-body">
-                                "La presentación, las ilustraciones y la profundidad con la que Orpianesi trata cada ubicación histórica convierten a esta obra en una pieza de colección invaluable."
-                            </blockquote>
-                            <div class="testimonial-footer">
-                                <span class="verified-badge">✓ Compra Verificada</span>
-                            </div>
-                        </article>
-
-                    </div>
-                </div>
-
-                <button class="slider-arrow next" id="testimonials-next" aria-label="Siguiente opinión">
-                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-                </button>
-            </div>
-
-            <div class="testimonials-dots" id="testimonials-dots" role="tablist" aria-label="Paginación de opiniones"></div>
         </div>
     </section>
 
@@ -765,6 +726,7 @@
             </div>
         </div>
     </section>
+
     <!-- Sección Blog Samurai -->
     <section class="section blog-section" id="blog">
         <div class="container">
@@ -782,80 +744,76 @@
         </div>
     </section>
 
-    <!-- Sección Redes Sociales y Comunidad Oficial -->
-    <section class="section social-section" id="redes" aria-label="Redes Sociales y Comunidad">
-        <div class="container text-center">
-            <div class="section-header fade-in">
-                <span class="section-subtitle">COMUNIDAD Y CONTENIDO EXCLUSIVO</span>
-                <h2 class="section-title">Sigue la Senda en Redes</h2>
-                <p class="section-desc">Acompáñanos en nuestras expediciones por Japón, análisis históricos del Bushido y novedades de las próximas publicaciones.</p>
+    <!-- Sección de Contacto Oficial -->
+    <section class="section contact-section" id="contacto" aria-label="Contacto Oficial y Redes">
+        <div class="container">
+            <div class="section-header text-center fade-in">
+                <span class="section-subtitle">CANALES DIRECTOS</span>
+                <h2 class="section-title">Contacto Oficial</h2>
+                <p class="section-desc">Ponte en contacto directo con Jorge Orpianesi para pedidos de libros dedicados en Argentina, consultas sobre seminarios y presentaciones.</p>
             </div>
 
-            <div class="social-cards-grid fade-in">
-                <!-- Instagram Card -->
-                <a href="https://www.instagram.com/larutadelsamurai" target="_blank" rel="noopener noreferrer" class="social-card instagram-card" aria-label="Instagram Oficial de La Ruta del Samurái">
-                    <div class="social-card-icon">
-                        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            <div class="contact-cards-grid fade-in">
+                <!-- Tarjeta 1: WhatsApp -->
+                <div class="contact-card highlight-card">
+                    <div class="contact-icon whatsapp-icon">
+                        <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor">
+                            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.302c-.087.087-.178.181-.077.355.101.173.449.741.964 1.2.662.591 1.221.774 1.394.861.173.087.275.072.376-.043.101-.116.433-.506.549-.679.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/>
                         </svg>
                     </div>
-                    <div class="social-card-content">
-                        <span class="social-platform">INSTAGRAM</span>
-                        <h3 class="social-handle">@larutadelsamurai</h3>
-                        <p class="social-desc">Fotografías diarias de expediciones, castillos y dojos tradicionales en Japón.</p>
-                        <span class="social-btn">Seguir en Instagram &rarr;</span>
-                    </div>
-                </a>
-
-                <!-- YouTube Card -->
-                <a href="https://www.youtube.com/@larutadelsamurai" target="_blank" rel="noopener noreferrer" class="social-card youtube-card" aria-label="Canal Oficial de YouTube de La Ruta del Samurái">
-                    <div class="social-card-icon">
-                        <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
-                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                        </svg>
-                    </div>
-                    <div class="social-card-content">
-                        <span class="social-platform">YOUTUBE</span>
-                        <h3 class="social-handle">La Ruta del Samurái</h3>
-                        <p class="social-desc">Documentales de viaje, técnicas de artes marciales y charlas sobre filosofía samurái.</p>
-                        <span class="social-btn">Suscribirse al Canal &rarr;</span>
-                    </div>
-                </a>
-
-                <!-- Facebook Card -->
-                <a href="https://www.facebook.com/larutadelsamurai" target="_blank" rel="noopener noreferrer" class="social-card facebook-card" aria-label="Página Oficial de Facebook de La Ruta del Samurái">
-                    <div class="social-card-icon">
-                        <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
-                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                        </svg>
-                    </div>
-                    <div class="social-card-content">
-                        <span class="social-platform">FACEBOOK</span>
-                        <h3 class="social-handle">La Ruta del Samurái</h3>
-                        <p class="social-desc">Comunidad de lectores, eventos, debates marciales y transmisiones especiales.</p>
-                        <span class="social-btn">Unirse a la Comunidad &rarr;</span>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Formulario de Suscripción / Newsletter & Footer -->
-    <section class="section signup-section" id="contacto">
-        <div class="container max-w-sm center fade-in">
-            <span class="section-subtitle text-center block">ÚNETE A LA SENDA</span>
-            <h2 class="section-title text-center">Recibe el Primer Capítulo Gratis</h2>
-            <p class="text-center">Suscríbete para recibir una versión preliminar del libro en formato PDF, además de meditaciones y reflexiones semanales sobre el Bushido.</p>
-            
-            <form class="signup-form" id="signup-form">
-                <div class="input-group">
-                    <input type="email" placeholder="Tu correo electrónico" required id="signup-email">
-                    <button type="submit" class="btn btn-primary">Suscribirse</button>
+                    <h3>WhatsApp Directo</h3>
+                    <p class="contact-highlight">+549 351 3886443</p>
+                    <p class="contact-desc">Atención rápida para consultas, pedidos de libros dedicados y envíos en toda Argentina.</p>
+                    <a href="https://wa.me/5493513886443?text=Hola%20Jorge,%20me%20comunico%20desde%20la%20web%20de%20El%20Camino%20del%20Samur%C3%A1i" target="_blank" rel="noopener noreferrer" class="btn btn-primary block text-center">Enviar WhatsApp</a>
                 </div>
-                <div class="form-message" id="form-message"></div>
-            </form>
+
+                <!-- Tarjeta 2: Dirección Física -->
+                <div class="contact-card">
+                    <div class="contact-icon location-icon">
+                        <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                    </div>
+                    <h3>Dirección & Dojo</h3>
+                    <p class="contact-highlight">Budokan Argentina</p>
+                    <p class="contact-desc">Sarmiento 375, Córdoba, República Argentina.<br><strong>Código Postal:</strong> 5000</p>
+                    <a href="https://maps.google.com/?q=Sarmiento+375,+Córdoba,+Argentina" target="_blank" rel="noopener noreferrer" class="btn btn-secondary block text-center">Ver en Google Maps</a>
+                </div>
+
+                <!-- Tarjeta 3: Correo Electrónico -->
+                <div class="contact-card">
+                    <div class="contact-icon email-icon">
+                        <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Correo Electrónico</h3>
+                    <p class="contact-highlight">budokanorpianesi@hotmail.com</p>
+                    <p class="contact-desc">Para correspondencia oficial, prensa, invitaciones a seminarios y eventos internacionales.</p>
+                    <a href="mailto:budokanorpianesi@hotmail.com" class="btn btn-secondary block text-center">Enviar Correo</a>
+                </div>
+            </div>
+
+            <!-- Repetir Redes Sociales en Contacto -->
+            <div class="contact-social-repeater center fade-in">
+                <h4 class="social-repeater-title">Nuestras Redes Sociales</h4>
+                <div class="social-repeater-links">
+                    <a href="https://www.youtube.com/@larutadelsamurai" target="_blank" rel="noopener noreferrer" class="social-pill-btn youtube-pill">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        <span>YouTube Oficial</span>
+                    </a>
+                    <a href="https://www.instagram.com/larutadelsamurai" target="_blank" rel="noopener noreferrer" class="social-pill-btn instagram-pill">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        <span>Instagram Oficial</span>
+                    </a>
+                    <a href="https://www.facebook.com/larutadelsamurai" target="_blank" rel="noopener noreferrer" class="social-pill-btn facebook-pill">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        <span>Facebook Oficial</span>
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 </main>
@@ -895,19 +853,22 @@
                     <ul>
                         <li><a href="#inicio">Inicio</a></li>
                         <li><a href="#sinopsis">El Libro</a></li>
-                        <li><a href="#virtudes">Las Virtudes</a></li>
-                        <li><a href="#oraculo">El Oráculo</a></li>
-                        <li><a href="#galeria">Galería</a></li>
+                        <li><a href="#opiniones">Opiniones</a></li>
                         <li><a href="#redes">Redes Sociales</a></li>
+                        <li><a href="#ediciones">Ediciones</a></li>
+                        <li><a href="#autor">Autor</a></li>
+                        <li><a href="#galeria">Galería</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
-                    <h4>Contacto & Redes</h4>
+                    <h4>Contacto & Dojo</h4>
                     <ul>
+                        <li><a href="https://wa.me/5493513886443" target="_blank" rel="noopener">WhatsApp: +549 351 3886443</a></li>
                         <li><a href="mailto:budokanorpianesi@hotmail.com">budokanorpianesi@hotmail.com</a></li>
-                        <li><a href="https://www.instagram.com/larutadelsamurai" target="_blank" rel="noopener">Instagram (@larutadelsamurai)</a></li>
-                        <li><a href="https://www.youtube.com/@larutadelsamurai" target="_blank" rel="noopener">YouTube (@larutadelsamurai)</a></li>
-                        <li><a href="https://www.facebook.com/larutadelsamurai" target="_blank" rel="noopener">Facebook Oficial</a></li>
+                        <li><span>Budokan: Sarmiento 375, Córdoba</span></li>
+                        <li><span>República Argentina · CP: 5000</span></li>
                     </ul>
                 </div>
             </div>

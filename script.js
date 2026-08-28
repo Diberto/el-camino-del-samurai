@@ -305,18 +305,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         function updateLogoImage() {
             if (!heroLogoImg) return;
-            const isMobile = window.innerWidth <= 768;
             const isNight = document.body.classList.contains('theme-night');
-            if (isMobile) {
-                // On mobile, below the circle:
-                // Day mode has light parchment background -> use dark logo (black letters + red stamp)
-                // Night mode has dark night background -> use light logo (white letters + red stamp)
-                heroLogoImg.src = isNight ? logoTypographyLight : logoTypographyDark;
-            } else {
-                // On desktop, over Mount Fuji / Enso circle artwork:
-                // Always use light logo (white letters + red stamp)
-                heroLogoImg.src = logoTypographyLight;
-            }
+            // Usar logo con letras negras originales (logoTypographyDark) para óptima legibilidad en modo diurno y móvil
+            heroLogoImg.src = isNight ? logoTypographyLight : logoTypographyDark;
         }
 
         updateLogoImage();
@@ -1006,60 +997,70 @@ document.addEventListener('DOMContentLoaded', () => {
 
     animatePetals();
 
-    // 5. INTERACTIVE ORACLE (BUSHIDO CARDS)
-    const oracleCards = document.querySelectorAll('.oracle-card');
-    const slashOverlay = document.getElementById('slash-overlay');
-    const btnResetOracle = document.getElementById('btn-reset-oracle');
-    let hasSelected = false;
+    // 5. OPINIONES DE LECTORES (FILTRO Y LIGHTBOX DE FOTOS)
+    function initReviewsInteraction() {
+        const filterBtns = document.querySelectorAll('.review-filter-btn');
+        const reviewCards = document.querySelectorAll('.review-card');
+        const photoWrappers = document.querySelectorAll('.review-photo-wrapper');
 
-    oracleCards.forEach(card => {
-        card.addEventListener('click', () => {
-            if (hasSelected) return; // Allow only one choice per meditation
-            
-            hasSelected = true;
+        if (filterBtns.length) {
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
 
-            // 1. Sword Slash Effect
-            slashOverlay.classList.add('slash-animation');
-            
-            // 2. Reveal and flip card halfway through the slash
-            setTimeout(() => {
-                card.classList.add('flipped');
-            }, 180);
-
-            // 3. Show Reset button and dim non-selected cards
-            setTimeout(() => {
-                oracleCards.forEach(otherCard => {
-                    if (otherCard !== card) {
-                        otherCard.style.opacity = '0.35';
-                        otherCard.style.filter = 'blur(1.5px)';
-                        otherCard.style.pointerEvents = 'none';
-                    }
+                    const filter = btn.getAttribute('data-filter');
+                    reviewCards.forEach(card => {
+                        const cardType = card.getAttribute('data-type');
+                        if (filter === 'all' || cardType === filter) {
+                            card.style.display = 'flex';
+                            card.style.animation = 'fadeInUp 0.4s ease forwards';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
                 });
-                btnResetOracle.classList.add('show');
-            }, 600);
+            });
+        }
 
-            // Cleanup slash class after animation completes
-            setTimeout(() => {
-                slashOverlay.classList.remove('slash-animation');
-            }, 400);
+        // Lightbox para fotos de lectores
+        photoWrappers.forEach(wrapper => {
+            wrapper.addEventListener('click', () => {
+                const src = wrapper.getAttribute('data-src');
+                const title = wrapper.getAttribute('data-title') || 'Foto de Lector';
+                let lightbox = document.getElementById('samurai-gallery-lightbox');
+                if (!lightbox) {
+                    lightbox = document.createElement('div');
+                    lightbox.id = 'samurai-gallery-lightbox';
+                    lightbox.className = 'gallery-lightbox';
+                    lightbox.innerHTML = `
+                        <div class="lightbox-backdrop"></div>
+                        <div class="lightbox-container">
+                            <button class="lightbox-close" aria-label="Cerrar">&times;</button>
+                            <img src="" alt="Vista previa de foto">
+                            <div class="lightbox-info">
+                                <div class="lightbox-tag">📸 Opinión de Lector</div>
+                                <h3 class="lightbox-title" style="color:#fff; margin:0.3rem 0 0 0; font-size:1.1rem;"></h3>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(lightbox);
+                    const closeBtn = lightbox.querySelector('.lightbox-close');
+                    const backdrop = lightbox.querySelector('.lightbox-backdrop');
+                    const closeFn = () => lightbox.classList.remove('active');
+                    if (closeBtn) closeBtn.addEventListener('click', closeFn);
+                    if (backdrop) backdrop.addEventListener('click', closeFn);
+                }
+                const img = lightbox.querySelector('img');
+                const titleEl = lightbox.querySelector('.lightbox-title');
+                if (img) img.src = src;
+                if (titleEl) titleEl.textContent = title;
+                lightbox.classList.add('active');
+            });
         });
-    });
+    }
 
-    btnResetOracle.addEventListener('click', () => {
-        // Reset all cards
-        oracleCards.forEach(card => {
-            card.classList.remove('flipped');
-            card.style.opacity = '1';
-            card.style.filter = 'none';
-            card.style.pointerEvents = 'auto';
-        });
-
-        // Hide reset button
-        btnResetOracle.classList.remove('show');
-        
-        // Reset choice state
-        hasSelected = false;
-    });
+    initReviewsInteraction();
 
     // 6. SCROLL FADE-IN ANIMATION (INTERSECTION OBSERVER)
     const fadeElements = document.querySelectorAll('.fade-in');
@@ -1080,28 +1081,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, observerOptions);
 
     fadeElements.forEach(el => fadeObserver.observe(el));
-
-    // 7. FORM SUBMIT MOCKUP
-    const signupForm = document.getElementById('signup-form');
-    const formMessage = document.getElementById('form-message');
-
-    if (signupForm && formMessage) {
-        signupForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const emailInput = document.getElementById('signup-email');
-            
-            if (emailInput && emailInput.value) {
-                formMessage.textContent = 'Procesando tu suscripción a la senda...';
-                formMessage.className = 'form-message';
-
-                setTimeout(() => {
-                    formMessage.textContent = '¡Suscripción exitosa! Tu primer capítulo ha sido enviado a ' + emailInput.value;
-                    formMessage.className = 'form-message success';
-                    emailInput.value = '';
-                }, 1200);
-            }
-        });
-    }
 
     // 9. SCROLL TO TOP BUTTON
     const scrollBtn = document.getElementById('scroll-top');

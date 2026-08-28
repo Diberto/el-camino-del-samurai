@@ -2,21 +2,26 @@
   "settings": {
     "site_title": "El Camino del Samurai",
     "sections_toggle": {
-      "hero": true,
-      "ediciones": true,
+      "inicio": true,
+      "sinopsis": true,
       "opiniones": true,
+      "redes": true,
+      "ediciones": true,
       "autor": true,
       "galeria": true,
       "blog": true,
       "contacto": true
     },
     "navigation_menu": [
-      { "id": "nav-1", "label": "Ediciones", "url": "#ediciones", "visible": true },
-      { "id": "nav-1b", "label": "Opiniones", "url": "#opiniones", "visible": true },
-      { "id": "nav-2", "label": "Autor", "url": "#autor", "visible": true },
-      { "id": "nav-3", "label": "Galería", "url": "#galeria", "visible": true },
-      { "id": "nav-4", "label": "Blog", "url": "#blog", "visible": true },
-      { "id": "nav-5", "label": "Comprar", "url": "#contacto", "visible": true }
+      { "id": "nav-0", "label": "Inicio", "url": "#inicio", "visible": true },
+      { "id": "nav-0b", "label": "El Libro", "url": "#sinopsis", "visible": true },
+      { "id": "nav-1", "label": "Opiniones", "url": "#opiniones", "visible": true },
+      { "id": "nav-1b", "label": "Redes", "url": "#redes", "visible": true },
+      { "id": "nav-2", "label": "Ediciones", "url": "#ediciones", "visible": true },
+      { "id": "nav-3", "label": "Autor", "url": "#autor", "visible": true },
+      { "id": "nav-4", "label": "Galería", "url": "#galeria", "visible": true },
+      { "id": "nav-5", "label": "Blog", "url": "#blog", "visible": true },
+      { "id": "nav-6", "label": "Contacto", "url": "#contacto", "visible": true }
     ]
   },
   "posts": [
