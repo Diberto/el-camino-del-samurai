@@ -1,57 +1,78 @@
 <?php
 /**
- * SECCIÓN OPINIONES DE NUESTROS LECTORES
+ * SECCIÓN DE OPINIONES Y TESTIMONIOS DE LECTORES (DISEÑO ORIGINAL)
  */
 $opiniones = get_json_data('opiniones.json', []);
 ?>
-<section id="opiniones" class="section reviews-section">
+<!-- Sección de Opiniones y Testimonios de Lectores -->
+<section class="section reviews-section" id="opiniones" aria-label="Opiniones de Lectores">
     <div class="container">
-        <div class="section-header text-center">
-            <span class="section-subtitle">COMUNIDAD MARCIAL</span>
+        <div class="section-header center fade-in">
+            <span class="section-subtitle">TESTIMONIOS & COMUNIDAD</span>
             <h2 class="section-title">Opiniones de nuestros lectores</h2>
-            <p class="section-desc">Testimonios, reseñas y fotografías de practicantes de artes marciales, historiadores y viajeros apasionados.</p>
+            <p class="section-desc">Experiencias, valoraciones y fotografías de practicantes marciales y apasionados de la cultura japonesa que recorren la senda del samurái.</p>
         </div>
 
         <!-- Filtros de Opiniones -->
-        <div class="reviews-filter-bar">
-            <button class="btn-filter active" data-filter="all">Todas las opiniones</button>
-            <button class="btn-filter" data-filter="photo">📸 Con Fotos de Lectores</button>
-            <button class="btn-filter" data-filter="text">✍️ Reseñas Literarias</button>
+        <div class="reviews-filter-wrapper fade-in">
+            <button class="review-filter-btn active" data-filter="all">Todas las Opiniones</button>
+            <button class="review-filter-btn" data-filter="photo">📸 Con Foto / Captura</button>
+            <button class="review-filter-btn" data-filter="text">✍️ Reseñas Escritas</button>
         </div>
 
-        <!-- Cuadrícula de Opiniones -->
-        <div class="reviews-grid">
+        <!-- Grid de Opiniones Mixtas -->
+        <div class="reviews-grid fade-in" id="reviews-grid">
             <?php foreach ($opiniones as $rev): ?>
-                <div class="review-card" data-type="<?= e($rev['type']) ?>">
-                    <?php if (!empty($rev['photo'])): ?>
-                        <div class="review-photo-wrapper" 
-                             data-src="<?= e($rev['photo']) ?>" 
-                             data-title="<?= e($rev['photo_title'] ?? $rev['name']) ?>">
-                            <img src="<?= e($rev['photo']) ?>" 
-                                 alt="<?= e($rev['name']) ?>" 
-                                 class="review-photo-img" 
-                                 loading="lazy" 
-                                 onerror="this.src='assets/orpianesi1.webp'">
-                            <span class="review-zoom-badge">🔍 Ampliar foto</span>
+                <?php if (($rev['type'] ?? 'text') === 'photo' && !empty($rev['photo'])): ?>
+                    <!-- Tarjeta con Foto -->
+                    <article class="review-card review-card-photo" data-type="photo">
+                        <div class="review-photo-wrapper" data-src="<?= e($rev['photo']) ?>" data-title="<?= e($rev['photo_title'] ?? $rev['name']) ?>">
+                            <img src="<?= e($rev['photo']) ?>" alt="<?= e($rev['name']) ?>" loading="lazy" class="review-photo-img" onerror="this.src='photos/orpianesi1.webp'">
+                            <div class="review-photo-badge">📸 <?= e($rev['photo_badge'] ?? 'Foto de Lector') ?></div>
+                            <div class="review-photo-overlay">
+                                <span>🔍 Clic para ampliar</span>
+                            </div>
                         </div>
-                    <?php endif; ?>
-
-                    <div class="review-card-content">
-                        <div class="review-stars">
-                            <?php for ($i = 0; $i < (int)($rev['rating'] ?? 5); $i++): ?>★<?php endfor; ?>
+                        <div class="review-content">
+                            <div class="review-stars">★★★★★</div>
+                            <p class="review-caption">"<?= e($rev['text']) ?>"</p>
+                            <div class="review-author">
+                                <strong><?= e($rev['name']) ?></strong>
+                                <span><?= e($rev['role']) ?></span>
+                            </div>
                         </div>
-                        <p class="review-text">"<?= e($rev['text']) ?>"</p>
-                        
-                        <div class="review-author-meta">
-                            <h4 class="review-name"><?= e($rev['name']) ?></h4>
-                            <span class="review-role"><?= e($rev['role']) ?></span>
-                            <?php if (!empty($rev['verified'])): ?>
-                                <span class="verified-pill">✓ Lector Verificado</span>
-                            <?php endif; ?>
+                    </article>
+                <?php else: ?>
+                    <!-- Tarjeta de Reseña de Texto -->
+                    <article class="review-card review-card-text" data-type="text">
+                        <div class="review-quote-mark">“</div>
+                        <div class="review-stars">★★★★★</div>
+                        <blockquote class="review-body">
+                            "<?= e($rev['text']) ?>"
+                        </blockquote>
+                        <div class="review-footer">
+                            <div class="review-avatar-text"><?= e(strtoupper(substr($rev['name'], 0, 2))) ?></div>
+                            <div class="review-author">
+                                <strong><?= e($rev['name']) ?></strong>
+                                <span><?= e($rev['role']) ?></span>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                        <?php if (!empty($rev['verified'])): ?>
+                            <div class="review-tag-badge">✓ Compra Verificada</div>
+                        <?php endif; ?>
+                    </article>
+                <?php endif; ?>
             <?php endforeach; ?>
+        </div>
+
+        <!-- Botón para enviar testimonio por WhatsApp -->
+        <div class="reviews-cta-box center fade-in">
+            <p class="reviews-cta-title">¿Ya leíste el libro o recibiste tu ejemplar?</p>
+            <p class="reviews-cta-desc">Envíanos tu foto o testimonio para publicarlo en la web oficial y redes sociales.</p>
+            <a href="https://wa.me/5493513886443?text=Hola%20Jorge,%20te%20env%C3%ADo%20mi%20opini%C3%B3n/foto%20sobre%20el%20libro%20de%20El%20Camino%20del%20Samur%C3%A1i" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-whatsapp-cta">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.302c-.087.087-.178.181-.077.355.101.173.449.741.964 1.2.662.591 1.221.774 1.394.861.173.087.275.072.376-.043.101-.116.433-.506.549-.679.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/></svg>
+                <span>Compartir mi Opinión por WhatsApp</span>
+            </a>
         </div>
     </div>
 </section>

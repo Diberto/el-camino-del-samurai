@@ -1,57 +1,69 @@
 <?php
 /**
- * SECCIÓN EDICIONES DISPONIBLES
+ * SECCIÓN CAPÍTULOS Y EDICIONES DISPONIBLES (DISEÑO ORIGINAL)
  */
 ?>
-<section id="ediciones" class="section editions-section">
-    <div class="container">
-        <div class="section-header text-center">
-            <span class="section-subtitle">ADQUIRIR LA OBRA</span>
-            <h2 class="section-title">Ediciones Disponibles</h2>
-            <p class="section-desc">Consigue los libros en formato físico o digital a nivel internacional o recíbelos en Argentina firmados y dedicados.</p>
-        </div>
-
-        <div class="editions-grid">
-            <!-- Opción 1: Digital y Físico (Amazon Global) -->
-            <div class="edition-card">
-                <div class="edition-badge">ENVÍO INTERNACIONAL</div>
-                <div class="edition-icon">🌍</div>
-                <h3 class="edition-title">Digital y Físico</h3>
-                <span class="edition-subtitle">Disponible en Amazon Global</span>
-                <p class="edition-desc">
-                    Adquiere la versión eBook para Kindle o la edición en papel con tapa blanda/dura con entrega rápida en todo el mundo.
-                </p>
-                <ul class="edition-features">
-                    <li>✓ Formato Kindle y Tapa Blanda / Dura</li>
-                    <li>✓ Entrega global garantizada por Amazon</li>
-                    <li>✓ Tomo I y Tomo II disponibles</li>
-                </ul>
-                <a href="<?= e($settings['amazon_url'] ?? 'https://www.amazon.com/s?k=jorge+orpianesi') ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block">
-                    Comprar en Amazon Global
-                </a>
+<!-- Sección de Capítulos y Ediciones -->
+<section class="section chapters-section" id="capitulos">
+    <div class="container grid-2">
+        <div class="chapters-content fade-in">
+            <span class="section-subtitle">CONTENIDO EXCLUSIVO</span>
+            <h2 class="section-title">Las Obras del Autor</h2>
+            <p class="section-desc">Dos tomos excepcionales que plasman un viaje sin precedentes por la historia feudal y las artes marciales de Japón.</p>
+            
+            <div class="chapters-list">
+                <div class="chapter-item">
+                    <div class="chapter-num">I</div>
+                    <div class="chapter-info">
+                        <h3>La Ruta del Samurái: Japón para Budokas</h3>
+                        <p>Un recorrido geográfico detallado por castillos, cementerios históricos y dojos antiguos, sirviendo como guía de viajes para todo cultor de artes marciales.</p>
+                    </div>
+                </div>
+                
+                <div class="chapter-item">
+                    <div class="chapter-num">II</div>
+                    <div class="chapter-info">
+                        <h3>El Paso de las Luciérnagas</h3>
+                        <p>La segunda parte de esta gran expedición, que profundiza en las leyendas de combates épicos, templos escondidos y el legado samurái en la modernidad.</p>
+                    </div>
+                </div>
             </div>
-
-            <!-- Opción 2: Físico para Argentina (Budokan Web + WhatsApp) -->
-            <div class="edition-card featured-edition">
-                <div class="edition-badge badge-gold">ARGENTINA DIRECTO</div>
-                <div class="edition-icon">🇦🇷</div>
-                <h3 class="edition-title">Físico para Argentina</h3>
-                <span class="edition-subtitle">Tienda Budokan & Ejemplar Firmado</span>
-                <p class="edition-desc">
-                    Compra tu libro directamente en la tienda oficial de Budokan Web o pídelo por WhatsApp para recibirlo firmado y dedicado por Jorge Orpianesi.
-                </p>
-                <ul class="edition-features">
-                    <li>✓ Ejemplar impreso de alta calidad</li>
-                    <li>✓ Opción de dedicatoria y firma del autor</li>
-                    <li>✓ Envíos a todo el territorio argentino</li>
-                </ul>
-                <div class="edition-actions">
-                    <a href="<?= e($settings['budokan_url'] ?? 'https://www.budokanweb.com/categoria-producto/libros/') ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block btn-budokan">
-                        🛒 Comprar en Budokan Web
-                    </a>
-                    <a href="<?= e($settings['whatsapp_url'] ?? 'https://wa.me/5493513886443') ?>" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-block">
-                        ✍️ Pedir firmado por WhatsApp
-                    </a>
+        </div>
+        
+        <div class="editions-wrapper fade-in" id="ediciones">
+            <span class="section-subtitle text-center block">ELIGE TU FORMATO</span>
+            <h2 class="section-title text-center">Ediciones Disponibles</h2>
+            
+            <div class="editions-cards">
+                <!-- Edición 1: Digital y Físico (Amazon) -->
+                <div class="edition-card">
+                    <div class="edition-badge">AMAZON GLOBAL</div>
+                    <h3 class="edition-title">Digital y Físico</h3>
+                    <p class="edition-format">Envío Internacional por Amazon</p>
+                    <div class="edition-price">Internacional</div>
+                    <ul class="edition-benefits">
+                        <li>Disponible en formato eBook Kindle para descarga inmediata</li>
+                        <li>Edición impresa en tapa blanda y tapa dura</li>
+                        <li>Envíos a todo el mundo con la garantía de Amazon</li>
+                        <li>Acceso completo a fotos y mapas de las rutas</li>
+                    </ul>
+                    <a href="<?= e($settings['amazon_url'] ?? 'https://www.amazon.com/s?k=jorge+orpianesi') ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary block text-center">Comprar en Amazon</a>
+                </div>
+                
+                <!-- Edición 2: Físico para Argentina -->
+                <div class="edition-card premium">
+                    <div class="edition-badge gold">ARGENTINA</div>
+                    <h3 class="edition-title">Físico para Argentina</h3>
+                    <p class="edition-format">Ejemplar Directo & Tienda Budokan</p>
+                    <div class="edition-price">Envíos Nacionales</div>
+                    <ul class="edition-benefits">
+                        <li>Envíos a todas las provincias de la República Argentina</li>
+                        <li>Ejemplar firmado y dedicado por Jorge Orpianesi</li>
+                        <li>Papel ahuesado premium con más de 200 fotografías a color</li>
+                        <li>9 mapas detallados de los recorridos por Japón</li>
+                    </ul>
+                    <a href="<?= e($settings['budokan_url'] ?? 'https://www.budokanweb.com/categoria-producto/libros/') ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary block text-center" style="margin-bottom: 0.75rem;">Comprar en Budokan Web</a>
+                    <a href="https://wa.me/5493513886443?text=Hola%20Jorge,%20quiero%20adquirir%20el%20libro%20f%C3%ADsico%20firmado%20en%20Argentina" target="_blank" rel="noopener noreferrer" class="btn btn-secondary block text-center">Pedir firmado por WhatsApp</a>
                 </div>
             </div>
         </div>
