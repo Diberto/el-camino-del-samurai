@@ -121,6 +121,7 @@ if ($action === 'edit' && isset($_GET['id'])) {
                 <a href="opiniones.php" class="admin-nav-item">💬 Opiniones de Lectores</a>
                 <a href="blog.php" class="admin-nav-item">📝 Artículos del Blog</a>
                 <a href="galeria.php" class="admin-nav-item active">🖼️ Galería de Fotos</a>
+                <a href="medios.php" class="admin-nav-item">📁 Biblioteca de Medios</a>
                 <a href="settings.php" class="admin-nav-item">⚙️ Configuración & Redes</a>
             </nav>
             <div class="admin-sidebar-footer">
@@ -158,13 +159,16 @@ if ($action === 'edit' && isset($_GET['id'])) {
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group">
-                                    <label for="photo_file">Subir Archivo de Imagen</label>
-                                    <input type="file" id="photo_file" name="photo_file" accept="image/*">
+                                <div class="form-group" style="flex: 2;">
+                                    <label for="image">Ruta de Imagen</label>
+                                    <div style="display: flex; gap: 0.5rem;">
+                                        <input type="text" id="image" name="image" value="<?= e($edit_item['image'] ?? '') ?>" placeholder="photos/foto.webp" style="flex:1;">
+                                        <button type="button" class="btn btn-admin-secondary" id="btn-pick-galeria-media" style="white-space: nowrap;">📁 Elegir de Medios</button>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="image">O Ruta de Imagen</label>
-                                    <input type="text" id="image" name="image" value="<?= e($edit_item['image'] ?? '') ?>" placeholder="photos/foto.webp">
+                                <div class="form-group" style="flex: 1;">
+                                    <label for="photo_file">O Subir Archivo</label>
+                                    <input type="file" id="photo_file" name="photo_file" accept="image/*">
                                 </div>
                             </div>
 
@@ -198,5 +202,21 @@ if ($action === 'edit' && isset($_GET['id'])) {
             </div>
         </main>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnPick = document.getElementById('btn-pick-galeria-media');
+            const imgInput = document.getElementById('image');
+            if (btnPick && imgInput) {
+                btnPick.addEventListener('click', () => {
+                    openMediaPicker((path) => {
+                        imgInput.value = path;
+                    });
+                });
+            }
+        });
+    </script>
+
+    <?php include __DIR__ . '/media_modal.php'; ?>
 </body>
 </html>

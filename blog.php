@@ -5,6 +5,7 @@
  */
 
 require_once __DIR__ . '/config/settings.php';
+require_once __DIR__ . '/config/analytics.php';
 
 $posts = get_json_data('blog.json', []);
 $slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
@@ -20,9 +21,11 @@ if (!empty($slug)) {
 }
 
 if ($current_post) {
+    track_page_view('Blog: ' . $current_post['title']);
     $custom_title = $current_post['title'];
     $custom_desc = $current_post['excerpt'];
 } else {
+    track_page_view('Blog: Listado General');
     $custom_title = 'Blog del Budo y Filosofía Samurái';
     $custom_desc = 'Artículos, reflexiones y crónicas sobre la historia feudal japonesa y las artes marciales.';
 }

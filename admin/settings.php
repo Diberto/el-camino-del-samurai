@@ -67,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                 <a href="opiniones.php" class="admin-nav-item">💬 Opiniones de Lectores</a>
                 <a href="blog.php" class="admin-nav-item">📝 Artículos del Blog</a>
                 <a href="galeria.php" class="admin-nav-item">🖼️ Galería de Fotos</a>
+                <a href="medios.php" class="admin-nav-item">📁 Biblioteca de Medios</a>
                 <a href="settings.php" class="admin-nav-item active">⚙️ Configuración & Redes</a>
             </nav>
             <div class="admin-sidebar-footer">

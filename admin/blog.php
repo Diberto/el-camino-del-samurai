@@ -209,6 +209,7 @@ if ($action === 'edit' && isset($_GET['id'])) {
                 <a href="opiniones.php" class="admin-nav-item">💬 Opiniones de Lectores</a>
                 <a href="blog.php" class="admin-nav-item active">📝 Artículos del Blog</a>
                 <a href="galeria.php" class="admin-nav-item">🖼️ Galería de Fotos</a>
+                <a href="medios.php" class="admin-nav-item">📁 Biblioteca de Medios</a>
                 <a href="settings.php" class="admin-nav-item">⚙️ Configuración & Redes</a>
             </nav>
             <div class="admin-sidebar-footer">
@@ -270,11 +271,16 @@ if ($action === 'edit' && isset($_GET['id'])) {
 
                                 <!-- EDITOR WYSIWYG COMPLETO -->
                                 <div class="form-group">
-                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
-                                        <label>Cuerpo del Artículo (Editor Visual WYSIWYG) *</label>
-                                        <button type="button" class="btn-toggle-view" id="btn-toggle-code" title="Alternar entre modo visual y código HTML">
-                                            &lt;/&gt; Ver Código HTML
-                                        </button>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; flex-wrap: wrap; gap: 0.5rem;">
+                                        <label style="margin:0;">Cuerpo del Artículo (Editor Visual WYSIWYG) *</label>
+                                        <div style="display: flex; gap: 0.5rem;">
+                                            <button type="button" class="btn-toggle-view" id="btn-insert-media-quill" style="background: rgba(197, 168, 128, 0.15); color: var(--admin-gold); border-color: rgba(197, 168, 128, 0.3);">
+                                                🖼️ Insertar Foto de la Biblioteca
+                                            </button>
+                                            <button type="button" class="btn-toggle-view" id="btn-toggle-code" title="Alternar entre modo visual y código HTML">
+                                                &lt;/&gt; Ver Código HTML
+                                            </button>
+                                        </div>
                                     </div>
                                     
                                     <!-- Contenedor del Editor Quill -->
@@ -285,12 +291,15 @@ if ($action === 'edit' && isset($_GET['id'])) {
                                 </div>
 
                                 <div class="form-row">
-                                    <div class="form-group flex-1">
+                                    <div class="form-group flex-2">
                                         <label for="cover_image">Ruta de Imagen de Portada</label>
-                                        <input type="text" id="cover_image" name="cover_image" value="<?= e($edit_item['cover_image'] ?? 'photos/castillo_sengoku.webp') ?>">
+                                        <div style="display: flex; gap: 0.5rem;">
+                                            <input type="text" id="cover_image" name="cover_image" value="<?= e($edit_item['cover_image'] ?? 'photos/castillo_sengoku.webp') ?>" style="flex:1;">
+                                            <button type="button" class="btn btn-secondary btn-sm" id="btn-pick-cover-media" style="white-space: nowrap;">📁 Elegir de Medios</button>
+                                        </div>
                                     </div>
                                     <div class="form-group flex-1">
-                                        <label for="cover_file">O Subir Nueva Imagen (WebP, JPG, PNG)</label>
+                                        <label for="cover_file">O Subir Nueva Imagen</label>
                                         <input type="file" id="cover_file" name="cover_file" accept=".webp,.jpg,.jpeg,.png">
                                     </div>
                                 </div>
@@ -412,6 +421,28 @@ if ($action === 'edit' && isset($_GET['id'])) {
                     });
                 }
 
+                // Botón elegir portada desde la biblioteca
+                const btnPickCover = document.getElementById('btn-pick-cover-media');
+                const coverInput = document.getElementById('cover_image');
+                if (btnPickCover && coverInput) {
+                    btnPickCover.addEventListener('click', () => {
+                        openMediaPicker((path) => {
+                            coverInput.value = path;
+                        });
+                    });
+                }
+
+                // Botón insertar imagen en el editor Quill
+                const btnInsertQuill = document.getElementById('btn-insert-media-quill');
+                if (btnInsertQuill) {
+                    btnInsertQuill.addEventListener('click', () => {
+                        openMediaPicker((path) => {
+                            const range = quill.getSelection(true);
+                            quill.insertEmbed(range.index, 'image', '../' + path);
+                        });
+                    });
+                }
+
                 // Sincronizar HTML antes del submit
                 postForm.addEventListener('submit', () => {
                     if (isCodeView) {
@@ -423,5 +454,7 @@ if ($action === 'edit' && isset($_GET['id'])) {
             }
         });
     </script>
+
+    <?php include __DIR__ . '/media_modal.php'; ?>
 </body>
 </html>

@@ -152,6 +152,7 @@ if ($action === 'edit' && isset($_GET['id'])) {
                 <a href="opiniones.php" class="admin-nav-item active">💬 Opiniones de Lectores</a>
                 <a href="blog.php" class="admin-nav-item">📝 Artículos del Blog</a>
                 <a href="galeria.php" class="admin-nav-item">🖼️ Galería de Fotos</a>
+                <a href="medios.php" class="admin-nav-item">📁 Biblioteca de Medios</a>
                 <a href="settings.php" class="admin-nav-item">⚙️ Configuración & Redes</a>
             </nav>
             <div class="admin-sidebar-footer">
@@ -223,9 +224,12 @@ if ($action === 'edit' && isset($_GET['id'])) {
                                 </div>
 
                                 <div class="form-row">
-                                    <div class="form-group flex-1">
+                                    <div class="form-group flex-2">
                                         <label for="photo">Ruta de Foto del Lector (Opcional)</label>
-                                        <input type="text" id="photo" name="photo" value="<?= e($edit_item['photo'] ?? '') ?>" placeholder="photos/lector_ejemplo.webp">
+                                        <div style="display: flex; gap: 0.5rem;">
+                                            <input type="text" id="photo" name="photo" value="<?= e($edit_item['photo'] ?? '') ?>" placeholder="photos/lector_ejemplo.webp" style="flex:1;">
+                                            <button type="button" class="btn btn-secondary btn-sm" id="btn-pick-photo-media" style="white-space: nowrap;">📁 Elegir de Medios</button>
+                                        </div>
                                     </div>
                                     <div class="form-group flex-1">
                                         <label for="photo_file">O Subir Nueva Foto</label>
@@ -326,5 +330,23 @@ if ($action === 'edit' && isset($_GET['id'])) {
             </div>
         </main>
     </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnPick = document.getElementById('btn-pick-photo-media');
+            const photoInput = document.getElementById('photo');
+            const typeSelect = document.getElementById('type');
+            if (btnPick && photoInput) {
+                btnPick.addEventListener('click', () => {
+                    openMediaPicker((path) => {
+                        photoInput.value = path;
+                        if (typeSelect) typeSelect.value = 'photo';
+                    });
+                });
+            }
+        });
+    </script>
+
+    <?php include __DIR__ . '/media_modal.php'; ?>
 </body>
 </html>

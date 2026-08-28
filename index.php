@@ -5,6 +5,8 @@
  */
 
 require_once __DIR__ . '/config/settings.php';
+require_once __DIR__ . '/config/analytics.php';
+track_page_view('Página Principal');
 
 $toggles = $settings['sections_toggle'] ?? [];
 
