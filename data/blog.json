@@ -1,0 +1,32 @@
+[
+  {
+    "id": "post-1",
+    "title": "La Filosofía del Bushido en el Siglo XXI",
+    "slug": "la-filosofia-del-bushido-en-el-siglo-xxi",
+    "excerpt": "Cómo los principios de los antiguos guerreros japoneses pueden transformar nuestro liderazgo y disciplina cotidiana.",
+    "content": "<p>El <strong>Bushido</strong>, o 'El Camino del Guerrero', no es solo un código de conducta feudal; es una guía atemporal de rectitud, coraje y autocontrol para enfrentar los desafíos modernos.</p><p>En un mundo acelerado y repleto de distracciones, cultivar la templanza, la lealtad a los propios principios y la calma mental es el verdadero combate cotidiano.</p><blockquote>'La verdadera victoria es la victoria sobre uno mismo.' — Morihei Ueshiba</blockquote><p>A través de la práctica constante y la introspección, el practicante aprende a dominar su mente antes de mover su espada o tomar una decisión crítica.</p>",
+    "cover_image": "photos/cueva_reigando.webp",
+    "author": "Jorge Orpianesi",
+    "created_at": "2026-07-27"
+  },
+  {
+    "id": "post-2",
+    "title": "Cueva Reigando: El Refugio de Miyamoto Musashi",
+    "slug": "cueva-reigando-el-refugio-de-miyamoto-musashi",
+    "excerpt": "Un recorrido por el histórico lugar en Kumamoto donde Musashi redactó El Libro de los Cinco Anillos (Go Rin No Sho).",
+    "content": "<p>En las laderas del monte Iwato, cerca de Kumamoto, se encuentra la mística cueva de <strong>Reigando</strong> ('La Cueva del Espíritu de la Roca').</p><p>Fue allí donde en los últimos meses de su vida, aislado de la sociedad y en profunda meditación Zen, Miyamoto Musashi escribió su obra cumbre: <em>Go Rin No Sho</em> (El Libro de los Cinco Anillos).</p><blockquote>'Piensa a la ligera de ti mismo y profundamente del mundo.' — Miyamoto Musashi</blockquote><p>Visitar este rincón rodeado de cientos de estatuas de piedra de los Rakan es una de las vivencias espirituales más conmovedoras para cualquier budoka.</p>",
+    "cover_image": "photos/castillo_sengoku.webp",
+    "author": "Jorge Orpianesi",
+    "created_at": "2026-07-26"
+  },
+  {
+    "id": "post-3",
+    "title": "El Arte de la Meditación Zazen para Guerreros",
+    "slug": "el-arte-de-la-meditacion-zazen-para-guerreros",
+    "excerpt": "Descubre la conexión entre la quietud mental y la precisión estratégica en el combate y en la vida moderna.",
+    "content": "<p>Para el samurái clásico, la espada y la mente eran una sola entidad indivisible. El entrenamiento físico sin calma interior conducía a la derrota ante el miedo o la ira.</p><p>La meditación Zazen enseñaba a vaciar la mente (<em>Mushin</em>) para reaccionar al instante con serenidad absoluta.</p>",
+    "cover_image": "photos/jardin_zen.webp",
+    "author": "Jorge Orpianesi",
+    "created_at": "2026-07-25"
+  }
+]

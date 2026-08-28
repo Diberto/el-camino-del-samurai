@@ -1,0 +1,44 @@
+[
+  {
+    "id": "gal-1",
+    "title": "Castillos y Fortalezas del Japón Feudal",
+    "tag": "Patrimonio Histórico",
+    "image": "photos/WhatsApp Image 2026-06-25 at 16.10.09.webp",
+    "fallback": "photos/castillo_sengoku.webp"
+  },
+  {
+    "id": "gal-2",
+    "title": "Templos y Santuarios Shinto Milenarios",
+    "tag": "Naturaleza & Zen",
+    "image": "photos/WhatsApp Image 2026-06-25 at 16.10.12.webp",
+    "fallback": "photos/cueva_reigando.webp"
+  },
+  {
+    "id": "gal-3",
+    "title": "Huellas de Miyamoto Musashi y Escuelas Tradicionales",
+    "tag": "Ruta del Budo",
+    "image": "photos/WhatsApp Image 2026-06-25 at 16.10.13.webp",
+    "fallback": "photos/orpianesi1.webp"
+  },
+  {
+    "id": "gal-4",
+    "title": "Jardines Zen y Paisajes Tradicionales",
+    "tag": "Cultura Tradicional",
+    "image": "photos/WhatsApp Image 2026-06-25 at 16.10.15.webp",
+    "fallback": "photos/jardin_zen.webp"
+  },
+  {
+    "id": "gal-5",
+    "title": "Pasos y Senderos Históricos de Japón",
+    "tag": "Expedición",
+    "image": "photos/WhatsApp Image 2026-06-25 at 16.10.29.webp",
+    "fallback": "photos/castillo_sengoku.webp"
+  },
+  {
+    "id": "gal-6",
+    "title": "Artefactos y Esculturas Sagradas del Budo",
+    "tag": "Tradición Marcial",
+    "image": "photos/WhatsApp Image 2026-06-25 at 16.10.35.webp",
+    "fallback": "photos/orpianesi2.webp"
+  }
+]

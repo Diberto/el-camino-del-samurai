@@ -4,6 +4,10 @@ pb_data
 bin/pocketbase
 data/*.json
 !data/.gitkeep
+!data/config.json
+!data/opiniones.json
+!data/blog.json
+!data/galeria.json
 uploads/
 !uploads/.gitkeep
 public/uploads/

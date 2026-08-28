@@ -1,0 +1,55 @@
+{
+  "settings": {
+    "site_title": "La Ruta del Samurái - Jorge Orpianesi",
+    "site_subtitle": "La Senda de la Historia y el Budo",
+    "site_description": "Un fascinante viaje por la geografía, templos y castillos feudales del Japón tradicional.",
+    "address": "Budokan Argentina - Sarmiento 375, Córdoba, República Argentina. CP: 5000",
+    "whatsapp": "+549 351 3886443",
+    "whatsapp_url": "https://wa.me/5493513886443",
+    "email": "budokanorpianesi@hotmail.com",
+    "amazon_url": "https://www.amazon.com/s?k=jorge+orpianesi",
+    "budokan_url": "https://www.budokanweb.com/categoria-producto/libros/",
+    "social": {
+      "youtube": {
+        "title": "YouTube",
+        "url": "https://www.youtube.com/@larutadelsamurai",
+        "handle": "@larutadelsamurai",
+        "desc": "Documentales de viaje, técnicas de artes marciales y charlas sobre filosofía samurái."
+      },
+      "instagram": {
+        "title": "Instagram",
+        "url": "https://www.instagram.com/la.ruta.del.samurai/",
+        "handle": "@la.ruta.del.samurai",
+        "desc": "Fotografías diarias de expediciones, castillos y dojos tradicionales en Japón."
+      },
+      "facebook": {
+        "title": "Facebook",
+        "url": "https://www.facebook.com/jorgeorpianesi",
+        "handle": "Jorge Orpianesi",
+        "desc": "Comunidad de lectores, eventos, debates marciales y transmisiones especiales."
+      }
+    },
+    "sections_toggle": {
+      "inicio": true,
+      "sinopsis": true,
+      "opiniones": true,
+      "redes": true,
+      "ediciones": true,
+      "autor": true,
+      "galeria": true,
+      "blog": true,
+      "contacto": true
+    },
+    "navigation_menu": [
+      { "id": "nav-inicio", "label": "Inicio", "url": "#inicio", "visible": true },
+      { "id": "nav-libro", "label": "El Libro", "url": "#sinopsis", "visible": true },
+      { "id": "nav-opiniones", "label": "Opiniones", "url": "#opiniones", "visible": true },
+      { "id": "nav-redes", "label": "Redes", "url": "#redes", "visible": true },
+      { "id": "nav-ediciones", "label": "Ediciones", "url": "#ediciones", "visible": true },
+      { "id": "nav-autor", "label": "Autor", "url": "#autor", "visible": true },
+      { "id": "nav-galeria", "label": "Galería", "url": "#galeria", "visible": true },
+      { "id": "nav-blog", "label": "Blog", "url": "#blog", "visible": true },
+      { "id": "nav-contacto", "label": "Contacto", "url": "#contacto", "visible": true }
+    ]
+  }
+}

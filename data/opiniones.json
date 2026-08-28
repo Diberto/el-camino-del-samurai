@@ -1,0 +1,67 @@
+[
+  {
+    "id": "rev-1",
+    "name": "Sensei Carlos Benítez",
+    "role": "6° Dan Karate-Do & Kobudo, Córdoba",
+    "type": "photo",
+    "avatar": "assets/orpianesi1.webp",
+    "photo": "photos/WhatsApp Image 2026-06-25 at 16.10.12.webp",
+    "photo_title": "Lectura en el Hombu Dojo",
+    "rating": 5,
+    "text": "Una obra imprescindible. La rigurosidad histórica de Jorge combinada con su vivencia marcial en Japón transportan al lector al corazón de los antiguos castillos feudales.",
+    "date": "2026-08-15",
+    "verified": true
+  },
+  {
+    "id": "rev-2",
+    "name": "Dr. Fernando Morales",
+    "role": "Historiador y Practicante de Kendo, Buenos Aires",
+    "type": "text",
+    "avatar": "assets/kanji_stamp.webp",
+    "photo": "",
+    "photo_title": "",
+    "rating": 5,
+    "text": "Es el libro en español más completo sobre las rutas y templos del Budo tradicional. Los mapas y fotografías inéditas son una joya documental.",
+    "date": "2026-08-10",
+    "verified": true
+  },
+  {
+    "id": "rev-3",
+    "name": "Sensei Alejandro Rossi",
+    "role": "Instructor de Iaido, Rosario",
+    "type": "photo",
+    "avatar": "assets/orpianesi1.webp",
+    "photo": "photos/WhatsApp Image 2026-06-25 at 16.10.31.webp",
+    "photo_title": "Ejemplares dedicados en el Dojo",
+    "rating": 5,
+    "text": "Tener este libro en mano mientras entrenas es inspirador. Jorge ha logrado plasmar la esencia y la ética de los samuráis de forma clara y profunda.",
+    "date": "2026-08-04",
+    "verified": true
+  },
+  {
+    "id": "rev-4",
+    "name": "Laura Gutiérrez",
+    "role": "Viajera cultural y lectora, Mendoza",
+    "type": "text",
+    "avatar": "assets/kanji_stamp.webp",
+    "photo": "",
+    "photo_title": "",
+    "rating": 5,
+    "text": "Lo usé como guía en mi viaje a Japón para visitar la Cueva Reigando y el Castillo de Himeji. Una experiencia inolvidable. ¡Súper recomendado!",
+    "date": "2026-07-28",
+    "verified": true
+  },
+  {
+    "id": "rev-5",
+    "name": "Gustavo Peralta",
+    "role": "Practicante de Aikido, Santiago de Chile",
+    "type": "photo",
+    "avatar": "assets/orpianesi1.webp",
+    "photo": "photos/WhatsApp Image 2026-06-25 at 16.10.35.webp",
+    "photo_title": "Comunidad marcial compartiendo la lectura",
+    "rating": 5,
+    "text": "Ambos tomos son de colección. La calidad de impresión, el papel y el contenido filosófico superaron todas mis expectativas.",
+    "date": "2026-07-20",
+    "verified": true
+  }
+]
