@@ -44,5 +44,24 @@ $nav_menu = $settings['navigation_menu'] ?? [
                 <?php endforeach; ?>
             </ul>
         </nav>
+
+        <!-- Botón Selector Modo Día / Noche -->
+        <button class="theme-toggle-btn" id="theme-toggle" aria-label="Cambiar modo día/noche" title="Modo Día (日) / Noche (月)">
+            <div class="toggle-sky-bg">
+                <div class="toggle-sky-night">
+                    <span class="toggle-star star-1"></span>
+                    <span class="toggle-star star-2"></span>
+                    <span class="toggle-star star-3"></span>
+                    <span class="toggle-moon-aura"></span>
+                </div>
+                <div class="toggle-sky-day">
+                    <span class="toggle-sun-rays"></span>
+                    <span class="toggle-cloud cloud-1"></span>
+                    <span class="toggle-cloud cloud-2"></span>
+                </div>
+            </div>
+            <span class="kanji-day" aria-hidden="true">日</span>
+            <span class="kanji-night" aria-hidden="true">月</span>
+        </button>
     </div>
 </header>

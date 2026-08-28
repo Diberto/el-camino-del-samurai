@@ -31,6 +31,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // 1.5 Toggle Modo Día / Noche
+    const themeToggle = document.getElementById('theme-toggle');
+    const savedTheme = localStorage.getItem('samurai_theme');
+    if (savedTheme === 'day') {
+        document.body.classList.remove('theme-night');
+    } else {
+        document.body.classList.add('theme-night');
+    }
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const isNight = document.body.classList.toggle('theme-night');
+            localStorage.setItem('samurai_theme', isNight ? 'night' : 'day');
+        });
+    }
+
     // 2. Selector de Tomos y Volteo de Portadas (El Libro / Sinopsis)
     const tomoTabs = document.querySelectorAll('.tomo-tab');
     const tomo1Display = document.getElementById('display-tomo-1');
