@@ -45,7 +45,7 @@ $page_desc = $custom_desc ?? $settings['site_description'];
     <!-- Hojas de Estilo -->
     <link rel="stylesheet" href="css/styles.css?v=3.0">
 </head>
-<body>
+<body data-theme-default="<?= e($settings['theme_default'] ?? 'day') ?>" data-reviews-filter="<?= e($settings['reviews_default_filter'] ?? 'text') ?>">
 
     <!-- Canvas para pétalos de sakura -->
     <canvas id="sakura-canvas"></canvas>

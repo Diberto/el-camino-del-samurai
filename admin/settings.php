@@ -20,6 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
     $settings['budokan_url'] = trim($_POST['budokan_url'] ?? 'https://www.budokanweb.com/tienda/libros/la-ruta-del-samurai-formato-libro/');
     $settings['budokan_tomo1_url'] = trim($_POST['budokan_tomo1_url'] ?? 'https://www.budokanweb.com/tienda/libros/la-ruta-del-samurai-formato-libro/');
     $settings['budokan_tomo2_url'] = trim($_POST['budokan_tomo2_url'] ?? 'https://www.budokanweb.com/tienda/destacados/el-paso-de-las-luciernagas-la-ruta-del-samurai-2/');
+    $settings['theme_default'] = trim($_POST['theme_default'] ?? 'day');
+    $settings['reviews_default_filter'] = trim($_POST['reviews_default_filter'] ?? 'text');
 
     // Redes Sociales Oficiales
     $settings['social']['youtube']['url'] = trim($_POST['yt_url'] ?? 'https://www.youtube.com/@larutadelsamurai');
@@ -89,6 +91,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                 <?php endif; ?>
 
                 <form method="POST" action="settings.php" class="admin-form">
+                    <!-- Apariencia y Filtros Predeterminados -->
+                    <div class="admin-card">
+                        <h3>🎨 Apariencia y Filtros Predeterminados</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="theme_default">Modo de Color por Defecto</label>
+                                <select id="theme_default" name="theme_default">
+                                    <option value="day" <?= ($settings['theme_default'] ?? 'day') === 'day' ? 'selected' : '' ?>>☀️ Modo Día (日) - Predeterminado</option>
+                                    <option value="night" <?= ($settings['theme_default'] ?? 'day') === 'night' ? 'selected' : '' ?>>🌙 Modo Noche (月)</option>
+                                    <option value="time" <?= ($settings['theme_default'] ?? 'day') === 'time' ? 'selected' : '' ?>>⏰ Automático según la hora (6h-19h Día / 19h-6h Noche)</option>
+                                    <option value="device" <?= ($settings['theme_default'] ?? 'day') === 'device' ? 'selected' : '' ?>>📱 Automático según dispositivo / sistema operativo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="reviews_default_filter">Filtro por Defecto de Opiniones</label>
+                                <select id="reviews_default_filter" name="reviews_default_filter">
+                                    <option value="text" <?= ($settings['reviews_default_filter'] ?? 'text') === 'text' ? 'selected' : '' ?>>✍️ Reseñas Escritas (Predeterminado)</option>
+                                    <option value="all" <?= ($settings['reviews_default_filter'] ?? 'text') === 'all' ? 'selected' : '' ?>>🌐 Todas las Opiniones</option>
+                                    <option value="photo" <?= ($settings['reviews_default_filter'] ?? 'text') === 'photo' ? 'selected' : '' ?>>📸 Fotos de Lectores con el Libro</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Datos de Contacto Oficial -->
                     <div class="admin-card">
                         <h3>📍 Datos de Contacto Oficial</h3>

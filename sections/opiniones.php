@@ -1,8 +1,9 @@
 <?php
 /**
- * SECCIÓN DE OPINIONES Y TESTIMONIOS DE LECTORES (DISEÑO ORIGINAL)
+ * SECCIÓN DE OPINIONES Y TESTIMONIOS DE LECTORES (CONFIGURABLE DESDE ADMIN)
  */
 $opiniones = get_json_data('opiniones.json', []);
+$default_filter = $settings['reviews_default_filter'] ?? 'text';
 ?>
 <!-- Sección de Opiniones y Testimonios de Lectores -->
 <section class="section reviews-section" id="opiniones" aria-label="Opiniones de Lectores">
@@ -13,19 +14,24 @@ $opiniones = get_json_data('opiniones.json', []);
             <p class="section-desc">Experiencias, valoraciones y fotografías de practicantes marciales y apasionados de la cultura japonesa que recorren la senda del samurái.</p>
         </div>
 
-        <!-- Filtros de Opiniones -->
+        <!-- Filtros de Opiniones (Configurable desde Admin) -->
         <div class="reviews-filter-wrapper fade-in">
-            <button class="review-filter-btn active" data-filter="all">Todas las Opiniones</button>
-            <button class="review-filter-btn" data-filter="photo">📸 Con Foto / Captura</button>
-            <button class="review-filter-btn" data-filter="text">✍️ Reseñas Escritas</button>
+            <button class="review-filter-btn <?= $default_filter === 'all' ? 'active' : '' ?>" data-filter="all">Todas las Opiniones</button>
+            <button class="review-filter-btn <?= $default_filter === 'photo' ? 'active' : '' ?>" data-filter="photo">📸 Con Foto / Captura</button>
+            <button class="review-filter-btn <?= $default_filter === 'text' ? 'active' : '' ?>" data-filter="text">✍️ Reseñas Escritas</button>
         </div>
 
         <!-- Grid de Opiniones Mixtas -->
         <div class="reviews-grid fade-in" id="reviews-grid">
             <?php foreach ($opiniones as $rev): ?>
-                <?php if (($rev['type'] ?? 'text') === 'photo' && !empty($rev['photo'])): ?>
+                <?php 
+                    $card_type = $rev['type'] ?? 'text';
+                    $is_visible = ($default_filter === 'all' || $card_type === $default_filter);
+                    $stars = str_repeat('★', (int)($rev['rating'] ?? 5));
+                ?>
+                <?php if ($card_type === 'photo' && !empty($rev['photo'])): ?>
                     <!-- Tarjeta con Foto -->
-                    <article class="review-card review-card-photo" data-type="photo">
+                    <article class="review-card review-card-photo" data-type="photo" style="display: <?= $is_visible ? 'flex' : 'none' ?>;">
                         <div class="review-photo-wrapper" data-src="<?= e($rev['photo']) ?>" data-title="<?= e($rev['photo_title'] ?? $rev['name']) ?>">
                             <img src="<?= e($rev['photo']) ?>" alt="<?= e($rev['name']) ?>" loading="lazy" class="review-photo-img" onerror="this.src='photos/orpianesi1.webp'">
                             <div class="review-photo-badge">📸 <?= e($rev['photo_badge'] ?? 'Foto de Lector') ?></div>
@@ -34,7 +40,7 @@ $opiniones = get_json_data('opiniones.json', []);
                             </div>
                         </div>
                         <div class="review-content">
-                            <div class="review-stars">★★★★★</div>
+                            <div class="review-stars"><?= $stars ?></div>
                             <p class="review-caption">"<?= e($rev['text']) ?>"</p>
                             <div class="review-author">
                                 <strong><?= e($rev['name']) ?></strong>
@@ -43,15 +49,21 @@ $opiniones = get_json_data('opiniones.json', []);
                         </div>
                     </article>
                 <?php else: ?>
-                    <!-- Tarjeta de Reseña de Texto -->
-                    <article class="review-card review-card-text" data-type="text">
+                    <!-- Tarjeta de Reseña de Texto con Avatar Miniatura si tiene foto -->
+                    <article class="review-card review-card-text" data-type="text" style="display: <?= $is_visible ? 'flex' : 'none' ?>;">
                         <div class="review-quote-mark">“</div>
-                        <div class="review-stars">★★★★★</div>
+                        <div class="review-stars"><?= $stars ?></div>
                         <blockquote class="review-body">
                             "<?= e($rev['text']) ?>"
                         </blockquote>
                         <div class="review-footer">
-                            <div class="review-avatar-text"><?= e(strtoupper(substr($rev['name'], 0, 2))) ?></div>
+                            <?php if (!empty($rev['photo'])): ?>
+                                <div class="review-avatar-photo">
+                                    <img src="<?= e($rev['photo']) ?>" alt="<?= e($rev['name']) ?>" onerror="this.parentElement.className='review-avatar-text'; this.parentElement.innerText='<?= e(strtoupper(substr($rev['name'], 0, 2))) ?>';">
+                                </div>
+                            <?php else: ?>
+                                <div class="review-avatar-text"><?= e(strtoupper(substr($rev['name'], 0, 2))) ?></div>
+                            <?php endif; ?>
                             <div class="review-author">
                                 <strong><?= e($rev['name']) ?></strong>
                                 <span><?= e($rev['role']) ?></span>

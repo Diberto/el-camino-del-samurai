@@ -33,10 +33,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleBtn = document.getElementById('theme-toggle');
     const heroLogoImg = document.getElementById('hero-logo-main');
     const savedTheme = localStorage.getItem('theme_mode');
+    const defaultThemeConfig = document.body.getAttribute('data-theme-default') || 'day';
     
-    const hour = new Date().getHours();
-    const isNightTime = hour < 6 || hour >= 19;
-    const initialNightMode = savedTheme === 'night' || (!savedTheme && isNightTime);
+    let initialNightMode = false;
+    if (savedTheme) {
+        initialNightMode = (savedTheme === 'night');
+    } else {
+        if (defaultThemeConfig === 'night') {
+            initialNightMode = true;
+        } else if (defaultThemeConfig === 'time') {
+            const hour = new Date().getHours();
+            initialNightMode = (hour < 6 || hour >= 19);
+        } else if (defaultThemeConfig === 'device') {
+            initialNightMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        } else {
+            // 'day' o por defecto
+            initialNightMode = false;
+        }
+    }
     
     if (initialNightMode) {
         document.body.classList.add('theme-night');
@@ -664,22 +678,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterBtns = document.querySelectorAll('.review-filter-btn');
     const reviewCards = document.querySelectorAll('.review-card');
 
+    function applyReviewFilter(filter) {
+        filterBtns.forEach(b => {
+            if (b.getAttribute('data-filter') === filter) {
+                b.classList.add('active');
+            } else {
+                b.classList.remove('active');
+            }
+        });
+
+        reviewCards.forEach(card => {
+            const cardType = card.getAttribute('data-type');
+            if (filter === 'all' || cardType === filter) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
             const filter = btn.getAttribute('data-filter') || 'all';
-            reviewCards.forEach(card => {
-                const cardType = card.getAttribute('data-type');
-                if (filter === 'all' || cardType === filter) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+            applyReviewFilter(filter);
         });
     });
+
+    const defaultReviewFilter = document.body.getAttribute('data-reviews-filter') || 'text';
+    if (filterBtns.length > 0 && reviewCards.length > 0) {
+        applyReviewFilter(defaultReviewFilter);
+    }
 
     // =========================================================================
     // 9. LIGHTBOX MODAL PARA GALERÍA Y OPINIONES
