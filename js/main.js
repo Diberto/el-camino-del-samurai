@@ -83,6 +83,44 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Manejo inteligente de anclas con scroll suave y compensación del navbar
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (!targetId || targetId === '#') return;
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+                e.preventDefault();
+                const navHeight = navbar ? navbar.offsetHeight : 70;
+                const targetTop = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                window.scrollTo({
+                    top: targetTop,
+                    behavior: 'smooth'
+                });
+                if (history.pushState) {
+                    history.pushState(null, null, targetId);
+                }
+            }
+        });
+    });
+
+    // Desplazamiento automático si se llega con hash desde otra página (ej: index.php#sinopsis)
+    if (window.location.hash) {
+        setTimeout(() => {
+            try {
+                const targetEl = document.querySelector(window.location.hash);
+                if (targetEl) {
+                    const navHeight = navbar ? navbar.offsetHeight : 70;
+                    const targetTop = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                    window.scrollTo({
+                        top: targetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            } catch (err) {}
+        }, 120);
+    }
+
     // Scroll Navbar Effect & Active Section Tracker
     function handleScrollEffects() {
         const scrollY = window.scrollY;

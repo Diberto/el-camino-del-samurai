@@ -1,17 +1,21 @@
 <?php
 /**
- * MENÚ DE NAVEGACIÓN GLOBAL (DISEÑO ORIGINAL)
+ * MENÚ DE NAVEGACIÓN GLOBAL - LA RUTA DEL SAMURÁI
+ * Soporta navegación fluida entre páginas (index.php y blog.php) sin superposición de URLs.
  */
-$nav_menu = $settings['navigation_menu'] ?? [
-    ['label' => 'Inicio', 'url' => '#inicio', 'visible' => true],
-    ['label' => 'El Libro', 'url' => '#sinopsis', 'visible' => true],
-    ['label' => 'Opiniones', 'url' => '#opiniones', 'visible' => true],
-    ['label' => 'Redes', 'url' => '#redes', 'visible' => true],
-    ['label' => 'Ediciones', 'url' => '#ediciones', 'visible' => true],
-    ['label' => 'Autor', 'url' => '#autor', 'visible' => true],
-    ['label' => 'Galería', 'url' => '#galeria', 'visible' => true],
-    ['label' => 'Blog', 'url' => '#blog', 'visible' => true],
-    ['label' => 'Contacto', 'url' => '#contacto', 'visible' => true]
+$current_page = basename($_SERVER['PHP_SELF'] ?? '');
+$is_home = ($current_page === 'index.php' || empty($current_page) || $current_page === 'index');
+
+$nav_menu = [
+    ['label' => 'Inicio', 'section' => 'inicio', 'url' => $is_home ? '#inicio' : 'index.php#inicio'],
+    ['label' => 'El Libro', 'section' => 'sinopsis', 'url' => $is_home ? '#sinopsis' : 'index.php#sinopsis'],
+    ['label' => 'Opiniones', 'section' => 'opiniones', 'url' => $is_home ? '#opiniones' : 'index.php#opiniones'],
+    ['label' => 'Redes', 'section' => 'redes', 'url' => $is_home ? '#redes' : 'index.php#redes'],
+    ['label' => 'Ediciones', 'section' => 'ediciones', 'url' => $is_home ? '#ediciones' : 'index.php#ediciones'],
+    ['label' => 'Autor', 'section' => 'autor', 'url' => $is_home ? '#autor' : 'index.php#autor'],
+    ['label' => 'Galería', 'section' => 'galeria', 'url' => $is_home ? '#galeria' : 'index.php#galeria'],
+    ['label' => 'Blog', 'section' => 'blog', 'url' => 'blog.php', 'is_page' => true],
+    ['label' => 'Contacto', 'section' => 'contacto', 'url' => $is_home ? '#contacto' : 'index.php#contacto', 'is_btn' => true]
 ];
 ?>
 <!-- Header / Navbar -->
@@ -25,13 +29,29 @@ $nav_menu = $settings['navigation_menu'] ?? [
         <nav class="nav-menu" id="nav-menu" role="navigation" aria-label="Menú principal">
             <ul>
                 <?php foreach ($nav_menu as $item): ?>
-                    <?php if (!empty($item['visible'])): ?>
-                        <?php 
-                            $is_contacto = strpos($item['url'], 'contacto') !== false;
-                            $class = $is_contacto ? 'btn btn-nav' : 'nav-link';
-                        ?>
-                        <li><a href="<?= e($item['url']) ?>" class="<?= $class ?>"><?= e($item['label']) ?></a></li>
-                    <?php endif; ?>
+                    <?php 
+                        $is_active = false;
+                        if (!empty($item['is_page']) && strpos($current_page, 'blog') !== false) {
+                            $is_active = true;
+                        } elseif ($is_home && $item['section'] === 'inicio') {
+                            $is_active = true;
+                        }
+                        
+                        $classes = [];
+                        if (!empty($item['is_btn'])) {
+                            $classes[] = 'btn btn-nav';
+                        } else {
+                            $classes[] = 'nav-link';
+                        }
+                        if ($is_active) {
+                            $classes[] = 'active';
+                        }
+                    ?>
+                    <li>
+                        <a href="<?= e($item['url']) ?>" class="<?= implode(' ', $classes) ?>" data-section="<?= e($item['section']) ?>">
+                            <?= e($item['label']) ?>
+                        </a>
+                    </li>
                 <?php endforeach; ?>
             </ul>
         </nav>
