@@ -364,6 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const bgCanvas = document.getElementById('clouds-bg-canvas');
         const fgCanvas = document.getElementById('clouds-fg-canvas');
         if (!bgCanvas && !fgCanvas) return;
+        if (isMobileDevice) return; // En móviles los SVG ya presentan las montañas y nieblas sin recargar canvas
 
         let bgCtx = bgCanvas ? bgCanvas.getContext('2d', { alpha: true }) : null;
         let fgCtx = fgCanvas ? fgCanvas.getContext('2d', { alpha: true }) : null;
@@ -747,71 +748,57 @@ document.addEventListener('DOMContentLoaded', () => {
     let targetMouseY = 0;
     const lerpFactor = 0.08;
 
-    if (!isMobileDevice && !isLowEndDevice) {
+    if (!isMobileDevice) {
         window.addEventListener('mousemove', (e) => {
             targetMouseX = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
             targetMouseY = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
         }, { passive: true });
-    }
 
-    function updateParallaxFrame() {
-        const scrollY = window.scrollY;
-        if (scrollY < window.innerHeight) {
-            const mSvg1X = mouseX * -22;
-            const mSvg1Y = mouseY * -14;
-            const mCloudsFgX = mouseX * -18;
-            const mCloudsFgY = mouseY * -11;
-            const mSvg2X = mouseX * -16;
-            const mSvg2Y = mouseY * -10;
-            const mSvg3X = mouseX * -10;
-            const mSvg3Y = mouseY * -6;
-            const mSvg4X = mouseX * -5;
-            const mSvg4Y = mouseY * -3;
-            const mSvg5X = mouseX * 8;
-            const mSvg5Y = mouseY * 5;
-            const mSvg6X = mouseX * 16;
-            const mSvg6Y = mouseY * 10;
-            const mSvg7X = mouseX * 24;
-            const mSvg7Y = mouseY * 15;
-            const mTextX = mouseX * 8;
-            const mTextY = mouseY * 4;
+        function updateParallaxFrame() {
+            const scrollY = window.scrollY;
+            if (scrollY < window.innerHeight) {
+                const mSvg1X = mouseX * -22;
+                const mSvg1Y = mouseY * -14;
+                const mCloudsFgX = mouseX * -18;
+                const mCloudsFgY = mouseY * -11;
+                const mSvg2X = mouseX * -16;
+                const mSvg2Y = mouseY * -10;
+                const mSvg3X = mouseX * -10;
+                const mSvg3Y = mouseY * -6;
+                const mSvg4X = mouseX * -5;
+                const mSvg4Y = mouseY * -3;
+                const mSvg5X = mouseX * 8;
+                const mSvg5Y = mouseY * 5;
+                const mSvg6X = mouseX * 16;
+                const mSvg6Y = mouseY * 10;
+                const mSvg7X = mouseX * 24;
+                const mSvg7Y = mouseY * 15;
+                const mTextX = mouseX * 8;
+                const mTextY = mouseY * 4;
 
-            const sSvg1Y = scrollY * 0.38;
-            const sCloudsFgY = scrollY * 0.34;
-            const sSvg2Y = scrollY * 0.30;
-            const sSvg3Y = scrollY * 0.22;
-            const sSvg4Y = scrollY * 0.16;
-            const sSvg5Y = scrollY * 0.10;
-            const sSvg6Y = scrollY * 0.06;
-            const sSvg7Y = scrollY * 0.02;
-            const sTextY = scrollY * 0.18;
+                const sSvg1Y = scrollY * 0.38;
+                const sCloudsFgY = scrollY * 0.34;
+                const sSvg2Y = scrollY * 0.30;
+                const sSvg3Y = scrollY * 0.22;
+                const sSvg4Y = scrollY * 0.16;
+                const sSvg5Y = scrollY * 0.10;
+                const sSvg6Y = scrollY * 0.06;
+                const sSvg7Y = scrollY * 0.02;
+                const sTextY = scrollY * 0.18;
 
-            if (layerSvg1) layerSvg1.style.transform = `translate3d(${mSvg1X}px, ${sSvg1Y + mSvg1Y}px, 0) scale(1.05)`;
-            if (layerCloudsFg) layerCloudsFg.style.transform = `translate3d(${mCloudsFgX}px, ${sCloudsFgY + mCloudsFgY}px, 0) scale(1.04)`;
-            if (layerSvg2) layerSvg2.style.transform = `translate3d(${mSvg2X}px, ${sSvg2Y + mSvg2Y}px, 0) scale(1.04)`;
-            if (layerSvg3) layerSvg3.style.transform = `translate3d(${mSvg3X}px, ${sSvg3Y + mSvg3Y}px, 0) scale(1.03)`;
-            if (layerSvg4) layerSvg4.style.transform = `translate3d(${mSvg4X}px, ${sSvg4Y + mSvg4Y}px, 0) scale(1.02)`;
-            if (layerSvg5) layerSvg5.style.transform = `translate3d(${mSvg5X}px, ${sSvg5Y + mSvg5Y}px, 0) scale(1.02)`;
-            if (layerSvg6) layerSvg6.style.transform = `translate3d(${mSvg6X}px, ${sSvg6Y + mSvg6Y}px, 0) scale(1.01)`;
-            if (layerSvg7) layerSvg7.style.transform = `translate3d(${mSvg7X}px, ${sSvg7Y + mSvg7Y}px, 0) scale(1.01)`;
-            if (layerSvg8) layerSvg8.style.transform = `translate3d(${mSvg7X * 1.2}px, ${sSvg7Y + mSvg7Y * 1.2}px, 0) scale(1.01)`;
-            if (layerText) layerText.style.transform = `translate3d(${mTextX}px, ${sTextY + mTextY}px, 0)`;
-        }
-    }
-
-    if (isMobileDevice || isLowEndDevice) {
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    if (isHeroVisible) updateParallaxFrame();
-                    ticking = false;
-                });
-                ticking = true;
+                if (layerSvg1) layerSvg1.style.transform = `translate3d(${mSvg1X}px, ${sSvg1Y + mSvg1Y}px, 0) scale(1.05)`;
+                if (layerCloudsFg) layerCloudsFg.style.transform = `translate3d(${mCloudsFgX}px, ${sCloudsFgY + mCloudsFgY}px, 0) scale(1.04)`;
+                if (layerSvg2) layerSvg2.style.transform = `translate3d(${mSvg2X}px, ${sSvg2Y + mSvg2Y}px, 0) scale(1.04)`;
+                if (layerSvg3) layerSvg3.style.transform = `translate3d(${mSvg3X}px, ${sSvg3Y + mSvg3Y}px, 0) scale(1.03)`;
+                if (layerSvg4) layerSvg4.style.transform = `translate3d(${mSvg4X}px, ${sSvg4Y + mSvg4Y}px, 0) scale(1.02)`;
+                if (layerSvg5) layerSvg5.style.transform = `translate3d(${mSvg5X}px, ${sSvg5Y + mSvg5Y}px, 0) scale(1.02)`;
+                if (layerSvg6) layerSvg6.style.transform = `translate3d(${mSvg6X}px, ${sSvg6Y + mSvg6Y}px, 0) scale(1.01)`;
+                if (layerSvg7) layerSvg7.style.transform = `translate3d(${mSvg7X}px, ${sSvg7Y + mSvg7Y}px, 0) scale(1.01)`;
+                if (layerSvg8) layerSvg8.style.transform = `translate3d(${mSvg7X * 1.2}px, ${sSvg7Y + mSvg7Y * 1.2}px, 0) scale(1.01)`;
+                if (layerText) layerText.style.transform = `translate3d(${mTextX}px, ${sTextY + mTextY}px, 0)`;
             }
-        }, { passive: true });
-        updateParallaxFrame();
-    } else {
+        }
+
         function animateParallax() {
             mouseX += (targetMouseX - mouseX) * lerpFactor;
             mouseY += (targetMouseY - mouseY) * lerpFactor;
@@ -835,37 +822,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const sakuraPetalTextures = [petalImg1, petalImg2, petalImg3];
 
     let petals = [];
-    const dpr = isLowEndDevice ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
-    canvas.width = window.innerWidth * dpr;
-    canvas.height = window.innerHeight * dpr;
-    ctx.scale(dpr, dpr);
-    let width = canvas.width / dpr;
-    let height = canvas.height / dpr;
+    let width = window.innerWidth;
+    let height = window.innerHeight;
 
-    let mousePos = { x: -1000, y: -1000 };
-    let prevMousePos = { x: -1000, y: -1000 };
-    let mouseVelX = 0;
-    let mouseVelY = 0;
-
-    let lastScrollY = window.scrollY;
-    let scrollVelY = 0;
-    let scrollBurst = 0;
-
-    const windTrails = [];
-
-    window.addEventListener('scroll', () => {
-        const sy = window.scrollY;
-        scrollVelY = sy - lastScrollY;
-        lastScrollY = sy;
-    });
-
-    window.addEventListener('resize', () => {
-        width = canvas.width = window.innerWidth * dpr;
-        height = canvas.height = window.innerHeight * dpr;
+    function setupCanvasDimensions() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.scale(dpr, dpr);
-        width = canvas.width / dpr;
-        height = canvas.height / dpr;
-    });
+    }
+
+    setupCanvasDimensions();
+    window.addEventListener('resize', setupCanvasDimensions, { passive: true });
 
     window.addEventListener('mousemove', (e) => {
         prevMousePos.x = mousePos.x;

@@ -3831,25 +3831,34 @@ body.theme-night .hero-overlay-bottom {
 }
 
 /* ==========================================================================
-   PERFORMANCE OPTIMIZATION FOR LOW-END MOBILE & DEVICES (GPU / BATTERY / RAM)
+   PERFORMANCE & IMAGE CLARITY OPTIMIZATIONS (SAMSUNG / ANDROID / GPU COMPATIBILITY)
    ========================================================================== */
 
-/* 1. Content Visibility: Defer rendering of offscreen sections until scrolled into view */
-.reviews-section,
-.social-section,
-.chapters-section,
-.author-section,
-.gallery-section,
-.blog-preview-section,
-.contact-section,
-.footer {
-    content-visibility: auto;
-    contain-intrinsic-size: 1px 650px;
+/* Global image clarity to prevent pixelation/artifacts on high-DPI AMOLED screens */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
-/* 2. Low-End Mobile & Performance Mode Overrides */
+/* Mobile & Touch Screen Optimizations */
 @media (max-width: 768px), (pointer: coarse) {
-    /* Disable expensive blur filters that drop FPS on budget Mali/PowerVR/Snapdragon GPUs */
+    /* 1. Eliminate mask-image & heavy filter stacking that cause visual artifacts on mobile GPUs */
+    .hero-parallax .parallax-layer {
+        -webkit-mask-image: none !important;
+        mask-image: none !important;
+        filter: none !important;
+        transform: none !important;
+        will-change: auto !important;
+    }
+
+    /* 2. Hide heavy multi-layer cloud canvases on mobile (SVG already renders crisp art) */
+    #clouds-fg-canvas,
+    #clouds-bg-canvas {
+        display: none !important;
+    }
+
+    /* 3. Disable expensive blur filters that drop FPS on Mali/PowerVR/Snapdragon GPUs */
     .testimonial-card,
     .review-card,
     .social-macro-card,
@@ -3890,31 +3899,20 @@ body.theme-night .hero-overlay-bottom {
 
     /* Optimize rendering and touch responsiveness */
     body {
-        text-rendering: optimizeSpeed;
         -webkit-tap-highlight-color: transparent;
     }
 
-    /* Prevent layer thrashing on mobile canvas */
-    #clouds-fg-canvas,
-    #starfield-canvas,
-    #sakura-canvas {
-        pointer-events: none !important;
+    /* Clean hero logo rendering without halo artifacts */
+    .hero-logo-main {
+        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.55)) !important;
+        transform: none !important;
         will-change: auto !important;
     }
 }
 
 /* Low-End Class explicitly injected by hardware detection */
-.low-end-device .hero-parallax .parallax-layer[class*="layer-svg-"] {
-    transition: none !important;
-    will-change: auto !important;
-}
-
 .low-end-device .book-3d-card {
     will-change: transform;
-}
-
-.low-end-device #sakura-canvas {
-    opacity: 0.85;
 }
 
 /* ==========================================================================
