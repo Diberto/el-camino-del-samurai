@@ -2,23 +2,23 @@
    EL CAMINO DEL SAMURAI - DESIGN SYSTEM & STYLES
    ========================================================================== */
 
-/* 1. VARIABLES & RESET (DAY MODE DEFAULT) */
+/* 1. VARIABLES & RESET (DAY MODE DEFAULT - HIGH CONTRAST) */
 :root {
-    --bg-primary: #f5f0eb;
-    --bg-secondary: #e8e1d7;
-    --bg-card: rgba(255, 255, 255, 0.90);
+    --bg-primary: #f8f5f0;
+    --bg-secondary: #eee7dc;
+    --bg-card: #ffffff;
     
     --accent-red: #d81124;
-    --accent-red-hover: #ef233c;
+    --accent-red-hover: #b80d1e;
     --accent-red-glow: rgba(216, 17, 36, 0.35);
     
-    --accent-gold: #aa7d36;
-    --accent-gold-hover: #c4944c;
-    --accent-gold-glow: rgba(170, 125, 54, 0.25);
+    --accent-gold: #8f6222;
+    --accent-gold-hover: #754f19;
+    --accent-gold-glow: rgba(143, 98, 34, 0.25);
     
     --text-primary: #111319;
-    --text-secondary: #3e4250;
-    --text-muted: #6b7080;
+    --text-secondary: #2d313d;
+    --text-muted: #525866;
     
     --font-title: 'Cinzel', serif;
     --font-body: 'Plus Jakarta Sans', sans-serif;
@@ -26,25 +26,25 @@
     --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     --transition-fast: all 0.2s ease;
     
-    --border-color: rgba(0, 0, 0, 0.08);
+    --border-color: rgba(0, 0, 0, 0.12);
     --border-glow: rgba(216, 17, 36, 0.18);
 }
 
-/* NIGHT MODE THEME OVERRIDES (DARK SAMURAI NIGHT) */
+/* NIGHT MODE THEME OVERRIDES (HIGH CONTRAST DARK) */
 body.theme-night {
     --bg-primary: #07080a;
     --bg-secondary: #111218;
-    --bg-card: rgba(18, 19, 26, 0.70);
+    --bg-card: rgba(18, 19, 26, 0.85);
     
     --accent-gold: #c5a880;
     --accent-gold-hover: #dfc59f;
     --accent-gold-glow: rgba(197, 168, 128, 0.3);
     
     --text-primary: #f8f9fa;
-    --text-secondary: #a2aab2;
-    --text-muted: #6c757d;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
     
-    --border-color: rgba(255, 255, 255, 0.06);
+    --border-color: rgba(255, 255, 255, 0.08);
     --border-glow: rgba(216, 17, 36, 0.25);
 }
 
@@ -98,7 +98,7 @@ img {
     display: block;
 }
 
-/* 2. UTILITY CLASSES */
+/* 2. UTILITY CLASSES & SECTION BACKGROUNDS */
 .container {
     width: 100%;
     max-width: 1200px;
@@ -194,39 +194,61 @@ img {
 
 .btn-primary {
     background-color: var(--accent-red);
-    color: var(--text-primary);
+    color: #ffffff !important;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
     box-shadow: 0 4px 20px var(--accent-red-glow);
 }
 
 .btn-primary:hover {
     background-color: var(--accent-red-hover);
+    color: #ffffff !important;
     transform: translateY(-2px);
     box-shadow: 0 6px 25px rgba(217, 4, 41, 0.6);
 }
 
+.btn-blue {
+    background-color: #0e305e !important;
+    color: #ffffff !important;
+    font-weight: 700;
+    border: 1px solid #1a6ed8 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 20px rgba(14, 48, 94, 0.4);
+}
+
+.btn-blue:hover {
+    background-color: #15428a !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(26, 110, 216, 0.6);
+}
+
 .btn-secondary {
-    background-color: transparent;
+    background-color: rgba(170, 125, 54, 0.08);
     color: var(--accent-gold);
-    border: 1px solid var(--accent-gold);
-    box-shadow: 0 4px 20px rgba(197, 168, 128, 0.05);
+    border: 1.5px solid var(--accent-gold);
+    font-weight: 700;
+    box-shadow: 0 4px 20px rgba(197, 168, 128, 0.08);
 }
 
 .btn-secondary:hover {
     background-color: var(--accent-gold);
-    color: var(--bg-primary);
+    color: #ffffff !important;
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px var(--accent-gold-glow);
+    box-shadow: 0 6px 25px rgba(170, 125, 54, 0.25);
 }
 
 .btn-nav {
     padding: 0.5rem 1.25rem;
     font-size: 0.85rem;
     background-color: var(--accent-red);
-    color: var(--text-primary);
+    color: #ffffff !important;
+    font-weight: 700;
 }
 
 .btn-nav:hover {
     background-color: var(--accent-red-hover);
+    color: #ffffff !important;
     transform: translateY(-1px);
 }
 

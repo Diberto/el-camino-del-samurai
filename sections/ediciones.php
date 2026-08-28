@@ -67,7 +67,7 @@ $budokan_tomo2 = $settings['budokan_tomo2_url'] ?? 'https://www.budokanweb.com/t
                     </ul>
                     <div style="display: flex; flex-direction: column; gap: 0.6rem;">
                         <a href="<?= e($budokan_tomo1) ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary block text-center">Comprar Tomo 1 (Budokan Web)</a>
-                        <a href="<?= e($budokan_tomo2) ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary block text-center" style="background-color: #0d2b56; border: 1px solid #1a6ed8;">Comprar Tomo 2 (Budokan Web)</a>
+                        <a href="<?= e($budokan_tomo2) ?>" target="_blank" rel="noopener noreferrer" class="btn btn-blue block text-center">Comprar Tomo 2 (Budokan Web)</a>
                         <a href="https://wa.me/5493513886443?text=Hola%20Jorge,%20quiero%20adquirir%20el%20libro%20f%C3%ADsico%20firmado%20en%20Argentina" target="_blank" rel="noopener noreferrer" class="btn btn-secondary block text-center">Pedir firmado por WhatsApp</a>
                     </div>
                 </div>
