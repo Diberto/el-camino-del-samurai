@@ -50,7 +50,7 @@
         <div class="parallax-layer parallax-text">
             <div class="hero-content">
                 <div class="hero-main-logo-wrapper">
-                    <img src="assets/logo_typography_dark.webp" 
+                    <img src="assets/logo_hero_official.webp" 
                          alt="La Ruta del Samurái - Jorge Orpianesi" 
                          class="hero-logo-main" 
                          id="hero-logo-main" 
