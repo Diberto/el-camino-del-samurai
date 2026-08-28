@@ -4,6 +4,7 @@
  * Con Editor WYSIWYG interactivo y función para duplicar artículos
  */
 require_once __DIR__ . '/../config/auth.php';
+require_once __DIR__ . '/../config/media_helper.php';
 require_admin_auth();
 
 $posts = get_json_data('blog.json', []);
@@ -55,13 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_post'])) {
     $created_at = !empty($_POST['created_at']) ? trim($_POST['created_at']) : date('Y-m-d');
 
     if (isset($_FILES['cover_file']) && $_FILES['cover_file']['error'] === UPLOAD_ERR_OK) {
-        $ext = strtolower(pathinfo($_FILES['cover_file']['name'], PATHINFO_EXTENSION));
-        if (in_array($ext, ['webp', 'jpg', 'jpeg', 'png'])) {
-            $new_filename = 'blog_' . time() . '.' . $ext;
-            $dest = ROOT_DIR . '/photos/' . $new_filename;
-            if (move_uploaded_file($_FILES['cover_file']['tmp_name'], $dest)) {
-                $cover_image = 'photos/' . $new_filename;
-            }
+        $saved = optimize_and_save_image($_FILES['cover_file'], 'blog', 1920, 85);
+        if ($saved) {
+            $cover_image = $saved;
         }
     }
 

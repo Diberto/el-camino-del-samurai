@@ -4,6 +4,7 @@
  * Gestión centralizada de fotografías, portadas y recursos para todo el sitio
  */
 require_once __DIR__ . '/../config/auth.php';
+require_once __DIR__ . '/../config/media_helper.php';
 require_admin_auth();
 
 $msg = '';
@@ -27,7 +28,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['file'
     }
 }
 
-// 2. Subir nuevo archivo
+// 2. Subir nuevo archivo con optimización automática a WebP
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_media'])) {
     if (isset($_FILES['media_files'])) {
         $uploaded_count = 0;
@@ -35,17 +36,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_media'])) {
         
         for ($i = 0; $i < $total_files; $i++) {
             if ($_FILES['media_files']['error'][$i] === UPLOAD_ERR_OK) {
-                $orig_name = $_FILES['media_files']['name'][$i];
-                $ext = strtolower(pathinfo($orig_name, PATHINFO_EXTENSION));
+                $single_file = [
+                    'name' => $_FILES['media_files']['name'][$i],
+                    'type' => $_FILES['media_files']['type'][$i],
+                    'tmp_name' => $_FILES['media_files']['tmp_name'][$i],
+                    'error' => $_FILES['media_files']['error'][$i],
+                    'size' => $_FILES['media_files']['size'][$i]
+                ];
                 
-                if (in_array($ext, ['webp', 'jpg', 'jpeg', 'png', 'svg', 'gif'])) {
-                    $clean_name = preg_replace('/[^a-zA-Z0-9_-]/', '_', pathinfo($orig_name, PATHINFO_FILENAME));
-                    $filename = $clean_name . '_' . time() . '.' . $ext;
-                    $dest = ROOT_DIR . '/photos/' . $filename;
-                    
-                    if (move_uploaded_file($_FILES['media_files']['tmp_name'][$i], $dest)) {
-                        $uploaded_count++;
-                    }
+                $saved = optimize_and_save_image($single_file, 'media', 1920, 85);
+                if ($saved) {
+                    $uploaded_count++;
                 }
             }
         }

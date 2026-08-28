@@ -3,30 +3,24 @@
  * API JSON DE MEDIOS - Para el selector modal en Blog, Opiniones y Galería
  */
 require_once __DIR__ . '/../config/auth.php';
+require_once __DIR__ . '/../config/media_helper.php';
 require_admin_auth();
 
 header('Content-Type: application/json; charset=utf-8');
 
-// 1. Subida de archivo por AJAX
+// 1. Subida de archivo por AJAX con optimización automática a WebP
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
-    if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
-        $ext = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
-        if (in_array($ext, ['webp', 'jpg', 'jpeg', 'png', 'svg', 'gif'])) {
-            $base_name = preg_replace('/[^a-zA-Z0-9_-]/', '_', pathinfo($_FILES['file']['name'], PATHINFO_FILENAME));
-            $filename = $base_name . '_' . time() . '.' . $ext;
-            $dest = ROOT_DIR . '/photos/' . $filename;
-            if (move_uploaded_file($_FILES['file']['tmp_name'], $dest)) {
-                echo json_encode([
-                    'success' => true,
-                    'path' => 'photos/' . $filename,
-                    'filename' => $filename,
-                    'message' => 'Imagen subida correctamente a la biblioteca'
-                ]);
-                exit;
-            }
-        }
+    $saved_path = optimize_and_save_image($_FILES['file'], 'media', 1920, 85);
+    if ($saved_path) {
+        echo json_encode([
+            'success' => true,
+            'path' => $saved_path,
+            'filename' => basename($saved_path),
+            'message' => 'Imagen optimizada a WebP y subida con éxito'
+        ]);
+        exit;
     }
-    echo json_encode(['success' => false, 'message' => 'Error al subir la imagen']);
+    echo json_encode(['success' => false, 'message' => 'Error al procesar y optimizar la imagen']);
     exit;
 }
 

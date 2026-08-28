@@ -3,6 +3,7 @@
  * PANEL ADMIN - GESTIÓN DE GALERÍA FOTOGRÁFICA
  */
 require_once __DIR__ . '/../config/auth.php';
+require_once __DIR__ . '/../config/media_helper.php';
 require_admin_auth();
 
 $galeria = get_json_data('galeria.json', []);
@@ -45,13 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_galeria'])) {
     $fallback = trim($_POST['fallback'] ?? 'photos/castillo_sengoku.webp');
 
     if (isset($_FILES['photo_file']) && $_FILES['photo_file']['error'] === UPLOAD_ERR_OK) {
-        $ext = strtolower(pathinfo($_FILES['photo_file']['name'], PATHINFO_EXTENSION));
-        if (in_array($ext, ['webp', 'jpg', 'jpeg', 'png'])) {
-            $new_filename = 'gal_' . time() . '.' . $ext;
-            $dest = ROOT_DIR . '/photos/' . $new_filename;
-            if (move_uploaded_file($_FILES['photo_file']['tmp_name'], $dest)) {
-                $image = 'photos/' . $new_filename;
-            }
+        $saved = optimize_and_save_image($_FILES['photo_file'], 'gal', 1920, 85);
+        if ($saved) {
+            $image = $saved;
         }
     }
 
