@@ -1,6 +1,7 @@
 <?php
 /**
  * PANEL ADMIN - GESTIÓN DE OPINIONES DE LECTORES
+ * Con función para duplicar testimonios y fotos de lectores
  */
 require_once __DIR__ . '/../config/auth.php';
 require_admin_auth();
@@ -10,7 +11,7 @@ $action = $_GET['action'] ?? 'list';
 $msg = '';
 $error = '';
 
-// 1. Procesar Eliminación
+// 1. Eliminar Opinión
 if ($action === 'delete' && isset($_GET['id'])) {
     $id = $_GET['id'];
     $opiniones = array_values(array_filter($opiniones, fn($item) => $item['id'] !== $id));
@@ -19,7 +20,30 @@ if ($action === 'delete' && isset($_GET['id'])) {
     exit;
 }
 
-// 2. Procesar Guardado (Crear o Editar)
+// 2. Duplicar Opinión
+if ($action === 'duplicate' && isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $target = null;
+    foreach ($opiniones as $item) {
+        if ($item['id'] === $id) {
+            $target = $item;
+            break;
+        }
+    }
+    if ($target) {
+        $copy = $target;
+        $timestamp = time();
+        $copy['id'] = 'rev-' . $timestamp;
+        $copy['name'] = $target['name'] . ' (Copia)';
+        $copy['date'] = date('Y-m-d');
+        array_unshift($opiniones, $copy);
+        save_json_data('opiniones.json', $opiniones);
+        header('Location: opiniones.php?msg=duplicated');
+        exit;
+    }
+}
+
+// 3. Guardar / Editar Opinión
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_opinion'])) {
     $id = !empty($_POST['id']) ? trim($_POST['id']) : 'rev-' . time();
     $name = trim($_POST['name'] ?? '');
@@ -32,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_opinion'])) {
     $verified = isset($_POST['verified']);
     $date = !empty($_POST['date']) ? trim($_POST['date']) : date('Y-m-d');
 
-    // Procesar subida de archivo si existe
     if (isset($_FILES['photo_file']) && $_FILES['photo_file']['error'] === UPLOAD_ERR_OK) {
         $ext = strtolower(pathinfo($_FILES['photo_file']['name'], PATHINFO_EXTENSION));
         if (in_array($ext, ['webp', 'jpg', 'jpeg', 'png'])) {
@@ -81,6 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_opinion'])) {
 if (isset($_GET['msg'])) {
     if ($_GET['msg'] === 'saved') $msg = 'Opinión guardada con éxito.';
     if ($_GET['msg'] === 'deleted') $msg = 'Opinión eliminada con éxito.';
+    if ($_GET['msg'] === 'duplicated') $msg = 'Opinión duplicada con éxito como nueva copia editable.';
 }
 
 $edit_item = null;
@@ -100,7 +124,18 @@ if ($action === 'edit' && isset($_GET['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Opiniones | Panel de Administración</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/admin.css?v=2.0">
+    <link rel="stylesheet" href="../css/admin.css?v=3.0">
+    <style>
+        .btn-duplicate {
+            background: rgba(197, 168, 128, 0.15);
+            color: var(--admin-gold);
+            border: 1px solid rgba(197, 168, 128, 0.3);
+        }
+        .btn-duplicate:hover {
+            background: rgba(197, 168, 128, 0.3);
+            color: #ffffff;
+        }
+    </style>
 </head>
 <body class="admin-body">
     <div class="admin-layout">
@@ -127,130 +162,167 @@ if ($action === 'edit' && isset($_GET['id'])) {
 
         <main class="admin-main">
             <header class="admin-topbar">
-                <h2>Gestión de Opiniones de Lectores</h2>
-                <a href="opiniones.php?action=new" class="btn btn-admin-primary">➕ Nueva Opinión</a>
+                <h2>Gestión de Opiniones y Reseñas</h2>
+                <div class="admin-user-info">
+                    <span>Administrador</span>
+                </div>
             </header>
 
             <div class="admin-content">
-                <?php if (!empty($msg)): ?>
-                    <div class="alert alert-success"><?= e($msg) ?></div>
+                <?php if ($msg): ?>
+                    <div class="admin-alert success"><?= e($msg) ?></div>
                 <?php endif; ?>
 
                 <?php if ($action === 'new' || $action === 'edit'): ?>
-                    <!-- Formulario de Creación / Edición -->
+                    <!-- FORMULARIO CREAR / EDITAR -->
                     <div class="admin-card">
-                        <h3><?= $action === 'edit' ? 'Editar Opinión de Lector' : 'Agregar Nueva Opinión de Lector' ?></h3>
-                        <form method="POST" action="opiniones.php" enctype="multipart/form-data" class="admin-form">
-                            <input type="hidden" name="id" value="<?= e($edit_item['id'] ?? '') ?>">
-                            
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="name">Nombre del Lector / Sensei *</label>
-                                    <input type="text" id="name" name="name" required value="<?= e($edit_item['name'] ?? '') ?>" placeholder="Ej: Sensei Carlos Benítez">
-                                </div>
-                                <div class="form-group">
-                                    <label for="role">Rol / Dojo / Ciudad *</label>
-                                    <input type="text" id="role" name="role" required value="<?= e($edit_item['role'] ?? '') ?>" placeholder="Ej: 5° Dan Karate-Do, Córdoba">
-                                </div>
-                            </div>
+                        <div class="admin-card-header">
+                            <h3><?= $action === 'edit' ? 'Editar Opinión' : 'Nueva Opinión de Lector' ?></h3>
+                            <a href="opiniones.php" class="btn btn-secondary btn-sm">← Volver al Listado</a>
+                        </div>
+                        <div class="admin-card-body">
+                            <form action="opiniones.php" method="POST" enctype="multipart/form-data" class="admin-form">
+                                <input type="hidden" name="id" value="<?= e($edit_item['id'] ?? '') ?>">
 
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="type">Tipo de Opinión</label>
-                                    <select id="type" name="type">
-                                        <option value="text" <?= ($edit_item['type'] ?? '') === 'text' ? 'selected' : '' ?>>✍️ Reseña Literaria (Solo Texto)</option>
-                                        <option value="photo" <?= ($edit_item['type'] ?? '') === 'photo' ? 'selected' : '' ?>>📸 Con Foto del Lector / Libro</option>
-                                    </select>
+                                <div class="form-row">
+                                    <div class="form-group flex-2">
+                                        <label for="name">Nombre del Lector *</label>
+                                        <input type="text" id="name" name="name" required value="<?= e($edit_item['name'] ?? '') ?>" placeholder="Ej: Sensei Carlos Medina">
+                                    </div>
+                                    <div class="form-group flex-1">
+                                        <label for="role">Subtítulo / Profesión / Ubicación</label>
+                                        <input type="text" id="role" name="role" value="<?= e($edit_item['role'] ?? 'Lector Verificado') ?>" placeholder="Ej: 5° Dan Iaido, Buenos Aires">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="rating">Calificación (Estrellas)</label>
-                                    <select id="rating" name="rating">
-                                        <option value="5" <?= ($edit_item['rating'] ?? 5) == 5 ? 'selected' : '' ?>>★★★★★ (5 Estrellas)</option>
-                                        <option value="4" <?= ($edit_item['rating'] ?? 5) == 4 ? 'selected' : '' ?>>★★★★☆ (4 Estrellas)</option>
-                                        <option value="3" <?= ($edit_item['rating'] ?? 5) == 3 ? 'selected' : '' ?>>★★★☆☆ (3 Estrellas)</option>
-                                    </select>
-                                </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label for="text">Texto de la Opinión / Testimonio *</label>
-                                <textarea id="text" name="text" rows="4" required placeholder="Escribe la reseña o comentario del lector..."><?= e($edit_item['text'] ?? '') ?></textarea>
-                            </div>
+                                <div class="form-row">
+                                    <div class="form-group flex-1">
+                                        <label for="type">Tipo de Tarjeta</label>
+                                        <select id="type" name="type">
+                                            <option value="text" <?= ($edit_item['type'] ?? '') === 'text' ? 'selected' : '' ?>>✍️ Reseña Escrita (Tarjeta Estándar)</option>
+                                            <option value="photo" <?= ($edit_item['type'] ?? '') === 'photo' ? 'selected' : '' ?>>📸 Con Fotografía (Tarjeta Destacada)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group flex-1">
+                                        <label for="rating">Calificación en Estrellas</label>
+                                        <select id="rating" name="rating">
+                                            <option value="5" <?= ($edit_item['rating'] ?? 5) == 5 ? 'selected' : '' ?>>⭐⭐⭐⭐⭐ (5 Estrellas)</option>
+                                            <option value="4" <?= ($edit_item['rating'] ?? 5) == 4 ? 'selected' : '' ?>>⭐⭐⭐⭐ (4 Estrellas)</option>
+                                            <option value="3" <?= ($edit_item['rating'] ?? 5) == 3 ? 'selected' : '' ?>>⭐⭐⭐ (3 Estrellas)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group flex-1">
+                                        <label for="date">Fecha</label>
+                                        <input type="date" id="date" name="date" value="<?= e($edit_item['date'] ?? date('Y-m-d')) ?>">
+                                    </div>
+                                </div>
 
-                            <div class="form-row">
                                 <div class="form-group">
-                                    <label for="photo_file">Subir Foto del Lector (WebP / JPG / PNG)</label>
-                                    <input type="file" id="photo_file" name="photo_file" accept="image/*">
+                                    <label for="text">Texto del Testimonio / Reseña *</label>
+                                    <textarea id="text" name="text" rows="4" required placeholder="Escribe el testimonio que dio el lector sobre el libro..."><?= e($edit_item['text'] ?? '') ?></textarea>
                                 </div>
-                                <div class="form-group">
-                                    <label for="photo">O Ruta de Foto Existente</label>
-                                    <input type="text" id="photo" name="photo" value="<?= e($edit_item['photo'] ?? '') ?>" placeholder="photos/foto.webp">
-                                </div>
-                            </div>
 
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="photo_title">Título / Pie de Foto (Opcional)</label>
-                                    <input type="text" id="photo_title" name="photo_title" value="<?= e($edit_item['photo_title'] ?? '') ?>" placeholder="Ej: Lectura en el Dojo">
+                                <div class="form-row">
+                                    <div class="form-group flex-1">
+                                        <label for="photo">Ruta de Foto del Lector (Opcional)</label>
+                                        <input type="text" id="photo" name="photo" value="<?= e($edit_item['photo'] ?? '') ?>" placeholder="photos/lector_ejemplo.webp">
+                                    </div>
+                                    <div class="form-group flex-1">
+                                        <label for="photo_file">O Subir Nueva Foto</label>
+                                        <input type="file" id="photo_file" name="photo_file" accept=".webp,.jpg,.jpeg,.png">
+                                    </div>
                                 </div>
-                                <div class="form-group checkbox-group">
-                                    <label>
-                                        <input type="checkbox" name="verified" value="1" <?= !empty($edit_item['verified']) ? 'checked' : '' ?>>
-                                        Mostrar distintivo "✓ Lector Verificado"
+
+                                <div class="form-group">
+                                    <label for="photo_title">Título / Pie de Foto (para fotos de lectores)</label>
+                                    <input type="text" id="photo_title" name="photo_title" value="<?= e($edit_item['photo_title'] ?? '') ?>" placeholder="Ej: Lector disfrutando el Tomo I en Japón">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="verified" value="1" <?= (!isset($edit_item) || !empty($edit_item['verified'])) ? 'checked' : '' ?>>
+                                        <span>Mostrar insignia oficial de <strong>"Compra Verificada"</strong></span>
                                     </label>
                                 </div>
-                            </div>
 
-                            <div class="form-actions">
-                                <button type="submit" name="save_opinion" class="btn btn-admin-primary">Guardar Opinión</button>
-                                <a href="opiniones.php" class="btn btn-admin-secondary">Cancelar</a>
+                                <div class="form-actions" style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                                    <button type="submit" name="save_opinion" class="btn btn-primary">💾 Guardar Opinión</button>
+                                    <a href="opiniones.php" class="btn btn-secondary">Cancelar</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <!-- LISTADO DE OPINIONES CON ACCIÓN DUPLICAR -->
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <h3>Opiniones Registradas (<?= count($opiniones) ?>)</h3>
+                            <a href="opiniones.php?action=new" class="btn btn-primary btn-sm">+ Nueva Opinión</a>
+                        </div>
+                        <div class="admin-card-body p-0">
+                            <div class="table-responsive">
+                                <table class="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Lector</th>
+                                            <th>Tipo</th>
+                                            <th>Valoración</th>
+                                            <th>Testimonio</th>
+                                            <th>Fecha</th>
+                                            <th class="text-right">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php if (empty($opiniones)): ?>
+                                            <tr>
+                                                <td colspan="6" class="text-center py-4">No hay opiniones registradas todavía.</td>
+                                            </tr>
+                                        <?php else: ?>
+                                            <?php foreach ($opiniones as $item): ?>
+                                                <tr>
+                                                    <td>
+                                                        <div style="display: flex; align-items: center; gap: 0.6rem;">
+                                                            <?php if (!empty($item['photo'])): ?>
+                                                                <img src="../<?= e($item['photo']) ?>" alt="Foto" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;" onerror="this.src='../photos/review_juan.webp'">
+                                                            <?php else: ?>
+                                                                <div style="width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; color: var(--admin-gold);">✍️</div>
+                                                            <?php endif; ?>
+                                                            <div>
+                                                                <strong><?= e($item['name']) ?></strong>
+                                                                <div style="font-size: 0.75rem; color: var(--admin-text-muted);"><?= e($item['role'] ?? '') ?></div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span class="badge <?= ($item['type'] ?? '') === 'photo' ? 'badge-primary' : 'badge-secondary' ?>">
+                                                            <?= ($item['type'] ?? '') === 'photo' ? '📸 Foto' : '✍️ Escrita' ?>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span style="color: #fbbf24;"><?= str_repeat('★', (int)($item['rating'] ?? 5)) ?></span>
+                                                    </td>
+                                                    <td>
+                                                        <p style="font-size: 0.85rem; max-width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0;">
+                                                            <?= e($item['text']) ?>
+                                                        </p>
+                                                    </td>
+                                                    <td><?= format_date($item['date'] ?? '') ?></td>
+                                                    <td class="text-right">
+                                                        <div style="display: flex; gap: 0.4rem; justify-content: flex-end;">
+                                                            <a href="opiniones.php?action=duplicate&id=<?= urlencode($item['id']) ?>" class="btn btn-duplicate btn-xs" title="Duplicar este testimonio">📑 Duplicar</a>
+                                                            <a href="opiniones.php?action=edit&id=<?= urlencode($item['id']) ?>" class="btn btn-secondary btn-xs" title="Editar">✏️</a>
+                                                            <a href="opiniones.php?action=delete&id=<?= urlencode($item['id']) ?>" class="btn btn-danger btn-xs" onclick="return confirm('¿Estás seguro de eliminar esta opinión?');" title="Eliminar">🗑️</a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </tbody>
+                                </table>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 <?php endif; ?>
-
-                <!-- Listado de Opiniones -->
-                <div class="admin-card">
-                    <h3>Listado de Opiniones Publicadas (<?= count($opiniones) ?>)</h3>
-                    <div class="table-responsive">
-                        <table class="admin-table">
-                            <thead>
-                                <tr>
-                                    <th>Lector</th>
-                                    <th>Tipo</th>
-                                    <th>Calificación</th>
-                                    <th>Foto</th>
-                                    <th>Fecha</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($opiniones as $rev): ?>
-                                    <tr>
-                                        <td>
-                                            <strong><?= e($rev['name']) ?></strong><br>
-                                            <small><?= e($rev['role']) ?></small>
-                                        </td>
-                                        <td><span class="badge badge-<?= $rev['type'] ?>"><?= $rev['type'] === 'photo' ? 'Foto' : 'Texto' ?></span></td>
-                                        <td><?= str_repeat('★', (int)$rev['rating']) ?></td>
-                                        <td>
-                                            <?php if (!empty($rev['photo'])): ?>
-                                                <img src="../<?= e($rev['photo']) ?>" alt="Foto" class="table-thumb" onerror="this.style.display='none'">
-                                            <?php else: ?>
-                                                <span class="text-muted">—</span>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td><?= e($rev['date']) ?></td>
-                                        <td class="table-actions">
-                                            <a href="opiniones.php?action=edit&id=<?= urlencode($rev['id']) ?>" class="btn-sm btn-edit">Editar</a>
-                                            <a href="opiniones.php?action=delete&id=<?= urlencode($rev['id']) ?>" class="btn-sm btn-delete" onclick="return confirm('¿Eliminar esta opinión?');">Eliminar</a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
         </main>
     </div>

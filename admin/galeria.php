@@ -17,6 +17,26 @@ if ($action === 'delete' && isset($_GET['id'])) {
     exit;
 }
 
+if ($action === 'duplicate' && isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $target = null;
+    foreach ($galeria as $item) {
+        if ($item['id'] === $id) {
+            $target = $item;
+            break;
+        }
+    }
+    if ($target) {
+        $copy = $target;
+        $copy['id'] = 'gal-' . time();
+        $copy['title'] = $target['title'] . ' (Copia)';
+        array_unshift($galeria, $copy);
+        save_json_data('galeria.json', $galeria);
+        header('Location: galeria.php?msg=duplicated');
+        exit;
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_galeria'])) {
     $id = !empty($_POST['id']) ? trim($_POST['id']) : 'gal-' . time();
     $title = trim($_POST['title'] ?? '');
@@ -166,6 +186,7 @@ if ($action === 'edit' && isset($_GET['id'])) {
                                     <span class="badge badge-tag"><?= e($item['tag'] ?? 'Japón') ?></span>
                                     <h4><?= e($item['title']) ?></h4>
                                     <div class="admin-gallery-actions">
+                                        <a href="galeria.php?action=duplicate&id=<?= urlencode($item['id']) ?>" class="btn-sm btn-edit" title="Duplicar">📑 Duplicar</a>
                                         <a href="galeria.php?action=edit&id=<?= urlencode($item['id']) ?>" class="btn-sm btn-edit">Editar</a>
                                         <a href="galeria.php?action=delete&id=<?= urlencode($item['id']) ?>" class="btn-sm btn-delete" onclick="return confirm('¿Eliminar esta fotografía?');">Eliminar</a>
                                     </div>
