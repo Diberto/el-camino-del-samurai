@@ -18,7 +18,25 @@ import { syncService } from './src/services/sync-service.js';
 
 let isAppTabVisible = !document.hidden;
 let isHeroVisible = true;
+let isBookVisible = true;
 const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Intelligent Low-End Mobile & Hardware Detection (CPU cores, RAM, UserAgent)
+const isMobileDevice = typeof window !== 'undefined' && (
+    window.innerWidth <= 768 ||
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+);
+
+const isLowEndDevice = isMobileDevice || (
+    typeof navigator !== 'undefined' && (
+        (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+        (navigator.deviceMemory && navigator.deviceMemory <= 4)
+    )
+) || prefersReducedMotion;
+
+if (typeof document !== 'undefined' && isLowEndDevice) {
+    document.documentElement.classList.add('low-end-device');
+}
 
 function escapeHTML(str) {
     if (str === null || str === undefined) return '';
@@ -37,8 +55,8 @@ document.addEventListener('visibilitychange', () => {
         if (typeof animateVolumetricClouds === 'function' && isHeroVisible) requestAnimationFrame(animateVolumetricClouds);
         if (typeof animateStars === 'function' && isHeroVisible) requestAnimationFrame(animateStars);
         if (typeof animateParallax === 'function' && isHeroVisible) requestAnimationFrame(animateParallax);
-        if (typeof animatePetals === 'function') requestAnimationFrame(animatePetals);
-        if (typeof animate3DBook === 'function') requestAnimationFrame(animate3DBook);
+        if (typeof animatePetals === 'function' && isHeroVisible) requestAnimationFrame(animatePetals);
+        if (typeof animate3DBook === 'function' && isBookVisible) requestAnimationFrame(animate3DBook);
     }
 });
 
@@ -405,8 +423,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const activeTextures = validTextures.length > 0 ? validTextures : textures;
 
             const cloudCfg = gpuConfig.currentConfig.clouds;
-            const bgCount = cloudCfg.volumeCountBg || 14;
-            const fgCount = cloudCfg.volumeCountFg || 9;
+            const bgCount = isLowEndDevice ? 2 : (cloudCfg.volumeCountBg || 14);
+            const fgCount = isLowEndDevice ? 2 : (cloudCfg.volumeCountFg || 9);
 
             // Background distant clouds (Behind Mount Fuji - 14 particles)
             for (let i = 0; i < bgCount; i++) {
@@ -537,7 +555,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function createStars() {
             stars = [];
             const pCfg = gpuConfig.currentConfig.particles;
-            const numStars = pCfg.starCount || 130;
+            const numStars = isLowEndDevice ? 28 : (pCfg.starCount || 130);
             const twinkle = pCfg.starTwinkleSpeed || 1.0;
             for (let i = 0; i < numStars; i++) {
                 stars.push({
@@ -588,8 +606,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.beginPath();
                     ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
                     ctx.fillStyle = `rgba(225, 235, 255, ${star.alpha})`;
-                    ctx.shadowBlur = 4;
-                    ctx.shadowColor = '#ffffff';
+                    if (!isLowEndDevice) {
+                        ctx.shadowBlur = 4;
+                        ctx.shadowColor = '#ffffff';
+                    }
                     ctx.fill();
                 }
                 
@@ -727,47 +747,35 @@ document.addEventListener('DOMContentLoaded', () => {
     let targetMouseY = 0;
     const lerpFactor = 0.08;
 
-    window.addEventListener('mousemove', (e) => {
-        targetMouseX = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
-        targetMouseY = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
-    }, { passive: true });
+    if (!isMobileDevice && !isLowEndDevice) {
+        window.addEventListener('mousemove', (e) => {
+            targetMouseX = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
+            targetMouseY = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
+        }, { passive: true });
+    }
 
-    function animateParallax() {
-        mouseX += (targetMouseX - mouseX) * lerpFactor;
-        mouseY += (targetMouseY - mouseY) * lerpFactor;
-
+    function updateParallaxFrame() {
         const scrollY = window.scrollY;
-
         if (scrollY < window.innerHeight) {
-            // Mouse multipliers (layered depth)
-            const mSvg1X = mouseX * -22; // Monte Fuji
+            const mSvg1X = mouseX * -22;
             const mSvg1Y = mouseY * -14;
-
-            const mCloudsFgX = mouseX * -18; // Nubes volumétricas frontales
+            const mCloudsFgX = mouseX * -18;
             const mCloudsFgY = mouseY * -11;
-
-            const mSvg2X = mouseX * -16; // Río / Camino
+            const mSvg2X = mouseX * -16;
             const mSvg2Y = mouseY * -10;
-
-            const mSvg3X = mouseX * -10; // Terreno rocoso
+            const mSvg3X = mouseX * -10;
             const mSvg3Y = mouseY * -6;
-
-            const mSvg4X = mouseX * -5;  // Samurái en acantilado
+            const mSvg4X = mouseX * -5;
             const mSvg4Y = mouseY * -3;
-
-            const mSvg5X = mouseX * 8;   // Anillo Enso
+            const mSvg5X = mouseX * 8;
             const mSvg5Y = mouseY * 5;
-
-            const mSvg6X = mouseX * 16;  // Rama de Sakura
+            const mSvg6X = mouseX * 16;
             const mSvg6Y = mouseY * 10;
-
-            const mSvg7X = mouseX * 24;  // Pétalos flotantes
+            const mSvg7X = mouseX * 24;
             const mSvg7Y = mouseY * 15;
-
             const mTextX = mouseX * 8;
             const mTextY = mouseY * 4;
 
-            // Scroll position multipliers
             const sSvg1Y = scrollY * 0.38;
             const sCloudsFgY = scrollY * 0.34;
             const sSvg2Y = scrollY * 0.30;
@@ -789,13 +797,32 @@ document.addEventListener('DOMContentLoaded', () => {
             if (layerSvg8) layerSvg8.style.transform = `translate3d(${mSvg7X * 1.2}px, ${sSvg7Y + mSvg7Y * 1.2}px, 0) scale(1.01)`;
             if (layerText) layerText.style.transform = `translate3d(${mTextX}px, ${sTextY + mTextY}px, 0)`;
         }
-
-        if (isAppTabVisible && isHeroVisible && !prefersReducedMotion) {
-            requestAnimationFrame(animateParallax);
-        }
     }
 
-    animateParallax();
+    if (isMobileDevice || isLowEndDevice) {
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    if (isHeroVisible) updateParallaxFrame();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+        updateParallaxFrame();
+    } else {
+        function animateParallax() {
+            mouseX += (targetMouseX - mouseX) * lerpFactor;
+            mouseY += (targetMouseY - mouseY) * lerpFactor;
+            updateParallaxFrame();
+
+            if (isAppTabVisible && isHeroVisible && !prefersReducedMotion) {
+                requestAnimationFrame(animateParallax);
+            }
+        }
+        animateParallax();
+    }
 
     // 4. INTERACTIVE SAKURA PETALS (HTML5 CANVAS WITH LAYER 7 & 8 TEXTURES)
     const canvas = document.getElementById('sakura-canvas');
@@ -808,8 +835,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sakuraPetalTextures = [petalImg1, petalImg2, petalImg3];
 
     let petals = [];
-    const maxPetals = 50;
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = isLowEndDevice ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
     canvas.width = window.innerWidth * dpr;
     canvas.height = window.innerHeight * dpr;
     ctx.scale(dpr, dpr);
@@ -959,39 +985,45 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const targetMaxPetals = gpuConfig.currentConfig.particles.sakuraCount || 50;
+    const targetMaxPetals = isLowEndDevice ? 12 : (gpuConfig.currentConfig.particles.sakuraCount || 35);
     for (let i = 0; i < targetMaxPetals; i++) {
         petals.push(new SakuraPetal());
     }
 
     function animatePetals() {
+        if (!isAppTabVisible || (!isHeroVisible && window.scrollY > window.innerHeight * 1.3)) {
+            return;
+        }
+
         ctx.clearRect(0, 0, width, height);
 
         scrollVelY *= 0.85;
         if (scrollBurst > 0) scrollBurst -= 0.03;
 
-        for (let i = windTrails.length - 1; i >= 0; i--) {
-            const t = windTrails[i];
-            t.alpha -= 0.02;
-            t.x += mouseVelX * 0.1;
-            t.y += mouseVelY * 0.1;
-            if (t.alpha <= 0) {
-                windTrails.splice(i, 1);
-                continue;
+        if (!isLowEndDevice) {
+            for (let i = windTrails.length - 1; i >= 0; i--) {
+                const t = windTrails[i];
+                t.alpha -= 0.02;
+                t.x += mouseVelX * 0.1;
+                t.y += mouseVelY * 0.1;
+                if (t.alpha <= 0) {
+                    windTrails.splice(i, 1);
+                    continue;
+                }
+                ctx.beginPath();
+                ctx.arc(t.x, t.y, t.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 200, 210, ${t.alpha * 0.5})`;
+                ctx.fill();
             }
-            ctx.beginPath();
-            ctx.arc(t.x, t.y, t.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 200, 210, ${t.alpha * 0.5})`;
-            ctx.fill();
-        }
 
-        if (windTrails.length > 80) windTrails.splice(0, windTrails.length - 80);
+            if (windTrails.length > 50) windTrails.splice(0, windTrails.length - 50);
+        }
 
         petals.forEach(petal => {
             petal.update();
             petal.draw();
         });
-        if (isAppTabVisible) {
+        if (isAppTabVisible && (isHeroVisible || window.scrollY < window.innerHeight * 1.3)) {
             requestAnimationFrame(animatePetals);
         }
     }
@@ -1250,8 +1282,38 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // 5. Slow Idle Animation Loop
+        // 4.5 IntersectionObserver para suspender el ciclo 3D cuando no está en pantalla
+        const sinopsisEl = document.getElementById('sinopsis');
+        if (sinopsisEl && 'IntersectionObserver' in window) {
+            const bookObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const wasVisible = isBookVisible;
+                    isBookVisible = entry.isIntersecting;
+                    if (!wasVisible && isBookVisible && isAppTabVisible && !prefersReducedMotion) {
+                        requestAnimationFrame(animate3DBook);
+                    }
+                });
+            }, { threshold: 0.05 });
+            bookObserver.observe(sinopsisEl);
+        }
+
+        // 5. Ciclo de Animación 3D Inteligente (Ahorro en Móviles)
         function animate3DBook() {
+            if (!isBookVisible || !isAppTabVisible) return;
+
+            // En móviles de baja gama, suspender el balanceo continuo para ahorrar 100% de CPU en reposo
+            if (isLowEndDevice && !isDragging) {
+                rotY += (targetRotY - rotY) * 0.15;
+                rotX += (targetRotX - rotX) * 0.15;
+                if (activeCard) {
+                    activeCard.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+                }
+                if (Math.abs(targetRotY - rotY) > 0.08 || Math.abs(targetRotX - rotX) > 0.08) {
+                    requestAnimationFrame(animate3DBook);
+                }
+                return;
+            }
+
             const now = Date.now();
             const timeSinceInteraction = now - lastInteractionTime;
 
@@ -1279,7 +1341,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            if (isAppTabVisible) {
+            if (isAppTabVisible && isBookVisible) {
                 requestAnimationFrame(animate3DBook);
             }
         }

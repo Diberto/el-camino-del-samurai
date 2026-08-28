@@ -3831,6 +3831,93 @@ body.theme-night .hero-overlay-bottom {
 }
 
 /* ==========================================================================
+   PERFORMANCE OPTIMIZATION FOR LOW-END MOBILE & DEVICES (GPU / BATTERY / RAM)
+   ========================================================================== */
+
+/* 1. Content Visibility: Defer rendering of offscreen sections until scrolled into view */
+.reviews-section,
+.social-section,
+.chapters-section,
+.author-section,
+.gallery-section,
+.blog-preview-section,
+.contact-section,
+.footer {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 650px;
+}
+
+/* 2. Low-End Mobile & Performance Mode Overrides */
+@media (max-width: 768px), (pointer: coarse) {
+    /* Disable expensive blur filters that drop FPS on budget Mali/PowerVR/Snapdragon GPUs */
+    .testimonial-card,
+    .review-card,
+    .social-macro-card,
+    .social-card,
+    .contact-card,
+    .lightbox-backdrop,
+    .review-photo-badge,
+    .nav-menu {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    /* Use crisp, solid high-contrast backgrounds instead of heavy composite blurs */
+    .nav-menu {
+        background: #090a0f !important;
+    }
+
+    .lightbox-backdrop {
+        background: rgba(4, 5, 8, 0.96) !important;
+    }
+
+    /* Simplify box shadows to single lightweight passes */
+    .review-card,
+    .social-macro-card,
+    .contact-card,
+    .gallery-card,
+    .author-image-card {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    .review-card:hover,
+    .social-macro-card:hover,
+    .contact-card:hover,
+    .gallery-card:hover {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6) !important;
+        transform: translateY(-3px) !important;
+    }
+
+    /* Optimize rendering and touch responsiveness */
+    body {
+        text-rendering: optimizeSpeed;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Prevent layer thrashing on mobile canvas */
+    #clouds-fg-canvas,
+    #starfield-canvas,
+    #sakura-canvas {
+        pointer-events: none !important;
+        will-change: auto !important;
+    }
+}
+
+/* Low-End Class explicitly injected by hardware detection */
+.low-end-device .hero-parallax .parallax-layer[class*="layer-svg-"] {
+    transition: none !important;
+    will-change: auto !important;
+}
+
+.low-end-device .book-3d-card {
+    will-change: transform;
+}
+
+.low-end-device #sakura-canvas {
+    opacity: 0.85;
+}
+
+/* ==========================================================================
    ACCESSIBILITY: PREFERS REDUCED MOTION
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
