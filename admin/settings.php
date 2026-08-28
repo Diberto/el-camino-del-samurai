@@ -16,8 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
     $settings['whatsapp'] = trim($_POST['whatsapp'] ?? '+549 351 3886443');
     $settings['whatsapp_url'] = trim($_POST['whatsapp_url'] ?? 'https://wa.me/5493513886443');
     $settings['email'] = trim($_POST['email'] ?? 'budokanorpianesi@hotmail.com');
-    $settings['amazon_url'] = trim($_POST['amazon_url'] ?? 'https://www.amazon.com/s?k=jorge+orpianesi');
-    $settings['budokan_url'] = trim($_POST['budokan_url'] ?? 'https://www.budokanweb.com/categoria-producto/libros/');
+    $settings['amazon_url'] = trim($_POST['amazon_url'] ?? 'https://www.amazon.com/s?k=jorge+orpianesi&crid=6E5AFU50XWPW&sprefix=jorge+orpianesi%2Caps%2C237&ref=nb_sb_noss');
+    $settings['budokan_url'] = trim($_POST['budokan_url'] ?? 'https://www.budokanweb.com/tienda/libros/la-ruta-del-samurai-formato-libro/');
+    $settings['budokan_tomo1_url'] = trim($_POST['budokan_tomo1_url'] ?? 'https://www.budokanweb.com/tienda/libros/la-ruta-del-samurai-formato-libro/');
+    $settings['budokan_tomo2_url'] = trim($_POST['budokan_tomo2_url'] ?? 'https://www.budokanweb.com/tienda/destacados/el-paso-de-las-luciernagas-la-ruta-del-samurai-2/');
 
     // Redes Sociales Oficiales
     $settings['social']['youtube']['url'] = trim($_POST['yt_url'] ?? 'https://www.youtube.com/@larutadelsamurai');
@@ -119,13 +121,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                         
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="budokan_url">Tienda Budokan Web (Argentina)</label>
-                                <input type="url" id="budokan_url" name="budokan_url" value="<?= e($settings['budokan_url'] ?? 'https://www.budokanweb.com/categoria-producto/libros/') ?>">
+                                <label for="budokan_tomo1_url">Tomo 1: La Ruta del Samurái (Budokan Argentina)</label>
+                                <input type="url" id="budokan_tomo1_url" name="budokan_tomo1_url" value="<?= e($settings['budokan_tomo1_url'] ?? 'https://www.budokanweb.com/tienda/libros/la-ruta-del-samurai-formato-libro/') ?>">
                             </div>
                             <div class="form-group">
-                                <label for="amazon_url">Enlace Amazon Global (Digital / Papel)</label>
-                                <input type="url" id="amazon_url" name="amazon_url" value="<?= e($settings['amazon_url'] ?? 'https://www.amazon.com/s?k=jorge+orpianesi') ?>">
+                                <label for="budokan_tomo2_url">Tomo 2: El Paso de las Luciérnagas (Budokan Argentina)</label>
+                                <input type="url" id="budokan_tomo2_url" name="budokan_tomo2_url" value="<?= e($settings['budokan_tomo2_url'] ?? 'https://www.budokanweb.com/tienda/destacados/el-paso-de-las-luciernagas-la-ruta-del-samurai-2/') ?>">
                             </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="amazon_url">Enlace Amazon Global (Todos los títulos / Exterior)</label>
+                            <input type="url" id="amazon_url" name="amazon_url" value="<?= e($settings['amazon_url'] ?? 'https://www.amazon.com/s?k=jorge+orpianesi&crid=6E5AFU50XWPW&sprefix=jorge+orpianesi%2Caps%2C237&ref=nb_sb_noss') ?>">
                         </div>
                     </div>
 
