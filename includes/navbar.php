@@ -1,6 +1,6 @@
 <?php
 /**
- * MENÚ DE NAVEGACIÓN RESPONSIVE
+ * MENÚ DE NAVEGACIÓN GLOBAL (DISEÑO ORIGINAL)
  */
 $nav_menu = $settings['navigation_menu'] ?? [
     ['label' => 'Inicio', 'url' => '#inicio', 'visible' => true],
@@ -14,24 +14,15 @@ $nav_menu = $settings['navigation_menu'] ?? [
     ['label' => 'Contacto', 'url' => '#contacto', 'visible' => true]
 ];
 ?>
-<!-- Barra de Navegación Principal -->
-<header class="navbar" id="navbar">
+<!-- Header / Navbar -->
+<header class="navbar" id="navbar" role="banner">
     <div class="nav-container">
-        <!-- Botón Hamburguesa Móvil -->
-        <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú de navegación" aria-expanded="false">
+        <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
             <span></span>
             <span></span>
             <span></span>
         </button>
-
-        <!-- Logo / Marca -->
-        <a href="index.php#inicio" class="nav-logo">
-            <img src="assets/kanji_stamp.webp" alt="Sello Kanji" class="logo-img">
-            <span class="logo-text">LA RUTA DEL SAMURÁI</span>
-        </a>
-
-        <!-- Menú de Enlaces -->
-        <nav class="nav-menu" id="nav-menu">
+        <nav class="nav-menu" id="nav-menu" role="navigation" aria-label="Menú principal">
             <ul>
                 <?php foreach ($nav_menu as $item): ?>
                     <?php if (!empty($item['visible'])): ?>
@@ -44,16 +35,16 @@ $nav_menu = $settings['navigation_menu'] ?? [
                 <?php endforeach; ?>
             </ul>
         </nav>
-
-        <!-- Botón Selector Modo Día / Noche -->
         <button class="theme-toggle-btn" id="theme-toggle" aria-label="Cambiar modo día/noche" title="Modo Día (日) / Noche (月)">
             <div class="toggle-sky-bg">
+                <!-- Vista Nocturna -->
                 <div class="toggle-sky-night">
                     <span class="toggle-star star-1"></span>
                     <span class="toggle-star star-2"></span>
                     <span class="toggle-star star-3"></span>
                     <span class="toggle-moon-aura"></span>
                 </div>
+                <!-- Vista Diurna -->
                 <div class="toggle-sky-day">
                     <span class="toggle-sun-rays"></span>
                     <span class="toggle-cloud cloud-1"></span>

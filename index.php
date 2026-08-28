@@ -13,7 +13,10 @@ require_once __DIR__ . '/includes/header.php';
 
 // Menú de Navegación
 require_once __DIR__ . '/includes/navbar.php';
+?>
 
+<main id="main">
+<?php
 // 1. Portada / Hero Section
 if ($toggles['inicio'] ?? true) {
     require_once __DIR__ . '/sections/hero.php';
@@ -58,6 +61,9 @@ if ($toggles['blog'] ?? true) {
 if ($toggles['contacto'] ?? true) {
     require_once __DIR__ . '/sections/contacto.php';
 }
+?>
+</main>
 
+<?php
 // Pie de Página y Modal Lightbox
 require_once __DIR__ . '/includes/footer.php';
