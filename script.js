@@ -66,24 +66,20 @@ document.addEventListener('DOMContentLoaded', () => {
     function applyDynamicSettings(settings) {
         if (!settings) return;
         if (settings.sections_toggle) {
-            if (settings.sections_toggle.opiniones === undefined) {
-                settings.sections_toggle.opiniones = true;
-            }
             Object.entries(settings.sections_toggle).forEach(([sec, active]) => {
                 const el = document.getElementById(sec) || document.querySelector(`.${sec}-section`) || document.querySelector(`.${sec}`);
                 if (el) {
-                    if (sec === 'opiniones' && active !== false) {
-                        el.style.display = '';
-                    } else {
-                        el.style.display = active ? '' : 'none';
-                    }
+                    el.style.display = active === false ? 'none' : '';
                 }
             });
-            // Guarantee opinions section is displayed if not explicitly disabled
-            const opinionesEl = document.getElementById('opiniones');
-            if (opinionesEl && settings.sections_toggle.opiniones !== false) {
-                opinionesEl.style.display = '';
-            }
+            // Garantizar que las secciones principales siempre estén visibles por defecto
+            const defaultVisible = ['opiniones', 'sinopsis', 'redes', 'ediciones', 'autor', 'galeria', 'blog', 'contacto'];
+            defaultVisible.forEach(secId => {
+                const el = document.getElementById(secId) || document.querySelector(`.${secId}-section`);
+                if (el && settings.sections_toggle[secId] !== false) {
+                    el.style.display = '';
+                }
+            });
         }
 
         if (settings.navigation_menu) {
@@ -1066,25 +1062,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initReviewsInteraction();
 
-    // 6. SCROLL FADE-IN ANIMATION (INTERSECTION OBSERVER)
+    // 6. SCROLL FADE-IN ANIMATION (INTERSECTION OBSERVER CON COMPATIBILIDAD MÓVIL TOTAL)
     const fadeElements = document.querySelectorAll('.fade-in');
 
-    const observerOptions = {
-        root: null, // relative to viewport
-        threshold: 0.1, // trigger when 10% is visible
-        rootMargin: "0px 0px -80px 0px" // trigger slightly before entering screen
-    };
+    if (isMobileDevice || isLowEndDevice) {
+        // En móviles y Samsung, mostrar el 100% del contenido de inmediato para evitar cualquier bloqueo de pantalla en blanco
+        fadeElements.forEach(el => el.classList.add('appear'));
+    } else {
+        const observerOptions = {
+            root: null,
+            threshold: 0.05,
+            rootMargin: "0px 0px 50px 0px"
+        };
 
-    const fadeObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('appear');
-                observer.unobserve(entry.target); // Stop observing once it appears
-            }
-        });
-    }, observerOptions);
+        const fadeObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('appear');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
 
-    fadeElements.forEach(el => fadeObserver.observe(el));
+        fadeElements.forEach(el => fadeObserver.observe(el));
+
+        // Temporizador de seguridad para garantizar visibilidad en cualquier navegador
+        setTimeout(() => {
+            fadeElements.forEach(el => el.classList.add('appear'));
+        }, 800);
+    }
 
     // 9. SCROLL TO TOP BUTTON
     const scrollBtn = document.getElementById('scroll-top');
