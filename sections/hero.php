@@ -50,7 +50,7 @@
         <div class="parallax-layer parallax-text">
             <div class="hero-content">
                 <div class="hero-main-logo-wrapper">
-                    <img src="assets/enso_illustration_composite.png" 
+                    <img src="assets/enso_emblem_centered.png" 
                          alt="Emblema Enso Samurái" 
                          class="hero-logo-emblem" 
                          fetchpriority="high" 
