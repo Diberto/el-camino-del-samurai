@@ -1,0 +1,41 @@
+[
+  {
+    "id": "tomo1",
+    "title": "La Ruta del Samurái",
+    "subtitle": "Japón para Budokas",
+    "tab_label": "Tomo I: La Ruta del Samurái",
+    "badge": "TOMO I",
+    "format": "Formato Libro & Ebook",
+    "cover_front": "assets/book1_front.webp",
+    "cover_back": "assets/book1_back.webp",
+    "pages": "320 páginas",
+    "desc": "Un recorrido geográfico por los lugares más famosos relacionados con los samuráis siguiendo los pasos del famoso duelista Miyamoto Musashi mientras el lector descubre las maravillas de Japón.",
+    "buy_url": "https://www.budokanweb.com/tienda/libros/la-ruta-del-samurai-formato-libro/"
+  },
+  {
+    "id": "tomo2",
+    "title": "El Paso de las Luciérnagas",
+    "subtitle": "La Ruta del Samurái 2",
+    "tab_label": "Tomo II: El Paso de las Luciérnagas",
+    "badge": "TOMO II",
+    "format": "Formato Libro & Ebook",
+    "cover_front": "assets/book2_front.webp",
+    "cover_back": "assets/book2_back.webp",
+    "pages": "380 páginas",
+    "desc": "La segunda expedición del autor por tierras japonesas buscando los antiguos caminos que recorrían los samuráis durante el período Edo. Jorge Orpianesi emula los recorridos hechos por el artista Utagawa Hiroshige en el siglo XIX a través de la ruta Tokaido uniendo la antigua Edo con Kioto y el regreso por la ruta Nakasendo mientras hace una comparativa entre las imágenes que va tomando en su camino con las pinturas que realizó Hiroshige en la época de los samuráis.",
+    "buy_url": "https://www.budokanweb.com/tienda/destacados/el-paso-de-las-luciernagas-la-ruta-del-samurai-2/"
+  },
+  {
+    "id": "tomo3",
+    "title": "Along the Samurai's Route",
+    "subtitle": "Japan for budokas",
+    "tab_label": "English: Along the Samurai's Route",
+    "badge": "ENGLISH EDITION",
+    "format": "Kindle & Paperback",
+    "cover_front": "assets/book3_front.webp",
+    "cover_back": "assets/book3_back.webp",
+    "pages": "300 pages",
+    "desc": "A geographical journey through the most famous places related to the samurai, following in the footsteps of the famous duelist Miyamoto Musashi, while the reader discovers the wonders of Japan.",
+    "buy_url": "https://www.amazon.com/s?k=jorge+orpianesi&crid=6E5AFU50XWPW&sprefix=jorge+orpianesi%2Caps%2C237&ref=nb_sb_noss"
+  }
+]
