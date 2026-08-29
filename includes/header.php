@@ -43,7 +43,7 @@ $page_desc = $custom_desc ?? $settings['site_description'];
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Hojas de Estilo -->
-    <link rel="stylesheet" href="css/styles.css?v=3.0">
+    <link rel="stylesheet" href="css/styles.css?v=3.2">
 </head>
 <body data-theme-default="<?= e($settings['theme_default'] ?? 'day') ?>" data-reviews-filter="<?= e($settings['reviews_default_filter'] ?? 'text') ?>">
 

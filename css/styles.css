@@ -928,22 +928,26 @@ body.theme-night .layer-svg-6 {
 
 @media (max-width: 991px) {
     .hero-parallax {
-        min-height: 100vh !important;
-        min-height: 100dvh !important;
+        min-height: auto !important;
         height: auto !important;
-        padding-top: 70px !important;
-        padding-bottom: 25px !important;
+        padding-top: 55px !important;
+        padding-bottom: 2.5rem !important;
         display: flex !important;
-        align-items: flex-start !important;
-        justify-content: center !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
         box-sizing: border-box !important;
     }
     .hero-stage {
         height: auto !important;
+        min-height: 0 !important;
         width: 100% !important;
         display: flex !important;
-        align-items: flex-start !important;
-        justify-content: center !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        padding: 0 !important;
+        margin: 0 auto !important;
     }
     .parallax-text {
         position: relative !important;
@@ -951,11 +955,13 @@ body.theme-night .layer-svg-6 {
         left: 0 !important;
         width: 100% !important;
         height: auto !important;
-        padding: 0.25rem 1rem 1rem 1rem !important;
+        padding: 0.25rem 1rem 0.5rem 1rem !important;
         display: flex !important;
-        justify-content: center !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
         align-items: center !important;
         text-align: center !important;
+        margin: 0 auto !important;
     }
     .hero-content {
         margin: 0 auto !important;
@@ -971,25 +977,27 @@ body.theme-night .layer-svg-6 {
         justify-content: center !important;
         gap: 0.35rem !important;
         margin-top: 0 !important;
-        margin-bottom: 0.75rem !important;
+        margin-bottom: 0.6rem !important;
     }
     .hero-logo-emblem {
-        max-width: 135px !important;
+        max-width: 125px !important;
+        height: auto !important;
     }
     .hero-logo-typography {
-        max-width: 220px !important;
+        max-width: 205px !important;
+        height: auto !important;
     }
     .hero-tagline {
-        font-size: 0.72rem !important;
-        letter-spacing: 0.2em !important;
-        margin-bottom: 0.5rem !important;
+        font-size: 0.7rem !important;
+        letter-spacing: 0.18em !important;
+        margin-bottom: 0.45rem !important;
         text-align: center !important;
     }
     .hero-desc {
-        font-size: 0.92rem !important;
+        font-size: 0.9rem !important;
         line-height: 1.45 !important;
         margin-bottom: 1.15rem !important;
-        max-width: 440px !important;
+        max-width: 420px !important;
         text-align: center !important;
     }
     .hero-actions {
