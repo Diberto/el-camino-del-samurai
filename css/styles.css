@@ -628,13 +628,12 @@ body.theme-night .theme-toggle-btn .kanji-night {
     opacity: 0.85;
 }
 
-/* LOW ATMOSPHERIC MIST & FOG (Niebla MÃ­stica en la Parte Inferior) */
+/* LOW ATMOSPHERIC MIST & FOG (Niebla Mística en la Parte Inferior) */
 .hero-mist-layer {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100vw;
-    height: 40vh;
     min-height: 250px;
     z-index: 5;
     pointer-events: none;
@@ -922,8 +921,48 @@ body.theme-night .layer-svg-6 {
     display: flex;
     gap: 1.25rem;
     justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 25;
     opacity: 0;
     animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
+}
+
+.hero-actions .btn {
+    padding: 0.85rem 2.2rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: 6px;
+    text-shadow: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-actions .btn-primary {
+    background-color: #d81124 !important;
+    color: #ffffff !important;
+    border: 1.5px solid #d81124 !important;
+    box-shadow: 0 4px 18px rgba(216, 17, 36, 0.45);
+}
+
+.hero-actions .btn-primary:hover {
+    background-color: #b50e1e !important;
+    border-color: #b50e1e !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(216, 17, 36, 0.65);
+}
+
+.hero-actions .btn-secondary {
+    background-color: #ffffff !important;
+    color: #8f6222 !important;
+    border: 1.5px solid #8f6222 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.hero-actions .btn-secondary:hover {
+    background-color: #8f6222 !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(143, 98, 34, 0.35);
 }
 
 @media (max-width: 991px) {
@@ -1118,25 +1157,19 @@ body.theme-night .hero-logo-typography {
     bottom: 0;
     left: 0;
     width: 100vw;
-    height: 32vh;
-    min-height: 220px;
+    height: 70px;
+    min-height: 50px;
     background: linear-gradient(to bottom, 
         transparent 0%, 
-        rgba(245, 240, 235, 0.05) 15%, 
-        rgba(245, 240, 235, 0.35) 45%, 
-        rgba(245, 240, 235, 0.85) 75%, 
         var(--bg-primary) 100%
     );
-    z-index: 6;
+    z-index: 2;
     pointer-events: none;
 }
 
 body.theme-night .hero-overlay-bottom {
     background: linear-gradient(to bottom, 
         transparent 0%, 
-        rgba(7, 8, 10, 0.08) 15%, 
-        rgba(7, 8, 10, 0.45) 45%, 
-        rgba(7, 8, 10, 0.90) 75%, 
         var(--bg-primary) 100%
     );
 }
