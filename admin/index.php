@@ -181,6 +181,7 @@ if ($max_views < 10) $max_views = 10;
                 <a href="blog.php" class="admin-nav-item">📝 Artículos del Blog</a>
                 <a href="galeria.php" class="admin-nav-item">🖼️ Galería de Fotos</a>
                 <a href="medios.php" class="admin-nav-item">📁 Biblioteca de Medios</a>
+                <a href="update.php" class="admin-nav-item">🚀 Actualizar Sistema</a>
                 <a href="settings.php" class="admin-nav-item">⚙️ Configuración & Redes</a>
             </nav>
 
