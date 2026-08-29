@@ -9,6 +9,73 @@ $config_data = get_json_data('config.json', ['settings' => []]);
 $settings = $config_data['settings'] ?? [];
 $msg = '';
 
+// Descargar Copia de Seguridad Completa (.ZIP)
+if (isset($_GET['action']) && $_GET['action'] === 'download_backup') {
+    if (class_exists('ZipArchive')) {
+        $zip = new ZipArchive();
+        $zipname = 'backup_samurai_' . date('Y-m-d_H-i') . '.zip';
+        $zip_path = sys_get_temp_dir() . '/' . $zipname;
+        if ($zip->open($zip_path, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
+            $data_files = glob(DATA_DIR . '/*.json');
+            if (is_array($data_files)) {
+                foreach ($data_files as $f) {
+                    $zip->addFile($f, 'data/' . basename($f));
+                }
+            }
+            $photo_files = glob(UPLOADS_DIR . '/*.*');
+            if (is_array($photo_files)) {
+                foreach ($photo_files as $f) {
+                    $zip->addFile($f, 'photos/' . basename($f));
+                }
+            }
+            $zip->close();
+            if (file_exists($zip_path)) {
+                header('Content-Type: application/zip');
+                header('Content-Disposition: attachment; filename="' . $zipname . '"');
+                header('Content-Length: ' . filesize($zip_path));
+                header('Pragma: no-cache');
+                header('Expires: 0');
+                readfile($zip_path);
+                @unlink($zip_path);
+                exit;
+            }
+        }
+    }
+}
+
+// Restaurar Copia de Seguridad (.ZIP o .JSON)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['restore_backup'])) {
+    if (!empty($_FILES['backup_file']['tmp_name'])) {
+        $tmp = $_FILES['backup_file']['tmp_name'];
+        $name = $_FILES['backup_file']['name'];
+        $ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+        
+        if ($ext === 'zip' && class_exists('ZipArchive')) {
+            $zip = new ZipArchive();
+            if ($zip->open($tmp) === TRUE) {
+                for ($i = 0; $i < $zip->numFiles; $i++) {
+                    $entry = $zip->getNameIndex($i);
+                    if (strpos($entry, 'data/') === 0 && substr($entry, -5) === '.json') {
+                        $content = $zip->getFromIndex($i);
+                        file_put_contents(ROOT_DIR . '/' . $entry, $content);
+                    } elseif (strpos($entry, 'photos/') === 0 && substr($entry, -1) !== '/') {
+                        $content = $zip->getFromIndex($i);
+                        file_put_contents(ROOT_DIR . '/' . $entry, $content);
+                    }
+                }
+                $zip->close();
+                $msg = '✅ Copia de seguridad ZIP restaurada con éxito. Todos tus datos y fotos fueron recuperados.';
+            } else {
+                $msg = '❌ Error al procesar el archivo ZIP de respaldo.';
+            }
+        } elseif ($ext === 'json') {
+            $target = DATA_DIR . '/' . basename($name);
+            move_uploaded_file($tmp, $target);
+            $msg = '✅ Archivo ' . htmlspecialchars($name) . ' restaurado con éxito.';
+        }
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
     $settings['site_title'] = trim($_POST['site_title'] ?? 'La Ruta del Samurái - Jorge Orpianesi');
     $settings['site_description'] = trim($_POST['site_description'] ?? '');
@@ -89,6 +156,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                 <?php if (!empty($msg)): ?>
                     <div class="alert alert-success"><?= e($msg) ?></div>
                 <?php endif; ?>
+
+                <!-- Respaldo y Protección de Datos -->
+                <div class="admin-card" style="border: 2px solid var(--accent-gold); background: rgba(170, 125, 54, 0.04);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="margin-bottom: 0.3rem;">🛡️ Copias de Seguridad & Protección de Contenidos</h3>
+                            <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">
+                                Descarga o restaura en cualquier momento una copia completa de tus <strong>artículos de blog, opiniones, galería, configuración y fotos</strong>.
+                            </p>
+                        </div>
+                        <a href="settings.php?action=download_backup" class="btn btn-admin-primary" style="text-decoration: none; padding: 0.75rem 1.4rem; font-weight: 700;">
+                            📥 Descargar Backup (.ZIP)
+                        </a>
+                    </div>
+                    
+                    <form method="POST" action="settings.php" enctype="multipart/form-data" style="border-top: 1px solid var(--border-color); padding-top: 1rem; display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
+                        <div class="form-group" style="margin-bottom: 0; flex-grow: 1; max-width: 400px;">
+                            <label style="font-size: 0.85rem; font-weight: 600;">Restaurar Copia de Seguridad (.ZIP o .JSON):</label>
+                            <input type="file" name="backup_file" accept=".zip,.json" required style="padding: 0.5rem; font-size: 0.85rem;">
+                        </div>
+                        <button type="submit" name="restore_backup" class="btn btn-admin-secondary" style="padding: 0.65rem 1.25rem;" onclick="return confirm('¿Estás seguro de restaurar este archivo de respaldo?');">
+                            📤 Restaurar Archivo
+                        </button>
+                    </form>
+                </div>
 
                 <form method="POST" action="settings.php" class="admin-form">
                     <!-- Apariencia y Filtros Predeterminados -->

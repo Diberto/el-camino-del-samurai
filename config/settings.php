@@ -13,11 +13,26 @@ if (session_status() === PHP_SESSION_NONE) {
 define('ROOT_DIR', realpath(__DIR__ . '/..'));
 define('DATA_DIR', ROOT_DIR . '/data');
 define('UPLOADS_DIR', ROOT_DIR . '/photos');
+define('BACKUPS_DIR', DATA_DIR . '/backups');
+
+// Asegurar que existan los directorios clave
+if (!is_dir(DATA_DIR)) {
+    @mkdir(DATA_DIR, 0755, true);
+}
+if (!is_dir(UPLOADS_DIR)) {
+    @mkdir(UPLOADS_DIR, 0755, true);
+}
+if (!is_dir(BACKUPS_DIR)) {
+    @mkdir(BACKUPS_DIR, 0755, true);
+}
 
 // Helper para leer archivos JSON de datos
 function get_json_data(string $filename, $default = []) {
     $path = DATA_DIR . '/' . $filename;
     if (!file_exists($path)) {
+        if (!empty($default)) {
+            save_json_data($filename, $default, false);
+        }
         return $default;
     }
     $content = file_get_contents($path);
@@ -25,9 +40,27 @@ function get_json_data(string $filename, $default = []) {
     return is_array($decoded) ? $decoded : $default;
 }
 
-// Helper para guardar datos JSON
-function save_json_data(string $filename, $data): bool {
+// Helper para guardar datos JSON con copia de seguridad automática
+function save_json_data(string $filename, $data, bool $create_backup = true): bool {
     $path = DATA_DIR . '/' . $filename;
+    
+    // Crear copia de seguridad automática previa si el archivo ya existe y tiene datos
+    if ($create_backup && file_exists($path) && filesize($path) > 0) {
+        $backup_file = BACKUPS_DIR . '/' . pathinfo($filename, PATHINFO_FILENAME) . '_' . date('Y-m-d_H-i-s') . '.json';
+        @copy($path, $backup_file);
+        
+        // Limitar a las últimas 15 copias de seguridad automáticas por archivo para no saturar disco
+        $existing_backups = glob(BACKUPS_DIR . '/' . pathinfo($filename, PATHINFO_FILENAME) . '_*.json');
+        if (is_array($existing_backups) && count($existing_backups) > 15) {
+            usort($existing_backups, function($a, $b) {
+                return filemtime($a) - filemtime($b);
+            });
+            while (count($existing_backups) > 15) {
+                @unlink(array_shift($existing_backups));
+            }
+        }
+    }
+    
     $encoded = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     return file_put_contents($path, $encoded) !== false;
 }
