@@ -546,7 +546,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.ellipse(0, 0, p.size, p.size * 0.55, 0, 0, Math.PI * 2);
                     ctx.fill();
 
-                    ctx.restore();
+                            ctx.restore();
                 }
             }
             requestAnimationFrame(renderSakura);
@@ -555,17 +555,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =========================================================================
-    // 7. MOTOR INTERACTIVO DEL LIBRO 3D (3D INTERACTIVE BOOK SHOWCASE)
+    // 7. MOTOR INTERACTIVO DEL LIBRO 3D (3D DYNAMIC BOOK SHOWCASE)
     // =========================================================================
     const tomoTabs = document.querySelectorAll('.tomo-tab');
-    const stage1 = document.getElementById('stage-tomo-1');
-    const stage2 = document.getElementById('stage-tomo-2');
-    const card1 = document.getElementById('book-card-1');
-    const card2 = document.getElementById('book-card-2');
+    const tomoStages = document.querySelectorAll('.tomo-stage');
+    const bookCards = document.querySelectorAll('.book-3d-card');
     const btnFlip = document.getElementById('btn-flip-single');
     const btnFlipText = document.getElementById('btn-flip-text');
 
-    let activeTomo = 1;
+    let activeTomoIdx = 1;
     let isFlipped = false;
 
     tomoTabs.forEach(tab => {
@@ -577,14 +575,16 @@ document.addEventListener('DOMContentLoaded', () => {
             tab.classList.add('active', 'btn-primary');
             tab.classList.remove('btn-secondary');
 
-            activeTomo = parseInt(tab.getAttribute('data-tomo') || '1');
-            if (activeTomo === 1) {
-                if (stage1) stage1.style.display = 'block';
-                if (stage2) stage2.style.display = 'none';
-            } else {
-                if (stage1) stage1.style.display = 'none';
-                if (stage2) stage2.style.display = 'block';
-            }
+            activeTomoIdx = parseInt(tab.getAttribute('data-tomo') || '1');
+            tomoStages.forEach((stage, idx) => {
+                if (idx + 1 === activeTomoIdx) {
+                    stage.style.display = 'block';
+                    stage.classList.add('active');
+                } else {
+                    stage.style.display = 'none';
+                    stage.classList.remove('active');
+                }
+            });
             resetBookRotation();
         });
     });
@@ -592,7 +592,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function resetBookRotation() {
         isFlipped = false;
         if (btnFlipText) btnFlipText.textContent = 'Girar a Contraportada';
-        [card1, card2].forEach(card => {
+        bookCards.forEach(card => {
             if (card) {
                 card.style.transform = 'rotateY(0deg) rotateX(0deg)';
                 card.setAttribute('data-rotated', 'false');
@@ -602,7 +602,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnFlip) {
         btnFlip.addEventListener('click', () => {
-            const currentCard = activeTomo === 1 ? card1 : card2;
+            const currentCard = document.getElementById(`book-card-${activeTomoIdx}`);
             if (!currentCard) return;
 
             isFlipped = !isFlipped;
@@ -618,7 +618,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    [card1, card2].forEach(card => {
+    bookCards.forEach(card => {
         if (!card) return;
         let isDragging = false;
         let startX = 0, startY = 0;
@@ -649,7 +649,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function stopDrag() {
             if (!isDragging) return;
             isDragging = false;
-            card.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+            card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
             if (Math.abs(currentRotY) > 90 && !isFlipped) {
                 isFlipped = true;
                 card.style.transform = 'rotateY(180deg) rotateX(0deg)';

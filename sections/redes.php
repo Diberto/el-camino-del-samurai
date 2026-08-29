@@ -1,16 +1,16 @@
 <?php
 /**
- * SECCIÓN REDES SOCIALES Y COMUNIDAD OFICIAL (MACRO ENLACES ORIGINALES)
+ * SECCIÓN REDES SOCIALES Y COMUNIDAD OFICIAL
  */
 $social = $settings['social'] ?? [];
 ?>
-<!-- Sección Redes Sociales y Comunidad Oficial (Macro Enlaces) -->
+<!-- Sección Redes Sociales y Comunidad Oficial -->
 <section class="section social-section" id="redes" aria-label="Redes Sociales y Comunidad Oficial">
     <div class="container text-center">
         <div class="section-header fade-in">
-            <span class="section-subtitle">COMUNIDAD Y CONTENIDO EXCLUSIVO</span>
-            <h2 class="section-title">Sigue la ruta del samurái en las redes</h2>
-            <p class="section-desc">Acompáñanos en nuestras expediciones documentales por Japón, análisis históricos del Bushido, videos técnicos y novedades literarias.</p>
+            <span class="section-subtitle">Comunidad y generación de contenido</span>
+            <h2 class="section-title">Sigue La Ruta del Samurái a través de nuestras redes</h2>
+            <p class="section-desc">Acompáñanos en nuestras publicaciones sobre historia y cultura japonesa, con videos y miles de fotografías que harán de tus libros una verdadera experiencia interactiva.</p>
         </div>
 
         <div class="social-macro-grid fade-in">
@@ -22,16 +22,15 @@ $social = $settings['social'] ?? [];
                     </svg>
                 </div>
                 <div class="social-macro-content">
-                    <span class="social-macro-platform">CANAL OFICIAL</span>
-                    <h3 class="social-macro-title">YouTube</h3>
-                    <p class="social-macro-handle"><?= e($social['youtube']['handle'] ?? '@larutadelsamurai') ?></p>
-                    <p class="social-macro-desc"><?= e($social['youtube']['desc'] ?? 'Documentales in situ por castillos, templos y campos de batalla de Japón, entrevistas y técnicas de artes marciales tradicionales.') ?></p>
+                    <span class="social-macro-platform">Canal oficial Youtube</span>
+                    <h3 class="social-macro-title">“La Ruta del Samurái”</h3>
+                    <p class="social-macro-desc">Videos sobre lugares visitados por el autor, consejos de viajes, entrevistas, presentaciones de libros, comentarios sobre las obras y también sobre cine y TV siempre relacionado con la historia samurái.</p>
                     <span class="social-macro-btn">Ver Videos y Suscribirse &rarr;</span>
                 </div>
             </a>
 
             <!-- Tarjeta Instagram -->
-            <a href="<?= e($social['instagram']['url'] ?? 'https://www.instagram.com/la.ruta.del.samurai/') ?>" target="_blank" rel="noopener noreferrer" class="social-macro-card instagram-macro-card" aria-label="Instagram Oficial">
+            <a href="<?= e($social['instagram']['url'] ?? 'https://www.instagram.com/la.ruta.de.samurai/') ?>" target="_blank" rel="noopener noreferrer" class="social-macro-card instagram-macro-card" aria-label="Instagram Oficial">
                 <div class="social-macro-icon">
                     <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -40,10 +39,9 @@ $social = $settings['social'] ?? [];
                     </svg>
                 </div>
                 <div class="social-macro-content">
-                    <span class="social-macro-platform">FOTOGRAFÍA & HISTORIAS</span>
-                    <h3 class="social-macro-title">Instagram</h3>
-                    <p class="social-macro-handle"><?= e($social['instagram']['handle'] ?? '@la.ruta.del.samurai') ?></p>
-                    <p class="social-macro-desc"><?= e($social['instagram']['desc'] ?? 'Fotografías diarias de expediciones, dojos ancestrales, arquitectura samurai y el día a día de Jorge Orpianesi en Japón.') ?></p>
+                    <span class="social-macro-platform">Instagram</span>
+                    <h3 class="social-macro-title">@la.ruta.de.samurai</h3>
+                    <p class="social-macro-desc">Fotografías, reels, e historias sobre lugares de Japón y publicaciones sobre diversos temas relacionados con ese país</p>
                     <span class="social-macro-btn">Seguir en Instagram &rarr;</span>
                 </div>
             </a>
@@ -56,10 +54,9 @@ $social = $settings['social'] ?? [];
                     </svg>
                 </div>
                 <div class="social-macro-content">
-                    <span class="social-macro-platform">COMUNIDAD OFICIAL</span>
-                    <h3 class="social-macro-title">Facebook</h3>
-                    <p class="social-macro-handle"><?= e($social['facebook']['handle'] ?? 'Jorge Orpianesi / La Ruta del Samurái') ?></p>
-                    <p class="social-macro-desc"><?= e($social['facebook']['desc'] ?? 'Punto de encuentro para lectores, debates marciales, presentaciones de libros, transmisiones en vivo y eventos especiales.') ?></p>
+                    <span class="social-macro-platform">Facebook</span>
+                    <h3 class="social-macro-title" style="font-size: 1.15rem;">La Ruta del Samurái, Japón para Budokas by Jorge Orpianesi</h3>
+                    <p class="social-macro-desc">Página destinada a la comunidad de seguidores y lectores que disfrutan de publicaciones históricas y novedades sobre Japón.</p>
                     <span class="social-macro-btn">Unirse a la Comunidad &rarr;</span>
                 </div>
             </a>

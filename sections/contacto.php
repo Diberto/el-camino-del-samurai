@@ -34,7 +34,7 @@
                         <circle cx="12" cy="10" r="3"></circle>
                     </svg>
                 </div>
-                <h3>Dirección & Dojo</h3>
+                <h3>Dirección</h3>
                 <p class="contact-highlight">Budokan Argentina</p>
                 <p class="contact-desc"><?= e($settings['address'] ?? 'Sarmiento 375, Córdoba, República Argentina.') ?><br><strong>Código Postal:</strong> 5000</p>
                 <a href="https://maps.google.com/?q=<?= urlencode($settings['address'] ?? 'Sarmiento 375, Córdoba, Argentina') ?>" target="_blank" rel="noopener noreferrer" class="btn btn-secondary block text-center">Ver en Google Maps</a>
@@ -49,9 +49,9 @@
                     </svg>
                 </div>
                 <h3>Correo Electrónico</h3>
-                <p class="contact-highlight"><?= e($settings['email'] ?? 'budokanorpianesi@hotmail.com') ?></p>
+                <p class="contact-highlight"><?= e($settings['email'] ?? 'jorgeorpianesi@hotmail.com') ?></p>
                 <p class="contact-desc">Para correspondencia oficial, prensa, invitaciones a seminarios y eventos internacionales.</p>
-                <a href="mailto:<?= e($settings['email'] ?? 'budokanorpianesi@hotmail.com') ?>" class="btn btn-secondary block text-center">Enviar Correo</a>
+                <a href="mailto:<?= e($settings['email'] ?? 'jorgeorpianesi@hotmail.com') ?>" class="btn btn-secondary block text-center">Enviar Correo</a>
             </div>
         </div>
 

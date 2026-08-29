@@ -49,10 +49,10 @@ $social = $settings['social'] ?? [];
                     </ul>
                 </div>
                 <div class="footer-links">
-                    <h4>Contacto & Dojo</h4>
+                    <h4>Contacto</h4>
                     <ul>
                         <li><a href="https://wa.me/5493513886443" target="_blank" rel="noopener">WhatsApp: +549 351 3886443</a></li>
-                        <li><a href="mailto:budokanorpianesi@hotmail.com">budokanorpianesi@hotmail.com</a></li>
+                        <li><a href="mailto:jorgeorpianesi@hotmail.com">jorgeorpianesi@hotmail.com</a></li>
                         <li><span>Budokan: Sarmiento 375, Córdoba</span></li>
                         <li><span>República Argentina · CP: 5000</span></li>
                     </ul>

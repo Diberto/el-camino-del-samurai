@@ -1,53 +1,19 @@
 <?php
 /**
- * SECCIÓN HERO / PORTADA PRINCIPAL (PARALLAX MULTICAPA ORIGINAL)
+ * SECCIÓN HERO / PORTADA PRINCIPAL OFICIAL
+ * Tonos cálidos pergamino a juego con el logo original, sin duplicación de logo y con lluvia de sakura.
  */
 ?>
-<!-- Hero Section (Parallax Multicapa SVG Impecable) -->
+<!-- Hero Section (Diseño Oficial Unificado) -->
 <section class="hero-parallax" id="inicio">
-    <!-- Capa de Cielos Animados (Día & Noche - GPU Accelerated) -->
-    <div class="sky-container" id="sky-container">
-        <!-- Cielo de Día (Azul Profundo & Nubes de Fondo) -->
-        <div class="sky-layer sky-day">
-            <div class="sun-glow"></div>
-            <canvas id="clouds-bg-canvas"></canvas>
-        </div>
-        <!-- Cielo de Noche (Estrellas & Aura Índigo) -->
-        <div class="sky-layer sky-night">
-            <canvas id="starfield-canvas"></canvas>
-            <div class="moon-aura"></div>
-        </div>
+    <!-- Fondo Atmosférico Cálido estilo Pergamino Tradicional -->
+    <div class="hero-bg-container">
+        <div class="hero-bg-glow"></div>
     </div>
     
-    <!-- Contenedor de Escenario Parallax de Ancho Máximo 1280px en Desktop -->
+    <!-- Contenedor Principal del Hero -->
     <div class="hero-stage">
-        <!-- Capa 1: Monte Fuji Nevado (SVG Layer 1) -->
-        <div class="parallax-layer layer-svg-1" style="background-image: url('assets/svg_true_layer_1.webp');"></div>
-        
-        <!-- Capa 1.5: Nubes Frontales Volumétricas -->
-        <canvas id="clouds-fg-canvas" class="parallax-layer layer-clouds-fg"></canvas>
-        
-        <!-- Capa 2: Río / Camino Serpenteante (SVG Layer 2) -->
-        <div class="parallax-layer layer-svg-2" style="background-image: url('assets/svg_true_layer_2.webp');"></div>
-        
-        <!-- Capa 3: Terreno y Rocas (SVG Layer 3) -->
-        <div class="parallax-layer layer-svg-3" style="background-image: url('assets/svg_true_layer_3.webp');"></div>
-        
-        <!-- Capa 4: Samurái Ilustrado en Acantilado (SVG Layer 4) -->
-        <div class="parallax-layer layer-svg-4" style="background-image: url('assets/svg_true_layer_4.webp');"></div>
-        
-        <!-- Capa 7: Marco Enso Sumi-e (SVG Layer 5) -->
-        <div class="parallax-layer layer-svg-5" style="background-image: url('assets/svg_true_layer_5.webp');"></div>
-        
-        <!-- Capa 8: Rama de Sakura y Flores (SVG Layer 6) -->
-        <div class="parallax-layer layer-svg-6" style="background-image: url('assets/svg_true_layer_6.webp');"></div>
-        
-        <!-- Capa 9: Pétalos Flotantes (SVG Layers 7 & 8) -->
-        <div class="parallax-layer layer-svg-7" style="background-image: url('assets/svg_true_layer_7.webp');"></div>
-        <div class="parallax-layer layer-svg-8" style="background-image: url('assets/svg_true_layer_8.webp');"></div>
-        
-        <!-- Capa 10: Contenido Principal con el Logo Tipográfico Oficial (Letras Negras Originales) -->
-        <div class="parallax-layer parallax-text">
+        <div class="parallax-text">
             <div class="hero-content">
                 <div class="hero-main-logo-wrapper">
                     <img src="assets/enso_emblem_centered.png" 
@@ -64,7 +30,7 @@
                 </div>
                 <h2 class="hero-tagline">LA SENDA DE LA HISTORIA Y EL BUDO</h2>
                 <p class="hero-desc">
-                    Sigue las huellas de Miyamoto Musashi. Un fascinante viaje por la geografía, templos y castillos feudales del Japón tradicional.
+                    Un recorrido por el Japón de los samuráis a través de los libros y canales de difusión de un estudioso de la cultura y la historia del país del sol naciente
                 </p>
                 <div class="hero-actions">
                     <a href="#sinopsis" class="btn btn-primary">Explorar Libros</a>
@@ -74,7 +40,7 @@
         </div>
     </div>
 
-    <!-- Capa de Niebla Atmosférica Inferior (Mist/Fog Místico de Ancho Completo) -->
+    <!-- Capa de Niebla Atmosférica Inferior -->
     <div class="hero-mist-layer">
         <div class="mist-wave mist-wave-1"></div>
         <div class="mist-wave mist-wave-2"></div>

@@ -1,63 +1,74 @@
 <?php
 /**
- * SECCIÓN SINOPSIS / EL LIBRO (CON VISOR 3D ORIGINAL INTERACTIVO)
+ * SECCIÓN SINOPSIS / LA OBRA LITERARIA (CON VISOR 3D DINÁMICO DE LIBROS)
  */
+$libros_catalogo = get_json_data('libros.json', []);
+if (empty($libros_catalogo)) {
+    $libros_catalogo = [
+        [
+            'id' => 'tomo1',
+            'title' => 'La Ruta del Samurái',
+            'subtitle' => 'Japón para Budokas',
+            'tab_label' => 'Tomo I: La Ruta del Samurái',
+            'cover_front' => 'assets/book1_front.webp',
+            'cover_back' => 'assets/book1_back.webp'
+        ],
+        [
+            'id' => 'tomo2',
+            'title' => 'El Paso de las Luciérnagas',
+            'subtitle' => 'La Ruta del Samurái 2',
+            'tab_label' => 'Tomo II: El Paso de las Luciérnagas',
+            'cover_front' => 'assets/book2_front.webp',
+            'cover_back' => 'assets/book2_back.webp'
+        ],
+        [
+            'id' => 'tomo3',
+            'title' => "Along the Samurai's Route",
+            'subtitle' => 'Japan for budokas',
+            'tab_label' => 'English: Along the Samurai\'s Route',
+            'cover_front' => 'assets/book3_front.webp',
+            'cover_back' => 'assets/book3_back.webp'
+        ]
+    ];
+}
 ?>
-<!-- Sección de Sinopsis / El Libro -->
+<!-- Sección de Sinopsis / La Obra Literaria -->
 <section class="section sinopsis-section" id="sinopsis">
     <div class="container grid-2">
         <div class="sinopsis-image fade-in">
             <div class="book-3d-wrapper" id="book-3d-container">
                 <div class="tomo-buttons-group">
-                    <button class="btn btn-primary tomo-tab active" data-tomo="1">Tomo I: La Ruta del Samurái</button>
-                    <button class="btn btn-secondary tomo-tab" data-tomo="2">Tomo II: El Paso de las Luciérnagas</button>
+                    <?php foreach ($libros_catalogo as $idx => $libro): ?>
+                        <button class="btn <?= $idx === 0 ? 'btn-primary active' : 'btn-secondary' ?> tomo-tab" data-tomo="<?= $idx + 1 ?>">
+                            <?= e($libro['tab_label'] ?? $libro['title']) ?>
+                        </button>
+                    <?php endforeach; ?>
                 </div>
 
-                <!-- Tomo 1 Stage -->
-                <div class="book-3d-stage tomo-stage active" id="stage-tomo-1">
-                    <div class="book-3d-card" id="book-card-1" data-rotated="false">
-                        <div class="book-face-front">
-                            <img src="assets/book1_front.webp" alt="La Ruta del Samurái - Portada Tomo 1" decoding="async">
-                            <div class="book-shine"></div>
+                <?php foreach ($libros_catalogo as $idx => $libro): ?>
+                    <!-- Stage Tomo <?= $idx + 1 ?> -->
+                    <div class="book-3d-stage tomo-stage <?= $idx === 0 ? 'active' : '' ?>" id="stage-tomo-<?= $idx + 1 ?>" style="<?= $idx > 0 ? 'display: none;' : '' ?>">
+                        <div class="book-3d-card" id="book-card-<?= $idx + 1 ?>" data-rotated="false">
+                            <div class="book-face-front">
+                                <img src="<?= e($libro['cover_front']) ?>" alt="<?= e($libro['title']) ?> - Portada" decoding="async">
+                                <div class="book-shine"></div>
+                            </div>
+                            <div class="book-face-back">
+                                <img src="<?= e($libro['cover_back']) ?>" alt="<?= e($libro['title']) ?> - Contraportada" decoding="async">
+                                <div class="book-shine"></div>
+                            </div>
+                            <div class="book-face-spine spine-tomo<?= ($idx % 2) + 1 ?>">
+                                <span class="spine-kanji">侍</span>
+                                <span class="spine-title"><?= e(strtoupper($libro['title'])) ?></span>
+                                <span class="spine-author">JORGE ORPIANESI</span>
+                            </div>
+                            <div class="book-face-pages"></div>
+                            <div class="book-face-top"></div>
+                            <div class="book-face-bottom"></div>
+                            <div class="book-3d-shadow"></div>
                         </div>
-                        <div class="book-face-back">
-                            <img src="assets/book1_back.webp" alt="La Ruta del Samurái - Contraportada Tomo 1" decoding="async">
-                            <div class="book-shine"></div>
-                        </div>
-                        <div class="book-face-spine spine-tomo1">
-                            <span class="spine-kanji">侍</span>
-                            <span class="spine-title">LA RUTA DEL SAMURÁI</span>
-                            <span class="spine-author">JORGE ORPIANESI</span>
-                        </div>
-                        <div class="book-face-pages"></div>
-                        <div class="book-face-top"></div>
-                        <div class="book-face-bottom"></div>
-                        <div class="book-3d-shadow"></div>
                     </div>
-                </div>
-
-                <!-- Tomo 2 Stage -->
-                <div class="book-3d-stage tomo-stage" id="stage-tomo-2" style="display: none;">
-                    <div class="book-3d-card" id="book-card-2" data-rotated="false">
-                        <div class="book-face-front">
-                            <img src="assets/book2_front.webp" alt="El Paso de las Luciérnagas - Portada Tomo 2" decoding="async">
-                            <div class="book-shine"></div>
-                        </div>
-                        <div class="book-face-back">
-                            <img src="assets/book2_back.webp" alt="El Paso de las Luciérnagas - Contraportada Tomo 2" decoding="async">
-                            <div class="book-shine"></div>
-                        </div>
-                        <div class="book-face-spine spine-tomo2">
-                            <span class="spine-kanji">侍</span>
-                            <span class="spine-title">EL PASO DE LAS LUCIÉRNAGAS</span>
-                            <span class="spine-author">JORGE ORPIANESI</span>
-                        </div>
-                        <div class="book-face-pages"></div>
-                        <div class="book-face-top"></div>
-                        <div class="book-face-bottom"></div>
-                        <div class="book-3d-shadow"></div>
-                    </div>
-                </div>
+                <?php endforeach; ?>
 
                 <div class="book-3d-controls">
                     <button class="btn btn-primary btn-flip-single" id="btn-flip-single">
@@ -73,8 +84,8 @@
         
         <div class="sinopsis-content fade-in">
             <span class="section-subtitle">LA OBRA LITERARIA</span>
-            <h2 class="section-title">La guía definitiva de Japón para Budokas</h2>
-            <p class="text-large">Una aventura literaria y fotográfica que conecta la historia feudal japonesa, las artes marciales y la filosofía de vida de los guerreros eternos.</p>
+            <h2 class="section-title">La guía definitiva de Japón para los amantes de la historia samurái.</h2>
+            <p class="text-large">Una aventura literaria y fotográfica que conecta la historia, las artes marciales, la cultura y la filosofía de Japón a través de entretenidas narrativas de viajes por los lugares icónicos del Japón samurái.</p>
             
             <div class="philosophy-points">
                 <div class="point-item">
@@ -82,8 +93,8 @@
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                     </div>
                     <div class="point-text">
-                        <h3>Viaje al Corazón de Japón</h3>
-                        <p>Explora templos budistas, castillos medievales, campos de batalla históricos y la mística del Monte Fuji con fotos y mapas únicos.</p>
+                        <h3>Viaje al Japón profundo</h3>
+                        <p>Explora templos y santuarios, antiguos poblados, caminos centenarios, castillos, cementerios, campos de batalla, escuelas samuráis y hasta el sagrado Monte Fuji acompañado de mapas, fotos a color, dibujos y pinturas históricas.</p>
                     </div>
                 </div>
                 
@@ -92,26 +103,23 @@
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     </div>
                     <div class="point-text">
-                        <h3>La senda de Miyamoto Musashi</h3>
-                        <p>Sigue el itinerario del legendario espadachín y autor de "El Libro de los Cinco Anillos" a través de los parajes donde meditó y luchó.</p>
+                        <h3>La vida de los grandes samuráis de la historia</h3>
+                        <p>Conoce la vida y obra de los grandes nombres de la historia samurái a través de textos antiguos, cartas personales, partes de batalla y de historias reales o noveladas de guerreros de la talla de Miyamoto Musashi, Tokugawa Ieyasu, Toyotomi Hideyoshi, Kato Kiyomasa, Todo Takatora, Honda Tadakatsu, Oda Nobunaga y ¡muchos más!</p>
                     </div>
                 </div>
                 
                 <div class="point-item">
                     <div class="point-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
                     </div>
                     <div class="point-text">
-                        <h3>Filosofía y Valores del Bushido</h3>
-                        <p>Reflexiones prácticas sobre el honor, el coraje, la serenidad y la disciplina para aplicar en la vida moderna.</p>
+                        <h3>Cultura y filosofía</h3>
+                        <p>Sumérgete en la sociedad japonesa actual a través de sus valores, creencias, costumbres y tradiciones que fueron heredadas de los grandes guerreros samurái que gobernaron el país durante casi ¡siete siglos!</p>
                     </div>
                 </div>
             </div>
             
-            <div class="sinopsis-actions">
-                <a href="#ediciones" class="btn btn-primary">Ver Ediciones Disponibles</a>
-                <a href="#autor" class="btn btn-secondary">Conocer al Autor</a>
-            </div>
+            <a href="#ediciones" class="btn btn-primary btn-margin">Adquirir Ejemplar</a>
         </div>
     </div>
 </section>

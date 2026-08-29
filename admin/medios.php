@@ -226,6 +226,7 @@ usort($all_media, fn($a, $b) => $b['mtime'] <=> $a['mtime']);
             </div>
             <nav class="admin-nav">
                 <a href="index.php" class="admin-nav-item">📊 Dashboard</a>
+                <a href="libros.php" class="admin-nav-item">📚 Catálogo de Libros</a>
                 <a href="opiniones.php" class="admin-nav-item">💬 Opiniones de Lectores</a>
                 <a href="blog.php" class="admin-nav-item">📝 Artículos del Blog</a>
                 <a href="galeria.php" class="admin-nav-item">🖼️ Galería de Fotos</a>

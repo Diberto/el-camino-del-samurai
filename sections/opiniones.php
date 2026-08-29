@@ -9,9 +9,9 @@ $default_filter = $settings['reviews_default_filter'] ?? 'text';
 <section class="section reviews-section" id="opiniones" aria-label="Opiniones de Lectores">
     <div class="container">
         <div class="section-header center fade-in">
-            <span class="section-subtitle">TESTIMONIOS & COMUNIDAD</span>
+            <span class="section-subtitle">Testimonios y comunidad</span>
             <h2 class="section-title">Opiniones de nuestros lectores</h2>
-            <p class="section-desc">Experiencias, valoraciones y fotografías de practicantes marciales y apasionados de la cultura japonesa que recorren la senda del samurái.</p>
+            <p class="section-desc">Experiencias, valoraciones y fotografías de nuestros seguidores apasionados por la cultura samurái.</p>
         </div>
 
         <!-- Filtros de Opiniones (Configurable desde Admin) -->

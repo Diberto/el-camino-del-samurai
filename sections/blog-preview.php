@@ -9,9 +9,9 @@ $featured_posts = array_slice($posts, 0, 3);
 <section class="section blog-section" id="blog">
     <div class="container">
         <div class="section-header text-center fade-in">
-            <span class="section-subtitle">BITÁCORA Y REFLEXIONES</span>
-            <h2 class="section-title">Blog Samurai</h2>
-            <p class="section-desc">Artículos, historia, meditaciones sobre el Bushido y relatos de viajes de Jorge Orpianesi.</p>
+            <span class="section-subtitle">Artículos y Reflexiones</span>
+            <h2 class="section-title">Blog Samurái</h2>
+            <p class="section-desc">Artículos, recuerdos, anécdotas y entrevistas escritas por Jorge Orpianesi</p>
         </div>
 
         <div id="home-blog-posts-grid" class="blog-grid fade-in" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">

@@ -8,9 +8,9 @@ $galeria = get_json_data('galeria.json', []);
 <section class="section gallery-section" id="galeria">
     <div class="container">
         <div class="section-header text-center fade-in">
-            <span class="section-subtitle">EXPEDICIONES Y FOTOGRAFÍA</span>
-            <h2 class="section-title">Galería de la Travesía</h2>
-            <p class="section-desc">Un recorrido visual exclusivo por los santuarios, castillos feudales y caminos sagrados que forman la esencia de las obras de Jorge Orpianesi.</p>
+            <span class="section-subtitle">Expediciones y fotografía</span>
+            <h2 class="section-title">Galería de las travesías</h2>
+            <p class="section-desc">Un recorrido visual por los lugares sagrados de la historia samurái con fotografías tomadas por el autor en sus viajes</p>
         </div>
 
         <div class="gallery-grid fade-in">
