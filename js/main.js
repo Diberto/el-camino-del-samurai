@@ -578,7 +578,7 @@ document.addEventListener('DOMContentLoaded', () => {
             activeTomoIdx = parseInt(tab.getAttribute('data-tomo') || '1');
             tomoStages.forEach((stage, idx) => {
                 if (idx + 1 === activeTomoIdx) {
-                    stage.style.display = 'block';
+                    stage.style.display = 'flex';
                     stage.classList.add('active');
                 } else {
                     stage.style.display = 'none';
