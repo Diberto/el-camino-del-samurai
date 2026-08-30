@@ -208,6 +208,7 @@ if ($action === 'edit' && isset($_GET['id'])) {
                 <a href="blog.php" class="admin-nav-item active">📝 Artículos del Blog</a>
                 <a href="galeria.php" class="admin-nav-item">🖼️ Galería de Fotos</a>
                 <a href="medios.php" class="admin-nav-item">📁 Biblioteca de Medios</a>
+                <a href="backups.php" class="admin-nav-item">💾 Copias de Seguridad</a>
                 <a href="update.php" class="admin-nav-item">🚀 Actualizar Sistema</a>
                 <a href="settings.php" class="admin-nav-item">⚙️ Configuración & Redes</a>
             </nav>

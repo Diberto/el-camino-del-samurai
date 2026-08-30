@@ -2,7 +2,9 @@
 /**
  * SECCIÓN DE OPINIONES Y TESTIMONIOS DE LECTORES (CONFIGURABLE DESDE ADMIN)
  */
-$opiniones = get_json_data('opiniones.json', []);
+$opiniones_all = get_json_data('opiniones.json', []);
+$reviews_limit = (int)($settings['home_reviews_limit'] ?? 6);
+$opiniones = ($reviews_limit > 0) ? array_slice($opiniones_all, 0, $reviews_limit) : $opiniones_all;
 $default_filter = $settings['reviews_default_filter'] ?? 'text';
 ?>
 <!-- Sección de Opiniones y Testimonios de Lectores -->

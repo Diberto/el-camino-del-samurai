@@ -64,12 +64,28 @@ $social = $settings['social'] ?? [];
         </div>
     </footer>
 
-    <!-- Lightbox Modal para la Galería -->
+    <!-- Lightbox Modal para la Galería con Controles de Desplazamiento -->
     <div class="gallery-lightbox" id="gallery-lightbox" aria-hidden="true" role="dialog">
         <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
         <div class="lightbox-container">
             <button class="lightbox-close" id="lightbox-close" aria-label="Cerrar vista">&times;</button>
-            <img src="" alt="Vista ampliada" id="lightbox-img">
+            <span class="lightbox-counter" id="lightbox-counter">1 / 1</span>
+            
+            <button class="lightbox-nav-btn lightbox-prev" id="lightbox-prev" aria-label="Foto anterior" title="Foto anterior (Flecha izquierda)">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+            <button class="lightbox-nav-btn lightbox-next" id="lightbox-next" aria-label="Foto siguiente" title="Foto siguiente (Flecha derecha)">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </button>
+
+            <div class="lightbox-media-wrapper">
+                <img src="" alt="Vista ampliada" id="lightbox-img">
+            </div>
+
             <div class="lightbox-info">
                 <span class="lightbox-tag" id="lightbox-tag"></span>
                 <h3 class="lightbox-title" id="lightbox-title"></h3>
@@ -85,6 +101,6 @@ $social = $settings['social'] ?? [];
     </button>
 
     <!-- JS Link -->
-    <script src="js/main.js?v=3.0"></script>
+    <script src="js/main.js?v=3.5"></script>
 </body>
 </html>

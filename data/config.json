@@ -13,6 +13,9 @@
     "budokan_tomo2_url": "https://www.budokanweb.com/tienda/destacados/el-paso-de-las-luciernagas-la-ruta-del-samurai-2/",
     "theme_default": "day",
     "reviews_default_filter": "text",
+    "home_blog_limit": 3,
+    "home_reviews_limit": 6,
+    "home_gallery_limit": 8,
     "social": {
       "youtube": {
         "title": "YouTube",

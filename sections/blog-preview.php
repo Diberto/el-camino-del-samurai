@@ -3,7 +3,8 @@
  * SECCIÓN BLOG SAMURAI (DISEÑO ORIGINAL)
  */
 $posts = get_json_data('blog.json', []);
-$featured_posts = array_slice($posts, 0, 3);
+$blog_limit = (int)($settings['home_blog_limit'] ?? 3);
+$featured_posts = array_slice($posts, 0, $blog_limit);
 ?>
 <!-- Sección Blog Samurai -->
 <section class="section blog-section" id="blog">

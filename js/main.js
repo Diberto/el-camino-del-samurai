@@ -710,23 +710,103 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =========================================================================
-    // 9. LIGHTBOX MODAL PARA GALERÍA Y OPINIONES
+    // 9. GALERÍA INTERACTIVA Y LIGHTBOX CON CONTROLES DE DESPLAZAMIENTO
     // =========================================================================
+    const galleryTrack = document.getElementById('gallery-scroll-track');
+    const btnGalleryPrev = document.getElementById('gallery-scroll-prev');
+    const btnGalleryNext = document.getElementById('gallery-scroll-next');
+    const btnOpenFullGallery = document.getElementById('btn-open-gallery-lightbox');
+
+    if (galleryTrack && btnGalleryPrev && btnGalleryNext) {
+        btnGalleryPrev.addEventListener('click', () => {
+            const card = galleryTrack.querySelector('.gallery-card');
+            const step = card ? card.offsetWidth + 24 : 320;
+            galleryTrack.scrollBy({ left: -step, behavior: 'smooth' });
+        });
+
+        btnGalleryNext.addEventListener('click', () => {
+            const card = galleryTrack.querySelector('.gallery-card');
+            const step = card ? card.offsetWidth + 24 : 320;
+            galleryTrack.scrollBy({ left: step, behavior: 'smooth' });
+        });
+    }
+
+    // Lightbox Modal Controller
     const lightbox = document.getElementById('gallery-lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     const lightboxTitle = document.getElementById('lightbox-title');
     const lightboxTag = document.getElementById('lightbox-tag');
+    const lightboxCounter = document.getElementById('lightbox-counter');
     const lightboxClose = document.getElementById('lightbox-close');
+    const lightboxPrev = document.getElementById('lightbox-prev');
+    const lightboxNext = document.getElementById('lightbox-next');
     const lightboxBackdrop = document.getElementById('lightbox-backdrop');
 
-    function openLightbox(src, title, tag) {
-        if (!lightbox || !lightboxImg) return;
-        lightboxImg.src = src;
-        if (lightboxTitle) lightboxTitle.textContent = title || '';
+    let currentGalleryPhotos = [];
+    let currentLightboxIdx = 0;
+
+    function buildGalleryPhotosList() {
+        currentGalleryPhotos = [];
+        const cards = document.querySelectorAll('.gallery-card');
+        cards.forEach((card, idx) => {
+            const src = card.getAttribute('data-src') || card.querySelector('img')?.src;
+            const title = card.getAttribute('data-title') || card.querySelector('.gallery-card-title')?.textContent || '';
+            const tag = card.getAttribute('data-tag') || card.querySelector('.gallery-tag')?.textContent || 'Fotografía';
+            if (src) {
+                currentGalleryPhotos.push({ src, title, tag, element: card });
+            }
+        });
+    }
+    buildGalleryPhotosList();
+
+    function showPhotoAtIndex(idx) {
+        if (!lightbox || !lightboxImg || currentGalleryPhotos.length === 0) return;
+        
+        if (idx < 0) idx = currentGalleryPhotos.length - 1;
+        if (idx >= currentGalleryPhotos.length) idx = 0;
+        currentLightboxIdx = idx;
+
+        const photo = currentGalleryPhotos[currentLightboxIdx];
+        lightboxImg.style.opacity = '0.3';
+        lightboxImg.style.transform = 'scale(0.97)';
+        
+        const tempImg = new Image();
+        tempImg.onload = () => {
+            lightboxImg.src = photo.src;
+            lightboxImg.style.opacity = '1';
+            lightboxImg.style.transform = 'scale(1)';
+        };
+        tempImg.src = photo.src;
+
+        if (lightboxTitle) lightboxTitle.textContent = photo.title || '';
         if (lightboxTag) {
-            lightboxTag.textContent = tag || '';
-            lightboxTag.style.display = tag ? 'inline-block' : 'none';
+            lightboxTag.textContent = photo.tag || '';
+            lightboxTag.style.display = photo.tag ? 'inline-block' : 'none';
         }
+        if (lightboxCounter) {
+            lightboxCounter.textContent = `${currentLightboxIdx + 1} / ${currentGalleryPhotos.length}`;
+        }
+    }
+
+    function openLightbox(src, title, tag, initialIndex = null) {
+        if (!lightbox) return;
+        buildGalleryPhotosList();
+
+        if (initialIndex !== null && initialIndex >= 0 && initialIndex < currentGalleryPhotos.length) {
+            currentLightboxIdx = initialIndex;
+        } else {
+            // Buscar índice por URL de imagen
+            const foundIdx = currentGalleryPhotos.findIndex(p => p.src === src);
+            if (foundIdx !== -1) {
+                currentLightboxIdx = foundIdx;
+            } else {
+                // Agregar como foto temporal (ej. de testimonios)
+                currentGalleryPhotos = [{ src, title, tag }];
+                currentLightboxIdx = 0;
+            }
+        }
+
+        showPhotoAtIndex(currentLightboxIdx);
         lightbox.classList.add('active');
         lightbox.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
@@ -739,15 +819,33 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
     }
 
-    document.querySelectorAll('.gallery-card').forEach(card => {
+    function nextPhoto() {
+        showPhotoAtIndex(currentLightboxIdx + 1);
+    }
+
+    function prevPhoto() {
+        showPhotoAtIndex(currentLightboxIdx - 1);
+    }
+
+    // Vincular clics en tarjetas de la galería
+    document.querySelectorAll('.gallery-card').forEach((card, idx) => {
         card.addEventListener('click', () => {
             const src = card.getAttribute('data-src') || card.querySelector('img')?.src;
             const title = card.getAttribute('data-title') || card.querySelector('.gallery-card-title')?.textContent;
             const tag = card.getAttribute('data-tag') || card.querySelector('.gallery-tag')?.textContent;
-            if (src) openLightbox(src, title, tag);
+            openLightbox(src, title, tag, idx);
         });
     });
 
+    if (btnOpenFullGallery) {
+        btnOpenFullGallery.addEventListener('click', () => {
+            if (currentGalleryPhotos.length > 0) {
+                openLightbox(currentGalleryPhotos[0].src, currentGalleryPhotos[0].title, currentGalleryPhotos[0].tag, 0);
+            }
+        });
+    }
+
+    // Clics en fotos de testimonios
     document.querySelectorAll('.review-photo-wrapper').forEach(wrapper => {
         wrapper.addEventListener('click', () => {
             const src = wrapper.getAttribute('data-src') || wrapper.querySelector('img')?.src;
@@ -756,13 +854,38 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Controles de Lightbox
     if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
     if (lightboxBackdrop) lightboxBackdrop.addEventListener('click', closeLightbox);
+    if (lightboxNext) lightboxNext.addEventListener('click', nextPhoto);
+    if (lightboxPrev) lightboxPrev.addEventListener('click', prevPhoto);
+
+    // Navegación por teclado (Flechas Izquierda / Derecha / Escape)
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && lightbox && lightbox.classList.contains('active')) {
-            closeLightbox();
-        }
+        if (!lightbox || !lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight' || e.key === 'KeyD') nextPhoto();
+        if (e.key === 'ArrowLeft' || e.key === 'KeyA') prevPhoto();
     });
+
+    // Soporte para gestos táctiles (Swipe) en Lightbox
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const lightboxContainer = document.querySelector('.lightbox-container');
+    if (lightboxContainer) {
+        lightboxContainer.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        lightboxContainer.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchEndX - touchStartX;
+            if (Math.abs(diff) > 45) {
+                if (diff < 0) nextPhoto(); // Deslizar a la izquierda = siguiente foto
+                else prevPhoto(); // Deslizar a la derecha = foto anterior
+            }
+        }, { passive: true });
+    }
 
     // =========================================================================
     // 10. SCROLL REVEAL & FADE-IN ANIMATION SYSTEM (INTERSECTION OBSERVER)

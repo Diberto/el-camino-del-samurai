@@ -89,6 +89,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
     $settings['budokan_tomo2_url'] = trim($_POST['budokan_tomo2_url'] ?? 'https://www.budokanweb.com/tienda/destacados/el-paso-de-las-luciernagas-la-ruta-del-samurai-2/');
     $settings['theme_default'] = trim($_POST['theme_default'] ?? 'day');
     $settings['reviews_default_filter'] = trim($_POST['reviews_default_filter'] ?? 'text');
+    $settings['home_blog_limit'] = max(1, (int)($_POST['home_blog_limit'] ?? 3));
+    $settings['home_reviews_limit'] = max(1, (int)($_POST['home_reviews_limit'] ?? 6));
+    $settings['home_gallery_limit'] = max(0, (int)($_POST['home_gallery_limit'] ?? 8));
 
     // Redes Sociales Oficiales
     $settings['social']['youtube']['url'] = trim($_POST['yt_url'] ?? 'https://www.youtube.com/@larutadelsamurai');
@@ -140,6 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                 <a href="blog.php" class="admin-nav-item">📝 Artículos del Blog</a>
                 <a href="galeria.php" class="admin-nav-item">🖼️ Galería de Fotos</a>
                 <a href="medios.php" class="admin-nav-item">📁 Biblioteca de Medios</a>
+                <a href="backups.php" class="admin-nav-item">💾 Copias de Seguridad</a>
                 <a href="update.php" class="admin-nav-item">🚀 Actualizar Sistema</a>
                 <a href="settings.php" class="admin-nav-item active">⚙️ Configuración & Redes</a>
             </nav>
@@ -206,6 +210,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                                     <option value="all" <?= ($settings['reviews_default_filter'] ?? 'text') === 'all' ? 'selected' : '' ?>>🌐 Todas las Opiniones</option>
                                     <option value="photo" <?= ($settings['reviews_default_filter'] ?? 'text') === 'photo' ? 'selected' : '' ?>>📸 Fotos de Lectores con el Libro</option>
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cantidad de Elementos a Mostrar en el Home -->
+                    <div class="admin-card">
+                        <h3>🔢 Cantidad de Elementos a Mostrar en la Portada / Home</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 1.25rem;">
+                            Define cuántos elementos se cargarán de forma predeterminada en cada sección del sitio principal:
+                        </p>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="home_blog_limit">📝 Artículos de Blog en Home</label>
+                                <input type="number" id="home_blog_limit" name="home_blog_limit" min="1" max="50" value="<?= (int)($settings['home_blog_limit'] ?? 3) ?>" required>
+                                <small style="color: var(--text-muted); font-size: 0.78rem;">Entradas visibles en la portada (por defecto: 3)</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="home_reviews_limit">💬 Opiniones / Reseñas en Home</label>
+                                <input type="number" id="home_reviews_limit" name="home_reviews_limit" min="1" max="50" value="<?= (int)($settings['home_reviews_limit'] ?? 6) ?>" required>
+                                <small style="color: var(--text-muted); font-size: 0.78rem;">Tarjetas en la grilla de testimonios (por defecto: 6)</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="home_gallery_limit">🖼️ Fotos de la Galería en Home</label>
+                                <input type="number" id="home_gallery_limit" name="home_gallery_limit" min="0" max="100" value="<?= (int)($settings['home_gallery_limit'] ?? 8) ?>" required>
+                                <small style="color: var(--text-muted); font-size: 0.78rem;">Fotografías en la galería (por defecto: 8, 0 = todas)</small>
                             </div>
                         </div>
                     </div>
