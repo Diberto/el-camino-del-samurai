@@ -7,11 +7,11 @@ require_once __DIR__ . '/settings.php';
 
 // Contraseña por defecto del panel (puede actualizarse desde el panel o variables de entorno)
 define('ADMIN_USER', 'admin');
-// Hash bcrypt — para cambiar la contraseña, generar un nuevo hash con password_hash()
-define('DEFAULT_ADMIN_HASH', '$2y$10$eO0p5912xN7tZtKqm0iC.O1.uYFmYj2R2vTfx6Vj2tX0gR9vM4u9W');
+// Hash bcrypt de 'samurai2026' — para cambiar la contraseña, generar un nuevo hash con password_hash()
+define('DEFAULT_ADMIN_HASH', '$2b$10$B2NRQoHS8LOOsm3fDnvZuOwnZ51h7HMNFEjkpkcUdggxXxN7Slf1S');
 
 // Máximo de intentos de login fallidos antes de bloqueo temporal
-define('MAX_LOGIN_ATTEMPTS', 5);
+define('MAX_LOGIN_ATTEMPTS', 10);
 define('LOGIN_LOCKOUT_SECONDS', 600); // 10 minutos
 
 function is_admin_logged_in(): bool {
