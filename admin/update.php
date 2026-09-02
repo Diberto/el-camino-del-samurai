@@ -73,9 +73,14 @@ function apply_safe_update_zip(string $zip_path): array {
             continue;
         }
 
-        // Asegurar que el directorio de destino exista
+        // SEGURIDAD: Prevenir Zip Slip — verificar que el destino esté dentro de ROOT_DIR
         if (!is_dir($target_dir)) {
             @mkdir($target_dir, 0755, true);
+        }
+        $real_target_dir = realpath($target_dir);
+        $real_root       = realpath(ROOT_DIR);
+        if ($real_target_dir === false || strpos($real_target_dir . DIRECTORY_SEPARATOR, $real_root . DIRECTORY_SEPARATOR) !== 0) {
+            continue; // Entrada maliciosa, saltar
         }
 
         // Extraer archivo actualizado de código, plantillas, estilos o scripts
@@ -167,8 +172,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['auto_update_git'])) {
                 if (strpos($entry_name, 'photos/') === 0 && file_exists($target_file)) continue;
                 if (in_array($entry_name, $protected_databases) && file_exists($target_file) && filesize($target_file) > 10) continue;
 
+                // SEGURIDAD: Prevenir Zip Slip — verificar que el destino esté dentro de ROOT_DIR
                 if (!is_dir($target_dir)) {
                     @mkdir($target_dir, 0755, true);
+                }
+                $real_target_dir = realpath($target_dir);
+                $real_root       = realpath(ROOT_DIR);
+                if ($real_target_dir === false || strpos($real_target_dir . DIRECTORY_SEPARATOR, $real_root . DIRECTORY_SEPARATOR) !== 0) {
+                    continue; // Entrada maliciosa, saltar
                 }
 
                 $content = $zip->getFromIndex($i);

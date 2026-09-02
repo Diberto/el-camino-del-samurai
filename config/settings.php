@@ -6,6 +6,13 @@
 
 // Iniciar sesión segura si no está iniciada
 if (session_status() === PHP_SESSION_NONE) {
+    session_set_cookie_params([
+        'lifetime' => 0,           // La cookie expira al cerrar el navegador
+        'path'     => '/',
+        'secure'   => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off', // Solo HTTPS
+        'httponly' => true,        // No accesible desde JavaScript (previene XSS de cookie)
+        'samesite' => 'Strict',    // Previene CSRF cross-site
+    ]);
     session_start();
 }
 

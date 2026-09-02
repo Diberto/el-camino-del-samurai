@@ -1,0 +1,9 @@
+User-agent: *  
+Disallow: /admin/  
+Disallow: /data/  
+Disallow: /config/  
+Disallow: /backups/  
+Disallow: /scripts/  
+Allow: /  
+  
+Sitemap: https://larutadelsamurai.com/sitemap.xml  

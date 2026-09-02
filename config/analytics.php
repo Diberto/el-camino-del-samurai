@@ -81,11 +81,11 @@ function track_page_view(string $page_name = 'Inicio') {
     }
 
     // 5. Origen del tráfico (Referrer)
-    $referrer = $_SERVER['HTTP_REFERER'] ?? '';
+    $referrer = substr($_SERVER['HTTP_REFERER'] ?? '', 0, 200); // Limitar para prevenir log injection
     $ref_source = 'Directo / Favoritos';
     if (!empty($referrer)) {
         $host = parse_url($referrer, PHP_URL_HOST);
-        if ($host) {
+        if ($host && strlen($host) < 100) { // Ignorar hosts sospechosamente largos
             if (strpos($host, 'instagram.com') !== false) $ref_source = 'Instagram';
             elseif (strpos($host, 'youtube.com') !== false) $ref_source = 'YouTube';
             elseif (strpos($host, 'facebook.com') !== false) $ref_source = 'Facebook';
@@ -96,7 +96,7 @@ function track_page_view(string $page_name = 'Inicio') {
     }
     $data['referrers'][$ref_source] = ($data['referrers'][$ref_source] ?? 0) + 1;
 
-    file_put_contents($analytics_file, json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+    file_put_contents($analytics_file, json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), LOCK_EX);
 }
 
 function get_analytics_summary() {

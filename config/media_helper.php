@@ -26,7 +26,7 @@ function optimize_and_save_image(array $file_input, string $prefix = 'media', in
     $orig_name = $file_input['name'];
     $ext = strtolower(pathinfo($orig_name, PATHINFO_EXTENSION));
 
-    $allowed = ['webp', 'jpg', 'jpeg', 'png', 'gif', 'svg'];
+    $allowed = ['webp', 'jpg', 'jpeg', 'png', 'gif'];
     if (!in_array($ext, $allowed)) {
         return null;
     }

@@ -11,16 +11,22 @@ $admin_base = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https'
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username'] ?? '');
-    $password = trim($_POST['password'] ?? '');
-
-    if (admin_login($username, $password)) {
-        session_write_close();
-        header('Location: ' . $admin_base . 'index.php', true, 302);
-        ob_end_flush();
-        exit;
+    if (is_login_blocked()) {
+        $error = 'Demasiados intentos fallidos. Volvé a intentar en 10 minutos.';
     } else {
-        $error = 'Usuario o contraseña incorrectos.';
+        $username = trim($_POST['username'] ?? '');
+        $password = trim($_POST['password'] ?? '');
+
+        if (admin_login($username, $password)) {
+            session_write_close();
+            header('Location: ' . $admin_base . 'index.php', true, 302);
+            ob_end_flush();
+            exit;
+        } else {
+            $error = is_login_blocked()
+                ? 'Cuenta bloqueada temporalmente por múltiples intentos fallidos.'
+                : 'Usuario o contraseña incorrectos.';
+        }
     }
 }
 

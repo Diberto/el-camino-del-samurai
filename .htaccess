@@ -34,12 +34,43 @@
 
 # 4. Encabezados de Seguridad
 <IfModule mod_headers.c>
-    Header set X-Content-Type-Options "nosniff"
-    Header set X-Frame-Options "SAMEORIGIN"
-    Header set X-XSS-Protection "1; mode=block"
+    # Prevenir MIME-type sniffing
+    Header always set X-Content-Type-Options "nosniff"
+    # Prevenir clickjacking
+    Header always set X-Frame-Options "SAMEORIGIN"
+    # XSS Protection legacy (IE/Edge antiguos)
+    Header always set X-XSS-Protection "1; mode=block"
+    # HSTS: forzar HTTPS por 1 año (activar sólo si el sitio tiene SSL estable)
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    # Referrer: enviar sólo origen en cross-origin
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    # Deshabilitar APIs sensibles no utilizadas
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+    # Content Security Policy
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self';"
 </IfModule>
 
-# 5. Proteger archivos de datos JSON contra acceso directo si se desea
+# 5. Bloquear acceso web directo a archivos JSON de datos
 <FilesMatch "\.json$">
-    # Permitir lectura a través de PHP pero no exposición accidental
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
 </FilesMatch>
+
+# 6. Bloquear acceso a archivos de configuración y sensibles
+<FilesMatch "\.(env|log|bak|sql|sh|git)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# 7. Deshabilitar listado de directorios
+Options -Indexes
