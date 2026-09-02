@@ -1948,11 +1948,12 @@ body.theme-night .tomo-buttons-group .tomo-tab:not(.active) {
 
 .social-macro-handle {
     font-family: var(--font-body) !important;
-    font-size: 1.15rem;
-    font-weight: 700;
-    letter-spacing: 0;
-    text-transform: lowercase;
-    color: var(--text-primary);
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    font-variant: normal !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    color: var(--text-primary) !important;
     margin-bottom: 0.5rem;
 }
 

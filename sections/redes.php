@@ -30,7 +30,7 @@ $social = $settings['social'] ?? [];
             </a>
 
             <!-- Tarjeta Instagram -->
-            <a href="<?= e($social['instagram']['url'] ?? 'https://www.instagram.com/la.ruta.de.samurai/') ?>" target="_blank" rel="noopener noreferrer" class="social-macro-card instagram-macro-card" aria-label="Instagram Oficial">
+            <a href="<?= e($social['instagram']['url'] ?? 'https://www.instagram.com/la.ruta.del.samurai/') ?>" target="_blank" rel="noopener noreferrer" class="social-macro-card instagram-macro-card" aria-label="Instagram Oficial">
                 <div class="social-macro-icon">
                     <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -40,7 +40,7 @@ $social = $settings['social'] ?? [];
                 </div>
                 <div class="social-macro-content">
                     <span class="social-macro-platform">Instagram</span>
-                    <h3 class="social-macro-title social-macro-handle">@la.ruta.de.samurai</h3>
+                    <h3 class="social-macro-title social-macro-handle">@la.ruta.del.samurai</h3>
                     <p class="social-macro-desc">Fotografías, reels, e historias sobre lugares de Japón y publicaciones sobre diversos temas relacionados con ese país</p>
                     <span class="social-macro-btn">Seguir en Instagram &rarr;</span>
                 </div>

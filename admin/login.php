@@ -2,7 +2,12 @@
 /**
  * PANEL ADMIN - LOGIN
  */
+ob_start(); // Previene ERR_HTTP2_PROTOCOL_ERROR por output antes de headers
 require_once __DIR__ . '/../config/auth.php';
+
+// Definir URL base del admin de forma dinámica
+$admin_base = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https' : 'http')
+    . '://' . ($_SERVER['HTTP_HOST'] ?? 'larutadelsamurai.com') . '/admin/';
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -10,7 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = trim($_POST['password'] ?? '');
 
     if (admin_login($username, $password)) {
-        header('Location: index.php');
+        session_write_close();
+        header('Location: ' . $admin_base . 'index.php', true, 302);
+        ob_end_flush();
         exit;
     } else {
         $error = 'Usuario o contraseña incorrectos.';
@@ -18,7 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if (is_admin_logged_in()) {
-    header('Location: index.php');
+    session_write_close();
+    header('Location: ' . $admin_base . 'index.php', true, 302);
+    ob_end_flush();
     exit;
 }
 ?>
