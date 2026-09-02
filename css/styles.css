@@ -898,23 +898,32 @@ body.theme-night .layer-svg-6 {
     font-family: var(--font-body);
     font-size: 0.9rem;
     font-weight: 700;
-    color: var(--accent-gold);
-    letter-spacing: 0.3em;
+    color: #7a5117;
+    letter-spacing: 0.25em;
     margin-bottom: 1rem;
     text-shadow: none;
     opacity: 0;
     animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
 }
 
+body.theme-night .hero-tagline {
+    color: var(--accent-gold);
+}
+
 .hero-desc {
     font-size: 1.12rem;
-    color: var(--text-secondary);
+    color: #1a1d27;
+    font-weight: 500;
     margin-bottom: 2rem;
     line-height: 1.7;
-    max-width: 680px;
+    max-width: 700px;
     text-shadow: none;
     opacity: 0;
     animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+}
+
+body.theme-night .hero-desc {
+    color: #dde3ed;
 }
 
 .hero-actions {
@@ -953,16 +962,28 @@ body.theme-night .layer-svg-6 {
 
 .hero-actions .btn-secondary {
     background-color: #ffffff !important;
-    color: #8f6222 !important;
-    border: 1.5px solid #8f6222 !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    color: #7a5117 !important;
+    border: 2px solid #8f6222 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.10);
 }
 
 .hero-actions .btn-secondary:hover {
-    background-color: #8f6222 !important;
+    background-color: #7a5117 !important;
     color: #ffffff !important;
+    border-color: #7a5117 !important;
     transform: translateY(-2px);
-    box-shadow: 0 8px 22px rgba(143, 98, 34, 0.35);
+    box-shadow: 0 8px 22px rgba(122, 81, 23, 0.4);
+}
+
+body.theme-night .hero-actions .btn-secondary {
+    background-color: transparent !important;
+    color: var(--accent-gold) !important;
+    border: 2px solid var(--accent-gold) !important;
+}
+
+body.theme-night .hero-actions .btn-secondary:hover {
+    background-color: var(--accent-gold) !important;
+    color: #07080a !important;
 }
 
 @media (max-width: 991px) {
@@ -1033,9 +1054,11 @@ body.theme-night .layer-svg-6 {
         text-align: center !important;
     }
     .hero-desc {
-        font-size: 0.9rem !important;
-        line-height: 1.45 !important;
-        margin-bottom: 1.15rem !important;
+        font-size: 0.92rem !important;
+        color: #1a1d27 !important;
+        font-weight: 500 !important;
+        line-height: 1.55 !important;
+        margin-bottom: 1.2rem !important;
         max-width: 420px !important;
         text-align: center !important;
     }
@@ -1047,8 +1070,9 @@ body.theme-night .layer-svg-6 {
         width: 100% !important;
     }
     .hero-actions .btn {
-        padding: 0.65rem 1.25rem !important;
-        font-size: 0.85rem !important;
+        padding: 0.68rem 1.35rem !important;
+        font-size: 0.88rem !important;
+        font-weight: 700 !important;
     }
 }
 
@@ -1214,9 +1238,21 @@ body.theme-night .hero-overlay-bottom {
 
 .tomo-buttons-group .tomo-tab.active {
     background-color: var(--accent-red);
-    color: var(--text-primary);
+    color: #ffffff;
     border-color: var(--accent-red);
     box-shadow: 0 6px 20px rgba(216, 17, 36, 0.5), 0 0 15px var(--accent-red-glow);
+}
+
+.tomo-buttons-group .tomo-tab:not(.active) {
+    background-color: #ffffff;
+    color: #3d3028;
+    border: 1.5px solid rgba(0, 0, 0, 0.18);
+}
+
+body.theme-night .tomo-buttons-group .tomo-tab:not(.active) {
+    background-color: rgba(255,255,255,0.06);
+    color: var(--text-secondary);
+    border: 1.5px solid rgba(255,255,255,0.12);
 }
 
 .book-3d-stage {
@@ -1911,10 +1947,13 @@ body.theme-night .hero-overlay-bottom {
 }
 
 .social-macro-handle {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    margin-bottom: 1.25rem;
+    font-family: var(--font-body) !important;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: lowercase;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
 }
 
 .social-macro-desc {
@@ -2941,6 +2980,20 @@ body.theme-night .hero-overlay-bottom {
 #scroll-top svg {
     width: 22px;
     height: 22px;
+}
+
+@media (max-width: 768px) {
+    #scroll-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 38px;
+        height: 38px;
+        z-index: 150;
+    }
+    #scroll-top svg {
+        width: 18px;
+        height: 18px;
+    }
 }
 
 /* 15. RESPONSIVENESS */

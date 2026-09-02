@@ -101,6 +101,6 @@ $social = $settings['social'] ?? [];
     </button>
 
     <!-- JS Link -->
-    <script src="js/main.js?v=3.5"></script>
+    <script src="js/main.js?v=3.7"></script>
 </body>
 </html>

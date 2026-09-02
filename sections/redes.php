@@ -40,7 +40,7 @@ $social = $settings['social'] ?? [];
                 </div>
                 <div class="social-macro-content">
                     <span class="social-macro-platform">Instagram</span>
-                    <h3 class="social-macro-title">@la.ruta.de.samurai</h3>
+                    <h3 class="social-macro-title social-macro-handle">@la.ruta.de.samurai</h3>
                     <p class="social-macro-desc">Fotografías, reels, e historias sobre lugares de Japón y publicaciones sobre diversos temas relacionados con ese país</p>
                     <span class="social-macro-btn">Seguir en Instagram &rarr;</span>
                 </div>
