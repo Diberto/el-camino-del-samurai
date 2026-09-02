@@ -287,7 +287,7 @@ if ($action === 'edit' && isset($_GET['id'])) {
                                     <div id="quill-editor"><?= $edit_item['content'] ?? '<p>Escribe aquí el contenido del artículo...</p>' ?></div>
                                     
                                     <!-- Textarea oculta que se sincroniza al enviar -->
-                                    <textarea name="content" id="content-hidden" style="display: none;"><?= e($edit_item['content'] ?? '') ?></textarea>
+                                    <textarea name="content" id="content-hidden" style="display: none;"><?= $edit_item['content'] ?? '' ?></textarea>
                                 </div>
 
                                 <div class="form-row">
@@ -394,6 +394,12 @@ if ($action === 'edit' && isset($_GET['id'])) {
                     },
                     placeholder: 'Escribe y diseña el artículo aquí con formato enriquecido...'
                 });
+
+                // Cargar contenido existente desde el textarea (sin escapar HTML)
+                const savedContent = hiddenTextarea.value.trim();
+                if (savedContent) {
+                    quill.root.innerHTML = savedContent;
+                }
 
                 let isCodeView = false;
                 if (btnToggleCode) {
