@@ -1972,25 +1972,48 @@ body.theme-night .tomo-buttons-group .tomo-tab:not(.active) {
     font-size: 0.9rem;
     font-weight: 700;
     color: #fff;
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
-    transition: all 0.3s ease;
+    background: rgba(30, 30, 30, 0.7);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.25s ease;
+    letter-spacing: 0.02em;
 }
 
+/* YouTube — siempre rojo */
+.youtube-macro-card .social-macro-btn {
+    background: #cc0000;
+    border-color: #ff2222;
+}
 .youtube-macro-card:hover .social-macro-btn {
     background: #ff0000;
-    border-color: #ff0000;
+    border-color: #ff4444;
+    transform: scale(1.04);
+    box-shadow: 0 4px 18px rgba(255, 0, 0, 0.4);
 }
 
-.instagram-macro-card:hover .social-macro-btn {
-    background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+/* Instagram — siempre gradiente */
+.instagram-macro-card .social-macro-btn {
+    background: linear-gradient(45deg, #e1306c, #833ab4);
     border-color: transparent;
 }
+.instagram-macro-card:hover .social-macro-btn {
+    background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+    transform: scale(1.04);
+    box-shadow: 0 4px 18px rgba(188, 24, 136, 0.45);
+}
 
-.facebook-macro-card:hover .social-macro-btn {
+/* Facebook — siempre azul */
+.facebook-macro-card .social-macro-btn {
     background: #1877f2;
     border-color: #1877f2;
 }
+.facebook-macro-card:hover .social-macro-btn {
+    background: #0a5fcf;
+    border-color: #0a5fcf;
+    transform: scale(1.04);
+    box-shadow: 0 4px 18px rgba(24, 119, 242, 0.45);
+}
+
+
 
 /* CONTACT SECTION ESTILOS */
 .contact-section {
@@ -4638,8 +4661,54 @@ img {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
-    text-decoration: none;
+
+.social-macro-btn {
+    display: inline-block;
+    padding: 0.75rem 1.6rem;
+    border-radius: 30px;
     font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    transition: all 0.25s ease;
+    letter-spacing: 0.02em;
+}
+
+/* YouTube — siempre rojo visible */
+.youtube-macro-card .social-macro-btn {
+    background: #cc0000;
+    border-color: #ff0000;
+}
+.youtube-macro-card:hover .social-macro-btn {
+    background: #ff0000;
+    border-color: #ff4444;
+    transform: scale(1.04);
+    box-shadow: 0 4px 18px rgba(255, 0, 0, 0.4);
+}
+
+/* Instagram — siempre gradiente visible */
+.instagram-macro-card .social-macro-btn {
+    background: linear-gradient(45deg, #e1306c, #833ab4);
+    border-color: transparent;
+}
+.instagram-macro-card:hover .social-macro-btn {
+    background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+    transform: scale(1.04);
+    box-shadow: 0 4px 18px rgba(188, 24, 136, 0.45);
+}
+
+/* Facebook — siempre azul visible */
+.facebook-macro-card .social-macro-btn {
+    background: #1877f2;
+    border-color: #1877f2;
+}
+.facebook-macro-card:hover .social-macro-btn {
+    background: #0a5fcf;
+    border-color: #0a5fcf;
+    transform: scale(1.04);
+    box-shadow: 0 4px 18px rgba(24, 119, 242, 0.45);
+}
     font-weight: 600;
     transition: all 0.2s ease;
 }
