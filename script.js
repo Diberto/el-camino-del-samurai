@@ -1520,7 +1520,130 @@ document.addEventListener('DOMContentLoaded', () => {
         animate3DBook();
     }
 
-    init3DBookEngine();
+    // 12.5 PHOTO GALLERY PAGINATION CONTROLLER
+    function initGalleryPagination() {
+        const galleryGrid = document.getElementById('gallery-posts-grid') || document.getElementById('gallery-scroll-track');
+        const galleryPagination = document.getElementById('gallery-pagination');
+        const btnGalleryPrev = document.getElementById('gallery-scroll-prev');
+        const btnGalleryNext = document.getElementById('gallery-scroll-next');
+        const galleryCounterTag = document.getElementById('gallery-counter-tag');
+
+        if (!galleryGrid) return;
+        const galleryCards = Array.from(galleryGrid.querySelectorAll('.gallery-card'));
+        const configuredGalleryPerPage = parseInt(galleryGrid.getAttribute('data-per-page') || '0', 10);
+        const GALLERY_PER_PAGE = configuredGalleryPerPage > 0 ? configuredGalleryPerPage : 3;
+        let currentGalleryPage = 1;
+
+        function renderGalleryPage() {
+            if (!galleryCards.length) return;
+
+            const totalPages = Math.max(1, Math.ceil(galleryCards.length / GALLERY_PER_PAGE));
+            if (currentGalleryPage > totalPages) currentGalleryPage = totalPages;
+            if (currentGalleryPage < 1) currentGalleryPage = 1;
+
+            const startIndex = (currentGalleryPage - 1) * GALLERY_PER_PAGE;
+            const endIndex = startIndex + GALLERY_PER_PAGE;
+
+            galleryCards.forEach((card, index) => {
+                if (index >= startIndex && index < endIndex) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (galleryCounterTag) {
+                const startNum = startIndex + 1;
+                const endNum = Math.min(galleryCards.length, endIndex);
+                if (totalPages > 1) {
+                    galleryCounterTag.innerHTML = `<span>📸 Fotos ${startNum}-${endNum} de ${galleryCards.length} • Pág. ${currentGalleryPage} de ${totalPages}</span>`;
+                } else {
+                    galleryCounterTag.innerHTML = `<span>📸 Mostrando ${galleryCards.length} fotografías</span>`;
+                }
+            }
+
+            if (btnGalleryPrev) {
+                btnGalleryPrev.disabled = currentGalleryPage <= 1;
+                btnGalleryPrev.classList.toggle('disabled', currentGalleryPage <= 1);
+            }
+            if (btnGalleryNext) {
+                btnGalleryNext.disabled = currentGalleryPage >= totalPages;
+                btnGalleryNext.classList.toggle('disabled', currentGalleryPage >= totalPages);
+            }
+
+            if (galleryPagination) {
+                if (totalPages <= 1) {
+                    galleryPagination.innerHTML = '';
+                    galleryPagination.style.display = 'none';
+                } else {
+                    galleryPagination.style.display = 'flex';
+                    let paginationHtml = '<ul class="pagination-list">';
+
+                    if (currentGalleryPage > 1) {
+                        paginationHtml += `<li><button type="button" class="pagination-link prev" data-gallery-page="${currentGalleryPage - 1}" aria-label="Página anterior">&larr; Anterior</button></li>`;
+                    } else {
+                        paginationHtml += `<li><span class="pagination-link disabled">&larr; Anterior</span></li>`;
+                    }
+
+                    for (let p = 1; p <= totalPages; p++) {
+                        const isActive = p === currentGalleryPage ? 'active' : '';
+                        paginationHtml += `<li><button type="button" class="pagination-link ${isActive}" data-gallery-page="${p}" aria-label="Ir a página ${p}">${p}</button></li>`;
+                    }
+
+                    if (currentGalleryPage < totalPages) {
+                        paginationHtml += `<li><button type="button" class="pagination-link next" data-gallery-page="${currentGalleryPage + 1}" aria-label="Página siguiente">Siguiente &rarr;</button></li>`;
+                    } else {
+                        paginationHtml += `<li><span class="pagination-link disabled">Siguiente &rarr;</span></li>`;
+                    }
+
+                    paginationHtml += '</ul>';
+                    galleryPagination.innerHTML = paginationHtml;
+
+                    galleryPagination.querySelectorAll('.pagination-link[data-gallery-page]').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const pageNum = parseInt(btn.getAttribute('data-gallery-page'), 10);
+                            if (pageNum && pageNum !== currentGalleryPage) {
+                                currentGalleryPage = pageNum;
+                                renderGalleryPage();
+                                const galSec = document.getElementById('galeria');
+                                if (galSec) galSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        });
+                    });
+                }
+            }
+        }
+
+        if (btnGalleryPrev) {
+            btnGalleryPrev.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentGalleryPage > 1) {
+                    currentGalleryPage--;
+                    renderGalleryPage();
+                    const galSec = document.getElementById('galeria');
+                    if (galSec) galSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        }
+
+        if (btnGalleryNext) {
+            btnGalleryNext.addEventListener('click', (e) => {
+                e.preventDefault();
+                const totalPages = Math.max(1, Math.ceil(galleryCards.length / GALLERY_PER_PAGE));
+                if (currentGalleryPage < totalPages) {
+                    currentGalleryPage++;
+                    renderGalleryPage();
+                    const galSec = document.getElementById('galeria');
+                    if (galSec) galSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        }
+
+        renderGalleryPage();
+    }
+
+    initGalleryPagination();
 
     // 13. PHOTO GALLERY LIGHTBOX MODAL CONTROLLER
     function initGalleryLightbox() {
