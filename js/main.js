@@ -1178,7 +1178,85 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =========================================================================
-    // 10. SCROLL REVEAL & FADE-IN ANIMATION SYSTEM (INTERSECTION OBSERVER)
+    // 10. PAGINACIÓN DE ARTÍCULOS EN LA SECCIÓN BLOG (HOME)
+    // =========================================================================
+    const homeBlogGrid = document.getElementById('home-blog-posts-grid');
+    const homeBlogPagination = document.getElementById('home-blog-pagination');
+
+    if (homeBlogGrid && homeBlogPagination) {
+        const blogCards = Array.from(homeBlogGrid.querySelectorAll('.blog-compact-card, .blog-card'));
+        const BLOG_PER_PAGE = 3; // 3 artículos por página (1 fila de 3 columnas en desktop)
+        let currentBlogPage = 1;
+
+        function renderHomeBlogPage() {
+            if (!blogCards.length) return;
+
+            const totalPages = Math.max(1, Math.ceil(blogCards.length / BLOG_PER_PAGE));
+            if (currentBlogPage > totalPages) currentBlogPage = totalPages;
+            if (currentBlogPage < 1) currentBlogPage = 1;
+
+            const startIndex = (currentBlogPage - 1) * BLOG_PER_PAGE;
+            const endIndex = startIndex + BLOG_PER_PAGE;
+
+            blogCards.forEach((card, index) => {
+                if (index >= startIndex && index < endIndex) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (totalPages <= 1) {
+                homeBlogPagination.innerHTML = '';
+                homeBlogPagination.style.display = 'none';
+            } else {
+                homeBlogPagination.style.display = 'flex';
+                let paginationHtml = '<ul class="pagination-list">';
+
+                // Botón Anterior
+                if (currentBlogPage > 1) {
+                    paginationHtml += `<li><button type="button" class="pagination-link prev" data-blog-page="${currentBlogPage - 1}" aria-label="Página anterior">&larr; Anterior</button></li>`;
+                } else {
+                    paginationHtml += `<li><span class="pagination-link disabled">&larr; Anterior</span></li>`;
+                }
+
+                // Botones numéricos
+                for (let p = 1; p <= totalPages; p++) {
+                    const isActive = p === currentBlogPage ? 'active' : '';
+                    paginationHtml += `<li><button type="button" class="pagination-link ${isActive}" data-blog-page="${p}" aria-label="Ir a página ${p}">${p}</button></li>`;
+                }
+
+                // Botón Siguiente
+                if (currentBlogPage < totalPages) {
+                    paginationHtml += `<li><button type="button" class="pagination-link next" data-blog-page="${currentBlogPage + 1}" aria-label="Página siguiente">Siguiente &rarr;</button></li>`;
+                } else {
+                    paginationHtml += `<li><span class="pagination-link disabled">Siguiente &rarr;</span></li>`;
+                }
+
+                paginationHtml += '</ul>';
+                homeBlogPagination.innerHTML = paginationHtml;
+
+                homeBlogPagination.querySelectorAll('[data-blog-page]').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const targetPage = parseInt(btn.getAttribute('data-blog-page'), 10);
+                        if (!isNaN(targetPage) && targetPage !== currentBlogPage) {
+                            currentBlogPage = targetPage;
+                            renderHomeBlogPage();
+                            const sectionEl = document.getElementById('blog');
+                            if (sectionEl) {
+                                sectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        }
+                    });
+                });
+            }
+        }
+
+        renderHomeBlogPage();
+    }
+
+    // =========================================================================
+    // 11. SCROLL REVEAL & FADE-IN ANIMATION SYSTEM (INTERSECTION OBSERVER)
     // =========================================================================
     const fadeElements = document.querySelectorAll('.fade-in');
 
