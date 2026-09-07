@@ -3,8 +3,8 @@
  * SECCIÓN GALERÍA DE LA TRAVESÍA - FORMATO GALERÍA CON LIGHTBOX Y CONTROLES DE DESPLAZAMIENTO
  */
 $galeria_all = get_json_data('galeria.json', []);
-$gallery_limit = (int)($settings['home_gallery_limit'] ?? 8);
-$galeria = ($gallery_limit > 0) ? array_slice($galeria_all, 0, $gallery_limit) : $galeria_all;
+$gallery_limit = (int)($settings['home_gallery_limit'] ?? 0);
+$galeria = ($gallery_limit > 0 && $gallery_limit < count($galeria_all)) ? array_slice($galeria_all, 0, $gallery_limit) : $galeria_all;
 $total_fotos = count($galeria);
 ?>
 <!-- Sección Galería Fotográfica de Japón -->

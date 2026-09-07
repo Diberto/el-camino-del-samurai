@@ -3,9 +3,9 @@
  * SECCIÓN DE OPINIONES Y TESTIMONIOS DE LECTORES (CONFIGURABLE DESDE ADMIN)
  */
 $opiniones_all = get_json_data('opiniones.json', []);
-$reviews_limit = (int)($settings['home_reviews_limit'] ?? 6);
-$opiniones = ($reviews_limit > 0) ? array_slice($opiniones_all, 0, $reviews_limit) : $opiniones_all;
-$default_filter = $settings['reviews_default_filter'] ?? 'text';
+$reviews_limit = (int)($settings['home_reviews_limit'] ?? 0);
+$opiniones = ($reviews_limit > 0 && $reviews_limit < count($opiniones_all)) ? array_slice($opiniones_all, 0, $reviews_limit) : $opiniones_all;
+$default_filter = $settings['reviews_default_filter'] ?? 'all';
 ?>
 <!-- Sección de Opiniones y Testimonios de Lectores -->
 <section class="section reviews-section" id="opiniones" aria-label="Opiniones de Lectores">

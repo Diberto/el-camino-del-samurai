@@ -89,10 +89,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
     $settings['budokan_tomo2_url'] = trim($_POST['budokan_tomo2_url'] ?? 'https://www.budokanweb.com/tienda/destacados/el-paso-de-las-luciernagas-la-ruta-del-samurai-2/');
     $settings['theme_default'] = trim($_POST['theme_default'] ?? 'day');
     $settings['reviews_default_filter'] = trim($_POST['reviews_default_filter'] ?? 'text');
-    $settings['home_blog_limit'] = max(1, (int)($_POST['home_blog_limit'] ?? 3));
+    $settings['home_blog_limit'] = max(0, (int)($_POST['home_blog_limit'] ?? 0));
     $settings['blog_per_page'] = max(1, (int)($_POST['blog_per_page'] ?? 6));
-    $settings['home_reviews_limit'] = max(1, (int)($_POST['home_reviews_limit'] ?? 6));
-    $settings['home_gallery_limit'] = max(0, (int)($_POST['home_gallery_limit'] ?? 8));
+    $settings['home_reviews_limit'] = max(0, (int)($_POST['home_reviews_limit'] ?? 0));
+    $settings['home_gallery_limit'] = max(0, (int)($_POST['home_gallery_limit'] ?? 0));
 
     // Redes Sociales Oficiales
     $settings['social']['youtube']['url'] = trim($_POST['yt_url'] ?? 'https://www.youtube.com/@larutadelsamurai');
@@ -225,8 +225,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="home_blog_limit">📝 Artículos de Blog en Home</label>
-                                <input type="number" id="home_blog_limit" name="home_blog_limit" min="1" max="50" value="<?= (int)($settings['home_blog_limit'] ?? 3) ?>" required>
-                                <small style="color: var(--text-muted); font-size: 0.78rem;">Entradas visibles en la portada (por defecto: 3)</small>
+                                <input type="number" id="home_blog_limit" name="home_blog_limit" min="0" max="50" value="<?= (int)($settings['home_blog_limit'] ?? 0) ?>">
+                                <small style="color: var(--text-muted); font-size: 0.78rem;">Entradas visibles en la portada (0 = todas)</small>
                             </div>
 
                             <div class="form-group">
@@ -237,14 +237,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
 
                             <div class="form-group">
                                 <label for="home_reviews_limit">💬 Opiniones / Reseñas en Home</label>
-                                <input type="number" id="home_reviews_limit" name="home_reviews_limit" min="1" max="50" value="<?= (int)($settings['home_reviews_limit'] ?? 6) ?>" required>
-                                <small style="color: var(--text-muted); font-size: 0.78rem;">Tarjetas en la grilla de testimonios (por defecto: 6)</small>
+                                <input type="number" id="home_reviews_limit" name="home_reviews_limit" min="0" max="50" value="<?= (int)($settings['home_reviews_limit'] ?? 0) ?>">
+                                <small style="color: var(--text-muted); font-size: 0.78rem;">Tarjetas en testimonios (0 = todas)</small>
                             </div>
 
                             <div class="form-group">
                                 <label for="home_gallery_limit">🖼️ Fotos de la Galería en Home</label>
-                                <input type="number" id="home_gallery_limit" name="home_gallery_limit" min="0" max="100" value="<?= (int)($settings['home_gallery_limit'] ?? 8) ?>" required>
-                                <small style="color: var(--text-muted); font-size: 0.78rem;">Fotografías en la galería (por defecto: 8, 0 = todas)</small>
+                                <input type="number" id="home_gallery_limit" name="home_gallery_limit" min="0" max="100" value="<?= (int)($settings['home_gallery_limit'] ?? 0) ?>">
+                                <small style="color: var(--text-muted); font-size: 0.78rem;">Fotografías en la galería (0 = todas)</small>
                             </div>
                         </div>
                     </div>
