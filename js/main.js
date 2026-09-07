@@ -678,7 +678,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterBtns = document.querySelectorAll('.review-filter-btn');
     const reviewCards = document.querySelectorAll('.review-card');
     const reviewsPagination = document.getElementById('reviews-pagination');
-    const REVIEWS_PER_PAGE = 6; // 6 opiniones por página (2 filas de 3 columnas en desktop)
+    const reviewsGrid = document.getElementById('reviews-grid');
+    const configuredReviewsPerPage = reviewsGrid ? parseInt(reviewsGrid.getAttribute('data-per-page') || '0', 10) : 0;
+    const REVIEWS_PER_PAGE = configuredReviewsPerPage > 0 ? configuredReviewsPerPage : 6;
 
     let currentReviewsFilter = document.body.getAttribute('data-reviews-filter') || 'all';
     let currentReviewsPage = 1;
@@ -905,9 +907,11 @@ document.addEventListener('DOMContentLoaded', () => {
         let totalPages = 1;
 
         function getVisibleCardsCount() {
+            const configured = parseInt(galleryTrack.getAttribute('data-per-view') || '0', 10);
+            const cols = configured > 0 ? configured : 3;
             if (window.innerWidth <= 640) return 1;
-            if (window.innerWidth <= 992) return 2;
-            return 3;
+            if (window.innerWidth <= 992) return Math.min(2, cols);
+            return cols;
         }
 
         function updateGalleryPagination() {
@@ -1185,7 +1189,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (homeBlogGrid && homeBlogPagination) {
         const blogCards = Array.from(homeBlogGrid.querySelectorAll('.blog-compact-card, .blog-card'));
-        const BLOG_PER_PAGE = 3; // 3 artículos por página (1 fila de 3 columnas en desktop)
+        const configuredBlogPerPage = parseInt(homeBlogGrid.getAttribute('data-per-page') || '0', 10);
+        const BLOG_PER_PAGE = configuredBlogPerPage > 0 ? configuredBlogPerPage : 3;
         let currentBlogPage = 1;
 
         function renderHomeBlogPage() {

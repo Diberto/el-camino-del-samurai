@@ -217,34 +217,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
 
                     <!-- Cantidad de Elementos a Mostrar en el Home -->
                     <div class="admin-card">
-                        <h3>🔢 Cantidad de Elementos a Mostrar en la Portada / Home</h3>
+                        <h3>🔢 Cantidad de Elementos por Página / Vista en la Portada (Home)</h3>
                         <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 1.25rem;">
-                            Define cuántos elementos se cargarán de forma predeterminada en cada sección del sitio principal:
+                            Define cuántos objetos se muestran a la vez en cada sección. <strong>Todos los elementos se conservan</strong> y los visitantes pueden recorrer la sección completa mediante la paginación y controles interactivos:
                         </p>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="home_blog_limit">📝 Artículos de Blog en Home</label>
+                                <label for="home_blog_limit">📝 Artículos de Blog por Página (Home)</label>
                                 <input type="number" id="home_blog_limit" name="home_blog_limit" min="0" max="50" value="<?= (int)($settings['home_blog_limit'] ?? 0) ?>">
-                                <small style="color: var(--text-muted); font-size: 0.78rem;">Entradas visibles en la portada (0 = todas)</small>
+                                <small style="color: var(--text-muted); font-size: 0.78rem;">Artículos visibles por página (ej. 3 por fila, 0 = 3 por defecto; con paginación completa)</small>
                             </div>
 
                             <div class="form-group">
-                                <label for="blog_per_page">📄 Artículos por Página en Blog</label>
+                                <label for="blog_per_page">📄 Artículos por Página en blog.php</label>
                                 <input type="number" id="blog_per_page" name="blog_per_page" min="1" max="50" value="<?= (int)($settings['blog_per_page'] ?? 6) ?>" required>
-                                <small style="color: var(--text-muted); font-size: 0.78rem;">Paginación en blog.php (por defecto: 6)</small>
+                                <small style="color: var(--text-muted); font-size: 0.78rem;">Paginación en la página completa blog.php</small>
                             </div>
 
                             <div class="form-group">
-                                <label for="home_reviews_limit">💬 Opiniones / Reseñas en Home</label>
+                                <label for="home_reviews_limit">💬 Opiniones por Página (Home)</label>
                                 <input type="number" id="home_reviews_limit" name="home_reviews_limit" min="0" max="50" value="<?= (int)($settings['home_reviews_limit'] ?? 0) ?>">
-                                <small style="color: var(--text-muted); font-size: 0.78rem;">Tarjetas en testimonios (0 = todas)</small>
+                                <small style="color: var(--text-muted); font-size: 0.78rem;">Opiniones visibles por página (ej. 3 o 6, 0 = 6 por defecto; con paginación completa)</small>
                             </div>
 
                             <div class="form-group">
-                                <label for="home_gallery_limit">🖼️ Fotos de la Galería en Home</label>
-                                <input type="number" id="home_gallery_limit" name="home_gallery_limit" min="0" max="100" value="<?= (int)($settings['home_gallery_limit'] ?? 0) ?>">
-                                <small style="color: var(--text-muted); font-size: 0.78rem;">Fotografías en la galería (0 = todas)</small>
+                                <label for="home_gallery_limit">🖼️ Fotos por Vista en Galería (Home)</label>
+                                <input type="number" id="home_gallery_limit" name="home_gallery_limit" min="0" max="20" value="<?= (int)($settings['home_gallery_limit'] ?? 0) ?>">
+                                <small style="color: var(--text-muted); font-size: 0.78rem;">Fotos visibles simultáneamente (ej. 3 fotos, 0 = 3 por defecto; navegando por todas)</small>
                             </div>
                         </div>
                     </div>

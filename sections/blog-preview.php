@@ -4,7 +4,8 @@
  */
 $posts = get_json_data('blog.json', []);
 $blog_limit = (int)($settings['home_blog_limit'] ?? 0);
-$featured_posts = ($blog_limit > 0 && $blog_limit < count($posts)) ? array_slice($posts, 0, $blog_limit) : $posts;
+$per_page = ($blog_limit > 0) ? $blog_limit : 3;
+$featured_posts = $posts; // Preservar todos los artículos para paginación completa en Home
 ?>
 <!-- Sección Blog Samurai -->
 <section class="section blog-section" id="blog">
@@ -15,13 +16,14 @@ $featured_posts = ($blog_limit > 0 && $blog_limit < count($posts)) ? array_slice
             <p class="section-desc">Artículos, recuerdos, anécdotas y entrevistas escritas por Jorge Orpianesi</p>
         </div>
 
-        <div id="home-blog-posts-grid" class="blog-compact-grid fade-in" style="margin-top: 2rem; margin-bottom: 2.5rem;">
-            <?php foreach ($featured_posts as $post): ?>
+        <div id="home-blog-posts-grid" class="blog-compact-grid fade-in" data-per-page="<?= $per_page ?>" style="margin-top: 2rem; margin-bottom: 2.5rem;">
+            <?php foreach ($featured_posts as $index => $post): ?>
                 <?php 
                     $read_time = max(1, ceil(str_word_count(strip_tags($post['content'] ?? '')) / 180));
                     $cover = !empty($post['cover_image']) ? $post['cover_image'] : 'photos/castillo_sengoku.webp';
+                    $is_initially_visible = ($index < $per_page);
                 ?>
-                <article class="blog-compact-card blog-home-card">
+                <article class="blog-compact-card blog-home-card" style="display: <?= $is_initially_visible ? 'flex' : 'none' ?>;">
                     <a href="blog.php?slug=<?= urlencode($post['slug']) ?>" class="blog-compact-thumb">
                         <img src="<?= e($cover) ?>" alt="<?= e($post['title']) ?>" loading="lazy" decoding="async" onerror="this.src='photos/castillo_sengoku.webp'">
                         <span class="blog-compact-date"><?= format_date($post['created_at']) ?></span>

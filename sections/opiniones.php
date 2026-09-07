@@ -4,7 +4,8 @@
  */
 $opiniones_all = get_json_data('opiniones.json', []);
 $reviews_limit = (int)($settings['home_reviews_limit'] ?? 0);
-$opiniones = ($reviews_limit > 0 && $reviews_limit < count($opiniones_all)) ? array_slice($opiniones_all, 0, $reviews_limit) : $opiniones_all;
+$per_page_reviews = ($reviews_limit > 0) ? $reviews_limit : 6;
+$opiniones = $opiniones_all; // Preservar todas las opiniones para paginación completa en Home
 $default_filter = $settings['reviews_default_filter'] ?? 'all';
 ?>
 <!-- Sección de Opiniones y Testimonios de Lectores -->
@@ -24,11 +25,18 @@ $default_filter = $settings['reviews_default_filter'] ?? 'all';
         </div>
 
         <!-- Grid de Opiniones Mixtas -->
-        <div class="reviews-grid fade-in" id="reviews-grid">
-            <?php foreach ($opiniones as $rev): ?>
-                <?php 
+        <div class="reviews-grid fade-in" id="reviews-grid" data-per-page="<?= $per_page_reviews ?>">
+            <?php 
+                $visible_count = 0;
+                foreach ($opiniones as $rev): 
                     $card_type = $rev['type'] ?? 'text';
-                    $is_visible = ($default_filter === 'all' || $card_type === $default_filter);
+                    $matches_filter = ($default_filter === 'all' || $card_type === $default_filter);
+                    if ($matches_filter) {
+                        $visible_count++;
+                        $is_visible = ($visible_count <= $per_page_reviews);
+                    } else {
+                        $is_visible = false;
+                    }
                     $stars = str_repeat('★', (int)($rev['rating'] ?? 5));
                     $text_len = mb_strlen($rev['text'] ?? '');
                 ?>

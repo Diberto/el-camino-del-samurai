@@ -4,7 +4,8 @@
  */
 $galeria_all = get_json_data('galeria.json', []);
 $gallery_limit = (int)($settings['home_gallery_limit'] ?? 0);
-$galeria = ($gallery_limit > 0 && $gallery_limit < count($galeria_all)) ? array_slice($galeria_all, 0, $gallery_limit) : $galeria_all;
+$per_view = ($gallery_limit > 0) ? $gallery_limit : 3;
+$galeria = $galeria_all; // Preservar todas las fotos para que la navegación y paginación recorran la galería completa
 $total_fotos = count($galeria);
 ?>
 <!-- Sección Galería Fotográfica de Japón -->
@@ -19,7 +20,7 @@ $total_fotos = count($galeria);
         <!-- Barra de Controles de la Galería -->
         <div class="gallery-controls-bar fade-in">
             <div class="gallery-counter-tag" id="gallery-counter-tag">
-                <span>📸 Mostrando <?= $total_fotos ?> fotografías</span>
+                <span>📸 Mostrando <?= min($per_view, $total_fotos) ?> de <?= $total_fotos ?> fotografías</span>
             </div>
 
             <div class="gallery-nav-buttons">
@@ -38,7 +39,7 @@ $total_fotos = count($galeria);
 
         <!-- Contenedor / Carrusel de Galería -->
         <div class="gallery-track-wrapper fade-in" id="gallery-track-wrapper">
-            <div class="gallery-scroll-track" id="gallery-scroll-track">
+            <div class="gallery-scroll-track" id="gallery-scroll-track" data-per-view="<?= $per_view ?>" style="--gallery-cols: <?= $per_view ?>;">
                 <?php foreach ($galeria as $index => $item): ?>
                     <div class="gallery-card" 
                          data-gallery-index="<?= $index ?>"

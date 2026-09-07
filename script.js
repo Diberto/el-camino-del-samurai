@@ -1002,7 +1002,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const filterBtns = document.querySelectorAll('.review-filter-btn');
         const reviewCards = document.querySelectorAll('.review-card');
         const reviewsPagination = document.getElementById('reviews-pagination');
-        const REVIEWS_PER_PAGE = 6;
+        const reviewsGrid = document.getElementById('reviews-grid');
+        const configuredReviewsPerPage = reviewsGrid ? parseInt(reviewsGrid.getAttribute('data-per-page') || '0', 10) : 0;
+        const REVIEWS_PER_PAGE = configuredReviewsPerPage > 0 ? configuredReviewsPerPage : 6;
 
         let currentReviewsFilter = document.body.getAttribute('data-reviews-filter') || 'all';
         let currentReviewsPage = 1;
@@ -1185,7 +1187,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (homeBlogGrid && homeBlogPagination) {
             const blogCards = Array.from(homeBlogGrid.querySelectorAll('.blog-compact-card, .blog-card'));
-            const BLOG_PER_PAGE = 3;
+            const configuredBlogPerPage = parseInt(homeBlogGrid.getAttribute('data-per-page') || '0', 10);
+            const BLOG_PER_PAGE = configuredBlogPerPage > 0 ? configuredBlogPerPage : 3;
             let currentBlogPage = 1;
 
             function renderHomeBlogPage() {

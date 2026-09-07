@@ -5020,6 +5020,7 @@ img {
 
 /* Track scroll horizontal fluido y responsivo con snap */
 .gallery-scroll-track {
+    --gallery-cols: 3;
     display: flex;
     gap: 1.75rem;
     overflow-x: auto;
@@ -5036,8 +5037,8 @@ img {
 }
 
 .gallery-scroll-track .gallery-card {
-    flex: 0 0 calc((100% - 3.5rem) / 3);
-    min-width: 280px;
+    flex: 0 0 calc((100% - (var(--gallery-cols) - 1) * 1.75rem) / var(--gallery-cols));
+    min-width: 260px;
     scroll-snap-align: start;
     scroll-snap-stop: always;
 }
