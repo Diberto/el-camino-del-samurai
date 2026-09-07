@@ -997,67 +997,183 @@ document.addEventListener('DOMContentLoaded', () => {
 
     animatePetals();
 
-    // 5. OPINIONES DE LECTORES (FILTRO Y LIGHTBOX DE FOTOS)
+    // 5. OPINIONES DE LECTORES (FILTRO, PAGINACIÓN Y MODAL DE AMPLIACIÓN)
     function initReviewsInteraction() {
         const filterBtns = document.querySelectorAll('.review-filter-btn');
         const reviewCards = document.querySelectorAll('.review-card');
-        const photoWrappers = document.querySelectorAll('.review-photo-wrapper');
+        const reviewsPagination = document.getElementById('reviews-pagination');
+        const REVIEWS_PER_PAGE = 6;
+
+        let currentReviewsFilter = document.body.getAttribute('data-reviews-filter') || 'all';
+        let currentReviewsPage = 1;
+
+        function renderReviews() {
+            if (!reviewCards.length) return;
+
+            filterBtns.forEach(btn => {
+                const filterVal = btn.getAttribute('data-filter');
+                btn.classList.toggle('active', filterVal === currentReviewsFilter);
+            });
+
+            const matchingCards = Array.from(reviewCards).filter(card => {
+                const type = card.getAttribute('data-type');
+                return currentReviewsFilter === 'all' || type === currentReviewsFilter;
+            });
+
+            const totalPages = Math.max(1, Math.ceil(matchingCards.length / REVIEWS_PER_PAGE));
+            if (currentReviewsPage > totalPages) currentReviewsPage = totalPages;
+            if (currentReviewsPage < 1) currentReviewsPage = 1;
+
+            const startIndex = (currentReviewsPage - 1) * REVIEWS_PER_PAGE;
+            const endIndex = startIndex + REVIEWS_PER_PAGE;
+
+            reviewCards.forEach(card => {
+                const isMatch = (currentReviewsFilter === 'all' || card.getAttribute('data-type') === currentReviewsFilter);
+                if (!isMatch) {
+                    card.style.display = 'none';
+                } else {
+                    const matchIndex = matchingCards.indexOf(card);
+                    if (matchIndex >= startIndex && matchIndex < endIndex) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+
+            if (reviewsPagination) {
+                if (totalPages <= 1) {
+                    reviewsPagination.innerHTML = '';
+                    reviewsPagination.style.display = 'none';
+                } else {
+                    reviewsPagination.style.display = 'flex';
+                    let paginationHtml = '<ul class="pagination-list">';
+
+                    if (currentReviewsPage > 1) {
+                        paginationHtml += `<li><button type="button" class="pagination-link prev" data-review-page="${currentReviewsPage - 1}" aria-label="Página anterior">&larr; Anterior</button></li>`;
+                    } else {
+                        paginationHtml += `<li><span class="pagination-link disabled">&larr; Anterior</span></li>`;
+                    }
+
+                    for (let p = 1; p <= totalPages; p++) {
+                        const isActive = p === currentReviewsPage ? 'active' : '';
+                        paginationHtml += `<li><button type="button" class="pagination-link ${isActive}" data-review-page="${p}" aria-label="Ir a página ${p}">${p}</button></li>`;
+                    }
+
+                    if (currentReviewsPage < totalPages) {
+                        paginationHtml += `<li><button type="button" class="pagination-link next" data-review-page="${currentReviewsPage + 1}" aria-label="Página siguiente">Siguiente &rarr;</button></li>`;
+                    } else {
+                        paginationHtml += `<li><span class="pagination-link disabled">Siguiente &rarr;</span></li>`;
+                    }
+
+                    paginationHtml += '</ul>';
+                    reviewsPagination.innerHTML = paginationHtml;
+
+                    reviewsPagination.querySelectorAll('[data-review-page]').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const targetPage = parseInt(btn.getAttribute('data-review-page'), 10);
+                            if (!isNaN(targetPage) && targetPage !== currentReviewsPage) {
+                                currentReviewsPage = targetPage;
+                                renderReviews();
+                                const sectionEl = document.getElementById('opiniones');
+                                if (sectionEl) sectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        });
+                    });
+                }
+            }
+        }
 
         if (filterBtns.length) {
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-
-                    const filter = btn.getAttribute('data-filter');
-                    reviewCards.forEach(card => {
-                        const cardType = card.getAttribute('data-type');
-                        if (filter === 'all' || cardType === filter) {
-                            card.style.display = 'flex';
-                            card.style.animation = 'fadeInUp 0.4s ease forwards';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
+                    const newFilter = btn.getAttribute('data-filter') || 'all';
+                    if (newFilter !== currentReviewsFilter) {
+                        currentReviewsFilter = newFilter;
+                        currentReviewsPage = 1;
+                        renderReviews();
+                    }
                 });
             });
         }
 
-        // Lightbox para fotos de lectores
-        photoWrappers.forEach(wrapper => {
-            wrapper.addEventListener('click', () => {
-                const src = wrapper.getAttribute('data-src');
-                const title = wrapper.getAttribute('data-title') || 'Foto de Lector';
-                let lightbox = document.getElementById('samurai-gallery-lightbox');
-                if (!lightbox) {
-                    lightbox = document.createElement('div');
-                    lightbox.id = 'samurai-gallery-lightbox';
-                    lightbox.className = 'gallery-lightbox';
-                    lightbox.innerHTML = `
-                        <div class="lightbox-backdrop"></div>
-                        <div class="lightbox-container">
-                            <button class="lightbox-close" aria-label="Cerrar">&times;</button>
-                            <img src="" alt="Vista previa de foto">
-                            <div class="lightbox-info">
-                                <div class="lightbox-tag">📸 Opinión de Lector</div>
-                                <h3 class="lightbox-title" style="color:#fff; margin:0.3rem 0 0 0; font-size:1.1rem;"></h3>
-                            </div>
-                        </div>
-                    `;
-                    document.body.appendChild(lightbox);
-                    const closeBtn = lightbox.querySelector('.lightbox-close');
-                    const backdrop = lightbox.querySelector('.lightbox-backdrop');
-                    const closeFn = () => lightbox.classList.remove('active');
-                    if (closeBtn) closeBtn.addEventListener('click', closeFn);
-                    if (backdrop) backdrop.addEventListener('click', closeFn);
-                }
-                const img = lightbox.querySelector('img');
-                const titleEl = lightbox.querySelector('.lightbox-title');
-                if (img) img.src = src;
-                if (titleEl) titleEl.textContent = title;
-                lightbox.classList.add('active');
+        if (reviewCards.length) {
+            renderReviews();
+        }
+
+        // Modal para opiniones
+        const reviewModal = document.getElementById('review-modal');
+        if (reviewModal) {
+            const reviewModalBackdrop = document.getElementById('review-modal-backdrop');
+            const reviewModalClose = document.getElementById('review-modal-close');
+            const reviewModalMedia = document.getElementById('review-modal-media');
+            const reviewModalImg = document.getElementById('review-modal-img');
+            const reviewModalBadge = document.getElementById('review-modal-badge');
+            const reviewModalStars = document.getElementById('review-modal-stars');
+            const reviewModalVerified = document.getElementById('review-modal-verified');
+            const reviewModalBody = document.getElementById('review-modal-body');
+            const reviewModalAvatar = document.getElementById('review-modal-avatar');
+            const reviewModalAuthor = document.getElementById('review-modal-author');
+            const reviewModalRole = document.getElementById('review-modal-role');
+            const reviewModalDate = document.getElementById('review-modal-date');
+
+            const closeReviewModal = () => {
+                reviewModal.classList.remove('active');
+                reviewModal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            };
+
+            if (reviewModalClose) reviewModalClose.addEventListener('click', closeReviewModal);
+            if (reviewModalBackdrop) reviewModalBackdrop.addEventListener('click', closeReviewModal);
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && reviewModal.classList.contains('active')) closeReviewModal();
             });
-        });
+
+            reviewCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const name = card.getAttribute('data-name') || 'Lector';
+                    const role = card.getAttribute('data-role') || '';
+                    const photo = card.getAttribute('data-photo') || '';
+                    const photoTitle = card.getAttribute('data-photo-title') || name;
+                    const rating = parseInt(card.getAttribute('data-rating') || '5', 10);
+                    const verified = card.getAttribute('data-verified') === '1';
+                    const date = card.getAttribute('data-date') || '';
+                    const fullTextEl = card.querySelector('.review-full-text');
+                    const textContent = fullTextEl ? fullTextEl.textContent.trim() : (card.querySelector('.review-caption, .review-body')?.textContent.trim() || '');
+
+                    if (reviewModalAuthor) reviewModalAuthor.textContent = name;
+                    if (reviewModalRole) reviewModalRole.textContent = role;
+                    if (reviewModalStars) reviewModalStars.textContent = '★'.repeat(rating);
+                    if (reviewModalBody) reviewModalBody.textContent = textContent ? `"${textContent}"` : '';
+                    if (reviewModalVerified) reviewModalVerified.style.display = verified ? 'inline-block' : 'none';
+                    if (reviewModalDate) reviewModalDate.textContent = date ? `Publicado: ${date}` : '';
+
+                    if (photo && reviewModalMedia && reviewModalImg) {
+                        reviewModalMedia.style.display = 'block';
+                        reviewModalImg.src = photo;
+                        reviewModalImg.alt = name;
+                        if (reviewModalBadge) reviewModalBadge.textContent = photoTitle ? `📸 ${photoTitle}` : '📸 Foto de Lector';
+                    } else if (reviewModalMedia) {
+                        reviewModalMedia.style.display = 'none';
+                        if (reviewModalImg) reviewModalImg.src = '';
+                    }
+
+                    if (reviewModalAvatar) {
+                        if (photo) {
+                            reviewModalAvatar.className = 'review-modal-avatar';
+                            reviewModalAvatar.innerHTML = `<img src="${photo}" alt="${name}" onerror="this.parentElement.className='review-modal-avatar text-avatar'; this.parentElement.innerText='${name.slice(0, 2).toUpperCase()}';">`;
+                        } else {
+                            reviewModalAvatar.className = 'review-modal-avatar text-avatar';
+                            reviewModalAvatar.textContent = name ? name.slice(0, 2).toUpperCase() : 'LS';
+                        }
+                    }
+
+                    reviewModal.classList.add('active');
+                    reviewModal.setAttribute('aria-hidden', 'false');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+        }
     }
 
     initReviewsInteraction();

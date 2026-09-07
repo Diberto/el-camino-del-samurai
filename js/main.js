@@ -673,41 +673,221 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // =========================================================================
-    // 8. FILTROS DE OPINIONES DE LECTORES (REVIEWS FILTER)
+    // 8. FILTROS Y PAGINACIÓN DE OPINIONES DE LECTORES + MODAL DE AMPLIACIÓN
     // =========================================================================
     const filterBtns = document.querySelectorAll('.review-filter-btn');
     const reviewCards = document.querySelectorAll('.review-card');
+    const reviewsPagination = document.getElementById('reviews-pagination');
+    const REVIEWS_PER_PAGE = 6; // 6 opiniones por página (2 filas de 3 columnas en desktop)
 
-    function applyReviewFilter(filter) {
-        filterBtns.forEach(b => {
-            if (b.getAttribute('data-filter') === filter) {
-                b.classList.add('active');
-            } else {
-                b.classList.remove('active');
-            }
+    let currentReviewsFilter = document.body.getAttribute('data-reviews-filter') || 'all';
+    let currentReviewsPage = 1;
+
+    function renderReviews() {
+        if (!reviewCards || reviewCards.length === 0) return;
+
+        // Actualizar botones de filtro
+        filterBtns.forEach(btn => {
+            const filterVal = btn.getAttribute('data-filter');
+            btn.classList.toggle('active', filterVal === currentReviewsFilter);
         });
 
+        // Filtrar tarjetas que corresponden al filtro actual
+        const matchingCards = Array.from(reviewCards).filter(card => {
+            const type = card.getAttribute('data-type');
+            return currentReviewsFilter === 'all' || type === currentReviewsFilter;
+        });
+
+        const totalPages = Math.max(1, Math.ceil(matchingCards.length / REVIEWS_PER_PAGE));
+        if (currentReviewsPage > totalPages) currentReviewsPage = totalPages;
+        if (currentReviewsPage < 1) currentReviewsPage = 1;
+
+        const startIndex = (currentReviewsPage - 1) * REVIEWS_PER_PAGE;
+        const endIndex = startIndex + REVIEWS_PER_PAGE;
+
+        // Mostrar / ocultar tarjetas
         reviewCards.forEach(card => {
-            const cardType = card.getAttribute('data-type');
-            if (filter === 'all' || cardType === filter) {
-                card.style.display = 'flex';
-            } else {
+            const isMatch = (currentReviewsFilter === 'all' || card.getAttribute('data-type') === currentReviewsFilter);
+            if (!isMatch) {
                 card.style.display = 'none';
+            } else {
+                const matchIndex = matchingCards.indexOf(card);
+                if (matchIndex >= startIndex && matchIndex < endIndex) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
             }
         });
+
+        // Generar controles de paginación
+        if (reviewsPagination) {
+            if (totalPages <= 1) {
+                reviewsPagination.innerHTML = '';
+                reviewsPagination.style.display = 'none';
+            } else {
+                reviewsPagination.style.display = 'flex';
+                let paginationHtml = '<ul class="pagination-list">';
+
+                // Botón Anterior
+                if (currentReviewsPage > 1) {
+                    paginationHtml += `<li><button type="button" class="pagination-link prev" data-review-page="${currentReviewsPage - 1}" aria-label="Página anterior">&larr; Anterior</button></li>`;
+                } else {
+                    paginationHtml += `<li><span class="pagination-link disabled">&larr; Anterior</span></li>`;
+                }
+
+                // Botones numéricos
+                for (let p = 1; p <= totalPages; p++) {
+                    const isActive = p === currentReviewsPage ? 'active' : '';
+                    paginationHtml += `<li><button type="button" class="pagination-link ${isActive}" data-review-page="${p}" aria-label="Ir a página ${p}">${p}</button></li>`;
+                }
+
+                // Botón Siguiente
+                if (currentReviewsPage < totalPages) {
+                    paginationHtml += `<li><button type="button" class="pagination-link next" data-review-page="${currentReviewsPage + 1}" aria-label="Página siguiente">Siguiente &rarr;</button></li>`;
+                } else {
+                    paginationHtml += `<li><span class="pagination-link disabled">Siguiente &rarr;</span></li>`;
+                }
+
+                paginationHtml += '</ul>';
+                reviewsPagination.innerHTML = paginationHtml;
+
+                // Eventos de clic en botones de paginación
+                reviewsPagination.querySelectorAll('[data-review-page]').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const targetPage = parseInt(btn.getAttribute('data-review-page'), 10);
+                        if (!isNaN(targetPage) && targetPage !== currentReviewsPage) {
+                            currentReviewsPage = targetPage;
+                            renderReviews();
+
+                            const sectionEl = document.getElementById('opiniones');
+                            if (sectionEl) {
+                                sectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        }
+                    });
+                });
+            }
+        }
     }
 
+    // Eventos de botones de filtro
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            const filter = btn.getAttribute('data-filter') || 'all';
-            applyReviewFilter(filter);
+            const newFilter = btn.getAttribute('data-filter') || 'all';
+            if (newFilter !== currentReviewsFilter) {
+                currentReviewsFilter = newFilter;
+                currentReviewsPage = 1; // Reiniciar a la primera página al cambiar filtro
+                renderReviews();
+            }
         });
     });
 
-    const defaultReviewFilter = document.body.getAttribute('data-reviews-filter') || 'text';
-    if (filterBtns.length > 0 && reviewCards.length > 0) {
-        applyReviewFilter(defaultReviewFilter);
+    // Inicializar renderizado de opiniones
+    if (reviewCards.length > 0) {
+        renderReviews();
     }
+
+    // Modal de Reseña Ampliada (Popup)
+    const reviewModal = document.getElementById('review-modal');
+    const reviewModalBackdrop = document.getElementById('review-modal-backdrop');
+    const reviewModalClose = document.getElementById('review-modal-close');
+    const reviewModalMedia = document.getElementById('review-modal-media');
+    const reviewModalImg = document.getElementById('review-modal-img');
+    const reviewModalBadge = document.getElementById('review-modal-badge');
+    const reviewModalStars = document.getElementById('review-modal-stars');
+    const reviewModalVerified = document.getElementById('review-modal-verified');
+    const reviewModalBody = document.getElementById('review-modal-body');
+    const reviewModalAvatar = document.getElementById('review-modal-avatar');
+    const reviewModalAuthor = document.getElementById('review-modal-author');
+    const reviewModalRole = document.getElementById('review-modal-role');
+    const reviewModalDate = document.getElementById('review-modal-date');
+
+    function openReviewModal(card) {
+        if (!reviewModal) return;
+
+        const name = card.getAttribute('data-name') || 'Lector';
+        const role = card.getAttribute('data-role') || '';
+        const photo = card.getAttribute('data-photo') || '';
+        const photoTitle = card.getAttribute('data-photo-title') || name;
+        const rating = parseInt(card.getAttribute('data-rating') || '5', 10);
+        const verified = card.getAttribute('data-verified') === '1';
+        const date = card.getAttribute('data-date') || '';
+
+        const fullTextEl = card.querySelector('.review-full-text');
+        const textContent = fullTextEl ? fullTextEl.textContent.trim() : (card.querySelector('.review-caption, .review-body')?.textContent.trim() || '');
+
+        if (reviewModalAuthor) reviewModalAuthor.textContent = name;
+        if (reviewModalRole) reviewModalRole.textContent = role;
+        if (reviewModalStars) reviewModalStars.textContent = '★'.repeat(rating);
+        if (reviewModalBody) reviewModalBody.textContent = textContent ? `"${textContent}"` : '';
+
+        if (reviewModalVerified) {
+            reviewModalVerified.style.display = verified ? 'inline-block' : 'none';
+        }
+
+        if (reviewModalDate) {
+            reviewModalDate.textContent = date ? `Publicado: ${date}` : '';
+        }
+
+        // Configurar medios / imagen
+        if (photo && reviewModalMedia && reviewModalImg) {
+            reviewModalMedia.style.display = 'block';
+            reviewModalImg.src = photo;
+            reviewModalImg.alt = name;
+            if (reviewModalBadge) {
+                reviewModalBadge.textContent = photoTitle ? `📸 ${photoTitle}` : '📸 Foto de Lector';
+            }
+        } else if (reviewModalMedia) {
+            reviewModalMedia.style.display = 'none';
+            if (reviewModalImg) reviewModalImg.src = '';
+        }
+
+        // Configurar avatar
+        if (reviewModalAvatar) {
+            if (photo) {
+                reviewModalAvatar.className = 'review-modal-avatar';
+                reviewModalAvatar.innerHTML = `<img src="${photo}" alt="${name}" onerror="this.parentElement.className='review-modal-avatar text-avatar'; this.parentElement.innerText='${name.slice(0, 2).toUpperCase()}';">`;
+            } else {
+                reviewModalAvatar.className = 'review-modal-avatar text-avatar';
+                reviewModalAvatar.textContent = name ? name.slice(0, 2).toUpperCase() : 'LS';
+            }
+        }
+
+        reviewModal.classList.add('active');
+        reviewModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeReviewModal() {
+        if (!reviewModal) return;
+        reviewModal.classList.remove('active');
+        reviewModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    if (reviewModalClose) reviewModalClose.addEventListener('click', closeReviewModal);
+    if (reviewModalBackdrop) reviewModalBackdrop.addEventListener('click', closeReviewModal);
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && reviewModal && reviewModal.classList.contains('active')) {
+            closeReviewModal();
+        }
+    });
+
+    // Delegación de apertura de modal en las tarjetas
+    reviewCards.forEach(card => {
+        card.addEventListener('click', () => {
+            openReviewModal(card);
+        });
+
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openReviewModal(card);
+            }
+        });
+    });
 
     // =========================================================================
     // 9. GALERÍA INTERACTIVA Y LIGHTBOX CON CONTROLES DE DESPLAZAMIENTO & PAGINACIÓN
