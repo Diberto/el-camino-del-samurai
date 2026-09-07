@@ -18,7 +18,7 @@ $total_fotos = count($galeria);
 
         <!-- Barra de Controles de la Galería -->
         <div class="gallery-controls-bar fade-in">
-            <div class="gallery-counter-tag">
+            <div class="gallery-counter-tag" id="gallery-counter-tag">
                 <span>📸 Mostrando <?= $total_fotos ?> fotografías</span>
             </div>
 
@@ -38,7 +38,7 @@ $total_fotos = count($galeria);
 
         <!-- Contenedor / Carrusel de Galería -->
         <div class="gallery-track-wrapper fade-in" id="gallery-track-wrapper">
-            <div class="gallery-grid" id="gallery-scroll-track">
+            <div class="gallery-scroll-track" id="gallery-scroll-track">
                 <?php foreach ($galeria as $index => $item): ?>
                     <div class="gallery-card" 
                          data-gallery-index="<?= $index ?>"
@@ -62,6 +62,9 @@ $total_fotos = count($galeria);
                 <?php endforeach; ?>
             </div>
         </div>
+
+        <!-- Puntos de Paginación de Galería -->
+        <div class="gallery-dots fade-in" id="gallery-dots" role="tablist" aria-label="Páginas de la galería"></div>
 
         <!-- Pie de Galería con Botón para Abrir Visor Completo -->
         <div class="gallery-footer-actions text-center fade-in">

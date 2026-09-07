@@ -1,44 +1,121 @@
 [
-  {
-    "id": "gal-1",
-    "title": "Castillos y Fortalezas del Japón Feudal",
-    "tag": "Patrimonio Histórico",
-    "image": "photos/WhatsApp Image 2026-06-25 at 16.10.09.webp",
-    "fallback": "photos/castillo_sengoku.webp"
-  },
-  {
-    "id": "gal-2",
-    "title": "Templos y Santuarios Shinto Milenarios",
-    "tag": "Naturaleza & Zen",
-    "image": "photos/WhatsApp Image 2026-06-25 at 16.10.12.webp",
-    "fallback": "photos/cueva_reigando.webp"
-  },
-  {
-    "id": "gal-3",
-    "title": "Huellas de Miyamoto Musashi y Escuelas Tradicionales",
-    "tag": "Ruta del Budo",
-    "image": "photos/WhatsApp Image 2026-06-25 at 16.10.13.webp",
-    "fallback": "photos/orpianesi1.webp"
-  },
-  {
-    "id": "gal-4",
-    "title": "Jardines Zen y Paisajes Tradicionales",
-    "tag": "Cultura Tradicional",
-    "image": "photos/WhatsApp Image 2026-06-25 at 16.10.15.webp",
-    "fallback": "photos/jardin_zen.webp"
-  },
-  {
-    "id": "gal-5",
-    "title": "Pasos y Senderos Históricos de Japón",
-    "tag": "Expedición",
-    "image": "photos/WhatsApp Image 2026-06-25 at 16.10.29.webp",
-    "fallback": "photos/castillo_sengoku.webp"
-  },
-  {
-    "id": "gal-6",
-    "title": "Artefactos y Esculturas Sagradas del Budo",
-    "tag": "Tradición Marcial",
-    "image": "photos/WhatsApp Image 2026-06-25 at 16.10.35.webp",
-    "fallback": "photos/orpianesi2.webp"
-  }
+    {
+        "id": "gal-1788803840",
+        "title": "Castillo de Iga Ueno",
+        "tag": "Castillos samurais",
+        "image": "photos/gal_5488d7e8-4b89-4886-9663-0dbfdfd70902_1788803840.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788803795",
+        "title": "Monumento al poeta Matsuo Basho",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_5978e638-8463-47fc-b61a-a8bb8c2a2073_1788803795.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788803722",
+        "title": "Casa de té de 350 años en la Ruta Tokaido",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_IMG_3459_1788803722.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788803501",
+        "title": "Hakone",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_IMG_3297_1788803501.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788803324",
+        "title": "Recorriendo la Ruta Tokaido",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_DSC_0377_1788803376.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788803129",
+        "title": "Santuario de los 47 ronin en Ako",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_b7f83a8f-96b0-459d-9645-b1afab632be0_1788803129.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788803024",
+        "title": "Honbu Dojo de Aikido",
+        "tag": "Tradición Marcial",
+        "image": "photos/gal_Proyecto_6_1788803024.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788802984",
+        "title": "Entrenando Karate en Okinawa",
+        "tag": "Tradición Marcial",
+        "image": "photos/gal_Proyecto_5_1788802984.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788802931",
+        "title": "Nuestros libros en Japón",
+        "tag": "Libros",
+        "image": "photos/gal_Opiniones_1_1788802931.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788802878",
+        "title": "Presentación de el libro \"El Paso de las Luciérnagas\"",
+        "tag": "Libro",
+        "image": "photos/gal_Eventos_1_1788802878.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788376986",
+        "title": "Catillo de Matsumoto",
+        "tag": "Castillos samuráis",
+        "image": "photos/gal_DSC_0830__2__1788376986.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1",
+        "title": "Warabi Matsuri",
+        "tag": "Vivencia samurái",
+        "image": "photos/WhatsApp Image 2026-06-25 at 16.10.09.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-2",
+        "title": "Seki Juku, antiguo pueblo samurái",
+        "tag": "Poblados históricos",
+        "image": "photos/WhatsApp Image 2026-06-25 at 16.10.12.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-3",
+        "title": "Narai Juku",
+        "tag": "Poblados históricos",
+        "image": "photos/WhatsApp Image 2026-06-25 at 16.10.13.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-4",
+        "title": "Práctica de iaido en Naha,  Okinawa",
+        "tag": "Tradición Marcial",
+        "image": "photos/WhatsApp Image 2026-06-25 at 16.10.15.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-5",
+        "title": "Santuario de Warabi con Nagao sensei",
+        "tag": "Templos y santuarios",
+        "image": "photos/WhatsApp Image 2026-06-25 at 16.10.29.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-6",
+        "title": "Torneo de Kendo en Saitama",
+        "tag": "Tradición Marcial",
+        "image": "photos/WhatsApp Image 2026-06-25 at 16.10.35.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    }
 ]

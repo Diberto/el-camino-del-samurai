@@ -98,11 +98,20 @@ document.addEventListener('DOMContentLoaded', async () => {
       .replace(/'/g, '&#039;');
   }
 
-  function renderCatalog(filterQuery = '') {
+  let catalogPage = 1;
+  const PAGE_SIZE = 6;
+
+  function renderCatalog(filterQuery = '', page = 1) {
+    catalogPage = page;
     const filtered = published.filter(p => {
       const q = filterQuery.toLowerCase();
       return p.title.toLowerCase().includes(q) || (p.excerpt && p.excerpt.toLowerCase().includes(q));
     });
+
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+    if (catalogPage > totalPages) catalogPage = totalPages;
+    const offset = (catalogPage - 1) * PAGE_SIZE;
+    const pagedPosts = filtered.slice(offset, offset + PAGE_SIZE);
 
     container.innerHTML = `
       <div style="margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1rem;">
@@ -115,7 +124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       ${filtered.length === 0 ? '<p style="color: var(--text-muted); text-align: center; padding: 3rem 0;">No se encontraron artículos con ese criterio de búsqueda.</p>' : ''}
 
       <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
-        ${filtered.map(post => `
+        ${pagedPosts.map(post => `
           <article class="blog-catalog-card" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: transform 0.3s ease; cursor: pointer;" data-id="${post.id || post.slug}">
             ${post.cover_image ? `<div style="height: 180px; overflow: hidden;"><img src="${post.cover_image}" alt="${post.title}" style="width: 100%; height: 100%; object-fit: cover;"></div>` : ''}
             <div style="padding: 1.5rem; display: flex; flex-direction: column; flex: 1;">
@@ -133,19 +142,49 @@ document.addEventListener('DOMContentLoaded', async () => {
           </article>
         `).join('')}
       </div>
+
+      ${totalPages > 1 ? `
+        <nav class="blog-pagination" style="margin-top: 3rem;" aria-label="Navegación de páginas">
+          <ul class="pagination-list">
+            <li>
+              ${catalogPage > 1 ? `<button type="button" class="pagination-link prev" data-page="${catalogPage - 1}" style="cursor: pointer;">&larr; Anterior</button>` : `<span class="pagination-link disabled">&larr; Anterior</span>`}
+            </li>
+            ${Array.from({ length: totalPages }, (_, i) => i + 1).map(p => `
+              <li>
+                <button type="button" class="pagination-link ${p === catalogPage ? 'active' : ''}" data-page="${p}" style="cursor: pointer;">${p}</button>
+              </li>
+            `).join('')}
+            <li>
+              ${catalogPage < totalPages ? `<button type="button" class="pagination-link next" data-page="${catalogPage + 1}" style="cursor: pointer;">Siguiente &rarr;</button>` : `<span class="pagination-link disabled">Siguiente &rarr;</span>`}
+            </li>
+          </ul>
+        </nav>
+      ` : ''}
     `;
 
     const searchInput = document.getElementById('blog-search-input');
     if (searchInput) {
-      searchInput.addEventListener('input', (e) => renderCatalog(e.target.value));
+      searchInput.addEventListener('input', (e) => renderCatalog(e.target.value, 1));
     }
+
+    container.querySelectorAll('.pagination-link[data-page]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const p = parseInt(btn.dataset.page, 10);
+        if (p) {
+          renderCatalog(filterQuery, p);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+    });
 
     container.querySelectorAll('.blog-catalog-card').forEach(card => {
       card.addEventListener('click', (e) => {
-        const id = card.dataset.id;
-        if (id) {
-          history.pushState(null, '', `blog.html?post=${id}`);
-          renderView();
+        if (e.target.closest('.open-post-btn') || !e.target.closest('a, button')) {
+          const id = card.dataset.id;
+          if (id) {
+            history.pushState(null, '', `blog.html?post=${id}`);
+            renderView();
+          }
         }
       });
     });

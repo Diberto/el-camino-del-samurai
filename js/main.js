@@ -710,26 +710,136 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =========================================================================
-    // 9. GALERÍA INTERACTIVA Y LIGHTBOX CON CONTROLES DE DESPLAZAMIENTO
+    // 9. GALERÍA INTERACTIVA Y LIGHTBOX CON CONTROLES DE DESPLAZAMIENTO & PAGINACIÓN
     // =========================================================================
     const galleryTrack = document.getElementById('gallery-scroll-track');
     const btnGalleryPrev = document.getElementById('gallery-scroll-prev');
     const btnGalleryNext = document.getElementById('gallery-scroll-next');
+    const galleryCounterTag = document.getElementById('gallery-counter-tag');
+    const galleryDotsContainer = document.getElementById('gallery-dots');
     const btnOpenFullGallery = document.getElementById('btn-open-gallery-lightbox');
 
-    if (galleryTrack && btnGalleryPrev && btnGalleryNext) {
-        btnGalleryPrev.addEventListener('click', () => {
-            const card = galleryTrack.querySelector('.gallery-card');
-            const step = card ? card.offsetWidth + 24 : 320;
-            galleryTrack.scrollBy({ left: -step, behavior: 'smooth' });
+    if (galleryTrack) {
+        const cards = Array.from(galleryTrack.querySelectorAll('.gallery-card'));
+        let currentPage = 0;
+        let totalPages = 1;
+
+        function getVisibleCardsCount() {
+            if (window.innerWidth <= 640) return 1;
+            if (window.innerWidth <= 992) return 2;
+            return 3;
+        }
+
+        function updateGalleryPagination() {
+            if (cards.length === 0) return;
+            const visibleCount = getVisibleCardsCount();
+            totalPages = Math.max(1, Math.ceil(cards.length / visibleCount));
+            if (currentPage >= totalPages) currentPage = totalPages - 1;
+
+            // Generar dots interactivos
+            if (galleryDotsContainer) {
+                galleryDotsContainer.innerHTML = '';
+                if (totalPages > 1) {
+                    for (let i = 0; i < totalPages; i++) {
+                        const dot = document.createElement('button');
+                        dot.className = `gallery-dot ${i === currentPage ? 'active' : ''}`;
+                        dot.setAttribute('aria-label', `Ir a página ${i + 1} de la galería`);
+                        dot.addEventListener('click', () => goToPage(i));
+                        galleryDotsContainer.appendChild(dot);
+                    }
+                    galleryDotsContainer.style.display = 'flex';
+                } else {
+                    galleryDotsContainer.style.display = 'none';
+                }
+            }
+
+            updateControlsState();
+        }
+
+        function updateControlsState() {
+            if (btnGalleryPrev) {
+                btnGalleryPrev.disabled = currentPage <= 0;
+                btnGalleryPrev.classList.toggle('disabled', currentPage <= 0);
+            }
+            if (btnGalleryNext) {
+                btnGalleryNext.disabled = currentPage >= totalPages - 1;
+                btnGalleryNext.classList.toggle('disabled', currentPage >= totalPages - 1);
+            }
+
+            // Actualizar dots
+            if (galleryDotsContainer) {
+                const dots = galleryDotsContainer.querySelectorAll('.gallery-dot');
+                dots.forEach((dot, idx) => {
+                    dot.classList.toggle('active', idx === currentPage);
+                });
+            }
+
+            // Actualizar etiqueta contadora
+            if (galleryCounterTag && cards.length > 0) {
+                const visibleCount = getVisibleCardsCount();
+                const startIdx = currentPage * visibleCount + 1;
+                const endIdx = Math.min(cards.length, (currentPage + 1) * visibleCount);
+                if (totalPages > 1) {
+                    galleryCounterTag.innerHTML = `<span>📸 Fotos ${startIdx}-${endIdx} de ${cards.length} • Pág. ${currentPage + 1} de ${totalPages}</span>`;
+                } else {
+                    galleryCounterTag.innerHTML = `<span>📸 Mostrando ${cards.length} fotografías</span>`;
+                }
+            }
+        }
+
+        function goToPage(pageIdx) {
+            currentPage = Math.max(0, Math.min(pageIdx, totalPages - 1));
+            const visibleCount = getVisibleCardsCount();
+            const targetCardIdx = currentPage * visibleCount;
+            const targetCard = cards[targetCardIdx];
+
+            if (targetCard) {
+                galleryTrack.scrollTo({
+                    left: targetCard.offsetLeft - galleryTrack.offsetLeft,
+                    behavior: 'smooth'
+                });
+            }
+            updateControlsState();
+        }
+
+        if (btnGalleryPrev) {
+            btnGalleryPrev.addEventListener('click', () => {
+                if (currentPage > 0) {
+                    goToPage(currentPage - 1);
+                }
+            });
+        }
+
+        if (btnGalleryNext) {
+            btnGalleryNext.addEventListener('click', () => {
+                if (currentPage < totalPages - 1) {
+                    goToPage(currentPage + 1);
+                }
+            });
+        }
+
+        // Sincronizar en scroll táctil/swipe
+        let scrollTimeout;
+        galleryTrack.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const scrollLeft = galleryTrack.scrollLeft;
+                const trackWidth = galleryTrack.clientWidth;
+                const newPage = Math.round(scrollLeft / (trackWidth || 1));
+                if (newPage !== currentPage && newPage >= 0 && newPage < totalPages) {
+                    currentPage = newPage;
+                    updateControlsState();
+                }
+            }, 60);
+        }, { passive: true });
+
+        window.addEventListener('resize', () => {
+            updateGalleryPagination();
         });
 
-        btnGalleryNext.addEventListener('click', () => {
-            const card = galleryTrack.querySelector('.gallery-card');
-            const step = card ? card.offsetWidth + 24 : 320;
-            galleryTrack.scrollBy({ left: step, behavior: 'smooth' });
-        });
+        updateGalleryPagination();
     }
+
 
     // Lightbox Modal Controller
     const lightbox = document.getElementById('gallery-lightbox');

@@ -31,7 +31,7 @@ if ($current_post) {
 }
 
 // Configuración de Paginación para el listado general
-$per_page = 6; // Artículos por página para diseño equilibrado y rápido
+$per_page = max(1, (int)($settings['blog_per_page'] ?? 6));
 $total_posts = count($posts);
 $total_pages = max(1, (int)ceil($total_posts / $per_page));
 $current_page_num = isset($_GET['page']) ? max(1, min((int)$_GET['page'], $total_pages)) : 1;
@@ -138,29 +138,33 @@ require_once __DIR__ . '/includes/navbar.php';
             <?php if ($total_pages > 1): ?>
                 <nav class="blog-pagination" aria-label="Navegación de páginas">
                     <ul class="pagination-list">
-                        <?php if ($current_page_num > 1): ?>
-                            <li>
+                        <li>
+                            <?php if ($current_page_num > 1): ?>
                                 <a href="blog.php?page=<?= $current_page_num - 1 ?>" class="pagination-link prev" aria-label="Página anterior">
                                     &larr; Anterior
                                 </a>
-                            </li>
-                        <?php endif; ?>
+                            <?php else: ?>
+                                <span class="pagination-link disabled" aria-disabled="true">&larr; Anterior</span>
+                            <?php endif; ?>
+                        </li>
 
                         <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                             <li>
-                                <a href="blog.php?page=<?= $i ?>" class="pagination-link <?= $i === $current_page_num ? 'active' : '' ?>">
+                                <a href="blog.php?page=<?= $i ?>" class="pagination-link <?= $i === $current_page_num ? 'active' : '' ?>" <?= $i === $current_page_num ? 'aria-current="page"' : '' ?>>
                                     <?= $i ?>
                                 </a>
                             </li>
                         <?php endfor; ?>
 
-                        <?php if ($current_page_num < $total_pages): ?>
-                            <li>
+                        <li>
+                            <?php if ($current_page_num < $total_pages): ?>
                                 <a href="blog.php?page=<?= $current_page_num + 1 ?>" class="pagination-link next" aria-label="Página siguiente">
                                     Siguiente &rarr;
                                 </a>
-                            </li>
-                        <?php endif; ?>
+                            <?php else: ?>
+                                <span class="pagination-link disabled" aria-disabled="true">Siguiente &rarr;</span>
+                            <?php endif; ?>
+                        </li>
                     </ul>
                 </nav>
             <?php endif; ?>

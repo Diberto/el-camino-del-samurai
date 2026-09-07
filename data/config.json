@@ -1,62 +1,108 @@
 {
-  "settings": {
-    "site_title": "La Ruta del Samurái - Jorge Orpianesi",
-    "site_subtitle": "La Senda de la Historia y el Budo",
-    "site_description": "Un fascinante viaje por la geografía, templos y castillos feudales del Japón tradicional.",
-    "address": "Budokan Argentina - Sarmiento 375, Córdoba, República Argentina. CP: 5000",
-    "whatsapp": "+549 351 3886443",
-    "whatsapp_url": "https://wa.me/5493513886443",
-    "email": "jorgeorpianesi@hotmail.com",
-    "amazon_url": "https://www.amazon.com/s?k=jorge+orpianesi&crid=6E5AFU50XWPW&sprefix=jorge+orpianesi%2Caps%2C237&ref=nb_sb_noss",
-    "budokan_url": "https://www.budokanweb.com/tienda/libros/la-ruta-del-samurai-formato-libro/",
-    "budokan_tomo1_url": "https://www.budokanweb.com/tienda/libros/la-ruta-del-samurai-formato-libro/",
-    "budokan_tomo2_url": "https://www.budokanweb.com/tienda/destacados/el-paso-de-las-luciernagas-la-ruta-del-samurai-2/",
-    "theme_default": "day",
-    "reviews_default_filter": "text",
-    "home_blog_limit": 3,
-    "home_reviews_limit": 6,
-    "home_gallery_limit": 8,
-    "social": {
-      "youtube": {
-        "title": "YouTube",
-        "url": "https://www.youtube.com/@larutadelsamurai",
-        "handle": "@larutadelsamurai",
-        "desc": "Documentales de viaje, técnicas de artes marciales y charlas sobre filosofía samurái."
-      },
-      "instagram": {
-        "title": "Instagram",
-        "url": "https://www.instagram.com/la.ruta.del.samurai/",
-        "handle": "@la.ruta.del.samurai",
-        "desc": "Fotografías diarias de expediciones, castillos y dojos tradicionales en Japón."
-      },
-      "facebook": {
-        "title": "Facebook",
-        "url": "https://www.facebook.com/jorgeorpianesi",
-        "handle": "Jorge Orpianesi",
-        "desc": "Comunidad de lectores, eventos, debates marciales y transmisiones especiales."
-      }
-    },
-    "sections_toggle": {
-      "inicio": true,
-      "sinopsis": true,
-      "opiniones": true,
-      "redes": true,
-      "ediciones": true,
-      "autor": true,
-      "galeria": true,
-      "blog": true,
-      "contacto": true
-    },
-    "navigation_menu": [
-      { "id": "nav-inicio", "label": "Inicio", "url": "#inicio", "visible": true },
-      { "id": "nav-libro", "label": "El Libro", "url": "#sinopsis", "visible": true },
-      { "id": "nav-opiniones", "label": "Opiniones", "url": "#opiniones", "visible": true },
-      { "id": "nav-redes", "label": "Redes", "url": "#redes", "visible": true },
-      { "id": "nav-ediciones", "label": "Ediciones", "url": "#ediciones", "visible": true },
-      { "id": "nav-autor", "label": "Autor", "url": "#autor", "visible": true },
-      { "id": "nav-galeria", "label": "Galería", "url": "#galeria", "visible": true },
-      { "id": "nav-blog", "label": "Blog", "url": "#blog", "visible": true },
-      { "id": "nav-contacto", "label": "Contacto", "url": "#contacto", "visible": true }
-    ]
-  }
+    "settings": {
+        "site_title": "La Ruta del Samurái - Jorge Orpianesi",
+        "site_subtitle": "La Senda de la Historia y el Budo",
+        "site_description": "",
+        "address": "Budokan Argentina - Sarmiento 375, Córdoba, República Argentina. CP: 5000",
+        "whatsapp": "+549 351 3886443",
+        "whatsapp_url": "https://wa.me/5493513886443",
+        "amazon_url": "https://www.amazon.com/stores/Jorge-Orpianesi/author/B0BWNTWK7B?language=es&ref=sr_ntt_srch_lnk_1&qid=1788188062&sr=8-1&shoppingPortalEnabled=true&ccs_id=1e181bf2-3fdb-4243-bc2f-6f12ec7a3ca9",
+        "budokan_url": "https://www.budokanweb.com/tienda/libros/la-ruta-del-samurai-formato-libro/",
+        "budokan_tomo1_url": "https://www.budokanweb.com/tienda/libros/la-ruta-del-samurai-formato-libro/",
+        "budokan_tomo2_url": "https://www.budokanweb.com/tienda/destacados/el-paso-de-las-luciernagas-la-ruta-del-samurai-2/",
+        "theme_default": "day",
+        "reviews_default_filter": "text",
+        "social": {
+            "youtube": {
+                "title": "YouTube",
+                "url": "https://www.youtube.com/@larutadelsamurai",
+                "handle": "@larutadelsamurai",
+                "desc": ""
+            },
+            "instagram": {
+                "title": "Instagram",
+                "url": "https://www.instagram.com/la.ruta.del.samurai/",
+                "handle": "@la.ruta.del.samurai",
+                "desc": ""
+            },
+            "facebook": {
+                "title": "Facebook",
+                "url": "https://www.facebook.com/jorgeorpianesi",
+                "handle": "Jorge Orpianesi",
+                "desc": ""
+            }
+        },
+        "sections_toggle": {
+            "inicio": true,
+            "sinopsis": true,
+            "opiniones": true,
+            "redes": true,
+            "ediciones": true,
+            "autor": true,
+            "galeria": true,
+            "blog": true,
+            "contacto": true
+        },
+        "navigation_menu": [
+            {
+                "id": "nav-inicio",
+                "label": "Inicio",
+                "url": "#inicio",
+                "visible": true
+            },
+            {
+                "id": "nav-libro",
+                "label": "El Libro",
+                "url": "#sinopsis",
+                "visible": true
+            },
+            {
+                "id": "nav-opiniones",
+                "label": "Opiniones",
+                "url": "#opiniones",
+                "visible": true
+            },
+            {
+                "id": "nav-redes",
+                "label": "Redes",
+                "url": "#redes",
+                "visible": true
+            },
+            {
+                "id": "nav-ediciones",
+                "label": "Ediciones",
+                "url": "#ediciones",
+                "visible": true
+            },
+            {
+                "id": "nav-autor",
+                "label": "Autor",
+                "url": "#autor",
+                "visible": true
+            },
+            {
+                "id": "nav-galeria",
+                "label": "Galería",
+                "url": "#galeria",
+                "visible": true
+            },
+            {
+                "id": "nav-blog",
+                "label": "Blog",
+                "url": "#blog",
+                "visible": true
+            },
+            {
+                "id": "nav-contacto",
+                "label": "Contacto",
+                "url": "#contacto",
+                "visible": true
+            }
+        ],
+        "email": "jorgeorpianesi@hotmail.com",
+        "home_blog_limit": 3,
+        "blog_per_page": 3,
+        "home_reviews_limit": 6,
+        "home_gallery_limit": 8
+    }
 }

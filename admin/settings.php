@@ -90,6 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
     $settings['theme_default'] = trim($_POST['theme_default'] ?? 'day');
     $settings['reviews_default_filter'] = trim($_POST['reviews_default_filter'] ?? 'text');
     $settings['home_blog_limit'] = max(1, (int)($_POST['home_blog_limit'] ?? 3));
+    $settings['blog_per_page'] = max(1, (int)($_POST['blog_per_page'] ?? 6));
     $settings['home_reviews_limit'] = max(1, (int)($_POST['home_reviews_limit'] ?? 6));
     $settings['home_gallery_limit'] = max(0, (int)($_POST['home_gallery_limit'] ?? 8));
 
@@ -226,6 +227,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                                 <label for="home_blog_limit">📝 Artículos de Blog en Home</label>
                                 <input type="number" id="home_blog_limit" name="home_blog_limit" min="1" max="50" value="<?= (int)($settings['home_blog_limit'] ?? 3) ?>" required>
                                 <small style="color: var(--text-muted); font-size: 0.78rem;">Entradas visibles en la portada (por defecto: 3)</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="blog_per_page">📄 Artículos por Página en Blog</label>
+                                <input type="number" id="blog_per_page" name="blog_per_page" min="1" max="50" value="<?= (int)($settings['blog_per_page'] ?? 6) ?>" required>
+                                <small style="color: var(--text-muted); font-size: 0.78rem;">Paginación en blog.php (por defecto: 6)</small>
                             </div>
 
                             <div class="form-group">

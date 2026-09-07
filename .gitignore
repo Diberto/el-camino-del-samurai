@@ -8,7 +8,12 @@ data/*.json
 !data/opiniones.json
 !data/blog.json
 !data/galeria.json
+!data/libros.json
 uploads/
 !uploads/.gitkeep
 public/uploads/
 !public/uploads/.gitkeep
+.codebase-memory/
+.graphify/cache/ast/
+*.zip
+
