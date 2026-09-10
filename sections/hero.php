@@ -28,7 +28,6 @@
                          fetchpriority="high" 
                          decoding="async">
                 </div>
-                <h2 class="hero-tagline">LA SENDA DE LA HISTORIA Y EL BUDO</h2>
                 <p class="hero-desc">
                     Un recorrido por el Japón de los samuráis a través de los libros y canales de difusión de un estudioso de la cultura y la historia del país del sol naciente
                 </p>
