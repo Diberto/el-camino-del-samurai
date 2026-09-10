@@ -11,7 +11,7 @@
         "budokan_tomo1_url": "https://www.budokanweb.com/tienda/libros/la-ruta-del-samurai-formato-libro/",
         "budokan_tomo2_url": "https://www.budokanweb.com/tienda/destacados/el-paso-de-las-luciernagas-la-ruta-del-samurai-2/",
         "theme_default": "day",
-        "reviews_default_filter": "text",
+        "reviews_default_filter": "all",
         "social": {
             "youtube": {
                 "title": "YouTube",
@@ -100,9 +100,9 @@
             }
         ],
         "email": "jorgeorpianesi@hotmail.com",
-        "home_blog_limit": 0,
-        "blog_per_page": 3,
-        "home_reviews_limit": 0,
-        "home_gallery_limit": 0
+        "home_blog_limit": 3,
+        "home_reviews_limit": 3,
+        "home_gallery_limit": 6,
+        "blog_per_page": 3
     }
 }

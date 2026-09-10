@@ -1,5 +1,649 @@
 [
     {
+        "id": "gal-1789057136",
+        "title": "Castillo de Matshushiro",
+        "tag": "Castillos samurais",
+        "image": "photos/gal_DSC_0613_1789057136.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1789057097",
+        "title": "Sitio de la Batalla de Kawanakajima",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_a2e92a7f-5348-4967-abcc-6cc9c698a6c3_1789057097.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1789057054",
+        "title": "Escuela samurái de Nagano - Dojo",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_ACUD6671_1789057054.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1789057007",
+        "title": "Casa del clan Sanada en Nagano",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_60a7f542-6fa9-40dd-a14b-4cb6fc8c3714_1789057007.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1789056875",
+        "title": "Habitación donde atentaron contra la vida de Sakamoto Ryoma",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_IMG_5831_1789056875.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1789056726",
+        "title": "Tumba de Oda Nobunaga",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_3afb87f0-a298-41eb-8590-0d26171d7a99_1789056726.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1789056661",
+        "title": "Tumba de Akechi Mitsuhide",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_576c4b96-88a6-4974-9536-9e01b5a00580_1789056661.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1789056547",
+        "title": "Tumba de Toyotomi Hideyoshi",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_DSC_0055_1789056547.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1789056448",
+        "title": "Sitio del asesinato contra Sakamoto Ryoma",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_0e6b3da3-da67-420b-8908-f92b2f27f7b1_1789056481.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1789056342",
+        "title": "Visita a Kawagoe",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_IMG_E8333_1789056342.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1789056212",
+        "title": "Junto al maestro  Hokama en su museo del Karate",
+        "tag": "Tradición Marcial",
+        "image": "photos/gal_DSCN3782_1789056212.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1789056128",
+        "title": "Monumento al maestro Gichin Funakoshi en Okinawa",
+        "tag": "Tradición Marcial",
+        "image": "photos/gal_20130909_181228-1_1789056128.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1789056046",
+        "title": "Monumento al maestro de Karate Chojun Miyagi",
+        "tag": "Tradición Marcial",
+        "image": "photos/gal_CSC_0034_1789056046.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1789055952",
+        "title": "Lugar de meditación de Sokon Matsumura  en el jardín Shikina",
+        "tag": "Tradición Marcial",
+        "image": "photos/gal_DSCN3581_1789055952.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1789055832",
+        "title": "Memorial de la Batalla de Okinawa",
+        "tag": "Lugar Histórico",
+        "image": "photos/gal_DSCN3489_1789055832.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1789055710",
+        "title": "Sayyonara Party con los grande maestros de Okinawa",
+        "tag": "Tradición Marcial",
+        "image": "photos/gal_CSC_0343_1789055710.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1789055546",
+        "title": "Parque Yoyogi, santuario Meiji",
+        "tag": "Templos y santuarios",
+        "image": "photos/gal_DSC_0823_1789055546.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788986730",
+        "title": "Templo Senso-ji",
+        "tag": "Templos y santuarios",
+        "image": "photos/gal_DSC_0769__2__1788986730.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788986507",
+        "title": "Nihon Budokan",
+        "tag": "Tradición Marcial",
+        "image": "photos/gal_DSC_0237__2__1788986507.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788986449",
+        "title": "Palacio imperial de Tokio",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_DSC_0206__2__1788986449.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788986390",
+        "title": "Mausoleo con las tumbas de 6 shogunes Tokugawa",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_DSC_0197__2__1788986390.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788986328",
+        "title": "Tumba de los 47 ronin en Sengaku-ji",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_DSC_0175__2__1788986328.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788986273",
+        "title": "Casa de Kira donde atacaron los 47 ronin",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_DSC_0136__2__1788986273.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788986207",
+        "title": "Monumento a Saigo Takamori, El Ultimo Samurái",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_DSC_0005__2__1788986207.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788986158",
+        "title": "Entrenamiento de iaido en Warabi, Saitama",
+        "tag": "Tradición Marcial",
+        "image": "photos/gal_71296587_2643851139010830_2246393862903824384_n_1788986158.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788985699",
+        "title": "Poblado de Shirakawa-go",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_DSC_0052__3__1788985699.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788985612",
+        "title": "Castillo de Shimabara",
+        "tag": "Castillos samurais",
+        "image": "photos/gal_DSC_0652_1788985612.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788985498",
+        "title": "Sitio de la batalla de Sekigahara",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_DSC_0080__3__1788985498.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788985387",
+        "title": "Shureimon, la puerta de la cortesía en el castillo de Shuri",
+        "tag": "Castillos samurais",
+        "image": "photos/gal_DSCN3595_1788985387.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788985310",
+        "title": "Entrenando Karate en el Santuario Naminoue, Okinawa",
+        "tag": "Tradición Marcial",
+        "image": "photos/gal_DSCN3742_1788985310.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788985218",
+        "title": "Abismo de Kanmanganfuchi",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_IMG_20190904_141040_1788985218.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788985165",
+        "title": "Puente Shinkyo",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_IMG_20190904_124703_1788985165.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788985059",
+        "title": "Tumba del shogun Tokugawa Ieyasu en Nikko",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_IMG_20190904_113217_1788985059.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788984978",
+        "title": "Tumba del shogun Tokugawa Iemitsu",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_IMG_20190904_102354_1788984978.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788984892",
+        "title": "Santuario Kasuga Taisha",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_IMG_20190913_134939_1788984892.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788984765",
+        "title": "Nara",
+        "tag": "Lugares Históricos",
+        "image": "photos/gal_IMG_20190913_120906_1788984765.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788984692",
+        "title": "Museo de arte Tokugawa",
+        "tag": "Museos",
+        "image": "photos/gal_DSC_0209__3__1788984692.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788984620",
+        "title": "Castillo de Nagoya",
+        "tag": "Castillos samurais",
+        "image": "photos/gal_IMG_20190908_091331_1788984620.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788984473",
+        "title": "Isla Dejima, unico puerto abierto durante el periodo Edo",
+        "tag": "Lugares históricos",
+        "image": "photos/gal_DSC_0630_1788984473.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788984405",
+        "title": "Monumento de la explosión nueclear en Nagasaki",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_IMG_20190921_100724_1788984529.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788984327",
+        "title": "Cima del Monte Misen en Miyajima",
+        "tag": "Lugares",
+        "image": "photos/gal_DSC_0354_1788984327.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788984246",
+        "title": "Santuario de Miyamoto Musashi",
+        "tag": "Miyamoto Musashi",
+        "image": "photos/gal_DSC_0095_1788984246.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788984177",
+        "title": "Sitio del nacimiento de Miyamoto Musashi",
+        "tag": "Miyamoto Musashi",
+        "image": "photos/gal_DSC_0076_1788984177.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788984134",
+        "title": "En el Musashi Budokan de su ciudad natal",
+        "tag": "Miyamoto Musashi",
+        "image": "photos/gal_DSC_0049_1788984134.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788984075",
+        "title": "Lugar del primer duelo de Miyamoto Musashi a los 13 años",
+        "tag": "Miyamoto Musashi",
+        "image": "photos/gal_DSC_0021_1788984075.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788887951",
+        "title": "Tozando Kioto",
+        "tag": "Tradición Marcial",
+        "image": "photos/gal_IMG_20190910_105133_1788887951.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788887837",
+        "title": "Pinturas de Miyamoto Musashi",
+        "tag": "Miyamoto Musashi",
+        "image": "photos/gal_DSC_0631__3__1788887837.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788887791",
+        "title": "Fushimi Inari Taisha",
+        "tag": "Templos y santuarios",
+        "image": "photos/gal_DSC_0673__3__1788887791.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788880582",
+        "title": "Templo Sanjusangendo donde Musashi mató a Yoshioka Densichiro",
+        "tag": "Miyamoto Musashi",
+        "image": "photos/gal_DSC_0640__3__1788880582.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788880521",
+        "title": "Templo Ryohan Ji",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_DSC_0612__3__1788880521.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788880458",
+        "title": "Templo Myoshin ji donde Musashi se encontró con Nagaoka Sado",
+        "tag": "Miyamoto Musashi",
+        "image": "photos/gal_DSC_0581__3__1788880458.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788880371",
+        "title": "Templo Honnoji donde Oda Nobunaga cometió seppuku",
+        "tag": "Templos y santuarios",
+        "image": "photos/gal_DSC_0464__3__1788880371.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788880315",
+        "title": "Bambusal de Arashiyama",
+        "tag": "Lugares",
+        "image": "photos/gal_DSC_0552__3__1788880315.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788880253",
+        "title": "Butokuden, el dojo mas antiguo de Japón",
+        "tag": "Tradición Marcial",
+        "image": "photos/gal_DSC_0502__3__1788880253.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788880125",
+        "title": "Ninenzaka, Higashiyama, barrio antiguo de Kioto",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_DSC_0421__3__1788880125.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788880046",
+        "title": "Sanenzaka, Higashiyama, barrio antiguo de Kioto",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_DSC_0405__3__1788880046.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788879731",
+        "title": "Zazen en el templo Enkoji",
+        "tag": "Templos y santuarios",
+        "image": "photos/gal_DSC_0298__3__1788879731.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788879681",
+        "title": "Ichijoji, donde Musashi se enfrento a Yoshioka Matashichiro",
+        "tag": "Miyamoto Musashi",
+        "image": "photos/gal_DSC_0246__3__1788879681.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788879632",
+        "title": "Templo Jobon Rendai donde Musashi se enfrentó a Yoshioka Seijuro",
+        "tag": "Miyamoto Musashi",
+        "image": "photos/gal_DSC_0242__3__1788879632.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788879566",
+        "title": "El Pabellón Dorado",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_IMG_20190909_093747_1788879566.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788879399",
+        "title": "Cueva Reigando donde Musashi escribio su libro",
+        "tag": "Miyamoto Musashi",
+        "image": "photos/gal_DSC_0732_1788879399.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788879341",
+        "title": "Tumba de Miyamoto Musashi",
+        "tag": "Miyamoto Musashi",
+        "image": "photos/gal_DSC_0685_1788879341.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788879285",
+        "title": "Tumba de Takeda Shingen",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_DSC_0953__2__1788879285.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788879201",
+        "title": "Cementerio Okunoin (el más grande y sagrado de Japón)",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_DSC_0937__2__1788879244.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788879127",
+        "title": "Alojado en el templo Sekishoin del monte Koya",
+        "tag": "Templos y santuarios",
+        "image": "photos/gal_DSC_0914__2__1788879127.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788879020",
+        "title": "Sitio de la batalla de Dano Ura",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_IMG_20190919_130110_1788879020.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788878858",
+        "title": "Kokura Hibun, el primer escrito sobre la vida de Musashi",
+        "tag": "Miyamoto Musashi",
+        "image": "photos/gal_DSC_0511_1788878858.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788878782",
+        "title": "Ganryujima, lugar del duelo entre Musashi y Sasaki",
+        "tag": "Miyamoto Musashi",
+        "image": "photos/gal_DSC_0443_1788878782.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788878721",
+        "title": "Castillo de Kokura",
+        "tag": "Castillos samurais",
+        "image": "photos/gal_DSC_0419_1788878721.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788878672",
+        "title": "Casa samurái en Kanazawa",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_IMG_20190906_100212_1788878672.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788878348",
+        "title": "Barrio samurái Nagamachi",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_DSC_0909_1788878348.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788878288",
+        "title": "Castillo de Kanazawa",
+        "tag": "Castillos samurais",
+        "image": "photos/gal_IMG_20190905_151741_1788878288.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788878238",
+        "title": "Monumento al maestro de karate Gichin Funakoshi",
+        "tag": "Tradición Marcial",
+        "image": "photos/gal_DSC_0439__2__1788878238.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788878144",
+        "title": "Buda del monte Nokogiri",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_IMG_20190903_170121_1788878144.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788878050",
+        "title": "Monumento al Comodoro Perry en Yokozuka",
+        "tag": "Lugares samurái",
+        "image": "photos/gal_DSC_0538__2__1788878050.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788877959",
+        "title": "Buda de Kamakura",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_DSC_0468__2__1788877959.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788877854",
+        "title": "Dojo de Aikido en Iwama",
+        "tag": "Tradición Marcial",
+        "image": "photos/gal_DSC_0363__2__1788877854.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788877752",
+        "title": "Puente de Iwakuni",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_DSC_0374_1788877752.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788877608",
+        "title": "Castillo de Hiroshima",
+        "tag": "Castillos samurais",
+        "image": "photos/gal_IMG_20190917_154445_1788877608.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788877503",
+        "title": "Kyudo",
+        "tag": "Tradición Marcial",
+        "image": "photos/gal_IMG_20190917_171602_1788877503.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788877390",
+        "title": "Castillo de Himeji",
+        "tag": "Castillos samurais",
+        "image": "photos/gal_IMG_20190916_093216_1788877390.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788877268",
+        "title": "La piedra meditativa de Miyamoto Musashi",
+        "tag": "Miyamoto Musashi",
+        "image": "photos/gal_DSC_0157_1788877268.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788877219",
+        "title": "Castillo de Fukuyama",
+        "tag": "Castillos samurais",
+        "image": "photos/gal_DSC_0133_1788877219.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788877093",
+        "title": "Castillo de Fukuoka",
+        "tag": "Castillos samuráis",
+        "image": "photos/gal_IMG_20190920_145327_1788877093.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788876973",
+        "title": "Buda de Nanzoin",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_DSC_0529_1788876973.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788876878",
+        "title": "Aokigahara, bosque de los suicidios",
+        "tag": "Lugares",
+        "image": "photos/gal_DSC_0414__2__1788876878.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788876830",
+        "title": "Pagoda Chureito",
+        "tag": "Patrimonio Histórico",
+        "image": "photos/gal_DSC_0388__2__1788876830.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788875265",
+        "title": "Cima del Monte Fuji",
+        "tag": "Lugares",
+        "image": "photos/gal_IMG_20190902_082335_1788875265.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788875183",
+        "title": "Escuela de samuráis Nisshinkan de Aizu",
+        "tag": "Escuela samurái",
+        "image": "photos/gal_DSC_0331__2__1788875183.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788875062",
+        "title": "Entrenando Karate en Okinawa",
+        "tag": "Tradición marcial",
+        "image": "photos/gal_DSC_0164_1788875062.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788874890",
+        "title": "Isla de Enoshima",
+        "tag": "Lugares  Históricos",
+        "image": "photos/gal_IMG_2995_1788874890.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
+        "id": "gal-1788874499",
+        "title": "Muralla del castillo de Inuyama, el mas antiguo de Japón.",
+        "tag": "Castillos samuráis",
+        "image": "photos/gal_DSC_0533_1788874499.webp",
+        "fallback": "photos/castillo_sengoku.webp"
+    },
+    {
         "id": "gal-1788803840",
         "title": "Castillo de Iga Ueno",
         "tag": "Castillos samurais",

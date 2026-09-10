@@ -34,7 +34,7 @@
     <!-- Hojas de Estilo Oficiales -->
     <link rel="stylesheet" href="styles.css">
 </head>
-<body data-theme-default="day" data-reviews-filter="text">
+<body data-theme-default="day" data-reviews-filter="all">
 
     <!-- Canvas para pétalos de sakura -->
     <canvas id="sakura-canvas"></canvas>
@@ -441,13 +441,766 @@
 
             <!-- Filtros de Opiniones -->
             <div class="reviews-filter-wrapper fade-in">
-                <button class="review-filter-btn " data-filter="all">Todas las Opiniones</button>
+                <button class="review-filter-btn active" data-filter="all">Todas las Opiniones</button>
                 <button class="review-filter-btn " data-filter="photo">📸 Con Foto / Captura</button>
-                <button class="review-filter-btn active" data-filter="text">✍️ Reseñas Escritas</button>
+                <button class="review-filter-btn " data-filter="text">✍️ Reseñas Escritas</button>
             </div>
 
             <!-- Grid de Opiniones Mixtas -->
             <div class="reviews-grid fade-in" id="reviews-grid" data-per-page="6">
+                <!-- Tarjeta de Reseña de Texto -->
+                <article class="review-card review-card-text" 
+                         data-id="rev-1788983968"
+                         data-type="text" 
+                         data-name="Paul Martin"
+                         data-role="Experto en sables japoneses, Tokio, Japón"
+                         data-photo=""
+                         data-rating="5"
+                         data-date="2025-07-18"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Paul Martin"
+                         style="display: flex;">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-card-text-inner">
+                        <div class="review-stars">★★★★★</div>
+                        <blockquote class="review-body review-text-clamped">
+                            "Jorge Orpianesi had a very succesful presentation of his new book. It is now available on youtube to watch. I was honored to be asked to write his foreword and contribute to Q&amp;A sectionon sword in the book. (Jorge Orpianesi tuvo una presentación muy exitosa de su nuevo libro. Ya está disponible en Youtube. Fue un honor para mí que me pidiera escribir el prólogo y participar de una seccion de preguntas y respuestas sobre los sables en el libro.)"
+                        </blockquote>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">PA</div>
+                        <div class="review-author">
+                            <strong>Paul Martin</strong>
+                            <span>Experto en sables japoneses, Tokio, Japón</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                    <div class="review-full-text" style="display: none;">Jorge Orpianesi had a very succesful presentation of his new book. It is now available on youtube to watch. I was honored to be asked to write his foreword and contribute to Q&amp;A sectionon sword in the book. (Jorge Orpianesi tuvo una presentación muy exitosa de su nuevo libro. Ya está disponible en Youtube. Fue un honor para mí que me pidiera escribir el prólogo y participar de una seccion de preguntas y respuestas sobre los sables en el libro.)</div>
+                </article>
+                <!-- Tarjeta de Reseña de Texto -->
+                <article class="review-card review-card-text" 
+                         data-id="rev-1788982332"
+                         data-type="text" 
+                         data-name="Ivan Gimenez"
+                         data-role="Lector Verificado"
+                         data-photo=""
+                         data-rating="5"
+                         data-date="2022-12-09"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Ivan Gimenez"
+                         style="display: flex;">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-card-text-inner">
+                        <div class="review-stars">★★★★★</div>
+                        <blockquote class="review-body review-text-clamped">
+                            "Genial video Jorge! Igual que todos los que publica! yo también me hice de un ejemplar de su libro La Ruta del Samurái, y la verdad es que día a día no dejo de leer cada capítulo y consultarlo a medida que voy siguiendo todos sus documentos y videos por la red. un fuerte abrazo, todos mis respetos  con todo el trabajo que está haciendo."
+                        </blockquote>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">IV</div>
+                        <div class="review-author">
+                            <strong>Ivan Gimenez</strong>
+                            <span>Lector Verificado</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                    <div class="review-full-text" style="display: none;">Genial video Jorge! Igual que todos los que publica! yo también me hice de un ejemplar de su libro La Ruta del Samurái, y la verdad es que día a día no dejo de leer cada capítulo y consultarlo a medida que voy siguiendo todos sus documentos y videos por la red. un fuerte abrazo, todos mis respetos  con todo el trabajo que está haciendo.</div>
+                </article>
+                <!-- Tarjeta de Reseña de Texto -->
+                <article class="review-card review-card-text" 
+                         data-id="rev-1788982169"
+                         data-type="text" 
+                         data-name="Eugenia Díaz"
+                         data-role="Lector Verificado"
+                         data-photo=""
+                         data-rating="5"
+                         data-date="2024-06-23"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Eugenia Díaz"
+                         style="display: flex;">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-card-text-inner">
+                        <div class="review-stars">★★★★★</div>
+                        <blockquote class="review-body review-text-clamped">
+                            "Lo felicito. Dueño de una pluma exquisita. Realmente me sentí parte de ese viaje. De hecho leí dos veces su libro. La primera, por más que quería ir despacio me lo devoré en unos días. Me era imposible no seguir leyendo página tras página. En la segunda lectura fue un gustar internamente, componer los lugares, ir viendo tu canal de Youtube, realmente una experiencia que recomiendo para todo budoka."
+                        </blockquote>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">EU</div>
+                        <div class="review-author">
+                            <strong>Eugenia Díaz</strong>
+                            <span>Lector Verificado</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                    <div class="review-full-text" style="display: none;">Lo felicito. Dueño de una pluma exquisita. Realmente me sentí parte de ese viaje. De hecho leí dos veces su libro. La primera, por más que quería ir despacio me lo devoré en unos días. Me era imposible no seguir leyendo página tras página. En la segunda lectura fue un gustar internamente, componer los lugares, ir viendo tu canal de Youtube, realmente una experiencia que recomiendo para todo budoka.</div>
+                </article>
+                <!-- Tarjeta de Reseña de Texto -->
+                <article class="review-card review-card-text" 
+                         data-id="rev-1788981961"
+                         data-type="text" 
+                         data-name="Angel Gutierrez"
+                         data-role="Lector Verificado"
+                         data-photo=""
+                         data-rating="5"
+                         data-date="2024-07-05"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Angel Gutierrez"
+                         style="display: flex;">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-card-text-inner">
+                        <div class="review-stars">★★★★★</div>
+                        <blockquote class="review-body review-text-clamped">
+                            "Estimado, disfruté mucho de su libro, bien escrito, claro, con mucha información que nos pone a los lectores en contexto. Aclaro que no soy practicnate de artes marciales pero nos acerca a la fascinante cultura nipona. Me gustó mucho la ruta de ese legendario (y desconocido para mí) samurái. Lo felicito, un libro que voy a guardar. un abrazo grande."
+                        </blockquote>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">AN</div>
+                        <div class="review-author">
+                            <strong>Angel Gutierrez</strong>
+                            <span>Lector Verificado</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                    <div class="review-full-text" style="display: none;">Estimado, disfruté mucho de su libro, bien escrito, claro, con mucha información que nos pone a los lectores en contexto. Aclaro que no soy practicnate de artes marciales pero nos acerca a la fascinante cultura nipona. Me gustó mucho la ruta de ese legendario (y desconocido para mí) samurái. Lo felicito, un libro que voy a guardar. un abrazo grande.</div>
+                </article>
+                <!-- Tarjeta con Foto -->
+                <article class="review-card review-card-photo" 
+                         data-id="rev-1788981769"
+                         data-type="photo" 
+                         data-name="Carlos Medina"
+                         data-role="Lector Verificado, Montevideo, Uruguay"
+                         data-photo="photos/lector_7b03e4be-bca4-40f5-aa74-2dd7384718a0_1788981769.webp"
+                         data-photo-title="Carlos Medina"
+                         data-rating="5"
+                         data-date="2026-09-09"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Carlos Medina"
+                         style="display: flex;">
+                    <div class="review-photo-wrapper" data-src="photos/lector_7b03e4be-bca4-40f5-aa74-2dd7384718a0_1788981769.webp" data-title="Carlos Medina">
+                        <img src="photos/lector_7b03e4be-bca4-40f5-aa74-2dd7384718a0_1788981769.webp" alt="Carlos Medina" loading="lazy" class="review-photo-img" onerror="this.src='photos/orpianesi1.webp'">
+                        <div class="review-photo-badge">📸 Foto de Lector</div>
+                        <div class="review-photo-overlay">
+                            <span>🔍 Clic para ampliar</span>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-caption review-text-clamped">"Espectacular el libro. Muchas gracias por compartir su recorrido por Japón y la vida del maestro Musashi. Recién lo termino pero voy a volver a leerlo unas cuantas veces. Saludos desde Montevideo, Uruguay!"</p>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                        <div class="review-author">
+                            <strong>Carlos Medina</strong>
+                            <span>Lector Verificado, Montevideo, Uruguay</span>
+                        </div>
+                    </div>
+                    <div class="review-full-text" style="display: none;">Espectacular el libro. Muchas gracias por compartir su recorrido por Japón y la vida del maestro Musashi. Recién lo termino pero voy a volver a leerlo unas cuantas veces. Saludos desde Montevideo, Uruguay!</div>
+                </article>
+                <!-- Tarjeta con Foto -->
+                <article class="review-card review-card-photo" 
+                         data-id="rev-1788981532"
+                         data-type="photo" 
+                         data-name="Daniel Gachuz"
+                         data-role="Lector Verificado"
+                         data-photo="photos/lector_42abad24-22f8-4802-9bd1-e011911df52b__1__1788981532.webp"
+                         data-photo-title="Daniel Gachuz"
+                         data-rating="5"
+                         data-date="2023-11-25"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Daniel Gachuz"
+                         style="display: flex;">
+                    <div class="review-photo-wrapper" data-src="photos/lector_42abad24-22f8-4802-9bd1-e011911df52b__1__1788981532.webp" data-title="Daniel Gachuz">
+                        <img src="photos/lector_42abad24-22f8-4802-9bd1-e011911df52b__1__1788981532.webp" alt="Daniel Gachuz" loading="lazy" class="review-photo-img" onerror="this.src='photos/orpianesi1.webp'">
+                        <div class="review-photo-badge">📸 Foto de Lector</div>
+                        <div class="review-photo-overlay">
+                            <span>🔍 Clic para ampliar</span>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-caption review-text-clamped">"Excelente libro!!"</p>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                        <div class="review-author">
+                            <strong>Daniel Gachuz</strong>
+                            <span>Lector Verificado</span>
+                        </div>
+                    </div>
+                    <div class="review-full-text" style="display: none;">Excelente libro!!</div>
+                </article>
+                <!-- Tarjeta de Reseña de Texto -->
+                <article class="review-card review-card-text" 
+                         data-id="rev-1788981331"
+                         data-type="text" 
+                         data-name="Aldo"
+                         data-role="Lector Verificado, Mexico"
+                         data-photo=""
+                         data-rating="5"
+                         data-date="2022-08-27"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Aldo"
+                         style="display: none;">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-card-text-inner">
+                        <div class="review-stars">★★★★★</div>
+                        <blockquote class="review-body review-text-clamped">
+                            "Acabo de comenzar a leer su libro y me ha encantado su formato, la narrativa, los textos que incluye, las fotos y mapas. Excelente trabajo! Saludos desde Mexico!"
+                        </blockquote>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">AL</div>
+                        <div class="review-author">
+                            <strong>Aldo</strong>
+                            <span>Lector Verificado, Mexico</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                    <div class="review-full-text" style="display: none;">Acabo de comenzar a leer su libro y me ha encantado su formato, la narrativa, los textos que incluye, las fotos y mapas. Excelente trabajo! Saludos desde Mexico!</div>
+                </article>
+                <!-- Tarjeta con Foto -->
+                <article class="review-card review-card-photo" 
+                         data-id="rev-1788981172"
+                         data-type="photo" 
+                         data-name="Aldo Corrales"
+                         data-role="Maestro de Aikido, Osorno, Chile"
+                         data-photo="photos/lector_0ef79029-78e0-4260-abef-bdd44eae8193_1788981172.webp"
+                         data-photo-title="Aldo Corrales"
+                         data-rating="5"
+                         data-date="2025-08-19"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Aldo Corrales"
+                         style="display: none;">
+                    <div class="review-photo-wrapper" data-src="photos/lector_0ef79029-78e0-4260-abef-bdd44eae8193_1788981172.webp" data-title="Aldo Corrales">
+                        <img src="photos/lector_0ef79029-78e0-4260-abef-bdd44eae8193_1788981172.webp" alt="Aldo Corrales" loading="lazy" class="review-photo-img" onerror="this.src='photos/orpianesi1.webp'">
+                        <div class="review-photo-badge">📸 Foto de Lector</div>
+                        <div class="review-photo-overlay">
+                            <span>🔍 Clic para ampliar</span>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-caption review-text-clamped">"Hoy me llegó La Ruta del samurái 2, aquí junto al primer volumen escritos por Jorge Orpianesi, son sin duda, la mejor y más completa forma de hacer un viaje al Japón de las artes marciales, desde casa. Felicitaciones al autor por hacernos parte de sus viajes e investigaciones por el país del Budo."</p>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                        <div class="review-author">
+                            <strong>Aldo Corrales</strong>
+                            <span>Maestro de Aikido, Osorno, Chile</span>
+                        </div>
+                    </div>
+                    <div class="review-full-text" style="display: none;">Hoy me llegó La Ruta del samurái 2, aquí junto al primer volumen escritos por Jorge Orpianesi, son sin duda, la mejor y más completa forma de hacer un viaje al Japón de las artes marciales, desde casa. Felicitaciones al autor por hacernos parte de sus viajes e investigaciones por el país del Budo.</div>
+                </article>
+                <!-- Tarjeta de Reseña de Texto -->
+                <article class="review-card review-card-text" 
+                         data-id="rev-1788980895"
+                         data-type="text" 
+                         data-name="Guillermo Marenco"
+                         data-role="Lector Verificado"
+                         data-photo=""
+                         data-rating="5"
+                         data-date="2023-06-28"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Guillermo Marenco"
+                         style="display: none;">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-card-text-inner">
+                        <div class="review-stars">★★★★★</div>
+                        <blockquote class="review-body review-text-clamped">
+                            "Voy por la mitad del libro Jorge...fue el dinero mejor invertido definitivamente. Me hubiese gustado tenerlo antes d emi viaje a Japón, pero ahora me ayudó a comprender sobre muchos lugares que visité sin saber toda esa historia que hay en ellos. Para mi próxima visita ya tengo en cuenta muchas cosas...la lista va aumentando a medida que leo tu libro."
+                        </blockquote>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">GU</div>
+                        <div class="review-author">
+                            <strong>Guillermo Marenco</strong>
+                            <span>Lector Verificado</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                    <div class="review-full-text" style="display: none;">Voy por la mitad del libro Jorge...fue el dinero mejor invertido definitivamente. Me hubiese gustado tenerlo antes d emi viaje a Japón, pero ahora me ayudó a comprender sobre muchos lugares que visité sin saber toda esa historia que hay en ellos. Para mi próxima visita ya tengo en cuenta muchas cosas...la lista va aumentando a medida que leo tu libro.</div>
+                </article>
+                <!-- Tarjeta de Reseña de Texto -->
+                <article class="review-card review-card-text" 
+                         data-id="rev-1788980659"
+                         data-type="text" 
+                         data-name="Alejandra Lopez"
+                         data-role="Historiadora"
+                         data-photo=""
+                         data-rating="5"
+                         data-date="2023-05-17"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Alejandra Lopez"
+                         style="display: none;">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-card-text-inner">
+                        <div class="review-stars">★★★★★</div>
+                        <blockquote class="review-body review-text-clamped">
+                            "Maravilloso! Gracias Jorge, he aprendido demasiado, y eso que soy historiadora pero los detalles, la claridad y la veracidad  de la información es sorprendente. Gracias por compartir tan sublime experiencia. Seguiremos &quot;encontrádonos en el camino&quot;."
+                        </blockquote>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">AL</div>
+                        <div class="review-author">
+                            <strong>Alejandra Lopez</strong>
+                            <span>Historiadora</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                    <div class="review-full-text" style="display: none;">Maravilloso! Gracias Jorge, he aprendido demasiado, y eso que soy historiadora pero los detalles, la claridad y la veracidad  de la información es sorprendente. Gracias por compartir tan sublime experiencia. Seguiremos &quot;encontrádonos en el camino&quot;.</div>
+                </article>
+                <!-- Tarjeta de Reseña de Texto -->
+                <article class="review-card review-card-text" 
+                         data-id="rev-1788980370"
+                         data-type="text" 
+                         data-name="Jose Antonio"
+                         data-role="Lector Amazon, España"
+                         data-photo=""
+                         data-rating="5"
+                         data-date="2025-10-12"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Jose Antonio"
+                         style="display: none;">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-card-text-inner">
+                        <div class="review-stars">★★★★★</div>
+                        <blockquote class="review-body review-text-clamped">
+                            "El autor hace un trabajo genial. Deseoso de leer todo lo que escribe."
+                        </blockquote>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">JO</div>
+                        <div class="review-author">
+                            <strong>Jose Antonio</strong>
+                            <span>Lector Amazon, España</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                    <div class="review-full-text" style="display: none;">El autor hace un trabajo genial. Deseoso de leer todo lo que escribe.</div>
+                </article>
+                <!-- Tarjeta de Reseña de Texto -->
+                <article class="review-card review-card-text" 
+                         data-id="rev-1788980236"
+                         data-type="text" 
+                         data-name="Manuel Gonzalez"
+                         data-role="Lector  Amazon,  España"
+                         data-photo=""
+                         data-rating="5"
+                         data-date="2023-07-26"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Manuel Gonzalez"
+                         style="display: none;">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-card-text-inner">
+                        <div class="review-stars">★★★★★</div>
+                        <blockquote class="review-body review-text-clamped">
+                            "Imprescindible para amantes de Japón, de la Historia, del mundo samurai, y/o de practicantes de Artes Marciales."
+                        </blockquote>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">MA</div>
+                        <div class="review-author">
+                            <strong>Manuel Gonzalez</strong>
+                            <span>Lector  Amazon,  España</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                    <div class="review-full-text" style="display: none;">Imprescindible para amantes de Japón, de la Historia, del mundo samurai, y/o de practicantes de Artes Marciales.</div>
+                </article>
+                <!-- Tarjeta de Reseña de Texto -->
+                <article class="review-card review-card-text" 
+                         data-id="rev-1788980143"
+                         data-type="text" 
+                         data-name="Karime  Albarrán"
+                         data-role="Lector Amazon, Mexico"
+                         data-photo=""
+                         data-rating="5"
+                         data-date="2026-05-03"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Karime  Albarrán"
+                         style="display: none;">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-card-text-inner">
+                        <div class="review-stars">★★★★★</div>
+                        <blockquote class="review-body review-text-clamped">
+                            "Interesante. Está muy padre el libro te ayuda an elegies puntos de interes para tu viaje. Te transporta a las eras y enter un poco más de la cultura."
+                        </blockquote>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">KA</div>
+                        <div class="review-author">
+                            <strong>Karime  Albarrán</strong>
+                            <span>Lector Amazon, Mexico</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                    <div class="review-full-text" style="display: none;">Interesante. Está muy padre el libro te ayuda an elegies puntos de interes para tu viaje. Te transporta a las eras y enter un poco más de la cultura.</div>
+                </article>
+                <!-- Tarjeta de Reseña de Texto -->
+                <article class="review-card review-card-text" 
+                         data-id="rev-1788980012"
+                         data-type="text" 
+                         data-name="Edgar Bajani"
+                         data-role="Lector  Amazon, Mexico"
+                         data-photo=""
+                         data-rating="5"
+                         data-date="2026-07-02"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Edgar Bajani"
+                         style="display: none;">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-card-text-inner">
+                        <div class="review-stars">★★★★★</div>
+                        <blockquote class="review-body review-text-clamped">
+                            "Libro guía para reconocer en el japón actual alantiguo. Muy buen libro para quién es gustan de las artes marciales japonesas. Bien explicado con lenguaje adecuado para cualquier lector"
+                        </blockquote>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">ED</div>
+                        <div class="review-author">
+                            <strong>Edgar Bajani</strong>
+                            <span>Lector  Amazon, Mexico</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                    <div class="review-full-text" style="display: none;">Libro guía para reconocer en el japón actual alantiguo. Muy buen libro para quién es gustan de las artes marciales japonesas. Bien explicado con lenguaje adecuado para cualquier lector</div>
+                </article>
+                <!-- Tarjeta con Foto -->
+                <article class="review-card review-card-photo" 
+                         data-id="rev-1788978106"
+                         data-type="photo" 
+                         data-name="Carlos Cortes Otero"
+                         data-role="Lector  Amazon, España"
+                         data-photo="photos/lector_7194DAbqWQL_1788978106.webp"
+                         data-photo-title="Carlos Cortes Otero"
+                         data-rating="5"
+                         data-date="2025-12-24"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Carlos Cortes Otero"
+                         style="display: none;">
+                    <div class="review-photo-wrapper" data-src="photos/lector_7194DAbqWQL_1788978106.webp" data-title="Carlos Cortes Otero">
+                        <img src="photos/lector_7194DAbqWQL_1788978106.webp" alt="Carlos Cortes Otero" loading="lazy" class="review-photo-img" onerror="this.src='photos/orpianesi1.webp'">
+                        <div class="review-photo-badge">📸 Foto de Lector</div>
+                        <div class="review-photo-overlay">
+                            <span>🔍 Clic para ampliar</span>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-caption review-text-clamped">"Impresionante, fascinante obra. Te sumerge en el mundo de los samuráis, su historia y tradiciones. Muy recomendable."</p>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                        <div class="review-author">
+                            <strong>Carlos Cortes Otero</strong>
+                            <span>Lector  Amazon, España</span>
+                        </div>
+                    </div>
+                    <div class="review-full-text" style="display: none;">Impresionante, fascinante obra. Te sumerge en el mundo de los samuráis, su historia y tradiciones. Muy recomendable.</div>
+                </article>
+                <!-- Tarjeta con Foto -->
+                <article class="review-card review-card-photo" 
+                         data-id="rev-1788977908"
+                         data-type="photo" 
+                         data-name="Bruno Contardi"
+                         data-role="Maestro de iaido, Brasil"
+                         data-photo="photos/lector_ea0257be-d655-45ae-93a0-ea2598c92850_1788977908.webp"
+                         data-photo-title="Bruno Contardi"
+                         data-rating="5"
+                         data-date="2024-01-02"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Bruno Contardi"
+                         style="display: none;">
+                    <div class="review-photo-wrapper" data-src="photos/lector_ea0257be-d655-45ae-93a0-ea2598c92850_1788977908.webp" data-title="Bruno Contardi">
+                        <img src="photos/lector_ea0257be-d655-45ae-93a0-ea2598c92850_1788977908.webp" alt="Bruno Contardi" loading="lazy" class="review-photo-img" onerror="this.src='photos/orpianesi1.webp'">
+                        <div class="review-photo-badge">📸 Foto de Lector</div>
+                        <div class="review-photo-overlay">
+                            <span>🔍 Clic para ampliar</span>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-caption review-text-clamped">"Domo arigatou for the sharing support! Great book, amazing reading!  i am loving it the first chapter Tokyo and Ueno park!. (¡Muchas gracias por compartirlo! Es un libro estupendo, ¡una lectura fantástica! Me está encantando el primer capítulo sobre Tokio y el parque de Ueno.)"</p>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                        <div class="review-author">
+                            <strong>Bruno Contardi</strong>
+                            <span>Maestro de iaido, Brasil</span>
+                        </div>
+                    </div>
+                    <div class="review-full-text" style="display: none;">Domo arigatou for the sharing support! Great book, amazing reading!  i am loving it the first chapter Tokyo and Ueno park!. (¡Muchas gracias por compartirlo! Es un libro estupendo, ¡una lectura fantástica! Me está encantando el primer capítulo sobre Tokio y el parque de Ueno.)</div>
+                </article>
+                <!-- Tarjeta de Reseña de Texto -->
+                <article class="review-card review-card-text" 
+                         data-id="rev-1788977351"
+                         data-type="text" 
+                         data-name="Alberto González"
+                         data-role="Lector Verificado, Salem, Massachusetts"
+                         data-photo=""
+                         data-rating="5"
+                         data-date="2025-05-05"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Alberto González"
+                         style="display: none;">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-card-text-inner">
+                        <div class="review-stars">★★★★★</div>
+                        <blockquote class="review-body review-text-clamped">
+                            "No dejen de leer La Ruta del Samurái que es la única y mejor fuente en nuestro idioma y está enlazado con los mejores de Japón."
+                        </blockquote>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">AL</div>
+                        <div class="review-author">
+                            <strong>Alberto González</strong>
+                            <span>Lector Verificado, Salem, Massachusetts</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                    <div class="review-full-text" style="display: none;">No dejen de leer La Ruta del Samurái que es la única y mejor fuente en nuestro idioma y está enlazado con los mejores de Japón.</div>
+                </article>
+                <!-- Tarjeta de Reseña de Texto -->
+                <article class="review-card review-card-text" 
+                         data-id="rev-1788977142"
+                         data-type="text" 
+                         data-name="Henrypold"
+                         data-role="Lector Verificado"
+                         data-photo=""
+                         data-rating="5"
+                         data-date="2024-01-04"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Henrypold"
+                         style="display: none;">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-card-text-inner">
+                        <div class="review-stars">★★★★★</div>
+                        <blockquote class="review-body review-text-clamped">
+                            "Excelente libro! Lo empecé a leer hace unos días y no te suelta! Te traslada a otros lugares y tiempos, uno se imagina en el campo de batalla!"
+                        </blockquote>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">HE</div>
+                        <div class="review-author">
+                            <strong>Henrypold</strong>
+                            <span>Lector Verificado</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                    <div class="review-full-text" style="display: none;">Excelente libro! Lo empecé a leer hace unos días y no te suelta! Te traslada a otros lugares y tiempos, uno se imagina en el campo de batalla!</div>
+                </article>
+                <!-- Tarjeta de Reseña de Texto -->
+                <article class="review-card review-card-text" 
+                         data-id="rev-1788976985"
+                         data-type="text" 
+                         data-name="Ismael Fernandez"
+                         data-role="Lector Verificado"
+                         data-photo=""
+                         data-rating="5"
+                         data-date="2023-12-16"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Ismael Fernandez"
+                         style="display: none;">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-card-text-inner">
+                        <div class="review-stars">★★★★★</div>
+                        <blockquote class="review-body review-text-clamped">
+                            "Cómo disfruté de este libro (La Ruta del samurái)! y no solo eso sino que me servirá de guía práctica para cuando pueda cumplir mi sueño de viajar a Japón. Gracias maestro por ese gran libro. Esperando ansioso el siguiente!"
+                        </blockquote>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">IS</div>
+                        <div class="review-author">
+                            <strong>Ismael Fernandez</strong>
+                            <span>Lector Verificado</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                    <div class="review-full-text" style="display: none;">Cómo disfruté de este libro (La Ruta del samurái)! y no solo eso sino que me servirá de guía práctica para cuando pueda cumplir mi sueño de viajar a Japón. Gracias maestro por ese gran libro. Esperando ansioso el siguiente!</div>
+                </article>
+                <!-- Tarjeta de Reseña de Texto -->
+                <article class="review-card review-card-text" 
+                         data-id="rev-1788976803"
+                         data-type="text" 
+                         data-name="Guillermo Suarez"
+                         data-role="Practicante de Kendo, Chile"
+                         data-photo=""
+                         data-rating="5"
+                         data-date="2022-08-03"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Guillermo Suarez"
+                         style="display: none;">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-card-text-inner">
+                        <div class="review-stars">★★★★★</div>
+                        <blockquote class="review-body review-text-clamped">
+                            "Jorge, me encuentro leyendo tu libro y siguiendo tus aportes en redes sociales y es simplemente alucinante, es viajar mientras se lee. Saludos desde el otro lado de la cordillera, un kendoka amigo!"
+                        </blockquote>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">GU</div>
+                        <div class="review-author">
+                            <strong>Guillermo Suarez</strong>
+                            <span>Practicante de Kendo, Chile</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                    <div class="review-full-text" style="display: none;">Jorge, me encuentro leyendo tu libro y siguiendo tus aportes en redes sociales y es simplemente alucinante, es viajar mientras se lee. Saludos desde el otro lado de la cordillera, un kendoka amigo!</div>
+                </article>
+                <!-- Tarjeta de Reseña de Texto -->
+                <article class="review-card review-card-text" 
+                         data-id="rev-1788976582"
+                         data-type="text" 
+                         data-name="Katherine Salinas"
+                         data-role="Lector Verificado"
+                         data-photo=""
+                         data-rating="5"
+                         data-date="2023-10-07"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de Katherine Salinas"
+                         style="display: none;">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-card-text-inner">
+                        <div class="review-stars">★★★★★</div>
+                        <blockquote class="review-body review-text-clamped">
+                            "Estoy armando mi primer viaje a Japón y tus videos me han ayudado muchísimo. Tu libro también.  Ojalá puedas escribir otro pronto.  Gracias por compartir tu sabiduría con todos nosotros."
+                        </blockquote>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">KA</div>
+                        <div class="review-author">
+                            <strong>Katherine Salinas</strong>
+                            <span>Lector Verificado</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                    <div class="review-full-text" style="display: none;">Estoy armando mi primer viaje a Japón y tus videos me han ayudado muchísimo. Tu libro también.  Ojalá puedas escribir otro pronto.  Gracias por compartir tu sabiduría con todos nosotros.</div>
+                </article>
+                <!-- Tarjeta de Reseña de Texto -->
+                <article class="review-card review-card-text" 
+                         data-id="rev-1788975843"
+                         data-type="text" 
+                         data-name="perikillo08"
+                         data-role="Lector Verificado"
+                         data-photo=""
+                         data-rating="5"
+                         data-date="2025-09-04"
+                         data-verified="1"
+                         tabindex="0"
+                         role="button"
+                         aria-label="Ver reseña de perikillo08"
+                         style="display: none;">
+                    <div class="review-quote-mark">“</div>
+                    <div class="review-card-text-inner">
+                        <div class="review-stars">★★★★★</div>
+                        <blockquote class="review-body review-text-clamped">
+                            "Estoy leyendo La Ruta del Samurái y me está encantando! Busco cada lugar con Google Maps para ver lo en más detalle aun  y estoy aprendiendo un montón sobre historia y cultura japonesa. Tengo esperando para cuando lo termiine a El Paso de las Luciérnagas. Gracias por sus obras para los amantes de aquella época!"
+                        </blockquote>
+                        <div class="review-read-more-wrapper">
+                            <button type="button" class="review-read-more-btn">Ver más →</button>
+                        </div>
+                    </div>
+                    <div class="review-footer">
+                        <div class="review-avatar-text">PE</div>
+                        <div class="review-author">
+                            <strong>perikillo08</strong>
+                            <span>Lector Verificado</span>
+                        </div>
+                    </div>
+                    <div class="review-tag-badge">✓ Compra Verificada</div>
+                    <div class="review-full-text" style="display: none;">Estoy leyendo La Ruta del Samurái y me está encantando! Busco cada lugar con Google Maps para ver lo en más detalle aun  y estoy aprendiendo un montón sobre historia y cultura japonesa. Tengo esperando para cuando lo termiine a El Paso de las Luciérnagas. Gracias por sus obras para los amantes de aquella época!</div>
+                </article>
                 <!-- Tarjeta de Reseña de Texto -->
                 <article class="review-card review-card-text" 
                          data-id="rev-1788547886"
@@ -461,7 +1214,7 @@
                          tabindex="0"
                          role="button"
                          aria-label="Ver reseña de Julieta Olivero"
-                         style="display: flex;">
+                         style="display: none;">
                     <div class="review-quote-mark">“</div>
                     <div class="review-card-text-inner">
                         <div class="review-stars">★★★★★</div>
@@ -495,7 +1248,7 @@
                          tabindex="0"
                          role="button"
                          aria-label="Ver reseña de Antonella Speroni"
-                         style="display: flex;">
+                         style="display: none;">
                     <div class="review-quote-mark">“</div>
                     <div class="review-card-text-inner">
                         <div class="review-stars">★★★★★</div>
@@ -529,7 +1282,7 @@
                          tabindex="0"
                          role="button"
                          aria-label="Ver reseña de WC"
-                         style="display: flex;">
+                         style="display: none;">
                     <div class="review-quote-mark">“</div>
                     <div class="review-card-text-inner">
                         <div class="review-stars">★★★★★</div>
@@ -706,7 +1459,7 @@
                          tabindex="0"
                          role="button"
                          aria-label="Ver reseña de Gabriel Neves"
-                         style="display: flex;">
+                         style="display: none;">
                     <div class="review-quote-mark">“</div>
                     <div class="review-card-text-inner">
                         <div class="review-stars">★★★★★</div>
@@ -732,7 +1485,7 @@
                          data-id="rev-3"
                          data-type="text" 
                          data-name="Santiago Díaz"
-                         data-role="seguidor"
+                         data-role="Lector Verificado"
                          data-photo=""
                          data-rating="5"
                          data-date="2022-03-13"
@@ -756,7 +1509,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho."
                         <div class="review-avatar-text">SA</div>
                         <div class="review-author">
                             <strong>Santiago Díaz</strong>
-                            <span>seguidor</span>
+                            <span>Lector Verificado</span>
                         </div>
                     </div>
                     <div class="review-tag-badge">✓ Compra Verificada</div>
@@ -776,7 +1529,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                          tabindex="0"
                          role="button"
                          aria-label="Ver reseña de Antonio"
-                         style="display: flex;">
+                         style="display: none;">
                     <div class="review-quote-mark">“</div>
                     <div class="review-card-text-inner">
                         <div class="review-stars">★★★★★</div>
@@ -1057,7 +1810,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
             <!-- Barra de Controles de la Galería -->
             <div class="gallery-controls-bar fade-in">
                 <div class="gallery-counter-tag" id="gallery-counter-tag">
-                    <span>📸 Mostrando fotos 1-3 de 17</span>
+                    <span>📸 Mostrando fotos 1-3 de 109</span>
                 </div>
 
                 <div class="gallery-nav-buttons">
@@ -1078,10 +1831,1666 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
             <div class="gallery-grid fade-in" id="gallery-posts-grid" data-per-page="3">
                 <div class="gallery-card" 
                      data-gallery-index="0"
+                     data-src="photos/gal_DSC_0613_1789057136.webp" 
+                     data-title="Castillo de Matshushiro" 
+                     data-tag="Castillos samurais"
+                     style="display: flex;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0613_1789057136.webp" 
+                             alt="Castillo de Matshushiro" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Castillos samurais</span>
+                            <h4 class="gallery-card-title">Castillo de Matshushiro</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="1"
+                     data-src="photos/gal_a2e92a7f-5348-4967-abcc-6cc9c698a6c3_1789057097.webp" 
+                     data-title="Sitio de la Batalla de Kawanakajima" 
+                     data-tag="Lugares samurái"
+                     style="display: flex;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_a2e92a7f-5348-4967-abcc-6cc9c698a6c3_1789057097.webp" 
+                             alt="Sitio de la Batalla de Kawanakajima" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Sitio de la Batalla de Kawanakajima</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="2"
+                     data-src="photos/gal_ACUD6671_1789057054.webp" 
+                     data-title="Escuela samurái de Nagano - Dojo" 
+                     data-tag="Lugares samurái"
+                     style="display: flex;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_ACUD6671_1789057054.webp" 
+                             alt="Escuela samurái de Nagano - Dojo" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Escuela samurái de Nagano - Dojo</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="3"
+                     data-src="photos/gal_60a7f542-6fa9-40dd-a14b-4cb6fc8c3714_1789057007.webp" 
+                     data-title="Casa del clan Sanada en Nagano" 
+                     data-tag="Lugares samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_60a7f542-6fa9-40dd-a14b-4cb6fc8c3714_1789057007.webp" 
+                             alt="Casa del clan Sanada en Nagano" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Casa del clan Sanada en Nagano</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="4"
+                     data-src="photos/gal_IMG_5831_1789056875.webp" 
+                     data-title="Habitación donde atentaron contra la vida de Sakamoto Ryoma" 
+                     data-tag="Lugares samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_5831_1789056875.webp" 
+                             alt="Habitación donde atentaron contra la vida de Sakamoto Ryoma" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Habitación donde atentaron contra la vida de Sakamoto Ryoma</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="5"
+                     data-src="photos/gal_3afb87f0-a298-41eb-8590-0d26171d7a99_1789056726.webp" 
+                     data-title="Tumba de Oda Nobunaga" 
+                     data-tag="Lugares samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_3afb87f0-a298-41eb-8590-0d26171d7a99_1789056726.webp" 
+                             alt="Tumba de Oda Nobunaga" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Tumba de Oda Nobunaga</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="6"
+                     data-src="photos/gal_576c4b96-88a6-4974-9536-9e01b5a00580_1789056661.webp" 
+                     data-title="Tumba de Akechi Mitsuhide" 
+                     data-tag="Lugares samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_576c4b96-88a6-4974-9536-9e01b5a00580_1789056661.webp" 
+                             alt="Tumba de Akechi Mitsuhide" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Tumba de Akechi Mitsuhide</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="7"
+                     data-src="photos/gal_DSC_0055_1789056547.webp" 
+                     data-title="Tumba de Toyotomi Hideyoshi" 
+                     data-tag="Lugares samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0055_1789056547.webp" 
+                             alt="Tumba de Toyotomi Hideyoshi" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Tumba de Toyotomi Hideyoshi</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="8"
+                     data-src="photos/gal_0e6b3da3-da67-420b-8908-f92b2f27f7b1_1789056481.webp" 
+                     data-title="Sitio del asesinato contra Sakamoto Ryoma" 
+                     data-tag="Lugares samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_0e6b3da3-da67-420b-8908-f92b2f27f7b1_1789056481.webp" 
+                             alt="Sitio del asesinato contra Sakamoto Ryoma" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Sitio del asesinato contra Sakamoto Ryoma</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="9"
+                     data-src="photos/gal_IMG_E8333_1789056342.webp" 
+                     data-title="Visita a Kawagoe" 
+                     data-tag="Patrimonio Histórico"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_E8333_1789056342.webp" 
+                             alt="Visita a Kawagoe" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Patrimonio Histórico</span>
+                            <h4 class="gallery-card-title">Visita a Kawagoe</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="10"
+                     data-src="photos/gal_DSCN3782_1789056212.webp" 
+                     data-title="Junto al maestro  Hokama en su museo del Karate" 
+                     data-tag="Tradición Marcial"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSCN3782_1789056212.webp" 
+                             alt="Junto al maestro  Hokama en su museo del Karate" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Tradición Marcial</span>
+                            <h4 class="gallery-card-title">Junto al maestro  Hokama en su museo del Karate</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="11"
+                     data-src="photos/gal_20130909_181228-1_1789056128.webp" 
+                     data-title="Monumento al maestro Gichin Funakoshi en Okinawa" 
+                     data-tag="Tradición Marcial"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_20130909_181228-1_1789056128.webp" 
+                             alt="Monumento al maestro Gichin Funakoshi en Okinawa" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Tradición Marcial</span>
+                            <h4 class="gallery-card-title">Monumento al maestro Gichin Funakoshi en Okinawa</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="12"
+                     data-src="photos/gal_CSC_0034_1789056046.webp" 
+                     data-title="Monumento al maestro de Karate Chojun Miyagi" 
+                     data-tag="Tradición Marcial"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_CSC_0034_1789056046.webp" 
+                             alt="Monumento al maestro de Karate Chojun Miyagi" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Tradición Marcial</span>
+                            <h4 class="gallery-card-title">Monumento al maestro de Karate Chojun Miyagi</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="13"
+                     data-src="photos/gal_DSCN3581_1789055952.webp" 
+                     data-title="Lugar de meditación de Sokon Matsumura  en el jardín Shikina" 
+                     data-tag="Tradición Marcial"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSCN3581_1789055952.webp" 
+                             alt="Lugar de meditación de Sokon Matsumura  en el jardín Shikina" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Tradición Marcial</span>
+                            <h4 class="gallery-card-title">Lugar de meditación de Sokon Matsumura  en el jardín Shikina</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="14"
+                     data-src="photos/gal_DSCN3489_1789055832.webp" 
+                     data-title="Memorial de la Batalla de Okinawa" 
+                     data-tag="Lugar Histórico"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSCN3489_1789055832.webp" 
+                             alt="Memorial de la Batalla de Okinawa" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugar Histórico</span>
+                            <h4 class="gallery-card-title">Memorial de la Batalla de Okinawa</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="15"
+                     data-src="photos/gal_CSC_0343_1789055710.webp" 
+                     data-title="Sayyonara Party con los grande maestros de Okinawa" 
+                     data-tag="Tradición Marcial"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_CSC_0343_1789055710.webp" 
+                             alt="Sayyonara Party con los grande maestros de Okinawa" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Tradición Marcial</span>
+                            <h4 class="gallery-card-title">Sayyonara Party con los grande maestros de Okinawa</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="16"
+                     data-src="photos/gal_DSC_0823_1789055546.webp" 
+                     data-title="Parque Yoyogi, santuario Meiji" 
+                     data-tag="Templos y santuarios"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0823_1789055546.webp" 
+                             alt="Parque Yoyogi, santuario Meiji" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Templos y santuarios</span>
+                            <h4 class="gallery-card-title">Parque Yoyogi, santuario Meiji</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="17"
+                     data-src="photos/gal_DSC_0769__2__1788986730.webp" 
+                     data-title="Templo Senso-ji" 
+                     data-tag="Templos y santuarios"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0769__2__1788986730.webp" 
+                             alt="Templo Senso-ji" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Templos y santuarios</span>
+                            <h4 class="gallery-card-title">Templo Senso-ji</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="18"
+                     data-src="photos/gal_DSC_0237__2__1788986507.webp" 
+                     data-title="Nihon Budokan" 
+                     data-tag="Tradición Marcial"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0237__2__1788986507.webp" 
+                             alt="Nihon Budokan" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Tradición Marcial</span>
+                            <h4 class="gallery-card-title">Nihon Budokan</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="19"
+                     data-src="photos/gal_DSC_0206__2__1788986449.webp" 
+                     data-title="Palacio imperial de Tokio" 
+                     data-tag="Patrimonio Histórico"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0206__2__1788986449.webp" 
+                             alt="Palacio imperial de Tokio" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Patrimonio Histórico</span>
+                            <h4 class="gallery-card-title">Palacio imperial de Tokio</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="20"
+                     data-src="photos/gal_DSC_0197__2__1788986390.webp" 
+                     data-title="Mausoleo con las tumbas de 6 shogunes Tokugawa" 
+                     data-tag="Lugares samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0197__2__1788986390.webp" 
+                             alt="Mausoleo con las tumbas de 6 shogunes Tokugawa" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Mausoleo con las tumbas de 6 shogunes Tokugawa</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="21"
+                     data-src="photos/gal_DSC_0175__2__1788986328.webp" 
+                     data-title="Tumba de los 47 ronin en Sengaku-ji" 
+                     data-tag="Lugares samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0175__2__1788986328.webp" 
+                             alt="Tumba de los 47 ronin en Sengaku-ji" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Tumba de los 47 ronin en Sengaku-ji</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="22"
+                     data-src="photos/gal_DSC_0136__2__1788986273.webp" 
+                     data-title="Casa de Kira donde atacaron los 47 ronin" 
+                     data-tag="Lugares samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0136__2__1788986273.webp" 
+                             alt="Casa de Kira donde atacaron los 47 ronin" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Casa de Kira donde atacaron los 47 ronin</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="23"
+                     data-src="photos/gal_DSC_0005__2__1788986207.webp" 
+                     data-title="Monumento a Saigo Takamori, El Ultimo Samurái" 
+                     data-tag="Lugares samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0005__2__1788986207.webp" 
+                             alt="Monumento a Saigo Takamori, El Ultimo Samurái" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Monumento a Saigo Takamori, El Ultimo Samurái</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="24"
+                     data-src="photos/gal_71296587_2643851139010830_2246393862903824384_n_1788986158.webp" 
+                     data-title="Entrenamiento de iaido en Warabi, Saitama" 
+                     data-tag="Tradición Marcial"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_71296587_2643851139010830_2246393862903824384_n_1788986158.webp" 
+                             alt="Entrenamiento de iaido en Warabi, Saitama" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Tradición Marcial</span>
+                            <h4 class="gallery-card-title">Entrenamiento de iaido en Warabi, Saitama</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="25"
+                     data-src="photos/gal_DSC_0052__3__1788985699.webp" 
+                     data-title="Poblado de Shirakawa-go" 
+                     data-tag="Patrimonio Histórico"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0052__3__1788985699.webp" 
+                             alt="Poblado de Shirakawa-go" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Patrimonio Histórico</span>
+                            <h4 class="gallery-card-title">Poblado de Shirakawa-go</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="26"
+                     data-src="photos/gal_DSC_0652_1788985612.webp" 
+                     data-title="Castillo de Shimabara" 
+                     data-tag="Castillos samurais"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0652_1788985612.webp" 
+                             alt="Castillo de Shimabara" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Castillos samurais</span>
+                            <h4 class="gallery-card-title">Castillo de Shimabara</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="27"
+                     data-src="photos/gal_DSC_0080__3__1788985498.webp" 
+                     data-title="Sitio de la batalla de Sekigahara" 
+                     data-tag="Lugares samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0080__3__1788985498.webp" 
+                             alt="Sitio de la batalla de Sekigahara" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Sitio de la batalla de Sekigahara</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="28"
+                     data-src="photos/gal_DSCN3595_1788985387.webp" 
+                     data-title="Shureimon, la puerta de la cortesía en el castillo de Shuri" 
+                     data-tag="Castillos samurais"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSCN3595_1788985387.webp" 
+                             alt="Shureimon, la puerta de la cortesía en el castillo de Shuri" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Castillos samurais</span>
+                            <h4 class="gallery-card-title">Shureimon, la puerta de la cortesía en el castillo de Shuri</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="29"
+                     data-src="photos/gal_DSCN3742_1788985310.webp" 
+                     data-title="Entrenando Karate en el Santuario Naminoue, Okinawa" 
+                     data-tag="Tradición Marcial"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSCN3742_1788985310.webp" 
+                             alt="Entrenando Karate en el Santuario Naminoue, Okinawa" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Tradición Marcial</span>
+                            <h4 class="gallery-card-title">Entrenando Karate en el Santuario Naminoue, Okinawa</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="30"
+                     data-src="photos/gal_IMG_20190904_141040_1788985218.webp" 
+                     data-title="Abismo de Kanmanganfuchi" 
+                     data-tag="Patrimonio Histórico"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190904_141040_1788985218.webp" 
+                             alt="Abismo de Kanmanganfuchi" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Patrimonio Histórico</span>
+                            <h4 class="gallery-card-title">Abismo de Kanmanganfuchi</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="31"
+                     data-src="photos/gal_IMG_20190904_124703_1788985165.webp" 
+                     data-title="Puente Shinkyo" 
+                     data-tag="Patrimonio Histórico"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190904_124703_1788985165.webp" 
+                             alt="Puente Shinkyo" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Patrimonio Histórico</span>
+                            <h4 class="gallery-card-title">Puente Shinkyo</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="32"
+                     data-src="photos/gal_IMG_20190904_113217_1788985059.webp" 
+                     data-title="Tumba del shogun Tokugawa Ieyasu en Nikko" 
+                     data-tag="Lugares samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190904_113217_1788985059.webp" 
+                             alt="Tumba del shogun Tokugawa Ieyasu en Nikko" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Tumba del shogun Tokugawa Ieyasu en Nikko</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="33"
+                     data-src="photos/gal_IMG_20190904_102354_1788984978.webp" 
+                     data-title="Tumba del shogun Tokugawa Iemitsu" 
+                     data-tag="Lugares samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190904_102354_1788984978.webp" 
+                             alt="Tumba del shogun Tokugawa Iemitsu" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Tumba del shogun Tokugawa Iemitsu</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="34"
+                     data-src="photos/gal_IMG_20190913_134939_1788984892.webp" 
+                     data-title="Santuario Kasuga Taisha" 
+                     data-tag="Patrimonio Histórico"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190913_134939_1788984892.webp" 
+                             alt="Santuario Kasuga Taisha" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Patrimonio Histórico</span>
+                            <h4 class="gallery-card-title">Santuario Kasuga Taisha</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="35"
+                     data-src="photos/gal_IMG_20190913_120906_1788984765.webp" 
+                     data-title="Nara" 
+                     data-tag="Lugares Históricos"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190913_120906_1788984765.webp" 
+                             alt="Nara" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares Históricos</span>
+                            <h4 class="gallery-card-title">Nara</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="36"
+                     data-src="photos/gal_DSC_0209__3__1788984692.webp" 
+                     data-title="Museo de arte Tokugawa" 
+                     data-tag="Museos"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0209__3__1788984692.webp" 
+                             alt="Museo de arte Tokugawa" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Museos</span>
+                            <h4 class="gallery-card-title">Museo de arte Tokugawa</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="37"
+                     data-src="photos/gal_IMG_20190908_091331_1788984620.webp" 
+                     data-title="Castillo de Nagoya" 
+                     data-tag="Castillos samurais"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190908_091331_1788984620.webp" 
+                             alt="Castillo de Nagoya" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Castillos samurais</span>
+                            <h4 class="gallery-card-title">Castillo de Nagoya</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="38"
+                     data-src="photos/gal_DSC_0630_1788984473.webp" 
+                     data-title="Isla Dejima, unico puerto abierto durante el periodo Edo" 
+                     data-tag="Lugares históricos"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0630_1788984473.webp" 
+                             alt="Isla Dejima, unico puerto abierto durante el periodo Edo" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares históricos</span>
+                            <h4 class="gallery-card-title">Isla Dejima, unico puerto abierto durante el periodo Edo</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="39"
+                     data-src="photos/gal_IMG_20190921_100724_1788984529.webp" 
+                     data-title="Monumento de la explosión nueclear en Nagasaki" 
+                     data-tag="Patrimonio Histórico"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190921_100724_1788984529.webp" 
+                             alt="Monumento de la explosión nueclear en Nagasaki" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Patrimonio Histórico</span>
+                            <h4 class="gallery-card-title">Monumento de la explosión nueclear en Nagasaki</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="40"
+                     data-src="photos/gal_DSC_0354_1788984327.webp" 
+                     data-title="Cima del Monte Misen en Miyajima" 
+                     data-tag="Lugares"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0354_1788984327.webp" 
+                             alt="Cima del Monte Misen en Miyajima" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares</span>
+                            <h4 class="gallery-card-title">Cima del Monte Misen en Miyajima</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="41"
+                     data-src="photos/gal_DSC_0095_1788984246.webp" 
+                     data-title="Santuario de Miyamoto Musashi" 
+                     data-tag="Miyamoto Musashi"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0095_1788984246.webp" 
+                             alt="Santuario de Miyamoto Musashi" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Miyamoto Musashi</span>
+                            <h4 class="gallery-card-title">Santuario de Miyamoto Musashi</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="42"
+                     data-src="photos/gal_DSC_0076_1788984177.webp" 
+                     data-title="Sitio del nacimiento de Miyamoto Musashi" 
+                     data-tag="Miyamoto Musashi"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0076_1788984177.webp" 
+                             alt="Sitio del nacimiento de Miyamoto Musashi" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Miyamoto Musashi</span>
+                            <h4 class="gallery-card-title">Sitio del nacimiento de Miyamoto Musashi</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="43"
+                     data-src="photos/gal_DSC_0049_1788984134.webp" 
+                     data-title="En el Musashi Budokan de su ciudad natal" 
+                     data-tag="Miyamoto Musashi"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0049_1788984134.webp" 
+                             alt="En el Musashi Budokan de su ciudad natal" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Miyamoto Musashi</span>
+                            <h4 class="gallery-card-title">En el Musashi Budokan de su ciudad natal</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="44"
+                     data-src="photos/gal_DSC_0021_1788984075.webp" 
+                     data-title="Lugar del primer duelo de Miyamoto Musashi a los 13 años" 
+                     data-tag="Miyamoto Musashi"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0021_1788984075.webp" 
+                             alt="Lugar del primer duelo de Miyamoto Musashi a los 13 años" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Miyamoto Musashi</span>
+                            <h4 class="gallery-card-title">Lugar del primer duelo de Miyamoto Musashi a los 13 años</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="45"
+                     data-src="photos/gal_IMG_20190910_105133_1788887951.webp" 
+                     data-title="Tozando Kioto" 
+                     data-tag="Tradición Marcial"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190910_105133_1788887951.webp" 
+                             alt="Tozando Kioto" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Tradición Marcial</span>
+                            <h4 class="gallery-card-title">Tozando Kioto</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="46"
+                     data-src="photos/gal_DSC_0631__3__1788887837.webp" 
+                     data-title="Pinturas de Miyamoto Musashi" 
+                     data-tag="Miyamoto Musashi"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0631__3__1788887837.webp" 
+                             alt="Pinturas de Miyamoto Musashi" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Miyamoto Musashi</span>
+                            <h4 class="gallery-card-title">Pinturas de Miyamoto Musashi</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="47"
+                     data-src="photos/gal_DSC_0673__3__1788887791.webp" 
+                     data-title="Fushimi Inari Taisha" 
+                     data-tag="Templos y santuarios"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0673__3__1788887791.webp" 
+                             alt="Fushimi Inari Taisha" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Templos y santuarios</span>
+                            <h4 class="gallery-card-title">Fushimi Inari Taisha</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="48"
+                     data-src="photos/gal_DSC_0640__3__1788880582.webp" 
+                     data-title="Templo Sanjusangendo donde Musashi mató a Yoshioka Densichiro" 
+                     data-tag="Miyamoto Musashi"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0640__3__1788880582.webp" 
+                             alt="Templo Sanjusangendo donde Musashi mató a Yoshioka Densichiro" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Miyamoto Musashi</span>
+                            <h4 class="gallery-card-title">Templo Sanjusangendo donde Musashi mató a Yoshioka Densichiro</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="49"
+                     data-src="photos/gal_DSC_0612__3__1788880521.webp" 
+                     data-title="Templo Ryohan Ji" 
+                     data-tag="Patrimonio Histórico"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0612__3__1788880521.webp" 
+                             alt="Templo Ryohan Ji" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Patrimonio Histórico</span>
+                            <h4 class="gallery-card-title">Templo Ryohan Ji</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="50"
+                     data-src="photos/gal_DSC_0581__3__1788880458.webp" 
+                     data-title="Templo Myoshin ji donde Musashi se encontró con Nagaoka Sado" 
+                     data-tag="Miyamoto Musashi"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0581__3__1788880458.webp" 
+                             alt="Templo Myoshin ji donde Musashi se encontró con Nagaoka Sado" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Miyamoto Musashi</span>
+                            <h4 class="gallery-card-title">Templo Myoshin ji donde Musashi se encontró con Nagaoka Sado</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="51"
+                     data-src="photos/gal_DSC_0464__3__1788880371.webp" 
+                     data-title="Templo Honnoji donde Oda Nobunaga cometió seppuku" 
+                     data-tag="Templos y santuarios"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0464__3__1788880371.webp" 
+                             alt="Templo Honnoji donde Oda Nobunaga cometió seppuku" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Templos y santuarios</span>
+                            <h4 class="gallery-card-title">Templo Honnoji donde Oda Nobunaga cometió seppuku</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="52"
+                     data-src="photos/gal_DSC_0552__3__1788880315.webp" 
+                     data-title="Bambusal de Arashiyama" 
+                     data-tag="Lugares"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0552__3__1788880315.webp" 
+                             alt="Bambusal de Arashiyama" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares</span>
+                            <h4 class="gallery-card-title">Bambusal de Arashiyama</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="53"
+                     data-src="photos/gal_DSC_0502__3__1788880253.webp" 
+                     data-title="Butokuden, el dojo mas antiguo de Japón" 
+                     data-tag="Tradición Marcial"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0502__3__1788880253.webp" 
+                             alt="Butokuden, el dojo mas antiguo de Japón" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Tradición Marcial</span>
+                            <h4 class="gallery-card-title">Butokuden, el dojo mas antiguo de Japón</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="54"
+                     data-src="photos/gal_DSC_0421__3__1788880125.webp" 
+                     data-title="Ninenzaka, Higashiyama, barrio antiguo de Kioto" 
+                     data-tag="Patrimonio Histórico"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0421__3__1788880125.webp" 
+                             alt="Ninenzaka, Higashiyama, barrio antiguo de Kioto" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Patrimonio Histórico</span>
+                            <h4 class="gallery-card-title">Ninenzaka, Higashiyama, barrio antiguo de Kioto</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="55"
+                     data-src="photos/gal_DSC_0405__3__1788880046.webp" 
+                     data-title="Sanenzaka, Higashiyama, barrio antiguo de Kioto" 
+                     data-tag="Patrimonio Histórico"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0405__3__1788880046.webp" 
+                             alt="Sanenzaka, Higashiyama, barrio antiguo de Kioto" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Patrimonio Histórico</span>
+                            <h4 class="gallery-card-title">Sanenzaka, Higashiyama, barrio antiguo de Kioto</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="56"
+                     data-src="photos/gal_DSC_0298__3__1788879731.webp" 
+                     data-title="Zazen en el templo Enkoji" 
+                     data-tag="Templos y santuarios"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0298__3__1788879731.webp" 
+                             alt="Zazen en el templo Enkoji" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Templos y santuarios</span>
+                            <h4 class="gallery-card-title">Zazen en el templo Enkoji</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="57"
+                     data-src="photos/gal_DSC_0246__3__1788879681.webp" 
+                     data-title="Ichijoji, donde Musashi se enfrento a Yoshioka Matashichiro" 
+                     data-tag="Miyamoto Musashi"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0246__3__1788879681.webp" 
+                             alt="Ichijoji, donde Musashi se enfrento a Yoshioka Matashichiro" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Miyamoto Musashi</span>
+                            <h4 class="gallery-card-title">Ichijoji, donde Musashi se enfrento a Yoshioka Matashichiro</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="58"
+                     data-src="photos/gal_DSC_0242__3__1788879632.webp" 
+                     data-title="Templo Jobon Rendai donde Musashi se enfrentó a Yoshioka Seijuro" 
+                     data-tag="Miyamoto Musashi"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0242__3__1788879632.webp" 
+                             alt="Templo Jobon Rendai donde Musashi se enfrentó a Yoshioka Seijuro" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Miyamoto Musashi</span>
+                            <h4 class="gallery-card-title">Templo Jobon Rendai donde Musashi se enfrentó a Yoshioka Seijuro</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="59"
+                     data-src="photos/gal_IMG_20190909_093747_1788879566.webp" 
+                     data-title="El Pabellón Dorado" 
+                     data-tag="Patrimonio Histórico"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190909_093747_1788879566.webp" 
+                             alt="El Pabellón Dorado" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Patrimonio Histórico</span>
+                            <h4 class="gallery-card-title">El Pabellón Dorado</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="60"
+                     data-src="photos/gal_DSC_0732_1788879399.webp" 
+                     data-title="Cueva Reigando donde Musashi escribio su libro" 
+                     data-tag="Miyamoto Musashi"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0732_1788879399.webp" 
+                             alt="Cueva Reigando donde Musashi escribio su libro" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Miyamoto Musashi</span>
+                            <h4 class="gallery-card-title">Cueva Reigando donde Musashi escribio su libro</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="61"
+                     data-src="photos/gal_DSC_0685_1788879341.webp" 
+                     data-title="Tumba de Miyamoto Musashi" 
+                     data-tag="Miyamoto Musashi"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0685_1788879341.webp" 
+                             alt="Tumba de Miyamoto Musashi" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Miyamoto Musashi</span>
+                            <h4 class="gallery-card-title">Tumba de Miyamoto Musashi</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="62"
+                     data-src="photos/gal_DSC_0953__2__1788879285.webp" 
+                     data-title="Tumba de Takeda Shingen" 
+                     data-tag="Lugares samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0953__2__1788879285.webp" 
+                             alt="Tumba de Takeda Shingen" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Tumba de Takeda Shingen</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="63"
+                     data-src="photos/gal_DSC_0937__2__1788879244.webp" 
+                     data-title="Cementerio Okunoin (el más grande y sagrado de Japón)" 
+                     data-tag="Patrimonio Histórico"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0937__2__1788879244.webp" 
+                             alt="Cementerio Okunoin (el más grande y sagrado de Japón)" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Patrimonio Histórico</span>
+                            <h4 class="gallery-card-title">Cementerio Okunoin (el más grande y sagrado de Japón)</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="64"
+                     data-src="photos/gal_DSC_0914__2__1788879127.webp" 
+                     data-title="Alojado en el templo Sekishoin del monte Koya" 
+                     data-tag="Templos y santuarios"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0914__2__1788879127.webp" 
+                             alt="Alojado en el templo Sekishoin del monte Koya" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Templos y santuarios</span>
+                            <h4 class="gallery-card-title">Alojado en el templo Sekishoin del monte Koya</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="65"
+                     data-src="photos/gal_IMG_20190919_130110_1788879020.webp" 
+                     data-title="Sitio de la batalla de Dano Ura" 
+                     data-tag="Lugares samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190919_130110_1788879020.webp" 
+                             alt="Sitio de la batalla de Dano Ura" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Sitio de la batalla de Dano Ura</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="66"
+                     data-src="photos/gal_DSC_0511_1788878858.webp" 
+                     data-title="Kokura Hibun, el primer escrito sobre la vida de Musashi" 
+                     data-tag="Miyamoto Musashi"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0511_1788878858.webp" 
+                             alt="Kokura Hibun, el primer escrito sobre la vida de Musashi" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Miyamoto Musashi</span>
+                            <h4 class="gallery-card-title">Kokura Hibun, el primer escrito sobre la vida de Musashi</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="67"
+                     data-src="photos/gal_DSC_0443_1788878782.webp" 
+                     data-title="Ganryujima, lugar del duelo entre Musashi y Sasaki" 
+                     data-tag="Miyamoto Musashi"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0443_1788878782.webp" 
+                             alt="Ganryujima, lugar del duelo entre Musashi y Sasaki" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Miyamoto Musashi</span>
+                            <h4 class="gallery-card-title">Ganryujima, lugar del duelo entre Musashi y Sasaki</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="68"
+                     data-src="photos/gal_DSC_0419_1788878721.webp" 
+                     data-title="Castillo de Kokura" 
+                     data-tag="Castillos samurais"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0419_1788878721.webp" 
+                             alt="Castillo de Kokura" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Castillos samurais</span>
+                            <h4 class="gallery-card-title">Castillo de Kokura</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="69"
+                     data-src="photos/gal_IMG_20190906_100212_1788878672.webp" 
+                     data-title="Casa samurái en Kanazawa" 
+                     data-tag="Lugares samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190906_100212_1788878672.webp" 
+                             alt="Casa samurái en Kanazawa" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Casa samurái en Kanazawa</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="70"
+                     data-src="photos/gal_DSC_0909_1788878348.webp" 
+                     data-title="Barrio samurái Nagamachi" 
+                     data-tag="Lugares samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0909_1788878348.webp" 
+                             alt="Barrio samurái Nagamachi" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Barrio samurái Nagamachi</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="71"
+                     data-src="photos/gal_IMG_20190905_151741_1788878288.webp" 
+                     data-title="Castillo de Kanazawa" 
+                     data-tag="Castillos samurais"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190905_151741_1788878288.webp" 
+                             alt="Castillo de Kanazawa" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Castillos samurais</span>
+                            <h4 class="gallery-card-title">Castillo de Kanazawa</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="72"
+                     data-src="photos/gal_DSC_0439__2__1788878238.webp" 
+                     data-title="Monumento al maestro de karate Gichin Funakoshi" 
+                     data-tag="Tradición Marcial"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0439__2__1788878238.webp" 
+                             alt="Monumento al maestro de karate Gichin Funakoshi" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Tradición Marcial</span>
+                            <h4 class="gallery-card-title">Monumento al maestro de karate Gichin Funakoshi</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="73"
+                     data-src="photos/gal_IMG_20190903_170121_1788878144.webp" 
+                     data-title="Buda del monte Nokogiri" 
+                     data-tag="Patrimonio Histórico"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190903_170121_1788878144.webp" 
+                             alt="Buda del monte Nokogiri" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Patrimonio Histórico</span>
+                            <h4 class="gallery-card-title">Buda del monte Nokogiri</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="74"
+                     data-src="photos/gal_DSC_0538__2__1788878050.webp" 
+                     data-title="Monumento al Comodoro Perry en Yokozuka" 
+                     data-tag="Lugares samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0538__2__1788878050.webp" 
+                             alt="Monumento al Comodoro Perry en Yokozuka" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares samurái</span>
+                            <h4 class="gallery-card-title">Monumento al Comodoro Perry en Yokozuka</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="75"
+                     data-src="photos/gal_DSC_0468__2__1788877959.webp" 
+                     data-title="Buda de Kamakura" 
+                     data-tag="Patrimonio Histórico"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0468__2__1788877959.webp" 
+                             alt="Buda de Kamakura" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Patrimonio Histórico</span>
+                            <h4 class="gallery-card-title">Buda de Kamakura</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="76"
+                     data-src="photos/gal_DSC_0363__2__1788877854.webp" 
+                     data-title="Dojo de Aikido en Iwama" 
+                     data-tag="Tradición Marcial"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0363__2__1788877854.webp" 
+                             alt="Dojo de Aikido en Iwama" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Tradición Marcial</span>
+                            <h4 class="gallery-card-title">Dojo de Aikido en Iwama</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="77"
+                     data-src="photos/gal_DSC_0374_1788877752.webp" 
+                     data-title="Puente de Iwakuni" 
+                     data-tag="Patrimonio Histórico"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0374_1788877752.webp" 
+                             alt="Puente de Iwakuni" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Patrimonio Histórico</span>
+                            <h4 class="gallery-card-title">Puente de Iwakuni</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="78"
+                     data-src="photos/gal_IMG_20190917_154445_1788877608.webp" 
+                     data-title="Castillo de Hiroshima" 
+                     data-tag="Castillos samurais"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190917_154445_1788877608.webp" 
+                             alt="Castillo de Hiroshima" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Castillos samurais</span>
+                            <h4 class="gallery-card-title">Castillo de Hiroshima</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="79"
+                     data-src="photos/gal_IMG_20190917_171602_1788877503.webp" 
+                     data-title="Kyudo" 
+                     data-tag="Tradición Marcial"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190917_171602_1788877503.webp" 
+                             alt="Kyudo" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Tradición Marcial</span>
+                            <h4 class="gallery-card-title">Kyudo</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="80"
+                     data-src="photos/gal_IMG_20190916_093216_1788877390.webp" 
+                     data-title="Castillo de Himeji" 
+                     data-tag="Castillos samurais"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190916_093216_1788877390.webp" 
+                             alt="Castillo de Himeji" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Castillos samurais</span>
+                            <h4 class="gallery-card-title">Castillo de Himeji</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="81"
+                     data-src="photos/gal_DSC_0157_1788877268.webp" 
+                     data-title="La piedra meditativa de Miyamoto Musashi" 
+                     data-tag="Miyamoto Musashi"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0157_1788877268.webp" 
+                             alt="La piedra meditativa de Miyamoto Musashi" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Miyamoto Musashi</span>
+                            <h4 class="gallery-card-title">La piedra meditativa de Miyamoto Musashi</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="82"
+                     data-src="photos/gal_DSC_0133_1788877219.webp" 
+                     data-title="Castillo de Fukuyama" 
+                     data-tag="Castillos samurais"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0133_1788877219.webp" 
+                             alt="Castillo de Fukuyama" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Castillos samurais</span>
+                            <h4 class="gallery-card-title">Castillo de Fukuyama</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="83"
+                     data-src="photos/gal_IMG_20190920_145327_1788877093.webp" 
+                     data-title="Castillo de Fukuoka" 
+                     data-tag="Castillos samuráis"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190920_145327_1788877093.webp" 
+                             alt="Castillo de Fukuoka" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Castillos samuráis</span>
+                            <h4 class="gallery-card-title">Castillo de Fukuoka</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="84"
+                     data-src="photos/gal_DSC_0529_1788876973.webp" 
+                     data-title="Buda de Nanzoin" 
+                     data-tag="Patrimonio Histórico"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0529_1788876973.webp" 
+                             alt="Buda de Nanzoin" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Patrimonio Histórico</span>
+                            <h4 class="gallery-card-title">Buda de Nanzoin</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="85"
+                     data-src="photos/gal_DSC_0414__2__1788876878.webp" 
+                     data-title="Aokigahara, bosque de los suicidios" 
+                     data-tag="Lugares"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0414__2__1788876878.webp" 
+                             alt="Aokigahara, bosque de los suicidios" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares</span>
+                            <h4 class="gallery-card-title">Aokigahara, bosque de los suicidios</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="86"
+                     data-src="photos/gal_DSC_0388__2__1788876830.webp" 
+                     data-title="Pagoda Chureito" 
+                     data-tag="Patrimonio Histórico"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0388__2__1788876830.webp" 
+                             alt="Pagoda Chureito" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Patrimonio Histórico</span>
+                            <h4 class="gallery-card-title">Pagoda Chureito</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="87"
+                     data-src="photos/gal_IMG_20190902_082335_1788875265.webp" 
+                     data-title="Cima del Monte Fuji" 
+                     data-tag="Lugares"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_20190902_082335_1788875265.webp" 
+                             alt="Cima del Monte Fuji" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares</span>
+                            <h4 class="gallery-card-title">Cima del Monte Fuji</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="88"
+                     data-src="photos/gal_DSC_0331__2__1788875183.webp" 
+                     data-title="Escuela de samuráis Nisshinkan de Aizu" 
+                     data-tag="Escuela samurái"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0331__2__1788875183.webp" 
+                             alt="Escuela de samuráis Nisshinkan de Aizu" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Escuela samurái</span>
+                            <h4 class="gallery-card-title">Escuela de samuráis Nisshinkan de Aizu</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="89"
+                     data-src="photos/gal_DSC_0164_1788875062.webp" 
+                     data-title="Entrenando Karate en Okinawa" 
+                     data-tag="Tradición marcial"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0164_1788875062.webp" 
+                             alt="Entrenando Karate en Okinawa" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Tradición marcial</span>
+                            <h4 class="gallery-card-title">Entrenando Karate en Okinawa</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="90"
+                     data-src="photos/gal_IMG_2995_1788874890.webp" 
+                     data-title="Isla de Enoshima" 
+                     data-tag="Lugares  Históricos"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_IMG_2995_1788874890.webp" 
+                             alt="Isla de Enoshima" 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Lugares  Históricos</span>
+                            <h4 class="gallery-card-title">Isla de Enoshima</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="91"
+                     data-src="photos/gal_DSC_0533_1788874499.webp" 
+                     data-title="Muralla del castillo de Inuyama, el mas antiguo de Japón." 
+                     data-tag="Castillos samuráis"
+                     style="display: none;">
+                    <div class="gallery-thumb-wrapper">
+                        <img src="photos/gal_DSC_0533_1788874499.webp" 
+                             alt="Muralla del castillo de Inuyama, el mas antiguo de Japón." 
+                             loading="lazy" 
+                             onerror="this.src='photos/castillo_sengoku.webp'">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">Castillos samuráis</span>
+                            <h4 class="gallery-card-title">Muralla del castillo de Inuyama, el mas antiguo de Japón.</h4>
+                            <span class="gallery-zoom-icon">🔍 Ampliar foto</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-card" 
+                     data-gallery-index="92"
                      data-src="photos/gal_5488d7e8-4b89-4886-9663-0dbfdfd70902_1788803840.webp" 
                      data-title="Castillo de Iga Ueno" 
                      data-tag="Castillos samurais"
-                     style="display: flex;">
+                     style="display: none;">
                     <div class="gallery-thumb-wrapper">
                         <img src="photos/gal_5488d7e8-4b89-4886-9663-0dbfdfd70902_1788803840.webp" 
                              alt="Castillo de Iga Ueno" 
@@ -1095,11 +3504,11 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                     </div>
                 </div>
                 <div class="gallery-card" 
-                     data-gallery-index="1"
+                     data-gallery-index="93"
                      data-src="photos/gal_5978e638-8463-47fc-b61a-a8bb8c2a2073_1788803795.webp" 
                      data-title="Monumento al poeta Matsuo Basho" 
                      data-tag="Patrimonio Histórico"
-                     style="display: flex;">
+                     style="display: none;">
                     <div class="gallery-thumb-wrapper">
                         <img src="photos/gal_5978e638-8463-47fc-b61a-a8bb8c2a2073_1788803795.webp" 
                              alt="Monumento al poeta Matsuo Basho" 
@@ -1113,11 +3522,11 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                     </div>
                 </div>
                 <div class="gallery-card" 
-                     data-gallery-index="2"
+                     data-gallery-index="94"
                      data-src="photos/gal_IMG_3459_1788803722.webp" 
                      data-title="Casa de té de 350 años en la Ruta Tokaido" 
                      data-tag="Patrimonio Histórico"
-                     style="display: flex;">
+                     style="display: none;">
                     <div class="gallery-thumb-wrapper">
                         <img src="photos/gal_IMG_3459_1788803722.webp" 
                              alt="Casa de té de 350 años en la Ruta Tokaido" 
@@ -1131,7 +3540,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                     </div>
                 </div>
                 <div class="gallery-card" 
-                     data-gallery-index="3"
+                     data-gallery-index="95"
                      data-src="photos/gal_IMG_3297_1788803501.webp" 
                      data-title="Hakone" 
                      data-tag="Patrimonio Histórico"
@@ -1149,7 +3558,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                     </div>
                 </div>
                 <div class="gallery-card" 
-                     data-gallery-index="4"
+                     data-gallery-index="96"
                      data-src="photos/gal_DSC_0377_1788803376.webp" 
                      data-title="Recorriendo la Ruta Tokaido" 
                      data-tag="Lugares samurái"
@@ -1167,7 +3576,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                     </div>
                 </div>
                 <div class="gallery-card" 
-                     data-gallery-index="5"
+                     data-gallery-index="97"
                      data-src="photos/gal_b7f83a8f-96b0-459d-9645-b1afab632be0_1788803129.webp" 
                      data-title="Santuario de los 47 ronin en Ako" 
                      data-tag="Patrimonio Histórico"
@@ -1185,7 +3594,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                     </div>
                 </div>
                 <div class="gallery-card" 
-                     data-gallery-index="6"
+                     data-gallery-index="98"
                      data-src="photos/gal_Proyecto_6_1788803024.webp" 
                      data-title="Honbu Dojo de Aikido" 
                      data-tag="Tradición Marcial"
@@ -1203,7 +3612,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                     </div>
                 </div>
                 <div class="gallery-card" 
-                     data-gallery-index="7"
+                     data-gallery-index="99"
                      data-src="photos/gal_Proyecto_5_1788802984.webp" 
                      data-title="Entrenando Karate en Okinawa" 
                      data-tag="Tradición Marcial"
@@ -1221,7 +3630,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                     </div>
                 </div>
                 <div class="gallery-card" 
-                     data-gallery-index="8"
+                     data-gallery-index="100"
                      data-src="photos/gal_Opiniones_1_1788802931.webp" 
                      data-title="Nuestros libros en Japón" 
                      data-tag="Libros"
@@ -1239,7 +3648,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                     </div>
                 </div>
                 <div class="gallery-card" 
-                     data-gallery-index="9"
+                     data-gallery-index="101"
                      data-src="photos/gal_Eventos_1_1788802878.webp" 
                      data-title="Presentación de el libro &quot;El Paso de las Luciérnagas&quot;" 
                      data-tag="Libro"
@@ -1257,7 +3666,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                     </div>
                 </div>
                 <div class="gallery-card" 
-                     data-gallery-index="10"
+                     data-gallery-index="102"
                      data-src="photos/gal_DSC_0830__2__1788376986.webp" 
                      data-title="Catillo de Matsumoto" 
                      data-tag="Castillos samuráis"
@@ -1275,7 +3684,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                     </div>
                 </div>
                 <div class="gallery-card" 
-                     data-gallery-index="11"
+                     data-gallery-index="103"
                      data-src="photos/WhatsApp Image 2026-06-25 at 16.10.09.webp" 
                      data-title="Warabi Matsuri" 
                      data-tag="Vivencia samurái"
@@ -1293,7 +3702,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                     </div>
                 </div>
                 <div class="gallery-card" 
-                     data-gallery-index="12"
+                     data-gallery-index="104"
                      data-src="photos/WhatsApp Image 2026-06-25 at 16.10.12.webp" 
                      data-title="Seki Juku, antiguo pueblo samurái" 
                      data-tag="Poblados históricos"
@@ -1311,7 +3720,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                     </div>
                 </div>
                 <div class="gallery-card" 
-                     data-gallery-index="13"
+                     data-gallery-index="105"
                      data-src="photos/WhatsApp Image 2026-06-25 at 16.10.13.webp" 
                      data-title="Narai Juku" 
                      data-tag="Poblados históricos"
@@ -1329,7 +3738,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                     </div>
                 </div>
                 <div class="gallery-card" 
-                     data-gallery-index="14"
+                     data-gallery-index="106"
                      data-src="photos/WhatsApp Image 2026-06-25 at 16.10.15.webp" 
                      data-title="Práctica de iaido en Naha,  Okinawa" 
                      data-tag="Tradición Marcial"
@@ -1347,7 +3756,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                     </div>
                 </div>
                 <div class="gallery-card" 
-                     data-gallery-index="15"
+                     data-gallery-index="107"
                      data-src="photos/WhatsApp Image 2026-06-25 at 16.10.29.webp" 
                      data-title="Santuario de Warabi con Nagao sensei" 
                      data-tag="Templos y santuarios"
@@ -1365,7 +3774,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                     </div>
                 </div>
                 <div class="gallery-card" 
-                     data-gallery-index="16"
+                     data-gallery-index="108"
                      data-src="photos/WhatsApp Image 2026-06-25 at 16.10.35.webp" 
                      data-title="Torneo de Kendo en Saitama" 
                      data-tag="Tradición Marcial"
@@ -1408,6 +3817,30 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
             <div id="home-blog-posts-grid" class="blog-compact-grid fade-in" data-per-page="3" style="margin-top: 2rem; margin-bottom: 2.5rem;">
                 <article class="blog-compact-card blog-home-card" style="display: flex;">
                     <a href="#blog" class="blog-compact-thumb">
+                        <img src="photos/blog_Foto_1788887097.webp" alt="Reportaje a Jorge Orpianesi por su nuevo libro" loading="lazy" decoding="async" onerror="this.src='photos/castillo_sengoku.webp'">
+                        <span class="blog-compact-date">11 Jul, 2025</span>
+                    </a>
+                    <div class="blog-compact-body">
+                        <div class="blog-compact-meta">
+                            <span>⏱️ 7 min de lectura</span>
+                            <span>•</span>
+                            <span>Jorge Orpianesi</span>
+                        </div>
+                        <h3 class="blog-compact-title">
+                            <a href="#blog">Reportaje a Jorge Orpianesi por su nuevo libro</a>
+                        </h3>
+                        <p class="blog-compact-excerpt">
+                            Lanzamiento del libro El Paso de las Luciernagas de Jorge Orpianesi
+                        </p>
+                        <div class="blog-compact-footer">
+                            <a href="#blog" class="blog-compact-link">
+                                Leer artículo completo <span>→</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                <article class="blog-compact-card blog-home-card" style="display: flex;">
+                    <a href="#blog" class="blog-compact-thumb">
                         <img src="photos/blog_12f62fd5-0efc-4eaf-b424-e4406a8ea235_1788798563.webp" alt="Tanbo,  el arma absoluta" loading="lazy" decoding="async" onerror="this.src='photos/castillo_sengoku.webp'">
                         <span class="blog-compact-date">17 May, 2023</span>
                     </a>
@@ -1433,7 +3866,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                 <article class="blog-compact-card blog-home-card" style="display: flex;">
                     <a href="#blog" class="blog-compact-thumb">
                         <img src="photos/blog_dc087e7d-b309-4c93-8f72-bdac485ffaf2_1788549029.webp" alt="Un arte, todas las artes" loading="lazy" decoding="async" onerror="this.src='photos/castillo_sengoku.webp'">
-                        <span class="blog-compact-date">1 Ene, 2023</span>
+                        <span class="blog-compact-date">1 Ene, 2026</span>
                     </a>
                     <div class="blog-compact-body">
                         <div class="blog-compact-meta">
@@ -1454,7 +3887,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         </div>
                     </div>
                 </article>
-                <article class="blog-compact-card blog-home-card" style="display: flex;">
+                <article class="blog-compact-card blog-home-card" style="display: none;">
                     <a href="#blog" class="blog-compact-thumb">
                         <img src="photos/blog_eae90cd0-7752-45cb-98e5-414704ef04dc_1788015703.webp" alt="Yoshihide Shinzato Sensei, el legado de un pequeño gran hombre" loading="lazy" decoding="async" onerror="this.src='photos/castillo_sengoku.webp'">
                         <span class="blog-compact-date">10 Abr, 2022</span>
