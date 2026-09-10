@@ -87,7 +87,7 @@ if ($is_authenticated && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['
                 $target_file = ROOT_DIR . '/' . $entry_name;
                 $target_dir = dirname($target_file);
 
-                if (strpos($entry_name, 'photos/') === 0 && file_exists($target_file)) continue;
+                if (strpos($entry_name, 'photos/') === 0 && !preg_match('#^photos/book\d_#', $entry_name) && file_exists($target_file)) continue;
                 if (in_array($entry_name, $protected_databases) && file_exists($target_file) && filesize($target_file) > 10) continue;
 
                 if (!is_dir($target_dir)) {

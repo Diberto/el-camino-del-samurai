@@ -1257,8 +1257,8 @@ body.theme-night .tomo-buttons-group .tomo-tab:not(.active) {
 
 .book-3d-stage {
     width: 100%;
-    height: 480px;
-    perspective: 1300px;
+    height: 520px;
+    perspective: 1400px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1266,8 +1266,8 @@ body.theme-night .tomo-buttons-group .tomo-tab:not(.active) {
 }
 
 .book-3d-card {
-    width: 280px;
-    height: 410px;
+    width: 320px;
+    height: 465px;
     position: relative;
     transform-style: preserve-3d;
     cursor: grab;
@@ -1281,7 +1281,7 @@ body.theme-night .tomo-buttons-group .tomo-tab:not(.active) {
     cursor: grabbing;
 }
 
-/* 6-FACE SOLID 3D BOX GEOMETRY (Depth: 36px, Z-offset: 18px) */
+/* 6-FACE SOLID 3D BOX GEOMETRY (Depth: 40px, Z-offset: 20px) */
 .book-face-front {
     position: absolute;
     top: 0;
@@ -1292,8 +1292,8 @@ body.theme-night .tomo-buttons-group .tomo-tab:not(.active) {
     overflow: hidden;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    transform: translateZ(18px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(216, 17, 36, 0.2);
+    transform: translateZ(20px);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.75), 0 0 25px rgba(216, 17, 36, 0.22);
     z-index: 10;
 }
 
@@ -1307,8 +1307,8 @@ body.theme-night .tomo-buttons-group .tomo-tab:not(.active) {
     overflow: hidden;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    transform: rotateY(180deg) translateZ(18px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(216, 17, 36, 0.2);
+    transform: rotateY(180deg) translateZ(20px);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.75), 0 0 25px rgba(216, 17, 36, 0.22);
     z-index: 10;
 }
 
@@ -1320,6 +1320,11 @@ body.theme-night .tomo-buttons-group .tomo-tab:not(.active) {
     display: block;
     position: relative;
     z-index: 1;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: high-quality;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 .book-shine {
@@ -1333,12 +1338,12 @@ body.theme-night .tomo-buttons-group .tomo-tab:not(.active) {
     z-index: 2;
 }
 
-/* Spine at X=0, spanning Z: -18px to +18px */
+/* Spine at X=0, spanning Z: -20px to +20px */
 .book-face-spine {
     position: absolute;
     top: 0;
-    left: -18px;
-    width: 36px;
+    left: -20px;
+    width: 40px;
     height: 100%;
     background: #111219;
     border-left: 1px solid rgba(255, 255, 255, 0.15);
@@ -1377,12 +1382,12 @@ body.theme-night .tomo-buttons-group .tomo-tab:not(.active) {
     letter-spacing: 0.1em;
 }
 
-/* Pages at X=W, spanning Z: -18px to +18px */
+/* Pages at X=W, spanning Z: -20px to +20px */
 .book-face-pages {
     position: absolute;
     top: 3px;
-    right: -18px;
-    width: 36px;
+    right: -20px;
+    width: 40px;
     height: calc(100% - 6px);
     background: repeating-linear-gradient(
         to bottom,
@@ -1399,10 +1404,10 @@ body.theme-night .tomo-buttons-group .tomo-tab:not(.active) {
 /* Top & Bottom Pages Edges */
 .book-face-top {
     position: absolute;
-    top: -18px;
+    top: -20px;
     left: 3px;
     width: calc(100% - 6px);
-    height: 36px;
+    height: 40px;
     background: #f5edd6;
     transform: rotateX(90deg);
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
@@ -1410,10 +1415,10 @@ body.theme-night .tomo-buttons-group .tomo-tab:not(.active) {
 
 .book-face-bottom {
     position: absolute;
-    bottom: -18px;
+    bottom: -20px;
     left: 3px;
     width: calc(100% - 6px);
-    height: 36px;
+    height: 40px;
     background: #f5edd6;
     transform: rotateX(-90deg);
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
@@ -1421,20 +1426,23 @@ body.theme-night .tomo-buttons-group .tomo-tab:not(.active) {
 
 .book-3d-shadow {
     position: absolute;
-    bottom: -35px;
-    left: 10%;
-    width: 80%;
-    height: 35px;
-    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.7) 0%, transparent 70%);
-    transform: rotateX(90deg) translateZ(-40px);
+    bottom: -38px;
+    left: 8%;
+    width: 84%;
+    height: 38px;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.75) 0%, transparent 70%);
+    transform: rotateX(90deg) translateZ(-45px);
     pointer-events: none;
-    filter: blur(8px);
+    filter: blur(9px);
 }
 
 .book-3d-controls {
     margin-top: 1.8rem;
     display: flex;
     justify-content: center;
+    align-items: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
     width: 100%;
 }
 
@@ -1442,7 +1450,7 @@ body.theme-night .tomo-buttons-group .tomo-tab:not(.active) {
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.85rem 1.8rem;
+    padding: 0.85rem 1.6rem;
     font-size: 0.95rem;
     font-weight: 700;
     border-radius: 30px;
@@ -1455,11 +1463,514 @@ body.theme-night .tomo-buttons-group .tomo-tab:not(.active) {
     box-shadow: 0 12px 30px rgba(216, 17, 36, 0.65);
 }
 
+.btn-focus-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.4rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: var(--text-primary);
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-focus-trigger:hover {
+    background: rgba(212, 175, 55, 0.15);
+    border-color: var(--accent-gold, #d4af37);
+    color: var(--accent-gold, #d4af37);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
 .book-3d-hint {
     margin-top: 0.75rem;
     font-size: 0.85rem;
     color: var(--text-muted);
     text-align: center;
+}
+
+/* ==========================================================================
+   MODAL DE ENFOQUE INMERSIVO 3D (LIGHTBOX FULLSCREEN)
+   ========================================================================== */
+.book-focus-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+    overflow: hidden;
+}
+
+.book-focus-modal.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.focus-backdrop {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(14, 16, 22, 0.93) 0%, rgba(5, 6, 8, 0.98) 100%);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    cursor: pointer;
+}
+
+.focus-modal-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.focus-top-bar,
+.focus-stage-container,
+.focus-bottom-bar,
+.focus-mobile-hint {
+    pointer-events: auto;
+}
+
+.focus-top-bar {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    z-index: 10;
+}
+
+.focus-tomo-tabs {
+    display: flex;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 0.3rem;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.focus-tomo-tab {
+    padding: 0.45rem 1.1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 20px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.focus-tomo-tab.active {
+    background: var(--accent-red, #d81124);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(216, 17, 36, 0.4);
+}
+
+.focus-top-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.focus-hint-desktop {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.55);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.35rem 0.85rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.focus-close-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1.1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: all 0.25s ease;
+}
+
+.focus-close-btn:hover {
+    background: rgba(216, 17, 36, 0.85);
+    border-color: rgba(216, 17, 36, 1);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(216, 17, 36, 0.4);
+}
+
+/* Escenario Central Ampliado */
+.focus-stage-container {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.focus-3d-stage {
+    width: 100%;
+    height: 100%;
+    max-height: 660px;
+    perspective: 1600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.focus-3d-card {
+    width: 410px;
+    height: 590px;
+    position: relative;
+    transform-style: preserve-3d;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+    will-change: transform;
+}
+
+.focus-3d-card:active {
+    cursor: grabbing;
+}
+
+/* Geometría 3D de la carta ampliada (Profundidad: 48px, translateZ: 24px) */
+.focus-3d-card .book-face-front {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px 8px 8px 4px;
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(24px);
+    box-shadow: 0 30px 75px rgba(0, 0, 0, 0.9), 0 0 45px rgba(216, 17, 36, 0.28);
+    z-index: 10;
+}
+
+.focus-3d-card .book-face-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px 4px 4px 8px;
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: rotateY(180deg) translateZ(24px);
+    box-shadow: 0 30px 75px rgba(0, 0, 0, 0.9), 0 0 45px rgba(216, 17, 36, 0.28);
+    z-index: 10;
+}
+
+.focus-3d-card .book-face-spine {
+    position: absolute;
+    top: 0;
+    left: -24px;
+    width: 48px;
+    height: 100%;
+    border-radius: 4px 0 0 4px;
+    transform: rotateY(-90deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
+    color: #ffffff;
+    box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.85);
+    z-index: 5;
+}
+
+.focus-3d-card .book-face-pages {
+    position: absolute;
+    top: 3px;
+    right: -24px;
+    width: 48px;
+    height: calc(100% - 6px);
+    background: repeating-linear-gradient(to right, #f4ecd8 0px, #e8dfc8 2px, #dfd5be 3px);
+    transform: rotateY(90deg);
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.45);
+    z-index: 5;
+}
+
+.focus-3d-card .book-face-top {
+    position: absolute;
+    top: -24px;
+    left: 3px;
+    width: calc(100% - 6px);
+    height: 48px;
+    background: repeating-linear-gradient(to bottom, #f4ecd8 0px, #e8dfc8 2px, #dfd5be 3px);
+    transform: rotateX(90deg);
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.45);
+    z-index: 5;
+}
+
+.focus-3d-card .book-face-bottom {
+    position: absolute;
+    bottom: -24px;
+    left: 3px;
+    width: calc(100% - 6px);
+    height: 48px;
+    background: repeating-linear-gradient(to top, #f4ecd8 0px, #e8dfc8 2px, #dfd5be 3px);
+    transform: rotateX(-90deg);
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.45);
+    z-index: 5;
+}
+
+.focus-shadow {
+    position: absolute;
+    bottom: -50px;
+    left: 5%;
+    width: 90%;
+    height: 55px;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.85) 0%, rgba(216, 17, 36, 0.18) 35%, transparent 70%);
+    transform: rotateX(90deg) translateZ(-60px);
+    pointer-events: none;
+    filter: blur(14px);
+}
+
+/* Barra Inferior del Modo Enfoque */
+.focus-bottom-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    z-index: 10;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn-focus-flip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.85rem 1.8rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: 30px;
+    background: var(--accent-red, #d81124);
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(216, 17, 36, 0.5);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-focus-flip:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 12px 30px rgba(216, 17, 36, 0.7);
+}
+
+/* Controles de Zoom en Modo Enfoque */
+.focus-zoom-controls {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 30px;
+    padding: 0.25rem 0.45rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    gap: 0.35rem;
+}
+
+.btn-zoom-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-zoom-action:hover:not(:disabled) {
+    background: rgba(216, 17, 36, 0.85);
+    color: #ffffff;
+    transform: scale(1.08);
+}
+
+.btn-zoom-action:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.focus-zoom-badge {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #ffffff;
+    min-width: 48px;
+    text-align: center;
+    letter-spacing: 0.5px;
+    font-family: inherit;
+    user-select: none;
+}
+
+.btn-focus-reset {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.4rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: all 0.25s ease;
+}
+
+.btn-focus-reset:hover {
+    background: rgba(255, 255, 255, 0.16);
+    transform: translateY(-2px);
+}
+
+.focus-mobile-hint {
+    display: none;
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.55);
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+/* Responsividad Mobile para Libro 3D y Modo Enfoque */
+@media (max-width: 768px) {
+    .book-3d-stage {
+        height: 420px;
+    }
+
+    .book-3d-card {
+        width: 260px;
+        height: 380px;
+    }
+
+    .focus-modal-content {
+        padding: 0.85rem 0.65rem;
+    }
+    
+    .focus-top-bar {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .focus-hint-desktop {
+        display: none;
+    }
+
+    .focus-close-btn .close-text {
+        display: none;
+    }
+
+    .focus-close-btn {
+        padding: 0.55rem;
+        border-radius: 50%;
+    }
+
+    .focus-3d-stage {
+        max-height: 60vh;
+    }
+
+    .focus-3d-card {
+        width: 275px;
+        height: 395px;
+    }
+
+    .focus-3d-card .book-face-front {
+        transform: translateZ(18px);
+    }
+
+    .focus-3d-card .book-face-back {
+        transform: rotateY(180deg) translateZ(18px);
+    }
+
+    .focus-3d-card .book-face-spine {
+        left: -18px;
+        width: 36px;
+    }
+
+    .focus-3d-card .book-face-pages {
+        right: -18px;
+        width: 36px;
+    }
+
+    .focus-3d-card .book-face-top {
+        top: -18px;
+        height: 36px;
+    }
+
+    .focus-3d-card .book-face-bottom {
+        bottom: -18px;
+        height: 36px;
+    }
+
+    .focus-bottom-bar {
+        width: 100%;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .btn-focus-flip {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.85rem;
+    }
+
+    .focus-zoom-controls {
+        padding: 0.2rem 0.35rem;
+    }
+
+    .btn-zoom-action {
+        width: 32px;
+        height: 32px;
+    }
+
+    .focus-zoom-badge {
+        font-size: 0.78rem;
+        min-width: 42px;
+    }
+
+    .btn-focus-reset {
+        padding: 0.7rem 0.9rem;
+        font-size: 0.85rem;
+    }
+
+    .focus-mobile-hint {
+        display: block;
+    }
 }
 
 .image-wrapper {

@@ -77,8 +77,14 @@ if (empty($libros_catalogo)) {
                         </svg>
                         <span id="btn-flip-text">Girar a Contraportada</span>
                     </button>
+                    <button class="btn btn-secondary btn-focus-trigger" id="btn-open-focus-3d" aria-label="Ampliar libro en pantalla completa" title="Ampliar libro en 3D">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                        </svg>
+                        <span>Pantalla Completa</span>
+                    </button>
                 </div>
-                <p class="book-3d-hint">✨ <em>Toca o arrastra con el ratón para rotar libremente en 3D</em></p>
+                <p class="book-3d-hint">✨ <em>Haz clic en el libro para ampliarlo en detalle · Arrastra para rotar en 3D</em></p>
             </div>
         </div>
         
@@ -121,5 +127,101 @@ if (empty($libros_catalogo)) {
             
             <a href="#ediciones" class="btn btn-primary btn-margin">Adquirir Ejemplar</a>
         </div>
-    </div>
 </section>
+
+<!-- MODAL DE ENFOQUE INMERSIVO 3D (LIGHTBOX FULLSCREEN) -->
+<div class="book-focus-modal" id="book-focus-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Visor 3D ampliado de la obra">
+    <div class="focus-backdrop" id="focus-backdrop" title="Haz clic o desplaza para cerrar"></div>
+    
+    <div class="focus-modal-content">
+        <!-- Barra Superior de Navegación y Cierre -->
+        <div class="focus-top-bar">
+            <div class="focus-tomo-tabs" role="tablist">
+                <?php foreach ($libros_catalogo as $idx => $libro): ?>
+                    <button class="btn focus-tomo-tab <?= $idx === 0 ? 'active' : '' ?>" data-tomo="<?= $idx + 1 ?>" role="tab" aria-selected="<?= $idx === 0 ? 'true' : 'false' ?>">
+                        <?= e($libro['badge'] ?? 'TOMO ' . ($idx + 1)) ?>
+                    </button>
+                <?php endforeach; ?>
+            </div>
+            
+            <div class="focus-top-actions">
+                <span class="focus-hint-desktop">Desplaza (scroll) o presiona ESC para salir</span>
+                <button class="focus-close-btn" id="focus-close-btn" aria-label="Cerrar visor ampliado">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                    <span class="close-text">Cerrar</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Escenario 3D Central Ampliado -->
+        <div class="focus-stage-container" id="focus-stage-container">
+            <?php foreach ($libros_catalogo as $idx => $libro): ?>
+                <div class="focus-3d-stage tomo-focus-stage <?= $idx === 0 ? 'active' : '' ?>" id="focus-stage-tomo-<?= $idx + 1 ?>" style="<?= $idx > 0 ? 'display: none;' : '' ?>">
+                    <div class="focus-3d-card" id="focus-book-card-<?= $idx + 1 ?>" data-tomo="<?= $idx + 1 ?>">
+                        <div class="book-face-front">
+                            <img src="<?= e($libro['cover_front']) ?>" alt="<?= e($libro['title']) ?> - Portada en Alta Definición" decoding="async">
+                            <div class="book-shine"></div>
+                        </div>
+                        <div class="book-face-back">
+                            <img src="<?= e($libro['cover_back']) ?>" alt="<?= e($libro['title']) ?> - Contraportada en Alta Definición" decoding="async">
+                            <div class="book-shine"></div>
+                        </div>
+                        <div class="book-face-spine spine-tomo<?= ($idx % 2) + 1 ?>">
+                            <span class="spine-kanji">侍</span>
+                            <span class="spine-title"><?= e(strtoupper($libro['title'])) ?></span>
+                            <span class="spine-author">JORGE ORPIANESI</span>
+                        </div>
+                        <div class="book-face-pages"></div>
+                        <div class="book-face-top"></div>
+                        <div class="book-face-bottom"></div>
+                        <div class="book-3d-shadow focus-shadow"></div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- Barra de Controles Inferior con Zoom -->
+        <div class="focus-bottom-bar">
+            <button class="btn btn-primary btn-focus-flip" id="btn-focus-flip">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                </svg>
+                <span id="btn-focus-flip-text">Girar a Contraportada</span>
+            </button>
+
+            <!-- Controles de Acercamiento / Zoom -->
+            <div class="focus-zoom-controls" role="group" aria-label="Controles de zoom">
+                <button type="button" class="btn btn-secondary btn-zoom-action" id="btn-focus-zoom-out" title="Alejar libro" aria-label="Alejar">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        <line x1="8" y1="11" x2="14" y2="11"/>
+                    </svg>
+                </button>
+                <span class="focus-zoom-badge" id="focus-zoom-badge" title="Nivel de zoom actual">100%</span>
+                <button type="button" class="btn btn-secondary btn-zoom-action" id="btn-focus-zoom-in" title="Acercar libro para leer en detalle" aria-label="Acercar">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        <line x1="11" y1="8" x2="11" y2="14"/>
+                        <line x1="8" y1="11" x2="14" y2="11"/>
+                    </svg>
+                </button>
+            </div>
+
+            <button class="btn btn-secondary btn-focus-reset" id="btn-focus-reset" title="Restablecer posición inicial y escala">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                    <path d="M3 3v5h5"/>
+                </svg>
+                <span>Centrar</span>
+            </button>
+        </div>
+        
+        <p class="focus-mobile-hint">👆 <em>Desliza para salir · Doble toque en el libro para zoom</em></p>
+    </div>
+</div>
+

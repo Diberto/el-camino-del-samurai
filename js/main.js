@@ -555,37 +555,65 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =========================================================================
-    // 7. MOTOR INTERACTIVO DEL LIBRO 3D (3D DYNAMIC BOOK SHOWCASE)
+    // =========================================================================
+    // 7. MOTOR INTERACTIVO DEL LIBRO 3D (DYNAMIC 3D BOOK & INMERSIVE FOCUS MODE)
     // =========================================================================
     const tomoTabs = document.querySelectorAll('.tomo-tab');
     const tomoStages = document.querySelectorAll('.tomo-stage');
     const bookCards = document.querySelectorAll('.book-3d-card');
     const btnFlip = document.getElementById('btn-flip-single');
     const btnFlipText = document.getElementById('btn-flip-text');
+    const btnOpenFocus = document.getElementById('btn-open-focus-3d');
+
+    // Elementos del Modal de Enfoque 3D
+    const focusModal = document.getElementById('book-focus-modal');
+    const focusBackdrop = document.getElementById('focus-backdrop');
+    const focusCloseBtn = document.getElementById('focus-close-btn');
+    const focusTomoTabs = document.querySelectorAll('.focus-tomo-tab');
+    const focusStages = document.querySelectorAll('.tomo-focus-stage');
+    const focusCards = document.querySelectorAll('.focus-3d-card');
+    const btnFocusFlip = document.getElementById('btn-focus-flip');
+    const btnFocusFlipText = document.getElementById('btn-focus-flip-text');
+    const btnFocusReset = document.getElementById('btn-focus-reset');
+    const btnFocusZoomIn = document.getElementById('btn-focus-zoom-in');
+    const btnFocusZoomOut = document.getElementById('btn-focus-zoom-out');
+    const focusZoomBadge = document.getElementById('focus-zoom-badge');
 
     let activeTomoIdx = 1;
     let isFlipped = false;
 
+    // Sincronización de Tomos en la Página
+    function switchTomo(tomoNum) {
+        activeTomoIdx = parseInt(tomoNum, 10) || 1;
+        
+        tomoTabs.forEach(tab => {
+            const tNum = parseInt(tab.getAttribute('data-tomo'), 10);
+            if (tNum === activeTomoIdx) {
+                tab.classList.add('active', 'btn-primary');
+                tab.classList.remove('btn-secondary');
+            } else {
+                tab.classList.remove('active', 'btn-primary');
+                tab.classList.add('btn-secondary');
+            }
+        });
+
+        tomoStages.forEach((stage, idx) => {
+            if (idx + 1 === activeTomoIdx) {
+                stage.style.display = 'flex';
+                stage.classList.add('active');
+            } else {
+                stage.style.display = 'none';
+                stage.classList.remove('active');
+            }
+        });
+
+        resetBookRotation();
+    }
+
     tomoTabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            tomoTabs.forEach(t => {
-                t.classList.remove('active', 'btn-primary');
-                t.classList.add('btn-secondary');
-            });
-            tab.classList.add('active', 'btn-primary');
-            tab.classList.remove('btn-secondary');
-
-            activeTomoIdx = parseInt(tab.getAttribute('data-tomo') || '1');
-            tomoStages.forEach((stage, idx) => {
-                if (idx + 1 === activeTomoIdx) {
-                    stage.style.display = 'flex';
-                    stage.classList.add('active');
-                } else {
-                    stage.style.display = 'none';
-                    stage.classList.remove('active');
-                }
-            });
-            resetBookRotation();
+            const tomo = tab.getAttribute('data-tomo') || '1';
+            switchTomo(tomo);
         });
     });
 
@@ -594,6 +622,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btnFlipText) btnFlipText.textContent = 'Girar a Contraportada';
         bookCards.forEach(card => {
             if (card) {
+                card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
                 card.style.transform = 'rotateY(0deg) rotateX(0deg)';
                 card.setAttribute('data-rotated', 'false');
             }
@@ -606,6 +635,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!currentCard) return;
 
             isFlipped = !isFlipped;
+            currentCard.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
             if (isFlipped) {
                 currentCard.style.transform = 'rotateY(180deg) rotateX(0deg)';
                 currentCard.setAttribute('data-rotated', 'true');
@@ -618,14 +648,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Interacción Drag & Click en Tarjetas Inline
     bookCards.forEach(card => {
         if (!card) return;
         let isDragging = false;
         let startX = 0, startY = 0;
+        let totalDragDistance = 0;
+        let dragStartTime = 0;
         let currentRotY = 0, currentRotX = 0;
 
         function startDrag(e) {
             isDragging = true;
+            dragStartTime = Date.now();
+            totalDragDistance = 0;
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             const clientY = e.touches ? e.touches[0].clientY : e.clientY;
             startX = clientX;
@@ -639,6 +674,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const clientY = e.touches ? e.touches[0].clientY : e.clientY;
             const deltaX = clientX - startX;
             const deltaY = clientY - startY;
+            totalDragDistance += Math.hypot(deltaX, deltaY);
 
             currentRotY = (deltaX * 0.4) + (isFlipped ? 180 : 0);
             currentRotX = -deltaY * 0.25;
@@ -646,9 +682,17 @@ document.addEventListener('DOMContentLoaded', () => {
             card.style.transform = `rotateY(${currentRotY}deg) rotateX(${currentRotX}deg)`;
         }
 
-        function stopDrag() {
+        function stopDrag(e) {
             if (!isDragging) return;
             isDragging = false;
+            const dragDuration = Date.now() - dragStartTime;
+
+            // Si el movimiento fue mínimo (< 8px) y rápido (< 350ms), es un CLIC -> Abrir Modo Enfoque
+            if (totalDragDistance < 8 && dragDuration < 350) {
+                openFocusModal(activeTomoIdx);
+                return;
+            }
+
             card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
             if (Math.abs(currentRotY) > 90 && !isFlipped) {
                 isFlipped = true;
@@ -673,6 +717,320 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // =========================================================================
+    // CONTROLADOR DEL MODO ENFOQUE 3D (FULLSCREEN LIGHTBOX MODAL CON ZOOM)
+    // =========================================================================
+    let focusActiveTomoIdx = 1;
+    let isFocusFlipped = false;
+    let focusRotY = 0;
+    let focusRotX = 0;
+    let focusZoom = 1.0;
+    const ZOOM_MIN = 1.0;
+    const ZOOM_MAX = 2.2;
+    const ZOOM_STEP = 0.25;
+
+    function applyFocusCardTransform(card, transitionDuration = null) {
+        if (!card) return;
+        if (transitionDuration !== null) {
+            card.style.transition = `transform ${transitionDuration} cubic-bezier(0.16, 1, 0.3, 1)`;
+        }
+        card.style.transform = `scale(${focusZoom}) rotateY(${focusRotY}deg) rotateX(${focusRotX}deg)`;
+    }
+
+    function setFocusZoom(newZoom, smooth = true) {
+        focusZoom = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, Math.round(newZoom * 100) / 100));
+        
+        if (focusZoomBadge) {
+            focusZoomBadge.textContent = `${Math.round(focusZoom * 100)}%`;
+        }
+        if (btnFocusZoomIn) {
+            btnFocusZoomIn.disabled = focusZoom >= ZOOM_MAX;
+        }
+        if (btnFocusZoomOut) {
+            btnFocusZoomOut.disabled = focusZoom <= ZOOM_MIN;
+        }
+
+        const currentFocusCard = document.getElementById(`focus-book-card-${focusActiveTomoIdx}`);
+        if (currentFocusCard) {
+            applyFocusCardTransform(currentFocusCard, smooth ? '0.35s' : null);
+        }
+    }
+
+    function toggleQuickZoom() {
+        if (focusZoom > 1.1) {
+            setFocusZoom(1.0);
+        } else {
+            setFocusZoom(1.55);
+        }
+    }
+
+    function openFocusModal(tomoNum) {
+        if (!focusModal) return;
+        focusActiveTomoIdx = parseInt(tomoNum, 10) || activeTomoIdx || 1;
+
+        // Sincronizar tabs del modal
+        focusTomoTabs.forEach(tab => {
+            const tNum = parseInt(tab.getAttribute('data-tomo'), 10);
+            if (tNum === focusActiveTomoIdx) {
+                tab.classList.add('active');
+                tab.setAttribute('aria-selected', 'true');
+            } else {
+                tab.classList.remove('active');
+                tab.setAttribute('aria-selected', 'false');
+            }
+        });
+
+        // Mostrar stage del tomo correspondiente
+        focusStages.forEach((stage, idx) => {
+            if (idx + 1 === focusActiveTomoIdx) {
+                stage.style.display = 'flex';
+                stage.classList.add('active');
+            } else {
+                stage.style.display = 'none';
+                stage.classList.remove('active');
+            }
+        });
+
+        resetFocusBookPosition();
+
+        focusModal.classList.add('active');
+        focusModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeFocusModal() {
+        if (!focusModal || !focusModal.classList.contains('active')) return;
+        focusModal.classList.remove('active');
+        focusModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        setFocusZoom(1.0, false);
+    }
+
+    function resetFocusBookPosition() {
+        isFocusFlipped = false;
+        focusRotY = 0;
+        focusRotX = 0;
+        focusZoom = 1.0;
+        if (focusZoomBadge) focusZoomBadge.textContent = '100%';
+        if (btnFocusZoomIn) btnFocusZoomIn.disabled = false;
+        if (btnFocusZoomOut) btnFocusZoomOut.disabled = true;
+        if (btnFocusFlipText) btnFocusFlipText.textContent = 'Girar a Contraportada';
+        focusCards.forEach(card => {
+            if (card) {
+                card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                card.style.transform = 'scale(1) rotateY(0deg) rotateX(0deg)';
+            }
+        });
+    }
+
+    // Botones de Zoom In / Zoom Out
+    if (btnFocusZoomIn) {
+        btnFocusZoomIn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setFocusZoom(focusZoom + ZOOM_STEP);
+        });
+    }
+
+    if (btnFocusZoomOut) {
+        btnFocusZoomOut.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setFocusZoom(focusZoom - ZOOM_STEP);
+        });
+    }
+
+    // Botón de Abrir en Pantalla Completa desde la sección
+    if (btnOpenFocus) {
+        btnOpenFocus.addEventListener('click', (e) => {
+            e.preventDefault();
+            openFocusModal(activeTomoIdx);
+        });
+    }
+
+    // Pestañas dentro del Modal de Enfoque
+    focusTomoTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tNum = parseInt(tab.getAttribute('data-tomo'), 10) || 1;
+            focusActiveTomoIdx = tNum;
+            
+            focusTomoTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            focusStages.forEach((stage, idx) => {
+                if (idx + 1 === focusActiveTomoIdx) {
+                    stage.style.display = 'flex';
+                    stage.classList.add('active');
+                } else {
+                    stage.style.display = 'none';
+                    stage.classList.remove('active');
+                }
+            });
+
+            // Sincronizar también con la página inferior
+            switchTomo(tNum);
+            resetFocusBookPosition();
+        });
+    });
+
+    // Botón Volteo Rápido en Modo Enfoque
+    if (btnFocusFlip) {
+        btnFocusFlip.addEventListener('click', () => {
+            const currentFocusCard = document.getElementById(`focus-book-card-${focusActiveTomoIdx}`);
+            if (!currentFocusCard) return;
+
+            isFocusFlipped = !isFocusFlipped;
+            focusRotY = isFocusFlipped ? 180 : 0;
+            focusRotX = 0;
+
+            applyFocusCardTransform(currentFocusCard, '0.6s');
+
+            if (btnFocusFlipText) {
+                btnFocusFlipText.textContent = isFocusFlipped ? 'Girar a Portada' : 'Girar a Contraportada';
+            }
+        });
+    }
+
+    // Botón Centrar / Restablecer
+    if (btnFocusReset) {
+        btnFocusReset.addEventListener('click', () => {
+            resetFocusBookPosition();
+        });
+    }
+
+    // Interacción Drag 3D y Doble Clic/Toque para Zoom dentro del Modo Enfoque
+    let lastFocusTapTime = 0;
+    focusCards.forEach(card => {
+        if (!card) return;
+        let isFocusDragging = false;
+        let startX = 0, startY = 0;
+        let dragStartTime = 0;
+        let totalDragDist = 0;
+
+        // Doble Clic en Desktop
+        card.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            toggleQuickZoom();
+        });
+
+        function startFocusDrag(e) {
+            isFocusDragging = true;
+            dragStartTime = Date.now();
+            totalDragDist = 0;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            startX = clientX;
+            startY = clientY;
+            card.style.transition = 'none';
+        }
+
+        function moveFocusDrag(e) {
+            if (!isFocusDragging) return;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            const deltaX = clientX - startX;
+            const deltaY = clientY - startY;
+            totalDragDist += Math.hypot(deltaX, deltaY);
+
+            focusRotY += deltaX * 0.45;
+            focusRotX = Math.max(-45, Math.min(45, focusRotX - deltaY * 0.35));
+
+            card.style.transform = `scale(${focusZoom}) rotateY(${focusRotY}deg) rotateX(${focusRotX}deg)`;
+            startX = clientX;
+            startY = clientY;
+        }
+
+        function stopFocusDrag(e) {
+            if (!isFocusDragging) return;
+            isFocusDragging = false;
+            
+            const dragDuration = Date.now() - dragStartTime;
+            // Detección de doble toque táctil en móviles
+            if (totalDragDist < 10 && dragDuration < 320) {
+                const now = Date.now();
+                if (now - lastFocusTapTime < 340) {
+                    toggleQuickZoom();
+                    lastFocusTapTime = 0;
+                    return;
+                }
+                lastFocusTapTime = now;
+            }
+
+            card.style.transition = 'transform 0.3s ease-out';
+        }
+
+        card.addEventListener('mousedown', startFocusDrag);
+        window.addEventListener('mousemove', moveFocusDrag);
+        window.addEventListener('mouseup', stopFocusDrag);
+
+        card.addEventListener('touchstart', startFocusDrag, { passive: true });
+        window.addEventListener('touchmove', moveFocusDrag, { passive: true });
+        window.addEventListener('touchend', stopFocusDrag);
+    });
+
+    // =========================================================================
+    // MECANISMOS DE SALIDA NATURALES (DESPLAZAMIENTO / SCROLL, BACKDROP, ESC, BOTÓN)
+    // =========================================================================
+
+    // 1. Salida al Desplazar con la Rueda del Ratón o Zoom con Ctrl
+    window.addEventListener('wheel', (e) => {
+        if (!focusModal || !focusModal.classList.contains('active')) return;
+        
+        // Atajo de zoom accesible con Ctrl + Rueda
+        if (e.ctrlKey) {
+            const step = e.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP;
+            setFocusZoom(focusZoom + step);
+            return;
+        }
+
+        // Si el usuario no tiene zoom ampliado y gira la rueda, salimos con elegancia
+        if (focusZoom <= 1.05 && Math.abs(e.deltaY) > 35) {
+            closeFocusModal();
+        }
+    }, { passive: true });
+
+    // 2. Salida al Deslizar Verticalmente en Móviles (Swipe-to-Dismiss)
+    let focusTouchStartY = 0;
+    let focusTouchStartX = 0;
+    if (focusModal) {
+        focusModal.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                focusTouchStartY = e.touches[0].clientY;
+                focusTouchStartX = e.touches[0].clientX;
+            }
+        }, { passive: true });
+
+        focusModal.addEventListener('touchend', (e) => {
+            if (e.changedTouches.length === 1) {
+                const deltaY = e.changedTouches[0].clientY - focusTouchStartY;
+                const deltaX = Math.abs(e.changedTouches[0].clientX - focusTouchStartX);
+                // Si el libro está con zoom, no cerramos por deslizamiento accidental
+                if (focusZoom > 1.1) return;
+                
+                // Si el gesto fue vertical y mayor a 65px fuera de rotación, cerramos
+                if (Math.abs(deltaY) > 65 && Math.abs(deltaY) > deltaX * 1.3) {
+                    closeFocusModal();
+                }
+            }
+        }, { passive: true });
+    }
+
+    // 3. Clic en Fondo Oscuro (Backdrop)
+    if (focusBackdrop) {
+        focusBackdrop.addEventListener('click', closeFocusModal);
+    }
+
+    // 4. Botón de Cierre "✕"
+    if (focusCloseBtn) {
+        focusCloseBtn.addEventListener('click', closeFocusModal);
+    }
+
+    // 5. Tecla Escape (ESC)
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && focusModal && focusModal.classList.contains('active')) {
+            closeFocusModal();
+        }
+    });
+
     // 8. FILTROS Y PAGINACIÓN DE OPINIONES DE LECTORES + MODAL DE AMPLIACIÓN
     // =========================================================================
     const filterBtns = document.querySelectorAll('.review-filter-btn');

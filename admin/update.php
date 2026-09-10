@@ -63,8 +63,8 @@ function apply_safe_update_zip(string $zip_path): array {
         $target_file = ROOT_DIR . '/' . $entry_name;
         $target_dir = dirname($target_file);
 
-        // Si es una foto de usuario existente, no sobrescribirla
-        if (strpos($entry_name, 'photos/') === 0 && file_exists($target_file)) {
+        // Si es una foto de usuario existente (no portadas del libro), no sobrescribirla
+        if (strpos($entry_name, 'photos/') === 0 && !preg_match('#^photos/book\d_#', $entry_name) && file_exists($target_file)) {
             continue;
         }
 
@@ -169,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['auto_update_git'])) {
                 $target_file = ROOT_DIR . '/' . $entry_name;
                 $target_dir = dirname($target_file);
 
-                if (strpos($entry_name, 'photos/') === 0 && file_exists($target_file)) continue;
+                if (strpos($entry_name, 'photos/') === 0 && !preg_match('#^photos/book\d_#', $entry_name) && file_exists($target_file)) continue;
                 if (in_array($entry_name, $protected_databases) && file_exists($target_file) && filesize($target_file) > 10) continue;
 
                 // SEGURIDAD: Prevenir Zip Slip — verificar que el destino esté dentro de ROOT_DIR
