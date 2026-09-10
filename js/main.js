@@ -1031,6 +1031,90 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // =========================================================================
+    // HELPER: SISTEMA DE PAGINACIÓN COMPACTA CON ABREVIACIÓN Y ELIPSIS
+    // =========================================================================
+    function getPaginationRange(currentPage, totalPages, isMobile = false) {
+        if (totalPages <= 1) return [];
+
+        // Si hay 3 o menos páginas, siempre mostrar todas (ej. 1, 2, 3)
+        if (totalPages <= 3) {
+            return Array.from({ length: totalPages }, (_, i) => i + 1);
+        }
+
+        if (isMobile) {
+            // En móviles, abreviar cuando totalPages > 3
+            if (totalPages === 4) {
+                if (currentPage <= 2) {
+                    return [1, 2, '...', 4];
+                } else {
+                    return [1, '...', 3, 4];
+                }
+            }
+
+            // totalPages >= 5 (ej. Galería con 18 páginas)
+            if (currentPage <= 2) {
+                return [1, 2, 3, '...', totalPages];
+            } else if (currentPage >= totalPages - 1) {
+                return [1, '...', totalPages - 2, totalPages - 1, totalPages];
+            } else {
+                return [1, '...', currentPage, '...', totalPages];
+            }
+        } else {
+            // Desktop y tablet (> 600px)
+            if (totalPages <= 7) {
+                return Array.from({ length: totalPages }, (_, i) => i + 1);
+            }
+
+            // Cerca del principio
+            if (currentPage <= 4) {
+                return [1, 2, 3, 4, 5, '...', totalPages];
+            }
+            // Cerca del final
+            if (currentPage >= totalPages - 3) {
+                return [1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+            }
+            // En el medio
+            return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+        }
+    }
+
+    function renderPaginationHtml(currentPage, totalPages, dataAttr, ariaLabelPrefix = 'página') {
+        if (totalPages <= 1) return '';
+
+        const isMobile = window.innerWidth <= 600;
+        const items = getPaginationRange(currentPage, totalPages, isMobile);
+        let html = '<ul class="pagination-list">';
+
+        // Botón Anterior
+        if (currentPage > 1) {
+            html += `<li><button type="button" class="pagination-link prev" ${dataAttr}="${currentPage - 1}" aria-label="Página anterior">&larr;<span class="pagination-btn-text"> Anterior</span></button></li>`;
+        } else {
+            html += `<li><span class="pagination-link disabled">&larr;<span class="pagination-btn-text"> Anterior</span></span></li>`;
+        }
+
+        // Botones numéricos y elipsis
+        items.forEach(item => {
+            if (item === '...') {
+                html += `<li><span class="pagination-ellipsis" aria-hidden="true">&hellip;</span></li>`;
+            } else {
+                const isActive = item === currentPage ? 'active' : '';
+                const ariaCurrent = item === currentPage ? ' aria-current="page"' : '';
+                html += `<li><button type="button" class="pagination-link ${isActive}" ${dataAttr}="${item}" aria-label="Ir a ${ariaLabelPrefix} ${item}"${ariaCurrent}>${item}</button></li>`;
+            }
+        });
+
+        // Botón Siguiente
+        if (currentPage < totalPages) {
+            html += `<li><button type="button" class="pagination-link next" ${dataAttr}="${currentPage + 1}" aria-label="Página siguiente"><span class="pagination-btn-text">Siguiente </span>&rarr;</button></li>`;
+        } else {
+            html += `<li><span class="pagination-link disabled"><span class="pagination-btn-text">Siguiente </span>&rarr;</span></li>`;
+        }
+
+        html += '</ul>';
+        return html;
+    }
+
     // 8. FILTROS Y PAGINACIÓN DE OPINIONES DE LECTORES + MODAL DE AMPLIACIÓN
     // =========================================================================
     const filterBtns = document.querySelectorAll('.review-filter-btn');
@@ -1087,30 +1171,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 reviewsPagination.style.display = 'none';
             } else {
                 reviewsPagination.style.display = 'flex';
-                let paginationHtml = '<ul class="pagination-list">';
-
-                // Botón Anterior
-                if (currentReviewsPage > 1) {
-                    paginationHtml += `<li><button type="button" class="pagination-link prev" data-review-page="${currentReviewsPage - 1}" aria-label="Página anterior">&larr; Anterior</button></li>`;
-                } else {
-                    paginationHtml += `<li><span class="pagination-link disabled">&larr; Anterior</span></li>`;
-                }
-
-                // Botones numéricos
-                for (let p = 1; p <= totalPages; p++) {
-                    const isActive = p === currentReviewsPage ? 'active' : '';
-                    paginationHtml += `<li><button type="button" class="pagination-link ${isActive}" data-review-page="${p}" aria-label="Ir a página ${p}">${p}</button></li>`;
-                }
-
-                // Botón Siguiente
-                if (currentReviewsPage < totalPages) {
-                    paginationHtml += `<li><button type="button" class="pagination-link next" data-review-page="${currentReviewsPage + 1}" aria-label="Página siguiente">Siguiente &rarr;</button></li>`;
-                } else {
-                    paginationHtml += `<li><span class="pagination-link disabled">Siguiente &rarr;</span></li>`;
-                }
-
-                paginationHtml += '</ul>';
-                reviewsPagination.innerHTML = paginationHtml;
+                reviewsPagination.innerHTML = renderPaginationHtml(currentReviewsPage, totalPages, 'data-review-page', 'página');
 
                 // Eventos de clic en botones de paginación
                 reviewsPagination.querySelectorAll('[data-review-page]').forEach(btn => {
@@ -1312,30 +1373,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     galleryPagination.style.display = 'none';
                 } else {
                     galleryPagination.style.display = 'flex';
-                    let paginationHtml = '<ul class="pagination-list">';
-
-                    // Botón Anterior
-                    if (currentGalleryPage > 1) {
-                        paginationHtml += `<li><button type="button" class="pagination-link prev" data-gallery-page="${currentGalleryPage - 1}" aria-label="Página anterior">&larr; Anterior</button></li>`;
-                    } else {
-                        paginationHtml += `<li><span class="pagination-link disabled">&larr; Anterior</span></li>`;
-                    }
-
-                    // Botones numéricos
-                    for (let p = 1; p <= totalPages; p++) {
-                        const isActive = p === currentGalleryPage ? 'active' : '';
-                        paginationHtml += `<li><button type="button" class="pagination-link ${isActive}" data-gallery-page="${p}" aria-label="Ir a página ${p}">${p}</button></li>`;
-                    }
-
-                    // Botón Siguiente
-                    if (currentGalleryPage < totalPages) {
-                        paginationHtml += `<li><button type="button" class="pagination-link next" data-gallery-page="${currentGalleryPage + 1}" aria-label="Página siguiente">Siguiente &rarr;</button></li>`;
-                    } else {
-                        paginationHtml += `<li><span class="pagination-link disabled">Siguiente &rarr;</span></li>`;
-                    }
-
-                    paginationHtml += '</ul>';
-                    galleryPagination.innerHTML = paginationHtml;
+                    galleryPagination.innerHTML = renderPaginationHtml(currentGalleryPage, totalPages, 'data-gallery-page', 'página de galería');
 
                     // Event listeners para los botones de la barra inferior
                     galleryPagination.querySelectorAll('.pagination-link[data-gallery-page]').forEach(btn => {
@@ -1577,30 +1615,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 homeBlogPagination.style.display = 'none';
             } else {
                 homeBlogPagination.style.display = 'flex';
-                let paginationHtml = '<ul class="pagination-list">';
-
-                // Botón Anterior
-                if (currentBlogPage > 1) {
-                    paginationHtml += `<li><button type="button" class="pagination-link prev" data-blog-page="${currentBlogPage - 1}" aria-label="Página anterior">&larr; Anterior</button></li>`;
-                } else {
-                    paginationHtml += `<li><span class="pagination-link disabled">&larr; Anterior</span></li>`;
-                }
-
-                // Botones numéricos
-                for (let p = 1; p <= totalPages; p++) {
-                    const isActive = p === currentBlogPage ? 'active' : '';
-                    paginationHtml += `<li><button type="button" class="pagination-link ${isActive}" data-blog-page="${p}" aria-label="Ir a página ${p}">${p}</button></li>`;
-                }
-
-                // Botón Siguiente
-                if (currentBlogPage < totalPages) {
-                    paginationHtml += `<li><button type="button" class="pagination-link next" data-blog-page="${currentBlogPage + 1}" aria-label="Página siguiente">Siguiente &rarr;</button></li>`;
-                } else {
-                    paginationHtml += `<li><span class="pagination-link disabled">Siguiente &rarr;</span></li>`;
-                }
-
-                paginationHtml += '</ul>';
-                homeBlogPagination.innerHTML = paginationHtml;
+                homeBlogPagination.innerHTML = renderPaginationHtml(currentBlogPage, totalPages, 'data-blog-page', 'página del blog');
 
                 homeBlogPagination.querySelectorAll('[data-blog-page]').forEach(btn => {
                     btn.addEventListener('click', () => {
@@ -1619,6 +1634,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         renderHomeBlogPage();
+
+        // Listener adaptativo para redimensionamiento (actualiza paginación al cruzar breakpoint móvil de 600px)
+        let lastWasMobilePagination = window.innerWidth <= 600;
+        window.addEventListener('resize', () => {
+            const isNowMobile = window.innerWidth <= 600;
+            if (isNowMobile !== lastWasMobilePagination) {
+                lastWasMobilePagination = isNowMobile;
+                if (typeof renderReviews === 'function' && reviewsPagination && reviewsPagination.style.display !== 'none') {
+                    renderReviews();
+                }
+                if (typeof renderGalleryPage === 'function' && galleryPagination && galleryPagination.style.display !== 'none') {
+                    renderGalleryPage();
+                }
+                if (typeof renderHomeBlogPage === 'function' && homeBlogPagination && homeBlogPagination.style.display !== 'none') {
+                    renderHomeBlogPage();
+                }
+            }
+        });
     }
 
     // =========================================================================

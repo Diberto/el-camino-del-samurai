@@ -98,6 +98,64 @@ document.addEventListener('DOMContentLoaded', async () => {
       .replace(/'/g, '&#039;');
   }
 
+  function getPaginationRange(currentPage, totalPages, isMobile = false) {
+    if (totalPages <= 1) return [];
+    if (totalPages <= 3) return Array.from({ length: totalPages }, (_, i) => i + 1);
+
+    if (isMobile) {
+      if (totalPages === 4) {
+        return currentPage <= 2 ? [1, 2, '...', 4] : [1, '...', 3, 4];
+      }
+      if (currentPage <= 2) {
+        return [1, 2, 3, '...', totalPages];
+      } else if (currentPage >= totalPages - 1) {
+        return [1, '...', totalPages - 2, totalPages - 1, totalPages];
+      } else {
+        return [1, '...', currentPage, '...', totalPages];
+      }
+    } else {
+      if (totalPages <= 7) return Array.from({ length: totalPages }, (_, i) => i + 1);
+      if (currentPage <= 4) return [1, 2, 3, 4, 5, '...', totalPages];
+      if (currentPage >= totalPages - 3) {
+        return [1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+      }
+      return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+    }
+  }
+
+  function renderBlogPagination(currentPage, totalPages) {
+    if (totalPages <= 1) return '';
+    const isMobile = window.innerWidth <= 600;
+    const items = getPaginationRange(currentPage, totalPages, isMobile);
+
+    let html = '<nav class="blog-pagination" style="margin-top: 3rem;" aria-label="Navegación de páginas">';
+    html += '<ul class="pagination-list">';
+
+    if (currentPage > 1) {
+      html += `<li><button type="button" class="pagination-link prev" data-page="${currentPage - 1}" style="cursor: pointer;">&larr;<span class="pagination-btn-text"> Anterior</span></button></li>`;
+    } else {
+      html += `<li><span class="pagination-link disabled">&larr;<span class="pagination-btn-text"> Anterior</span></span></li>`;
+    }
+
+    items.forEach(item => {
+      if (item === '...') {
+        html += `<li><span class="pagination-ellipsis" aria-hidden="true">&hellip;</span></li>`;
+      } else {
+        const isActive = item === currentPage ? 'active' : '';
+        html += `<li><button type="button" class="pagination-link ${isActive}" data-page="${item}" style="cursor: pointer;">${item}</button></li>`;
+      }
+    });
+
+    if (currentPage < totalPages) {
+      html += `<li><button type="button" class="pagination-link next" data-page="${currentPage + 1}" style="cursor: pointer;"><span class="pagination-btn-text">Siguiente </span>&rarr;</button></li>`;
+    } else {
+      html += `<li><span class="pagination-link disabled"><span class="pagination-btn-text">Siguiente </span>&rarr;</span></li>`;
+    }
+
+    html += '</ul></nav>';
+    return html;
+  }
+
   let catalogPage = 1;
   const PAGE_SIZE = 6;
 
@@ -143,23 +201,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         `).join('')}
       </div>
 
-      ${totalPages > 1 ? `
-        <nav class="blog-pagination" style="margin-top: 3rem;" aria-label="Navegación de páginas">
-          <ul class="pagination-list">
-            <li>
-              ${catalogPage > 1 ? `<button type="button" class="pagination-link prev" data-page="${catalogPage - 1}" style="cursor: pointer;">&larr; Anterior</button>` : `<span class="pagination-link disabled">&larr; Anterior</span>`}
-            </li>
-            ${Array.from({ length: totalPages }, (_, i) => i + 1).map(p => `
-              <li>
-                <button type="button" class="pagination-link ${p === catalogPage ? 'active' : ''}" data-page="${p}" style="cursor: pointer;">${p}</button>
-              </li>
-            `).join('')}
-            <li>
-              ${catalogPage < totalPages ? `<button type="button" class="pagination-link next" data-page="${catalogPage + 1}" style="cursor: pointer;">Siguiente &rarr;</button>` : `<span class="pagination-link disabled">Siguiente &rarr;</span>`}
-            </li>
-          </ul>
-        </nav>
-      ` : ''}
+      ${totalPages > 1 ? renderBlogPagination(catalogPage, totalPages) : ''}
     `;
 
     const searchInput = document.getElementById('blog-search-input');
