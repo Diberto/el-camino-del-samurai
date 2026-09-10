@@ -31,8 +31,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Hojas de Estilo Oficiales -->
-    <link rel="stylesheet" href="styles.css">
+    <!-- Hojas de Estilo Oficiales (Minificada para máxima velocidad de carga) -->
+    <link rel="stylesheet" href="styles.min.css">
 </head>
 <body data-theme-default="day" data-reviews-filter="all">
 
@@ -166,11 +166,11 @@
                 <div class="book-3d-stage tomo-stage active" id="stage-tomo-1" style="">
                     <div class="book-3d-card" id="book-card-1" data-rotated="false">
                         <div class="book-face-front">
-                            <img src="assets/book1_front.webp" alt="La Ruta del Samurái - Portada" decoding="async">
+                            <img src="assets/book1_front.webp" alt="La Ruta del Samurái - Portada" fetchpriority="high" decoding="async">
                             <div class="book-shine"></div>
                         </div>
                         <div class="book-face-back">
-                            <img src="assets/book1_back.webp" alt="La Ruta del Samurái - Contraportada" decoding="async">
+                            <img src="assets/book1_back.webp" alt="La Ruta del Samurái - Contraportada" loading="lazy" fetchpriority="low" decoding="async">
                             <div class="book-shine"></div>
                         </div>
                         <div class="book-face-spine spine-tomo1">
@@ -188,11 +188,11 @@
                 <div class="book-3d-stage tomo-stage " id="stage-tomo-2" style="display: none;">
                     <div class="book-3d-card" id="book-card-2" data-rotated="false">
                         <div class="book-face-front">
-                            <img src="assets/book2_front.webp" alt="El Paso de las Luciérnagas - Portada" decoding="async">
+                            <img src="assets/book2_front.webp" alt="El Paso de las Luciérnagas - Portada" loading="lazy" fetchpriority="low" decoding="async">
                             <div class="book-shine"></div>
                         </div>
                         <div class="book-face-back">
-                            <img src="assets/book2_back.webp" alt="El Paso de las Luciérnagas - Contraportada" decoding="async">
+                            <img src="assets/book2_back.webp" alt="El Paso de las Luciérnagas - Contraportada" loading="lazy" fetchpriority="low" decoding="async">
                             <div class="book-shine"></div>
                         </div>
                         <div class="book-face-spine spine-tomo2">
@@ -210,11 +210,11 @@
                 <div class="book-3d-stage tomo-stage " id="stage-tomo-3" style="display: none;">
                     <div class="book-3d-card" id="book-card-3" data-rotated="false">
                         <div class="book-face-front">
-                            <img src="assets/book3_front.webp" alt="Along the Samurai&#039;s Route - Portada" decoding="async">
+                            <img src="assets/book3_front.webp" alt="Along the Samurai&#039;s Route - Portada" loading="lazy" fetchpriority="low" decoding="async">
                             <div class="book-shine"></div>
                         </div>
                         <div class="book-face-back">
-                            <img src="assets/book3_back.webp" alt="Along the Samurai&#039;s Route - Contraportada" decoding="async">
+                            <img src="assets/book3_back.webp" alt="Along the Samurai&#039;s Route - Contraportada" loading="lazy" fetchpriority="low" decoding="async">
                             <div class="book-shine"></div>
                         </div>
                         <div class="book-face-spine spine-tomo1">
@@ -325,11 +325,11 @@
             <div class="focus-3d-stage tomo-focus-stage active" id="focus-stage-tomo-1" style="">
                 <div class="focus-3d-card" id="focus-book-card-1" data-tomo="1">
                     <div class="book-face-front">
-                        <img src="assets/book1_front.webp" alt="La Ruta del Samurái - Portada en Alta Definición" decoding="async">
+                        <img src="assets/book1_front.webp" alt="La Ruta del Samurái - Portada en Alta Definición" loading="lazy" fetchpriority="low" decoding="async">
                         <div class="book-shine"></div>
                     </div>
                     <div class="book-face-back">
-                        <img src="assets/book1_back.webp" alt="La Ruta del Samurái - Contraportada en Alta Definición" decoding="async">
+                        <img src="assets/book1_back.webp" alt="La Ruta del Samurái - Contraportada en Alta Definición" loading="lazy" fetchpriority="low" decoding="async">
                         <div class="book-shine"></div>
                     </div>
                     <div class="book-face-spine spine-tomo1">
@@ -346,11 +346,11 @@
             <div class="focus-3d-stage tomo-focus-stage " id="focus-stage-tomo-2" style="display: none;">
                 <div class="focus-3d-card" id="focus-book-card-2" data-tomo="2">
                     <div class="book-face-front">
-                        <img src="assets/book2_front.webp" alt="El Paso de las Luciérnagas - Portada en Alta Definición" decoding="async">
+                        <img src="assets/book2_front.webp" alt="El Paso de las Luciérnagas - Portada en Alta Definición" loading="lazy" fetchpriority="low" decoding="async">
                         <div class="book-shine"></div>
                     </div>
                     <div class="book-face-back">
-                        <img src="assets/book2_back.webp" alt="El Paso de las Luciérnagas - Contraportada en Alta Definición" decoding="async">
+                        <img src="assets/book2_back.webp" alt="El Paso de las Luciérnagas - Contraportada en Alta Definición" loading="lazy" fetchpriority="low" decoding="async">
                         <div class="book-shine"></div>
                     </div>
                     <div class="book-face-spine spine-tomo2">
@@ -367,11 +367,11 @@
             <div class="focus-3d-stage tomo-focus-stage " id="focus-stage-tomo-3" style="display: none;">
                 <div class="focus-3d-card" id="focus-book-card-3" data-tomo="3">
                     <div class="book-face-front">
-                        <img src="assets/book3_front.webp" alt="Along the Samurai&#039;s Route - Portada en Alta Definición" decoding="async">
+                        <img src="assets/book3_front.webp" alt="Along the Samurai&#039;s Route - Portada en Alta Definición" loading="lazy" fetchpriority="low" decoding="async">
                         <div class="book-shine"></div>
                     </div>
                     <div class="book-face-back">
-                        <img src="assets/book3_back.webp" alt="Along the Samurai&#039;s Route - Contraportada en Alta Definición" decoding="async">
+                        <img src="assets/book3_back.webp" alt="Along the Samurai&#039;s Route - Contraportada en Alta Definición" loading="lazy" fetchpriority="low" decoding="async">
                         <div class="book-shine"></div>
                     </div>
                     <div class="book-face-spine spine-tomo1">
@@ -1838,6 +1838,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0613_1789057136.webp" 
                              alt="Castillo de Matshushiro" 
                              loading="lazy" 
+                             decoding="async" 
+                             
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Castillos samurais</span>
@@ -1856,6 +1858,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_a2e92a7f-5348-4967-abcc-6cc9c698a6c3_1789057097.webp" 
                              alt="Sitio de la Batalla de Kawanakajima" 
                              loading="lazy" 
+                             decoding="async" 
+                             
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -1874,6 +1878,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_ACUD6671_1789057054.webp" 
                              alt="Escuela samurái de Nagano - Dojo" 
                              loading="lazy" 
+                             decoding="async" 
+                             
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -1892,6 +1898,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_60a7f542-6fa9-40dd-a14b-4cb6fc8c3714_1789057007.webp" 
                              alt="Casa del clan Sanada en Nagano" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -1910,6 +1918,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_5831_1789056875.webp" 
                              alt="Habitación donde atentaron contra la vida de Sakamoto Ryoma" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -1928,6 +1938,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_3afb87f0-a298-41eb-8590-0d26171d7a99_1789056726.webp" 
                              alt="Tumba de Oda Nobunaga" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -1946,6 +1958,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_576c4b96-88a6-4974-9536-9e01b5a00580_1789056661.webp" 
                              alt="Tumba de Akechi Mitsuhide" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -1964,6 +1978,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0055_1789056547.webp" 
                              alt="Tumba de Toyotomi Hideyoshi" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -1982,6 +1998,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_0e6b3da3-da67-420b-8908-f92b2f27f7b1_1789056481.webp" 
                              alt="Sitio del asesinato contra Sakamoto Ryoma" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -2000,6 +2018,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_E8333_1789056342.webp" 
                              alt="Visita a Kawagoe" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -2018,6 +2038,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSCN3782_1789056212.webp" 
                              alt="Junto al maestro  Hokama en su museo del Karate" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Tradición Marcial</span>
@@ -2036,6 +2058,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_20130909_181228-1_1789056128.webp" 
                              alt="Monumento al maestro Gichin Funakoshi en Okinawa" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Tradición Marcial</span>
@@ -2054,6 +2078,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_CSC_0034_1789056046.webp" 
                              alt="Monumento al maestro de Karate Chojun Miyagi" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Tradición Marcial</span>
@@ -2072,6 +2098,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSCN3581_1789055952.webp" 
                              alt="Lugar de meditación de Sokon Matsumura  en el jardín Shikina" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Tradición Marcial</span>
@@ -2090,6 +2118,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSCN3489_1789055832.webp" 
                              alt="Memorial de la Batalla de Okinawa" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugar Histórico</span>
@@ -2108,6 +2138,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_CSC_0343_1789055710.webp" 
                              alt="Sayyonara Party con los grande maestros de Okinawa" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Tradición Marcial</span>
@@ -2126,6 +2158,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0823_1789055546.webp" 
                              alt="Parque Yoyogi, santuario Meiji" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Templos y santuarios</span>
@@ -2144,6 +2178,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0769__2__1788986730.webp" 
                              alt="Templo Senso-ji" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Templos y santuarios</span>
@@ -2162,6 +2198,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0237__2__1788986507.webp" 
                              alt="Nihon Budokan" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Tradición Marcial</span>
@@ -2180,6 +2218,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0206__2__1788986449.webp" 
                              alt="Palacio imperial de Tokio" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -2198,6 +2238,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0197__2__1788986390.webp" 
                              alt="Mausoleo con las tumbas de 6 shogunes Tokugawa" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -2216,6 +2258,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0175__2__1788986328.webp" 
                              alt="Tumba de los 47 ronin en Sengaku-ji" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -2234,6 +2278,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0136__2__1788986273.webp" 
                              alt="Casa de Kira donde atacaron los 47 ronin" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -2252,6 +2298,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0005__2__1788986207.webp" 
                              alt="Monumento a Saigo Takamori, El Ultimo Samurái" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -2270,6 +2318,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_71296587_2643851139010830_2246393862903824384_n_1788986158.webp" 
                              alt="Entrenamiento de iaido en Warabi, Saitama" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Tradición Marcial</span>
@@ -2288,6 +2338,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0052__3__1788985699.webp" 
                              alt="Poblado de Shirakawa-go" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -2306,6 +2358,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0652_1788985612.webp" 
                              alt="Castillo de Shimabara" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Castillos samurais</span>
@@ -2324,6 +2378,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0080__3__1788985498.webp" 
                              alt="Sitio de la batalla de Sekigahara" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -2342,6 +2398,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSCN3595_1788985387.webp" 
                              alt="Shureimon, la puerta de la cortesía en el castillo de Shuri" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Castillos samurais</span>
@@ -2360,6 +2418,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSCN3742_1788985310.webp" 
                              alt="Entrenando Karate en el Santuario Naminoue, Okinawa" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Tradición Marcial</span>
@@ -2378,6 +2438,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190904_141040_1788985218.webp" 
                              alt="Abismo de Kanmanganfuchi" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -2396,6 +2458,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190904_124703_1788985165.webp" 
                              alt="Puente Shinkyo" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -2414,6 +2478,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190904_113217_1788985059.webp" 
                              alt="Tumba del shogun Tokugawa Ieyasu en Nikko" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -2432,6 +2498,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190904_102354_1788984978.webp" 
                              alt="Tumba del shogun Tokugawa Iemitsu" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -2450,6 +2518,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190913_134939_1788984892.webp" 
                              alt="Santuario Kasuga Taisha" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -2468,6 +2538,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190913_120906_1788984765.webp" 
                              alt="Nara" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares Históricos</span>
@@ -2486,6 +2558,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0209__3__1788984692.webp" 
                              alt="Museo de arte Tokugawa" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Museos</span>
@@ -2504,6 +2578,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190908_091331_1788984620.webp" 
                              alt="Castillo de Nagoya" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Castillos samurais</span>
@@ -2522,6 +2598,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0630_1788984473.webp" 
                              alt="Isla Dejima, unico puerto abierto durante el periodo Edo" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares históricos</span>
@@ -2540,6 +2618,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190921_100724_1788984529.webp" 
                              alt="Monumento de la explosión nueclear en Nagasaki" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -2558,6 +2638,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0354_1788984327.webp" 
                              alt="Cima del Monte Misen en Miyajima" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares</span>
@@ -2576,6 +2658,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0095_1788984246.webp" 
                              alt="Santuario de Miyamoto Musashi" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Miyamoto Musashi</span>
@@ -2594,6 +2678,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0076_1788984177.webp" 
                              alt="Sitio del nacimiento de Miyamoto Musashi" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Miyamoto Musashi</span>
@@ -2612,6 +2698,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0049_1788984134.webp" 
                              alt="En el Musashi Budokan de su ciudad natal" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Miyamoto Musashi</span>
@@ -2630,6 +2718,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0021_1788984075.webp" 
                              alt="Lugar del primer duelo de Miyamoto Musashi a los 13 años" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Miyamoto Musashi</span>
@@ -2648,6 +2738,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190910_105133_1788887951.webp" 
                              alt="Tozando Kioto" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Tradición Marcial</span>
@@ -2666,6 +2758,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0631__3__1788887837.webp" 
                              alt="Pinturas de Miyamoto Musashi" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Miyamoto Musashi</span>
@@ -2684,6 +2778,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0673__3__1788887791.webp" 
                              alt="Fushimi Inari Taisha" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Templos y santuarios</span>
@@ -2702,6 +2798,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0640__3__1788880582.webp" 
                              alt="Templo Sanjusangendo donde Musashi mató a Yoshioka Densichiro" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Miyamoto Musashi</span>
@@ -2720,6 +2818,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0612__3__1788880521.webp" 
                              alt="Templo Ryohan Ji" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -2738,6 +2838,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0581__3__1788880458.webp" 
                              alt="Templo Myoshin ji donde Musashi se encontró con Nagaoka Sado" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Miyamoto Musashi</span>
@@ -2756,6 +2858,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0464__3__1788880371.webp" 
                              alt="Templo Honnoji donde Oda Nobunaga cometió seppuku" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Templos y santuarios</span>
@@ -2774,6 +2878,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0552__3__1788880315.webp" 
                              alt="Bambusal de Arashiyama" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares</span>
@@ -2792,6 +2898,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0502__3__1788880253.webp" 
                              alt="Butokuden, el dojo mas antiguo de Japón" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Tradición Marcial</span>
@@ -2810,6 +2918,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0421__3__1788880125.webp" 
                              alt="Ninenzaka, Higashiyama, barrio antiguo de Kioto" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -2828,6 +2938,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0405__3__1788880046.webp" 
                              alt="Sanenzaka, Higashiyama, barrio antiguo de Kioto" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -2846,6 +2958,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0298__3__1788879731.webp" 
                              alt="Zazen en el templo Enkoji" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Templos y santuarios</span>
@@ -2864,6 +2978,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0246__3__1788879681.webp" 
                              alt="Ichijoji, donde Musashi se enfrento a Yoshioka Matashichiro" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Miyamoto Musashi</span>
@@ -2882,6 +2998,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0242__3__1788879632.webp" 
                              alt="Templo Jobon Rendai donde Musashi se enfrentó a Yoshioka Seijuro" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Miyamoto Musashi</span>
@@ -2900,6 +3018,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190909_093747_1788879566.webp" 
                              alt="El Pabellón Dorado" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -2918,6 +3038,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0732_1788879399.webp" 
                              alt="Cueva Reigando donde Musashi escribio su libro" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Miyamoto Musashi</span>
@@ -2936,6 +3058,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0685_1788879341.webp" 
                              alt="Tumba de Miyamoto Musashi" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Miyamoto Musashi</span>
@@ -2954,6 +3078,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0953__2__1788879285.webp" 
                              alt="Tumba de Takeda Shingen" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -2972,6 +3098,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0937__2__1788879244.webp" 
                              alt="Cementerio Okunoin (el más grande y sagrado de Japón)" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -2990,6 +3118,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0914__2__1788879127.webp" 
                              alt="Alojado en el templo Sekishoin del monte Koya" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Templos y santuarios</span>
@@ -3008,6 +3138,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190919_130110_1788879020.webp" 
                              alt="Sitio de la batalla de Dano Ura" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -3026,6 +3158,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0511_1788878858.webp" 
                              alt="Kokura Hibun, el primer escrito sobre la vida de Musashi" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Miyamoto Musashi</span>
@@ -3044,6 +3178,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0443_1788878782.webp" 
                              alt="Ganryujima, lugar del duelo entre Musashi y Sasaki" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Miyamoto Musashi</span>
@@ -3062,6 +3198,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0419_1788878721.webp" 
                              alt="Castillo de Kokura" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Castillos samurais</span>
@@ -3080,6 +3218,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190906_100212_1788878672.webp" 
                              alt="Casa samurái en Kanazawa" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -3098,6 +3238,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0909_1788878348.webp" 
                              alt="Barrio samurái Nagamachi" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -3116,6 +3258,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190905_151741_1788878288.webp" 
                              alt="Castillo de Kanazawa" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Castillos samurais</span>
@@ -3134,6 +3278,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0439__2__1788878238.webp" 
                              alt="Monumento al maestro de karate Gichin Funakoshi" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Tradición Marcial</span>
@@ -3152,6 +3298,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190903_170121_1788878144.webp" 
                              alt="Buda del monte Nokogiri" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -3170,6 +3318,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0538__2__1788878050.webp" 
                              alt="Monumento al Comodoro Perry en Yokozuka" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -3188,6 +3338,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0468__2__1788877959.webp" 
                              alt="Buda de Kamakura" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -3206,6 +3358,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0363__2__1788877854.webp" 
                              alt="Dojo de Aikido en Iwama" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Tradición Marcial</span>
@@ -3224,6 +3378,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0374_1788877752.webp" 
                              alt="Puente de Iwakuni" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -3242,6 +3398,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190917_154445_1788877608.webp" 
                              alt="Castillo de Hiroshima" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Castillos samurais</span>
@@ -3260,6 +3418,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190917_171602_1788877503.webp" 
                              alt="Kyudo" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Tradición Marcial</span>
@@ -3278,6 +3438,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190916_093216_1788877390.webp" 
                              alt="Castillo de Himeji" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Castillos samurais</span>
@@ -3296,6 +3458,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0157_1788877268.webp" 
                              alt="La piedra meditativa de Miyamoto Musashi" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Miyamoto Musashi</span>
@@ -3314,6 +3478,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0133_1788877219.webp" 
                              alt="Castillo de Fukuyama" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Castillos samurais</span>
@@ -3332,6 +3498,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190920_145327_1788877093.webp" 
                              alt="Castillo de Fukuoka" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Castillos samuráis</span>
@@ -3350,6 +3518,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0529_1788876973.webp" 
                              alt="Buda de Nanzoin" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -3368,6 +3538,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0414__2__1788876878.webp" 
                              alt="Aokigahara, bosque de los suicidios" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares</span>
@@ -3386,6 +3558,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0388__2__1788876830.webp" 
                              alt="Pagoda Chureito" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -3404,6 +3578,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_20190902_082335_1788875265.webp" 
                              alt="Cima del Monte Fuji" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares</span>
@@ -3422,6 +3598,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0331__2__1788875183.webp" 
                              alt="Escuela de samuráis Nisshinkan de Aizu" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Escuela samurái</span>
@@ -3440,6 +3618,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0164_1788875062.webp" 
                              alt="Entrenando Karate en Okinawa" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Tradición marcial</span>
@@ -3458,6 +3638,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_2995_1788874890.webp" 
                              alt="Isla de Enoshima" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares  Históricos</span>
@@ -3476,6 +3658,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0533_1788874499.webp" 
                              alt="Muralla del castillo de Inuyama, el mas antiguo de Japón." 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Castillos samuráis</span>
@@ -3494,6 +3678,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_5488d7e8-4b89-4886-9663-0dbfdfd70902_1788803840.webp" 
                              alt="Castillo de Iga Ueno" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Castillos samurais</span>
@@ -3512,6 +3698,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_5978e638-8463-47fc-b61a-a8bb8c2a2073_1788803795.webp" 
                              alt="Monumento al poeta Matsuo Basho" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -3530,6 +3718,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_3459_1788803722.webp" 
                              alt="Casa de té de 350 años en la Ruta Tokaido" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -3548,6 +3738,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_IMG_3297_1788803501.webp" 
                              alt="Hakone" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -3566,6 +3758,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0377_1788803376.webp" 
                              alt="Recorriendo la Ruta Tokaido" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Lugares samurái</span>
@@ -3584,6 +3778,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_b7f83a8f-96b0-459d-9645-b1afab632be0_1788803129.webp" 
                              alt="Santuario de los 47 ronin en Ako" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Patrimonio Histórico</span>
@@ -3602,6 +3798,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_Proyecto_6_1788803024.webp" 
                              alt="Honbu Dojo de Aikido" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Tradición Marcial</span>
@@ -3620,6 +3818,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_Proyecto_5_1788802984.webp" 
                              alt="Entrenando Karate en Okinawa" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Tradición Marcial</span>
@@ -3638,6 +3838,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_Opiniones_1_1788802931.webp" 
                              alt="Nuestros libros en Japón" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Libros</span>
@@ -3656,6 +3858,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_Eventos_1_1788802878.webp" 
                              alt="Presentación de el libro &quot;El Paso de las Luciérnagas&quot;" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Libro</span>
@@ -3674,6 +3878,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/gal_DSC_0830__2__1788376986.webp" 
                              alt="Catillo de Matsumoto" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Castillos samuráis</span>
@@ -3692,6 +3898,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/WhatsApp Image 2026-06-25 at 16.10.09.webp" 
                              alt="Warabi Matsuri" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Vivencia samurái</span>
@@ -3710,6 +3918,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/WhatsApp Image 2026-06-25 at 16.10.12.webp" 
                              alt="Seki Juku, antiguo pueblo samurái" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Poblados históricos</span>
@@ -3728,6 +3938,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/WhatsApp Image 2026-06-25 at 16.10.13.webp" 
                              alt="Narai Juku" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Poblados históricos</span>
@@ -3746,6 +3958,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/WhatsApp Image 2026-06-25 at 16.10.15.webp" 
                              alt="Práctica de iaido en Naha,  Okinawa" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Tradición Marcial</span>
@@ -3764,6 +3978,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/WhatsApp Image 2026-06-25 at 16.10.29.webp" 
                              alt="Santuario de Warabi con Nagao sensei" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Templos y santuarios</span>
@@ -3782,6 +3998,8 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
                         <img src="photos/WhatsApp Image 2026-06-25 at 16.10.35.webp" 
                              alt="Torneo de Kendo en Saitama" 
                              loading="lazy" 
+                             decoding="async" 
+                             fetchpriority="low"
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <span class="gallery-tag">Tradición Marcial</span>
@@ -4163,7 +4381,7 @@ Musashi un crack y el capítulo de Okinawa me gustó mucho.</div>
         </svg>
     </button>
 
-    <!-- Motor JavaScript Principal Unificado -->
-    <script type="module" src="script.js"></script>
+    <!-- Motor JavaScript Principal Unificado (Minificado) -->
+    <script type="module" src="script.min.js"></script>
 </body>
 </html>

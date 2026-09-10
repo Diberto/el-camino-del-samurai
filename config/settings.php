@@ -4,8 +4,10 @@
  * Compatible con PHP 7.4+ y PHP 8.x
  */
 
-// Iniciar sesión segura si no está iniciada
-if (session_status() === PHP_SESSION_NONE) {
+// Iniciar sesión segura ÚNICAMENTE si es necesario (peticiones del panel admin o cookie de sesión activa)
+// Esto elimina por completo el cuello de botella de bloqueo de archivos de sesión en visitas públicas concurrentes
+$is_admin_request = (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], '/admin') !== false) || isset($_COOKIE[session_name()]);
+if ($is_admin_request && session_status() === PHP_SESSION_NONE) {
     session_set_cookie_params([
         'lifetime' => 0,           // La cookie expira al cerrar el navegador
         'path'     => '/',
@@ -33,21 +35,40 @@ if (!is_dir(BACKUPS_DIR)) {
     @mkdir(BACKUPS_DIR, 0755, true);
 }
 
-// Helper para leer archivos JSON de datos
+// Variable estática para caché en memoria de datos JSON en el ciclo de vida de la petición
+$GLOBALS['_JSON_RUNTIME_CACHE'] = [];
+
+// Helper para leer archivos JSON de datos con caché en memoria (Zero Disk I/O repetido)
 function get_json_data(string $filename, $default = []) {
+    if (isset($GLOBALS['_JSON_RUNTIME_CACHE'][$filename])) {
+        return $GLOBALS['_JSON_RUNTIME_CACHE'][$filename];
+    }
+
     $path = DATA_DIR . '/' . $filename;
     if (!file_exists($path)) {
         if (!empty($default)) {
             save_json_data($filename, $default, false);
         }
+        $GLOBALS['_JSON_RUNTIME_CACHE'][$filename] = $default;
         return $default;
     }
     $content = file_get_contents($path);
     $decoded = json_decode($content, true);
-    return is_array($decoded) ? $decoded : $default;
+    $result = is_array($decoded) ? $decoded : $default;
+    $GLOBALS['_JSON_RUNTIME_CACHE'][$filename] = $result;
+    return $result;
 }
 
-// Helper para guardar datos JSON con copia de seguridad automática
+// Helper para invalidar la caché en memoria al modificar datos
+function clear_json_runtime_cache(?string $filename = null) {
+    if ($filename === null) {
+        $GLOBALS['_JSON_RUNTIME_CACHE'] = [];
+    } else {
+        unset($GLOBALS['_JSON_RUNTIME_CACHE'][$filename]);
+    }
+}
+
+// Helper para guardar datos JSON con copia de seguridad automática e invalidación de caché
 function save_json_data(string $filename, $data, bool $create_backup = true): bool {
     $path = DATA_DIR . '/' . $filename;
     
@@ -69,7 +90,11 @@ function save_json_data(string $filename, $data, bool $create_backup = true): bo
     }
     
     $encoded = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    return file_put_contents($path, $encoded) !== false;
+    $saved = file_put_contents($path, $encoded) !== false;
+    if ($saved) {
+        clear_json_runtime_cache($filename);
+    }
+    return $saved;
 }
 
 // Cargar configuración global del sitio

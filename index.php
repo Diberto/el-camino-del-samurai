@@ -8,6 +8,34 @@ require_once __DIR__ . '/config/settings.php';
 require_once __DIR__ . '/config/analytics.php';
 track_page_view('Página Principal');
 
+// Validación de caché HTTP (ETag / 304 Not Modified) para concurrencia extrema
+$data_files = [
+    DATA_DIR . '/config.json',
+    DATA_DIR . '/libros.json',
+    DATA_DIR . '/opiniones.json',
+    DATA_DIR . '/galeria.json',
+    DATA_DIR . '/blog.json'
+];
+$last_mtime = filemtime(__FILE__);
+foreach ($data_files as $df) {
+    if (file_exists($df)) {
+        $last_mtime = max($last_mtime, filemtime($df));
+    }
+}
+$etag = '"' . md5($last_mtime . '_v3.8') . '"';
+
+header('ETag: ' . $etag);
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $last_mtime) . ' GMT');
+header('Cache-Control: no-cache, must-revalidate');
+
+if (session_status() !== PHP_SESSION_ACTIVE || empty($_SESSION['admin_logged_in'])) {
+    if ((isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']) === $etag) ||
+        (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) >= $last_mtime)) {
+        header('HTTP/1.1 304 Not Modified');
+        exit;
+    }
+}
+
 $toggles = $settings['sections_toggle'] ?? [];
 
 // Cabecera HTML y Meta Tags

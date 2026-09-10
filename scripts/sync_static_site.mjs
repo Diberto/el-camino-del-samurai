@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { transform } from 'esbuild';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -116,11 +117,11 @@ let tomoStages = libros.map((l, idx) => `                <!-- Stage Tomo ${idx +
                 <div class="book-3d-stage tomo-stage ${idx === 0 ? 'active' : ''}" id="stage-tomo-${idx + 1}" style="${idx > 0 ? 'display: none;' : ''}">
                     <div class="book-3d-card" id="book-card-${idx + 1}" data-rotated="false">
                         <div class="book-face-front">
-                            <img src="${e(l.cover_front)}" alt="${e(l.title)} - Portada" decoding="async">
+                            <img src="${e(l.cover_front)}" alt="${e(l.title)} - Portada" ${idx === 0 ? 'fetchpriority="high"' : 'loading="lazy" fetchpriority="low"'} decoding="async">
                             <div class="book-shine"></div>
                         </div>
                         <div class="book-face-back">
-                            <img src="${e(l.cover_back)}" alt="${e(l.title)} - Contraportada" decoding="async">
+                            <img src="${e(l.cover_back)}" alt="${e(l.title)} - Contraportada" loading="lazy" fetchpriority="low" decoding="async">
                             <div class="book-shine"></div>
                         </div>
                         <div class="book-face-spine spine-tomo${(idx % 2) + 1}">
@@ -142,11 +143,11 @@ let focusTomoTabs = libros.map((l, idx) => `                <button class="btn f
 let focusTomoStages = libros.map((l, idx) => `            <div class="focus-3d-stage tomo-focus-stage ${idx === 0 ? 'active' : ''}" id="focus-stage-tomo-${idx + 1}" style="${idx > 0 ? 'display: none;' : ''}">
                 <div class="focus-3d-card" id="focus-book-card-${idx + 1}" data-tomo="${idx + 1}">
                     <div class="book-face-front">
-                        <img src="${e(l.cover_front)}" alt="${e(l.title)} - Portada en Alta Definición" decoding="async">
+                        <img src="${e(l.cover_front)}" alt="${e(l.title)} - Portada en Alta Definición" loading="lazy" fetchpriority="low" decoding="async">
                         <div class="book-shine"></div>
                     </div>
                     <div class="book-face-back">
-                        <img src="${e(l.cover_back)}" alt="${e(l.title)} - Contraportada en Alta Definición" decoding="async">
+                        <img src="${e(l.cover_back)}" alt="${e(l.title)} - Contraportada en Alta Definición" loading="lazy" fetchpriority="low" decoding="async">
                         <div class="book-shine"></div>
                     </div>
                     <div class="book-face-spine spine-tomo${(idx % 2) + 1}">
@@ -646,6 +647,8 @@ let galleryCardsHtml = galeria.map((item, index) => {
                         <img src="${e(item.image)}" 
                              alt="${e(item.title)}" 
                              loading="lazy" 
+                             decoding="async" 
+                             ${!isVisible ? 'fetchpriority="low"' : ''}
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             ${item.tag ? `<span class="gallery-tag">${e(item.tag)}</span>` : ''}
@@ -965,8 +968,8 @@ const fullHtml = `<!DOCTYPE html>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Hojas de Estilo Oficiales -->
-    <link rel="stylesheet" href="styles.css">
+    <!-- Hojas de Estilo Oficiales (Minificada para máxima velocidad de carga) -->
+    <link rel="stylesheet" href="styles.min.css">
 </head>
 <body data-theme-default="day" data-reviews-filter="${e(defaultReviewFilter)}">
 
@@ -1011,8 +1014,8 @@ ${contactoHtml}
 
 ${footerHtml}
 
-    <!-- Motor JavaScript Principal Unificado -->
-    <script type="module" src="script.js"></script>
+    <!-- Motor JavaScript Principal Unificado (Minificado) -->
+    <script type="module" src="script.min.js"></script>
 </body>
 </html>
 `;
@@ -1021,10 +1024,33 @@ ${footerHtml}
 fs.writeFileSync(path.join(rootDir, 'index.html'), fullHtml, 'utf-8');
 console.log('✅ index.html sincronizado con éxito!');
 
-// Sincronizar styles.css desde css/styles.css
-fs.copyFileSync(path.join(rootDir, 'css', 'styles.css'), path.join(rootDir, 'styles.css'));
-console.log('✅ styles.css sincronizado desde css/styles.css!');
+// Sincronizar y minificar CSS
+const rawCss = fs.readFileSync(path.join(rootDir, 'css', 'styles.css'), 'utf-8');
+fs.writeFileSync(path.join(rootDir, 'styles.css'), rawCss, 'utf-8');
 
-// Sincronizar script.js desde js/main.js
-fs.copyFileSync(path.join(rootDir, 'js', 'main.js'), path.join(rootDir, 'script.js'));
-console.log('✅ script.js sincronizado desde js/main.js!');
+const minifiedCssResult = await transform(rawCss, {
+    loader: 'css',
+    minify: true,
+    legalComments: 'none'
+});
+const minCss = minifiedCssResult.code;
+
+fs.writeFileSync(path.join(rootDir, 'css', 'styles.min.css'), minCss, 'utf-8');
+fs.writeFileSync(path.join(rootDir, 'styles.min.css'), minCss, 'utf-8');
+console.log(`✅ CSS minificado: ${(rawCss.length / 1024).toFixed(1)} KB -> ${(minCss.length / 1024).toFixed(1)} KB (-${(100 - (minCss.length / rawCss.length * 100)).toFixed(1)}%)`);
+
+// Sincronizar y minificar JS
+const rawJs = fs.readFileSync(path.join(rootDir, 'js', 'main.js'), 'utf-8');
+fs.writeFileSync(path.join(rootDir, 'script.js'), rawJs, 'utf-8');
+
+const minifiedJsResult = await transform(rawJs, {
+    loader: 'js',
+    minify: true,
+    target: 'es2020',
+    legalComments: 'none'
+});
+const minJs = minifiedJsResult.code;
+
+fs.writeFileSync(path.join(rootDir, 'js', 'main.min.js'), minJs, 'utf-8');
+fs.writeFileSync(path.join(rootDir, 'script.min.js'), minJs, 'utf-8');
+console.log(`✅ JS minificado: ${(rawJs.length / 1024).toFixed(1)} KB -> ${(minJs.length / 1024).toFixed(1)} KB (-${(100 - (minJs.length / rawJs.length * 100)).toFixed(1)}%)`);

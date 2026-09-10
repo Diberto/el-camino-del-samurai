@@ -50,11 +50,11 @@ if (empty($libros_catalogo)) {
                     <div class="book-3d-stage tomo-stage <?= $idx === 0 ? 'active' : '' ?>" id="stage-tomo-<?= $idx + 1 ?>" style="<?= $idx > 0 ? 'display: none;' : '' ?>">
                         <div class="book-3d-card" id="book-card-<?= $idx + 1 ?>" data-rotated="false">
                             <div class="book-face-front">
-                                <img src="<?= e($libro['cover_front']) ?>" alt="<?= e($libro['title']) ?> - Portada" decoding="async">
+                                <img src="<?= e($libro['cover_front']) ?>" alt="<?= e($libro['title']) ?> - Portada" decoding="async" <?= $idx > 0 ? 'loading="lazy" fetchpriority="low"' : '' ?>>
                                 <div class="book-shine"></div>
                             </div>
                             <div class="book-face-back">
-                                <img src="<?= e($libro['cover_back']) ?>" alt="<?= e($libro['title']) ?> - Contraportada" decoding="async">
+                                <img src="<?= e($libro['cover_back']) ?>" alt="<?= e($libro['title']) ?> - Contraportada" decoding="async" loading="lazy" <?= $idx > 0 ? 'fetchpriority="low"' : '' ?>>
                                 <div class="book-shine"></div>
                             </div>
                             <div class="book-face-spine spine-tomo<?= ($idx % 2) + 1 ?>">
@@ -162,11 +162,11 @@ if (empty($libros_catalogo)) {
                 <div class="focus-3d-stage tomo-focus-stage <?= $idx === 0 ? 'active' : '' ?>" id="focus-stage-tomo-<?= $idx + 1 ?>" style="<?= $idx > 0 ? 'display: none;' : '' ?>">
                     <div class="focus-3d-card" id="focus-book-card-<?= $idx + 1 ?>" data-tomo="<?= $idx + 1 ?>">
                         <div class="book-face-front">
-                            <img src="<?= e($libro['cover_front']) ?>" alt="<?= e($libro['title']) ?> - Portada en Alta Definición" decoding="async">
+                            <img src="<?= e($libro['cover_front']) ?>" alt="<?= e($libro['title']) ?> - Portada en Alta Definición" decoding="async" loading="lazy" fetchpriority="low">
                             <div class="book-shine"></div>
                         </div>
                         <div class="book-face-back">
-                            <img src="<?= e($libro['cover_back']) ?>" alt="<?= e($libro['title']) ?> - Contraportada en Alta Definición" decoding="async">
+                            <img src="<?= e($libro['cover_back']) ?>" alt="<?= e($libro['title']) ?> - Contraportada en Alta Definición" decoding="async" loading="lazy" fetchpriority="low">
                             <div class="book-shine"></div>
                         </div>
                         <div class="book-face-spine spine-tomo<?= ($idx % 2) + 1 ?>">

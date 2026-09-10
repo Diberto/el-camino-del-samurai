@@ -100,7 +100,11 @@ $social = $settings['social'] ?? [];
         </svg>
     </button>
 
-    <!-- JS Link -->
-    <script src="js/main.js?v=3.7"></script>
+    <?php
+    $js_path = file_exists(__DIR__ . '/../js/main.min.js') ? 'js/main.min.js' : 'js/main.js';
+    $js_version = file_exists(__DIR__ . '/../' . $js_path) ? filemtime(__DIR__ . '/../' . $js_path) : '3.8';
+    ?>
+    <!-- Motor JavaScript Principal Unificado y Optimizado -->
+    <script src="<?= $js_path ?>?v=<?= $js_version ?>" defer></script>
 </body>
 </html>

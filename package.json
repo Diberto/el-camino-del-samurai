@@ -8,7 +8,8 @@
     "start": "node server.js",
     "dev": "vite",
     "pb": "node scripts/start-pocketbase.js",
-    "build": "vite build",
+    "sync": "node scripts/sync_static_site.mjs",
+    "build": "node scripts/sync_static_site.mjs && vite build",
     "preview": "vite preview"
   },
   "devDependencies": {

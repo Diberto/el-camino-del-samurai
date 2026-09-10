@@ -42,8 +42,12 @@ $page_desc = $custom_desc ?? $settings['site_description'];
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Hojas de Estilo -->
-    <link rel="stylesheet" href="css/styles.css?v=3.7">
+    <?php
+    $css_path = file_exists(__DIR__ . '/../css/styles.min.css') ? 'css/styles.min.css' : 'css/styles.css';
+    $css_version = file_exists(__DIR__ . '/../' . $css_path) ? filemtime(__DIR__ . '/../' . $css_path) : '3.8';
+    ?>
+    <!-- Hojas de Estilo Optimizadas -->
+    <link rel="stylesheet" href="<?= $css_path ?>?v=<?= $css_version ?>">
 </head>
 <body data-theme-default="<?= e($settings['theme_default'] ?? 'day') ?>" data-reviews-filter="<?= e($settings['reviews_default_filter'] ?? 'text') ?>">
 

@@ -51,6 +51,8 @@ $total_fotos = count($galeria);
                         <img src="<?= e($item['image']) ?>" 
                              alt="<?= e($item['title']) ?>" 
                              loading="lazy" 
+                             decoding="async"
+                             <?= !$is_visible ? 'fetchpriority="low"' : '' ?>
                              onerror="this.src='photos/castillo_sengoku.webp'">
                         <div class="gallery-overlay">
                             <?php if (!empty($item['tag'])): ?>

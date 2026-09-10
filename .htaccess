@@ -2,6 +2,12 @@
 # EL CAMINO DEL SAMURÁI - APACHE CONFIGURATION (.htaccess)
 # ==========================================================================
 
+# 0. Índice por defecto y Keep-Alive
+DirectoryIndex index.php index.html
+<IfModule mod_headers.c>
+    Header set Connection "keep-alive"
+</IfModule>
+
 # 1. Reescribir URLs amigables
 <IfModule mod_rewrite.c>
     RewriteEngine On
@@ -15,12 +21,15 @@
     RewriteRule ^blog/([a-zA-Z0-9-]+)/?$ blog.php?slug=$1 [L,QSA]
 </IfModule>
 
-# 2. Compresión Gzip para máxima velocidad
+# 2. Compresión Ultra Rápida: Brotli preferente con fallback a Gzip
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml image/svg+xml
+</IfModule>
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml image/svg+xml
 </IfModule>
 
-# 3. Caché de recursos estáticos en el navegador
+# 3. Políticas de Caché Agresivas en Navegador (HTTP Caching)
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresByType image/webp "access plus 1 year"
@@ -30,6 +39,19 @@
     ExpiresByType text/css "access plus 1 month"
     ExpiresByType application/javascript "access plus 1 month"
     ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# Cabeceras Cache-Control explícitas e inmutabilidad para recursos estáticos
+<IfModule mod_headers.c>
+    <FilesMatch "\.(webp|png|jpe?g|svg|ico|woff2?)$">
+        Header set Cache-Control "max-age=31536000, public, immutable"
+    </FilesMatch>
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "max-age=2592000, public"
+    </FilesMatch>
+    <FilesMatch "\.(html|php)$">
+        Header set Cache-Control "no-cache, must-revalidate"
+    </FilesMatch>
 </IfModule>
 
 # 4. Encabezados de Seguridad

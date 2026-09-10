@@ -5,11 +5,8 @@
  */
 
 function track_page_view(string $page_name = 'Inicio') {
-    // No contar visitas de administradores logueados para no falsear estadísticas
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-    if (!empty($_SESSION['admin_logged_in'])) {
+    // Si la sesión ya está activa y es un admin logueado, no contar para no falsear métricas
+    if (session_status() === PHP_SESSION_ACTIVE && !empty($_SESSION['admin_logged_in'])) {
         return;
     }
 
@@ -20,6 +17,14 @@ function track_page_view(string $page_name = 'Inicio') {
         return;
     }
 
+    // Ejecutar el procesamiento de analíticas en el hook de cierre (shutdown)
+    // Esto garantiza que el HTML se envíe de inmediato al navegador con TTFB mínimo
+    register_shutdown_function(function() use ($page_name, $user_agent) {
+        _execute_analytics_tracking($page_name, $user_agent);
+    });
+}
+
+function _execute_analytics_tracking(string $page_name, string $user_agent) {
     $analytics_file = ROOT_DIR . '/data/analytics.json';
     $data = [
         'total_views' => 0,
@@ -30,10 +35,12 @@ function track_page_view(string $page_name = 'Inicio') {
     ];
 
     if (file_exists($analytics_file)) {
-        $content = file_get_contents($analytics_file);
-        $decoded = json_decode($content, true);
-        if (is_array($decoded)) {
-            $data = array_merge($data, $decoded);
+        $content = @file_get_contents($analytics_file);
+        if ($content) {
+            $decoded = json_decode($content, true);
+            if (is_array($decoded)) {
+                $data = array_merge($data, $decoded);
+            }
         }
     }
 
@@ -96,7 +103,18 @@ function track_page_view(string $page_name = 'Inicio') {
     }
     $data['referrers'][$ref_source] = ($data['referrers'][$ref_source] ?? 0) + 1;
 
-    file_put_contents($analytics_file, json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), LOCK_EX);
+    // Escritura con bloqueo no bloqueante (LOCK_EX | LOCK_NB) para no detener concurrentes
+    $fp = @fopen($analytics_file, 'c+');
+    if ($fp) {
+        if (@flock($fp, LOCK_EX | LOCK_NB)) {
+            ftruncate($fp, 0);
+            rewind($fp);
+            fwrite($fp, json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+            fflush($fp);
+            flock($fp, LOCK_UN);
+        }
+        fclose($fp);
+    }
 }
 
 function get_analytics_summary() {
