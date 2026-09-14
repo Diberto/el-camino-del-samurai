@@ -124,10 +124,14 @@ let tomoStages = libros.map((l, idx) => `                <!-- Stage Tomo ${idx +
                             <img src="${e(l.cover_back)}" alt="${e(l.title)} - Contraportada" loading="lazy" fetchpriority="low" decoding="async">
                             <div class="book-shine"></div>
                         </div>
-                        <div class="book-face-spine spine-tomo${(idx % 2) + 1}">
-                            <span class="spine-kanji">侍</span>
-                            <span class="spine-title">${e(l.title.toUpperCase())}</span>
-                            <span class="spine-author">JORGE ORPIANESI</span>
+                        <div class="book-face-spine spine-tomo${(idx % 2) + 1}${l.cover_spine ? ' has-spine-image' : ''}">
+                            ${l.cover_spine ? `<img src="${e(l.cover_spine)}" alt="${e(l.title)} - Lomo" class="spine-img" decoding="async" ${idx > 0 ? 'loading="lazy" fetchpriority="low"' : ''}>` : ''}
+                            <div class="spine-fallback-content">
+                                <span class="spine-kanji">侍</span>
+                                <span class="spine-title">${e(l.title.toUpperCase())}</span>
+                                <span class="spine-author">JORGE ORPIANESI</span>
+                            </div>
+                            <div class="book-shine"></div>
                         </div>
                         <div class="book-face-pages"></div>
                         <div class="book-face-top"></div>
@@ -150,10 +154,14 @@ let focusTomoStages = libros.map((l, idx) => `            <div class="focus-3d-s
                         <img src="${e(l.cover_back)}" alt="${e(l.title)} - Contraportada en Alta Definición" loading="lazy" fetchpriority="low" decoding="async">
                         <div class="book-shine"></div>
                     </div>
-                    <div class="book-face-spine spine-tomo${(idx % 2) + 1}">
-                        <span class="spine-kanji">侍</span>
-                        <span class="spine-title">${e(l.title.toUpperCase())}</span>
-                        <span class="spine-author">JORGE ORPIANESI</span>
+                    <div class="book-face-spine spine-tomo${(idx % 2) + 1}${l.cover_spine ? ' has-spine-image' : ''}">
+                        ${l.cover_spine ? `<img src="${e(l.cover_spine)}" alt="${e(l.title)} - Lomo en Alta Definición" class="spine-img" decoding="async" loading="lazy" fetchpriority="low">` : ''}
+                        <div class="spine-fallback-content">
+                            <span class="spine-kanji">侍</span>
+                            <span class="spine-title">${e(l.title.toUpperCase())}</span>
+                            <span class="spine-author">JORGE ORPIANESI</span>
+                        </div>
+                        <div class="book-shine"></div>
                     </div>
                     <div class="book-face-pages"></div>
                     <div class="book-face-top"></div>

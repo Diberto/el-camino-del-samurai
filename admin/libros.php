@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_libro'])) {
     $buy_url = trim($_POST['buy_url'] ?? '');
     $cover_front = trim($_POST['cover_front'] ?? 'assets/book1_front.webp');
     $cover_back = trim($_POST['cover_back'] ?? 'assets/book1_back.webp');
+    $cover_spine = trim($_POST['cover_spine'] ?? '');
 
     require_once __DIR__ . '/../config/media_helper.php';
 
@@ -42,6 +43,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_libro'])) {
             $saved_front = optimize_and_save_image($_FILES['cover_front_file'], 'book_front', 2400, 92);
             if ($saved_front) {
                 $cover_front = is_array($saved_front) ? ($saved_front['path'] ?? $cover_front) : $saved_front;
+            }
+        }
+    }
+
+    // Procesar subida de lomo si se adjuntó archivo
+    if (isset($_FILES['cover_spine_file']) && !empty($_FILES['cover_spine_file']['name'])) {
+        if ($_FILES['cover_spine_file']['error'] === UPLOAD_ERR_OK) {
+            $saved_spine = optimize_and_save_image($_FILES['cover_spine_file'], 'book_spine', 1200, 92);
+            if ($saved_spine) {
+                $cover_spine = is_array($saved_spine) ? ($saved_spine['path'] ?? $cover_spine) : $saved_spine;
             }
         }
     }
@@ -67,7 +78,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_libro'])) {
         'desc' => $desc,
         'buy_url' => $buy_url,
         'cover_front' => $cover_front,
-        'cover_back' => $cover_back
+        'cover_back' => $cover_back,
+        'cover_spine' => $cover_spine
     ];
 
     $found = false;
@@ -187,6 +199,7 @@ if ($action === 'edit' && !empty($edit_id)) {
                                 <thead>
                                     <tr>
                                         <th>Tapa Frontal</th>
+                                        <th>Lomo</th>
                                         <th>Contratapa</th>
                                         <th>Título y Subtítulo</th>
                                         <th>Etiqueta Pestaña</th>
@@ -198,6 +211,13 @@ if ($action === 'edit' && !empty($edit_id)) {
                                         <tr>
                                             <td style="width: 80px;">
                                                 <img src="../<?= e($l['cover_front']) ?>" alt="Tapa" style="width: 60px; height: 85px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border-color);" onerror="this.src='../assets/book1_front.webp'">
+                                            </td>
+                                            <td style="width: 50px; text-align: center;">
+                                                <?php if (!empty($l['cover_spine'])): ?>
+                                                    <img src="../<?= e($l['cover_spine']) ?>" alt="Lomo" style="width: 25px; height: 85px; object-fit: cover; border-radius: 2px; border: 1px solid var(--border-color); display: inline-block;" onerror="this.style.display='none'">
+                                                <?php else: ?>
+                                                    <div style="width: 25px; height: 85px; background: #111219; border: 1px solid rgba(255,255,255,0.1); border-radius: 2px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--accent-gold); writing-mode: vertical-rl;" title="Textura 3D por defecto">侍</div>
+                                                <?php endif; ?>
                                             </td>
                                             <td style="width: 80px;">
                                                 <img src="../<?= e($l['cover_back']) ?>" alt="Contratapa" style="width: 60px; height: 85px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border-color);" onerror="this.src='../assets/book1_back.webp'">
@@ -276,23 +296,43 @@ if ($action === 'edit' && !empty($edit_id)) {
                                 <input type="url" id="buy_url" name="buy_url" value="<?= e($current_libro['buy_url'] ?? '') ?>" placeholder="https://...">
                             </div>
 
-                            <div class="form-row">
+                            <div class="form-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem;">
+                                <!-- Tapa Frontal -->
                                 <div class="form-group">
                                     <label for="cover_front">Tapa Frontal (Ruta o Subir archivo)</label>
                                     <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
                                         <input type="text" id="cover_front" name="cover_front" value="<?= e($current_libro['cover_front'] ?? 'assets/book1_front.webp') ?>" style="flex: 1;">
-                                        <button type="button" class="btn btn-admin-secondary" id="btn-pick-cover-front" style="white-space: nowrap;">📁 Elegir de Medios</button>
+                                        <button type="button" class="btn btn-admin-secondary" id="btn-pick-cover-front" style="white-space: nowrap;">📁 Medios</button>
                                     </div>
                                     <input type="file" name="cover_front_file" id="cover_front_file" accept="image/*" style="margin-top: 4px;">
                                     <div style="margin-top: 8px;">
                                         <img id="preview-cover-front" src="../<?= e($current_libro['cover_front'] ?? 'assets/book1_front.webp') ?>" alt="Vista previa Tapa" style="height: 110px; border-radius: 4px; border: 1px solid var(--border-color); object-fit: contain; background: rgba(0,0,0,0.3);" onerror="this.src='../assets/book1_front.webp'">
                                     </div>
                                 </div>
+
+                                <!-- Lomo del Libro -->
+                                <div class="form-group">
+                                    <label for="cover_spine">Lomo del Libro (Opcional - Imagen)</label>
+                                    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                        <input type="text" id="cover_spine" name="cover_spine" value="<?= e($current_libro['cover_spine'] ?? '') ?>" placeholder="Vacío = textura lista 3D" style="flex: 1;">
+                                        <button type="button" class="btn btn-admin-secondary" id="btn-pick-cover-spine" style="white-space: nowrap;">📁 Medios</button>
+                                    </div>
+                                    <input type="file" name="cover_spine_file" id="cover_spine_file" accept="image/*" style="margin-top: 4px;">
+                                    <div style="margin-top: 8px; display: flex; align-items: center; gap: 0.75rem;">
+                                        <img id="preview-cover-spine" src="<?= !empty($current_libro['cover_spine']) ? '../' . e($current_libro['cover_spine']) : '' ?>" alt="Vista previa Lomo" style="height: 110px; width: 35px; border-radius: 3px; border: 1px solid var(--border-color); object-fit: cover; background: rgba(0,0,0,0.3); <?= empty($current_libro['cover_spine']) ? 'display: none;' : '' ?>">
+                                        <div id="preview-cover-spine-placeholder" style="display: <?= empty($current_libro['cover_spine']) ? 'flex' : 'none' ?>; flex-direction: column; justify-content: center; height: 110px; padding: 0.5rem 0.75rem; border: 1px dashed var(--border-color); border-radius: 4px; background: rgba(255,255,255,0.02); font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
+                                            <span>✨ <strong>Textura 3D Estándar</strong></span>
+                                            <span style="font-size: 0.72rem;">Usa el diseño del borde con kanji y título automático.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Contratapa -->
                                 <div class="form-group">
                                     <label for="cover_back">Contratapa (Ruta o Subir archivo)</label>
                                     <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
                                         <input type="text" id="cover_back" name="cover_back" value="<?= e($current_libro['cover_back'] ?? 'assets/book1_back.webp') ?>" style="flex: 1;">
-                                        <button type="button" class="btn btn-admin-secondary" id="btn-pick-cover-back" style="white-space: nowrap;">📁 Elegir de Medios</button>
+                                        <button type="button" class="btn btn-admin-secondary" id="btn-pick-cover-back" style="white-space: nowrap;">📁 Medios</button>
                                     </div>
                                     <input type="file" name="cover_back_file" id="cover_back_file" accept="image/*" style="margin-top: 4px;">
                                     <div style="margin-top: 8px;">
@@ -340,6 +380,48 @@ if ($action === 'edit' && !empty($edit_id)) {
             fileFront.addEventListener('change', (e) => {
                 if (e.target.files && e.target.files[0]) {
                     prevFront.src = URL.createObjectURL(e.target.files[0]);
+                }
+            });
+        }
+
+        // Selector de lomo desde medios
+        const btnSpine = document.getElementById('btn-pick-cover-spine');
+        const inputSpine = document.getElementById('cover_spine');
+        const fileSpine = document.getElementById('cover_spine_file');
+        const prevSpine = document.getElementById('preview-cover-spine');
+        const placeholderSpine = document.getElementById('preview-cover-spine-placeholder');
+
+        if (btnSpine && inputSpine) {
+            btnSpine.addEventListener('click', () => {
+                openMediaPicker((path) => {
+                    inputSpine.value = path;
+                    if (prevSpine) {
+                        prevSpine.src = '../' + path;
+                        prevSpine.style.display = 'inline-block';
+                    }
+                    if (placeholderSpine) placeholderSpine.style.display = 'none';
+                });
+            });
+        }
+        if (inputSpine && prevSpine) {
+            inputSpine.addEventListener('input', () => {
+                const val = inputSpine.value.trim();
+                if (val) {
+                    prevSpine.src = (val.startsWith('http') || val.startsWith('/')) ? val : '../' + val;
+                    prevSpine.style.display = 'inline-block';
+                    if (placeholderSpine) placeholderSpine.style.display = 'none';
+                } else {
+                    prevSpine.style.display = 'none';
+                    if (placeholderSpine) placeholderSpine.style.display = 'flex';
+                }
+            });
+        }
+        if (fileSpine && prevSpine) {
+            fileSpine.addEventListener('change', (e) => {
+                if (e.target.files && e.target.files[0]) {
+                    prevSpine.src = URL.createObjectURL(e.target.files[0]);
+                    prevSpine.style.display = 'inline-block';
+                    if (placeholderSpine) placeholderSpine.style.display = 'none';
                 }
             });
         }

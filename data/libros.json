@@ -8,6 +8,7 @@
         "format": "Formato Libro & Ebook",
         "cover_front": "assets/book1_front.webp",
         "cover_back": "assets/book1_back.webp",
+        "cover_spine": "",
         "pages": "320 páginas",
         "desc": "Un recorrido geográfico por los lugares más famosos relacionados con los samuráis siguiendo los pasos del famoso duelista Miyamoto Musashi mientras el lector descubre las maravillas de Japón.",
         "buy_url": "https://www.budokanweb.com/tienda/libros/la-ruta-del-samurai-formato-libro/"
@@ -21,6 +22,7 @@
         "format": "Formato Libro & Ebook",
         "cover_front": "assets/book2_front.webp",
         "cover_back": "assets/book2_back.webp",
+        "cover_spine": "",
         "pages": "380 páginas",
         "desc": "La segunda expedición del autor por tierras japonesas buscando los antiguos caminos que recorrían los samuráis durante el período Edo. Jorge Orpianesi emula los recorridos hechos por el artista Utagawa Hiroshige en el siglo XIX a través de la ruta Tokaido uniendo la antigua Edo con Kioto y el regreso por la ruta Nakasendo mientras hace una comparativa entre las imágenes que va tomando en su camino con las pinturas que realizó Hiroshige en la época de los samuráis.",
         "buy_url": "https://www.budokanweb.com/tienda/destacados/el-paso-de-las-luciernagas-la-ruta-del-samurai-2/"
@@ -36,6 +38,7 @@
         "desc": "A geographical journey through the most famous places related to the samurai, following in the footsteps of the famous duelist Miyamoto Musashi, while the reader discovers the wonders of Japan.",
         "buy_url": "https://www.amazon.com/stores/Jorge-Orpianesi/author/B0BWNTWK7B?language=es&ref=sr_ntt_srch_lnk_1&qid=1788188062&sr=8-1&shoppingPortalEnabled=true&ccs_id=1e181bf2-3fdb-4243-bc2f-6f12ec7a3ca9",
         "cover_front": "assets/book3_front.webp",
-        "cover_back": "assets/book3_back.webp"
+        "cover_back": "assets/book3_back.webp",
+        "cover_spine": ""
     }
 ]

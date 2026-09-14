@@ -1358,6 +1358,56 @@ body.theme-night .tomo-buttons-group .tomo-tab:not(.active) {
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+    overflow: hidden;
+}
+
+/* Texturas listas que acompañan el diseño del borde del libro */
+.spine-tomo1 {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.75) 0%, rgba(216, 17, 36, 0.18) 35%, rgba(0, 0, 0, 0.45) 65%, rgba(0, 0, 0, 0.8) 100%), #14161f;
+    border-left: 1px solid rgba(216, 17, 36, 0.35);
+    border-right: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.spine-tomo2 {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.75) 0%, rgba(56, 120, 200, 0.22) 35%, rgba(0, 0, 0, 0.45) 65%, rgba(0, 0, 0, 0.8) 100%), #0e1524;
+    border-left: 1px solid rgba(70, 140, 230, 0.35);
+    border-right: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+/* Lomo con imagen personalizada */
+.book-face-spine.has-spine-image {
+    padding: 0 !important;
+    background: #07080a;
+}
+
+.book-face-spine.has-spine-image .spine-fallback-content {
+    display: none !important;
+}
+
+.spine-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    z-index: 1;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: high-quality;
+}
+
+.spine-fallback-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    padding: 1.8rem 0.25rem;
 }
 
 .spine-kanji {
@@ -1709,6 +1759,15 @@ body.theme-night .tomo-buttons-group .tomo-tab:not(.active) {
     color: #ffffff;
     box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.85);
     z-index: 5;
+    overflow: hidden;
+}
+
+.focus-3d-card .book-face-spine.has-spine-image {
+    padding: 0 !important;
+}
+
+.focus-3d-card .book-face-spine .spine-fallback-content {
+    padding: 2.2rem 0.3rem;
 }
 
 .focus-3d-card .book-face-pages {

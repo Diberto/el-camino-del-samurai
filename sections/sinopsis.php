@@ -57,10 +57,16 @@ if (empty($libros_catalogo)) {
                                 <img src="<?= e($libro['cover_back']) ?>" alt="<?= e($libro['title']) ?> - Contraportada" decoding="async" loading="lazy" <?= $idx > 0 ? 'fetchpriority="low"' : '' ?>>
                                 <div class="book-shine"></div>
                             </div>
-                            <div class="book-face-spine spine-tomo<?= ($idx % 2) + 1 ?>">
-                                <span class="spine-kanji">侍</span>
-                                <span class="spine-title"><?= e(strtoupper($libro['title'])) ?></span>
-                                <span class="spine-author">JORGE ORPIANESI</span>
+                            <div class="book-face-spine spine-tomo<?= ($idx % 2) + 1 ?><?= !empty($libro['cover_spine']) ? ' has-spine-image' : '' ?>">
+                                <?php if (!empty($libro['cover_spine'])): ?>
+                                    <img src="<?= e($libro['cover_spine']) ?>" alt="<?= e($libro['title']) ?> - Lomo" class="spine-img" decoding="async" <?= $idx > 0 ? 'loading="lazy" fetchpriority="low"' : '' ?>>
+                                <?php endif; ?>
+                                <div class="spine-fallback-content">
+                                    <span class="spine-kanji">侍</span>
+                                    <span class="spine-title"><?= e(strtoupper($libro['title'])) ?></span>
+                                    <span class="spine-author">JORGE ORPIANESI</span>
+                                </div>
+                                <div class="book-shine"></div>
                             </div>
                             <div class="book-face-pages"></div>
                             <div class="book-face-top"></div>
@@ -169,10 +175,16 @@ if (empty($libros_catalogo)) {
                             <img src="<?= e($libro['cover_back']) ?>" alt="<?= e($libro['title']) ?> - Contraportada en Alta Definición" decoding="async" loading="lazy" fetchpriority="low">
                             <div class="book-shine"></div>
                         </div>
-                        <div class="book-face-spine spine-tomo<?= ($idx % 2) + 1 ?>">
-                            <span class="spine-kanji">侍</span>
-                            <span class="spine-title"><?= e(strtoupper($libro['title'])) ?></span>
-                            <span class="spine-author">JORGE ORPIANESI</span>
+                        <div class="book-face-spine spine-tomo<?= ($idx % 2) + 1 ?><?= !empty($libro['cover_spine']) ? ' has-spine-image' : '' ?>">
+                            <?php if (!empty($libro['cover_spine'])): ?>
+                                <img src="<?= e($libro['cover_spine']) ?>" alt="<?= e($libro['title']) ?> - Lomo en Alta Definición" class="spine-img" decoding="async" loading="lazy" fetchpriority="low">
+                            <?php endif; ?>
+                            <div class="spine-fallback-content">
+                                <span class="spine-kanji">侍</span>
+                                <span class="spine-title"><?= e(strtoupper($libro['title'])) ?></span>
+                                <span class="spine-author">JORGE ORPIANESI</span>
+                            </div>
+                            <div class="book-shine"></div>
                         </div>
                         <div class="book-face-pages"></div>
                         <div class="book-face-top"></div>
