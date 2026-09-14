@@ -10,6 +10,12 @@ $msg = '';
 $action = $_GET['action'] ?? 'list';
 $edit_id = $_GET['id'] ?? '';
 
+if (isset($_GET['msg'])) {
+    if ($_GET['msg'] === 'saved') $msg = 'Libro guardado exitosamente.';
+    if ($_GET['msg'] === 'duplicated') $msg = 'Libro duplicado con éxito.';
+    if ($_GET['msg'] === 'deleted') $msg = 'Libro eliminado con éxito.';
+}
+
 // Guardar / Crear / Editar Libro
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_libro'])) {
     $id = trim($_POST['id'] ?? '');
@@ -28,21 +34,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_libro'])) {
     $cover_front = trim($_POST['cover_front'] ?? 'assets/book1_front.webp');
     $cover_back = trim($_POST['cover_back'] ?? 'assets/book1_back.webp');
 
+    require_once __DIR__ . '/../config/media_helper.php';
+
     // Procesar subida de tapa frontal si se adjuntó archivo
-    if (!empty($_FILES['cover_front_file']['name'])) {
-        require_once __DIR__ . '/../config/media_helper.php';
-        $res = optimize_and_save_image($_FILES['cover_front_file'], 'book_front');
-        if ($res['success']) {
-            $cover_front = $res['path'];
+    if (isset($_FILES['cover_front_file']) && !empty($_FILES['cover_front_file']['name'])) {
+        if ($_FILES['cover_front_file']['error'] === UPLOAD_ERR_OK) {
+            $saved_front = optimize_and_save_image($_FILES['cover_front_file'], 'book_front', 2400, 92);
+            if ($saved_front) {
+                $cover_front = is_array($saved_front) ? ($saved_front['path'] ?? $cover_front) : $saved_front;
+            }
         }
     }
 
     // Procesar subida de contratapa si se adjuntó archivo
-    if (!empty($_FILES['cover_back_file']['name'])) {
-        require_once __DIR__ . '/../config/media_helper.php';
-        $res = optimize_and_save_image($_FILES['cover_back_file'], 'book_back');
-        if ($res['success']) {
-            $cover_back = $res['path'];
+    if (isset($_FILES['cover_back_file']) && !empty($_FILES['cover_back_file']['name'])) {
+        if ($_FILES['cover_back_file']['error'] === UPLOAD_ERR_OK) {
+            $saved_back = optimize_and_save_image($_FILES['cover_back_file'], 'book_back', 2400, 92);
+            if ($saved_back) {
+                $cover_back = is_array($saved_back) ? ($saved_back['path'] ?? $cover_back) : $saved_back;
+            }
         }
     }
 
@@ -73,8 +83,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_libro'])) {
     }
 
     save_json_data('libros.json', $libros);
-    $msg = 'Libro guardado exitosamente.';
-    $action = 'list';
+    header('Location: libros.php?msg=saved');
+    exit;
 }
 
 // Duplicar Libro
@@ -87,8 +97,8 @@ if ($action === 'duplicate' && !empty($edit_id)) {
             $dup['tab_label'] = $l['tab_label'] . ' (Copia)';
             $libros[] = $dup;
             save_json_data('libros.json', $libros);
-            $msg = 'Libro duplicado con éxito.';
-            break;
+            header('Location: libros.php?msg=duplicated');
+            exit;
         }
     }
     $action = 'list';
@@ -100,8 +110,8 @@ if ($action === 'delete' && !empty($edit_id)) {
         return $l['id'] !== $edit_id;
     }));
     save_json_data('libros.json', $libros);
-    $msg = 'Libro eliminado con éxito.';
-    $action = 'list';
+    header('Location: libros.php?msg=deleted');
+    exit;
 }
 
 $current_libro = null;
@@ -269,23 +279,25 @@ if ($action === 'edit' && !empty($edit_id)) {
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="cover_front">Tapa Frontal (Ruta o Subir archivo)</label>
-                                    <input type="text" id="cover_front" name="cover_front" value="<?= e($current_libro['cover_front'] ?? 'assets/book1_front.webp') ?>">
-                                    <input type="file" name="cover_front_file" accept="image/*" style="margin-top: 6px;">
-                                    <?php if (!empty($current_libro['cover_front'])): ?>
-                                        <div style="margin-top: 8px;">
-                                            <img src="../<?= e($current_libro['cover_front']) ?>" alt="Vista previa Tapa" style="height: 100px; border-radius: 4px; border: 1px solid var(--border-color);">
-                                        </div>
-                                    <?php endif; ?>
+                                    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                        <input type="text" id="cover_front" name="cover_front" value="<?= e($current_libro['cover_front'] ?? 'assets/book1_front.webp') ?>" style="flex: 1;">
+                                        <button type="button" class="btn btn-admin-secondary" id="btn-pick-cover-front" style="white-space: nowrap;">📁 Elegir de Medios</button>
+                                    </div>
+                                    <input type="file" name="cover_front_file" id="cover_front_file" accept="image/*" style="margin-top: 4px;">
+                                    <div style="margin-top: 8px;">
+                                        <img id="preview-cover-front" src="../<?= e($current_libro['cover_front'] ?? 'assets/book1_front.webp') ?>" alt="Vista previa Tapa" style="height: 110px; border-radius: 4px; border: 1px solid var(--border-color); object-fit: contain; background: rgba(0,0,0,0.3);" onerror="this.src='../assets/book1_front.webp'">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="cover_back">Contratapa (Ruta o Subir archivo)</label>
-                                    <input type="text" id="cover_back" name="cover_back" value="<?= e($current_libro['cover_back'] ?? 'assets/book1_back.webp') ?>">
-                                    <input type="file" name="cover_back_file" accept="image/*" style="margin-top: 6px;">
-                                    <?php if (!empty($current_libro['cover_back'])): ?>
-                                        <div style="margin-top: 8px;">
-                                            <img src="../<?= e($current_libro['cover_back']) ?>" alt="Vista previa Contratapa" style="height: 100px; border-radius: 4px; border: 1px solid var(--border-color);">
-                                        </div>
-                                    <?php endif; ?>
+                                    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                        <input type="text" id="cover_back" name="cover_back" value="<?= e($current_libro['cover_back'] ?? 'assets/book1_back.webp') ?>" style="flex: 1;">
+                                        <button type="button" class="btn btn-admin-secondary" id="btn-pick-cover-back" style="white-space: nowrap;">📁 Elegir de Medios</button>
+                                    </div>
+                                    <input type="file" name="cover_back_file" id="cover_back_file" accept="image/*" style="margin-top: 4px;">
+                                    <div style="margin-top: 8px;">
+                                        <img id="preview-cover-back" src="../<?= e($current_libro['cover_back'] ?? 'assets/book1_back.webp') ?>" alt="Vista previa Contratapa" style="height: 110px; border-radius: 4px; border: 1px solid var(--border-color); object-fit: contain; background: rgba(0,0,0,0.3);" onerror="this.src='../assets/book1_back.webp'">
+                                    </div>
                                 </div>
                             </div>
 
@@ -299,5 +311,67 @@ if ($action === 'edit' && !empty($edit_id)) {
             </div>
         </main>
     </div>
+
+    <?php include __DIR__ . '/media_modal.php'; ?>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Selector de tapa frontal desde medios
+        const btnFront = document.getElementById('btn-pick-cover-front');
+        const inputFront = document.getElementById('cover_front');
+        const fileFront = document.getElementById('cover_front_file');
+        const prevFront = document.getElementById('preview-cover-front');
+
+        if (btnFront && inputFront) {
+            btnFront.addEventListener('click', () => {
+                openMediaPicker((path) => {
+                    inputFront.value = path;
+                    if (prevFront) prevFront.src = '../' + path;
+                });
+            });
+        }
+        if (inputFront && prevFront) {
+            inputFront.addEventListener('input', () => {
+                const val = inputFront.value.trim();
+                prevFront.src = (val.startsWith('http') || val.startsWith('/')) ? val : '../' + val;
+            });
+        }
+        if (fileFront && prevFront) {
+            fileFront.addEventListener('change', (e) => {
+                if (e.target.files && e.target.files[0]) {
+                    prevFront.src = URL.createObjectURL(e.target.files[0]);
+                }
+            });
+        }
+
+        // Selector de contratapa desde medios
+        const btnBack = document.getElementById('btn-pick-cover-back');
+        const inputBack = document.getElementById('cover_back');
+        const fileBack = document.getElementById('cover_back_file');
+        const prevBack = document.getElementById('preview-cover-back');
+
+        if (btnBack && inputBack) {
+            btnBack.addEventListener('click', () => {
+                openMediaPicker((path) => {
+                    inputBack.value = path;
+                    if (prevBack) prevBack.src = '../' + path;
+                });
+            });
+        }
+        if (inputBack && prevBack) {
+            inputBack.addEventListener('input', () => {
+                const val = inputBack.value.trim();
+                prevBack.src = (val.startsWith('http') || val.startsWith('/')) ? val : '../' + val;
+            });
+        }
+        if (fileBack && prevBack) {
+            fileBack.addEventListener('change', (e) => {
+                if (e.target.files && e.target.files[0]) {
+                    prevBack.src = URL.createObjectURL(e.target.files[0]);
+                }
+            });
+        }
+    });
+    </script>
 </body>
 </html>

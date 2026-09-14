@@ -18,6 +18,7 @@ if (!defined('ROOT_DIR')) {
  * @return string|null La ruta relativa del archivo guardado (ej: 'photos/img_123.webp') o null si falló.
  */
 function optimize_and_save_image(array $file_input, string $prefix = 'media', int $max_width = 1920, int $quality = 85): ?string {
+    @ini_set('memory_limit', '256M');
     if (!isset($file_input['tmp_name']) || empty($file_input['tmp_name']) || $file_input['error'] !== UPLOAD_ERR_OK) {
         return null;
     }
