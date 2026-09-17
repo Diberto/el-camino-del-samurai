@@ -82,6 +82,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
     $settings['address'] = trim($_POST['address'] ?? 'Budokan Argentina - Sarmiento 375, Córdoba, República Argentina. CP: 5000');
     $settings['whatsapp'] = trim($_POST['whatsapp'] ?? '+549 351 3886443');
     $settings['whatsapp_url'] = trim($_POST['whatsapp_url'] ?? 'https://wa.me/5493513886443');
+    $settings['whatsapp_opinion_msg'] = trim($_POST['whatsapp_opinion_msg'] ?? 'Hola Jorge, te envío mi opinión/foto sobre el libro de El Camino del Samurái');
+    $settings['custom_scripts_head'] = trim($_POST['custom_scripts_head'] ?? '');
+    $settings['custom_scripts_body'] = trim($_POST['custom_scripts_body'] ?? '');
     $settings['email'] = trim($_POST['email'] ?? 'budokanorpianesi@hotmail.com');
     $settings['amazon_url'] = trim($_POST['amazon_url'] ?? 'https://www.amazon.com/s?k=jorge+orpianesi&crid=6E5AFU50XWPW&sprefix=jorge+orpianesi%2Caps%2C237&ref=nb_sb_noss');
     $settings['budokan_url'] = trim($_POST['budokan_url'] ?? 'https://www.budokanweb.com/tienda/libros/la-ruta-del-samurai-formato-libro/');
@@ -270,6 +273,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                         </div>
 
                         <div class="form-group">
+                            <label for="whatsapp_opinion_msg">💬 Mensaje de WhatsApp para Recepción de Opiniones / Testimonios</label>
+                            <input type="text" id="whatsapp_opinion_msg" name="whatsapp_opinion_msg" value="<?= e($settings['whatsapp_opinion_msg'] ?? 'Hola Jorge, te envío mi opinión/foto sobre el libro de El Camino del Samurái') ?>" placeholder="Hola Jorge, te envío mi opinión/foto sobre el libro de El Camino del Samurái">
+                            <small style="color: var(--admin-text-muted); font-size: 0.78rem;">Texto pre-cargado cuando los lectores hacen clic en "Compartir mi opinión por WhatsApp" en la sección de Opiniones.</small>
+                        </div>
+
+                        <div class="form-group">
                             <label for="email">Correo Electrónico Oficial</label>
                             <input type="email" id="email" name="email" value="<?= e($settings['email'] ?? 'budokanorpianesi@hotmail.com') ?>">
                         </div>
@@ -363,6 +372,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
                                     <span><?= e($label) ?></span>
                                 </label>
                             <?php endforeach; ?>
+                        </div>
+                    </div>
+
+                    <!-- Scripts y Códigos Personalizados -->
+                    <div class="admin-card" style="border: 1px solid rgba(165, 214, 255, 0.25); background: rgba(13, 16, 23, 0.95);">
+                        <h3 style="display: flex; align-items: center; gap: 0.6rem; color: #a5d6ff;">
+                            <span>💻</span> Scripts y Códigos Personalizados (Google AdSense, Analytics, etc.)
+                        </h3>
+                        <p style="color: var(--admin-text-muted); font-size: 0.88rem; margin-bottom: 1.25rem; line-height: 1.5;">
+                            Agrega aquí scripts y etiquetas de terceros como <strong>Google AdSense</strong>, <strong>Google Analytics (GA4)</strong>, <strong>Google Tag Manager</strong>, <strong>Meta Pixel</strong> o códigos de seguimiento. Se inyectarán de forma segura en las páginas públicas del sitio web.
+                        </p>
+
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label for="custom_scripts_head" style="color: #ffffff;">
+                                <strong>Scripts en la Cabecera (&lt;head&gt;)</strong> &mdash; <span style="color: var(--admin-gold);">Recomendado para Google AdSense y Analytics</span>
+                            </label>
+                            <textarea id="custom_scripts_head" name="custom_scripts_head" rows="5" placeholder='<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-..." crossorigin="anonymous"></script>' style="font-family: Consolas, Monaco, 'Courier New', monospace; font-size: 0.85rem; background: #07090e; color: #a5d6ff; line-height: 1.45; border-color: rgba(165, 214, 255, 0.2); width: 100%;"><?= htmlspecialchars($settings['custom_scripts_head'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
+                            <small style="color: var(--admin-text-muted); font-size: 0.78rem;">Se inyecta justo antes de la etiqueta de cierre &lt;/head&gt; de todas las páginas.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="custom_scripts_body" style="color: #ffffff;">
+                                <strong>Scripts en el Pie de Página (&lt;body&gt;)</strong> &mdash; <span style="color: var(--admin-text-muted);">Opcional (Widgets de chat, píxeles diferidos)</span>
+                            </label>
+                            <textarea id="custom_scripts_body" name="custom_scripts_body" rows="4" placeholder="<!-- Scripts o widgets a cargar antes del cierre de </body> -->" style="font-family: Consolas, Monaco, 'Courier New', monospace; font-size: 0.85rem; background: #07090e; color: #a5d6ff; line-height: 1.45; border-color: rgba(165, 214, 255, 0.2); width: 100%;"><?= htmlspecialchars($settings['custom_scripts_body'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
+                            <small style="color: var(--admin-text-muted); font-size: 0.78rem;">Se inyecta justo antes de la etiqueta de cierre &lt;/body&gt; de todas las páginas.</small>
                         </div>
                     </div>
 

@@ -48,6 +48,11 @@ $page_desc = $custom_desc ?? $settings['site_description'];
     ?>
     <!-- Hojas de Estilo Optimizadas -->
     <link rel="stylesheet" href="<?= $css_path ?>?v=<?= $css_version ?>">
+
+    <?php if (!empty($settings['custom_scripts_head'])): ?>
+    <!-- Scripts Personalizados en <head> (Google AdSense, Analytics, etc.) -->
+    <?= $settings['custom_scripts_head'] . "\n" ?>
+    <?php endif; ?>
 </head>
 <body data-theme-default="<?= e($settings['theme_default'] ?? 'day') ?>" data-reviews-filter="<?= e($settings['reviews_default_filter'] ?? 'text') ?>">
 

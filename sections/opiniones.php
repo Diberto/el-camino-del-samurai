@@ -130,7 +130,13 @@ $default_filter = $settings['reviews_default_filter'] ?? 'all';
         <div class="reviews-cta-box center fade-in">
             <p class="reviews-cta-title">¿Ya leíste el libro o recibiste tu ejemplar?</p>
             <p class="reviews-cta-desc">Envíanos tu foto o testimonio para publicarlo en la web oficial y redes sociales.</p>
-            <a href="https://wa.me/5493513886443?text=Hola%20Jorge,%20te%20env%C3%ADo%20mi%20opini%C3%B3n/foto%20sobre%20el%20libro%20de%20El%20Camino%20del%20Samur%C3%A1i" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-whatsapp-cta">
+            <?php
+            $opinion_msg = $settings['whatsapp_opinion_msg'] ?? 'Hola Jorge, te envío mi opinión/foto sobre el libro de El Camino del Samurái';
+            $wa_phone = preg_replace('/[^0-9]/', '', $settings['whatsapp'] ?? '5493513886443');
+            if (empty($wa_phone)) $wa_phone = '5493513886443';
+            $wa_opinion_url = 'https://wa.me/' . $wa_phone . '?text=' . rawurlencode($opinion_msg);
+            ?>
+            <a href="<?= e($wa_opinion_url) ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-whatsapp-cta">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.302c-.087.087-.178.181-.077.355.101.173.449.741.964 1.2.662.591 1.221.774 1.394.861.173.087.275.072.376-.043.101-.116.433-.506.549-.679.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/></svg>
                 <span>Compartir mi Opinión por WhatsApp</span>
             </a>

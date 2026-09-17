@@ -106,5 +106,10 @@ $social = $settings['social'] ?? [];
     ?>
     <!-- Motor JavaScript Principal Unificado y Optimizado -->
     <script src="<?= $js_path ?>?v=<?= $js_version ?>" defer></script>
+
+    <?php if (!empty($settings['custom_scripts_body'])): ?>
+    <!-- Scripts Personalizados antes de </body> (Widgets, Chat, etc.) -->
+    <?= $settings['custom_scripts_body'] . "\n" ?>
+    <?php endif; ?>
 </body>
 </html>

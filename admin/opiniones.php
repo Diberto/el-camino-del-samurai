@@ -8,9 +8,20 @@ require_once __DIR__ . '/../config/media_helper.php';
 require_admin_auth();
 
 $opiniones = get_json_data('opiniones.json', []);
+$config_data = get_json_data('config.json', ['settings' => []]);
+$settings = $config_data['settings'] ?? [];
 $action = $_GET['action'] ?? 'list';
 $msg = '';
 $error = '';
+
+// Guardar mensaje de WhatsApp para recepción de opiniones
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_wa_opinion_msg'])) {
+    $settings['whatsapp_opinion_msg'] = trim($_POST['whatsapp_opinion_msg'] ?? 'Hola Jorge, te envío mi opinión/foto sobre el libro de El Camino del Samurái');
+    $config_data['settings'] = $settings;
+    save_json_data('config.json', $config_data);
+    header('Location: opiniones.php?msg=wa_saved');
+    exit;
+}
 
 // 1. Eliminar Opinión
 if ($action === 'delete' && isset($_GET['id'])) {
@@ -99,6 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_opinion'])) {
 }
 
 if (isset($_GET['msg'])) {
+    if ($_GET['msg'] === 'wa_saved') $msg = 'Mensaje de WhatsApp para opiniones actualizado con éxito.';
     if ($_GET['msg'] === 'saved') $msg = 'Opinión guardada con éxito.';
     if ($_GET['msg'] === 'deleted') $msg = 'Opinión eliminada con éxito.';
     if ($_GET['msg'] === 'duplicated') $msg = 'Opinión duplicada con éxito como nueva copia editable.';
@@ -257,6 +269,22 @@ if ($action === 'edit' && isset($_GET['id'])) {
                         </div>
                     </div>
                 <?php else: ?>
+                    <!-- MENSAJE DE WHATSAPP PARA RECEPCIÓN DE OPINIONES -->
+                    <div class="admin-card" style="margin-bottom: 1.5rem; background: rgba(37, 211, 102, 0.05); border: 1px solid rgba(37, 211, 102, 0.3);">
+                        <form method="POST" action="opiniones.php" style="display: flex; gap: 1.25rem; align-items: flex-end; flex-wrap: wrap;">
+                            <div style="flex: 1; min-width: 300px;">
+                                <label style="font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; color: #ffffff;">
+                                    <span style="color: #25D366; font-size: 1.2rem;">💬</span> Mensaje predeterminado de WhatsApp para recibir opiniones:
+                                </label>
+                                <input type="text" name="whatsapp_opinion_msg" value="<?= e($settings['whatsapp_opinion_msg'] ?? 'Hola Jorge, te envío mi opinión/foto sobre el libro de El Camino del Samurái') ?>" style="width: 100%; background: #07090e; border: 1px solid rgba(37, 211, 102, 0.35); color: #ffffff; padding: 0.75rem 1rem; border-radius: 6px;">
+                                <small style="color: var(--admin-text-muted); font-size: 0.78rem;">Texto que verán los lectores en WhatsApp al pulsar el botón <em>"Compartir mi opinión por WhatsApp"</em> en la web.</small>
+                            </div>
+                            <button type="submit" name="save_wa_opinion_msg" class="btn btn-admin-primary" style="white-space: nowrap; height: fit-content; padding: 0.75rem 1.4rem;">
+                                💾 Guardar Mensaje WhatsApp
+                            </button>
+                        </form>
+                    </div>
+
                     <!-- LISTADO DE OPINIONES CON ACCIÓN DUPLICAR -->
                     <div class="admin-card">
                         <div class="admin-card-header">
